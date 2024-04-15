@@ -7,7 +7,9 @@ public class PlaceService
     private PlacePanel _placePanel;
     private List<PlaceData> _placeDatas;
     private PlaceData _curPlaceData;
-   
+
+    public PlaceData CurPlaceData { get => _curPlaceData;  }
+
     public void Initialize()
     {       
         _placePanel = UIManager.Instance.PlacePanel;

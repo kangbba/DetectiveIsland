@@ -180,6 +180,17 @@ public class ArokaTransform : MonoBehaviour
            nowColorRoutine = StartCoroutine(SetImageColorRoutine(targetColor, totalTime, curvName, delayTime));
         }
     }
+    public void SetSpriteRendererColor(Color targetColor, float totalTime = 0f, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0f)
+    {
+        SetColorStop();
+        if(totalTime == 0f){
+            SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+            sprite.color = targetColor;
+        }
+        else{
+           nowColorRoutine = StartCoroutine(SetSpriteRendererColorRoutine(targetColor, totalTime, curvName, delayTime));
+        }
+    }
 
     public void SetColorStop()
     {
@@ -215,6 +226,31 @@ public class ArokaTransform : MonoBehaviour
         }
     }
 
+    private IEnumerator SetSpriteRendererColorRoutine(Color targetColor, float totalTime, CurveManager.CurvName curvName, float delayTime = 0f)
+    {
+        yield return new WaitForSeconds(delayTime);
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        if (sprite == null)
+        {
+            Debug.LogError("ArokaTransform: This function can only be used with UI elements that have Sprite component.");
+            yield break;
+        }
+        Color initialColor = sprite.color;
+        AnimationCurve animCurv = CurveManager.Instance.GetCurve(curvName);
+        float accumTime = 0;
+        while (sprite)
+        {
+            accumTime += Time.deltaTime;
+            float perone = totalTime == 0 ? 1f : Mathf.Clamp01(accumTime / totalTime);
+            float curvPerone = animCurv.Evaluate(perone);
+            sprite.color = Color.Lerp(initialColor, targetColor, curvPerone);
+            if (perone >= 1)
+            {
+                break;
+            }
+            yield return null;
+        }
+    }
     #endregion
 
     private IEnumerator SetRotRoutine(bool isWorld, Quaternion targeRot, float totalTime, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0f)

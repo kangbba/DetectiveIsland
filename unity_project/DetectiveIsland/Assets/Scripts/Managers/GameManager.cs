@@ -62,21 +62,28 @@ public class GameManager : MonoBehaviour
     {
         // 해당 placeID에 해당하는 PlaceData 가져오기
         PlaceData placeData = _placeService.GetPlaceData(placeID);
-        if (placeData != null)
-        {
-            // 이동하는 로직 작성
-            Debug.Log("Moving to place: " + placeData.PlaceID);
-            _placeService.SetPlace(placeData);
-            _placeService.SetOnPanel(true, 1f);
-            yield return new WaitForSeconds(1f);
-
-            Debug.Log("Arrived at place: " + placeData.PlaceID);
-            _dialogueService.SetOnPanel(true, 1f);
-            yield return new WaitForSeconds(1f);
-        }
-        else
+        if (placeData == null)
         {
             Debug.LogError("Cannot find place with ID: " + placeID);
+            yield break;
         }
+        // 이동하는 로직 작성
+        Debug.Log("Moving to place: " + placeData.PlaceID);
+        _placeService.SetPlace(placeData);
+        _placeService.SetOnPanel(true, 1f);
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log("Arrived at place: " + placeData.PlaceID);
+        _dialogueService.SetOnPanel(true, 1f);
+        yield return new WaitForSeconds(1f);
+
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+        _dialogueService.SetOnPanel(false, 1f);
+        yield return new WaitForSeconds(1f);
+
+        string testPlaceID = _placeService.CurPlaceData.PlaceID == "cafe_seabreeze" ? "port_entrance" :  "cafe_seabreeze";
+
+        StartCoroutine(MoveToPlaceCoroutine(testPlaceID));
     }
 }
