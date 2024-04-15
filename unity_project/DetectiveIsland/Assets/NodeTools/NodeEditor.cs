@@ -29,7 +29,6 @@ public class NodeEditor : EditorWindow
 
         if (isDraggingNode && selectedNode != null)
         {
-            // Update selected node's position
             selectedNode.rect.position = mousePosition - selectedNode.dragOffset;
             Repaint();
         }
@@ -41,19 +40,27 @@ public class NodeEditor : EditorWindow
         switch (e.type)
         {
             case EventType.MouseDown:
-                if (e.button == 1)  // Right click
+                if (e.button == 1) // Right click
                 {
                     ProcessContextMenu();
                     e.Use();
                 }
-                else if (e.button == 0)  // Left click
+                else if (e.button == 0) // Left click
                 {
                     selectedNode = GetNodeAtPosition(mousePosition);
                     if (selectedNode != null)
                     {
-                        isDraggingNode = true;
-                        selectedNode.dragOffset = mousePosition - selectedNode.rect.position;
-                        e.Use();
+                        if (e.clickCount == 2) // Double click
+                        {
+                            SetNodeTitle(selectedNode);
+                            e.Use();
+                        }
+                        else
+                        {
+                            isDraggingNode = true;
+                            selectedNode.dragOffset = mousePosition - selectedNode.rect.position;
+                            e.Use();
+                        }
                     }
                     else
                     {
@@ -70,20 +77,23 @@ public class NodeEditor : EditorWindow
     private void ProcessContextMenu()
     {
         GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent("Add Node"), false, () => OnClickAddNode());
+        genericMenu.AddItem(new GUIContent("Add Line Node"), false, () => OnClickAddNode(mousePosition));
         genericMenu.ShowAsContext();
     }
 
-    private void OnClickAddNode()
+    private void OnClickAddNode(Vector2 position)
     {
-        nodes.Add(new Node(mousePosition, 200, 100, "New Node"));
+        LineNode newNode = new LineNode(position, 200, 100, "New Line Node");
+        newNode.emotionID = "Unknown"; // default value
+        newNode.sentence = "Type sentence here"; // default placeholder
+        nodes.Add(newNode);
     }
 
     private void DrawNodes()
     {
         foreach (var node in nodes)
         {
-            GUI.Box(node.rect, node.title);
+            node.DrawNode();
         }
     }
 
@@ -97,5 +107,14 @@ public class NodeEditor : EditorWindow
             }
         }
         return null;
+    }
+
+    private void SetNodeTitle(Node node)
+    {
+        string newTitle = EditorGUILayout.TextField("Node Title", node.title);
+        if (newTitle != node.title)
+        {
+            node.title = newTitle;
+        }
     }
 }
