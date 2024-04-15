@@ -70,3 +70,7 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+unity_project/DetectiveIsland/.vsconfig
+unity_project/DetectiveIsland/Packages/manifest.json
+unity_project/DetectiveIsland/Packages/packages-lock.json
+unity_project/DetectiveIsland/Assets/-.Chul.meta
