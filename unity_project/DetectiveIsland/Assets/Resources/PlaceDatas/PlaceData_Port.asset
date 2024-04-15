@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78616c412a21840cfa2f2231d69d3d40, type: 3}
-  m_Name: PlaceData_
+  m_Name: PlaceData_Port
   m_EditorClassIdentifier: 
-  _placeID: 
+  _placeID: port
+  _placeNameForUser: "\uD56D\uAD6C"
+  _placeSprite: {fileID: 0}

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78616c412a21840cfa2f2231d69d3d40, type: 3}
+  m_Name: PlaceData_PortEntrance
+  m_EditorClassIdentifier: 
+  _placeID: port_entrance
+  _placeNameForUser: "\uD56D\uAD6C \uC785\uAD6C"
+  _placeSprite: {fileID: 0}

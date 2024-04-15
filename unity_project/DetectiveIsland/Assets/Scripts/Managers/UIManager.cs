@@ -2,13 +2,20 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private ArokaAnim _placePanel;
-    [SerializeField] private ArokaAnim _itemPanel;
-    [SerializeField] private ArokaAnim _characterPanel;
-    [SerializeField] private ArokaAnim _linePnael;
-
     private static UIManager _instance;
     public static UIManager Instance => _instance;
+    
+    [SerializeField] private ItemPanel _itemPanel;
+    [SerializeField] private PlacePanel _placePanel;
+    [SerializeField] private CharacterPanel _characterPanel;
+    [SerializeField] private DialoguePanel _dialoguePanel;
+
+    public ItemPanel ItemPanel => _itemPanel;
+    
+    public PlacePanel PlacePanel => _placePanel;    
+    
+    public CharacterPanel CharacterPanel => _characterPanel;
+    public DialoguePanel DialoguePanel => _dialoguePanel;
 
     private void Awake()
     {
@@ -23,8 +30,4 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public ArokaAnim PlacePanel => _placePanel;
-    public ArokaAnim ItemPanel => _itemPanel;
-    public ArokaAnim CharacterPanel => _characterPanel;
-    public ArokaAnim LinePanel => _linePnael;
 }

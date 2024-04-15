@@ -11,7 +11,7 @@ public class ArokaTransform : MonoBehaviour
     Coroutine nowScaleRoutine;
     Coroutine nowActiveRoutine;
     Coroutine nowColorRoutine;
-
+    
 
     #region POSITION
     public void SetPos(Vector3 targetPos, float totalTime = 0f, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0)

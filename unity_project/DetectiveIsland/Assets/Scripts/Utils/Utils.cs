@@ -5,11 +5,35 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.IO;
 
 
 namespace ArokaUtil {
+
     public static class Utils
     {
+        public static List<T> LoadDatasFromFolder<T>(string folderName) where T : UnityEngine.Object
+        {
+            var dataList = new List<T>();
+
+            // 폴더 내의 모든 ScriptableObject를 가져와 리스트에 추가
+            string folderPath = "Assets/Resources/" + folderName;
+            DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+            FileInfo[] files = directoryInfo.GetFiles("*.asset");
+
+            foreach (FileInfo file in files)
+            {
+                string path = folderName + "/" + Path.GetFileNameWithoutExtension(file.Name);
+                T data = Resources.Load<T>(path);
+
+                if (data != null)
+                {
+                    dataList.Add(data);
+                }
+            }
+            return dataList;
+        }
+
 
         public static int EnumCount(this Type _type)
         {

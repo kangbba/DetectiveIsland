@@ -2,7 +2,7 @@ using System.Drawing;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ArokaAnim))]
+[CustomEditor(typeof(ArokaAnim), true)]
 public class UIAnimEditor : Editor
 {
     public override void OnInspectorGUI()

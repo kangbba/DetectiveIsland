@@ -7,53 +7,76 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
-    private PlaceManager _placeManager;
-    private ItemManager _itemManager;
-    private CharacterManager _characterManager;
+    private EventService _eventService;
+    private DialogueService _dialogueService;
+    private ItemService _itemService;
+    private PlaceService _placeService;
+    private CharacterService _characterService;
 
-     private void Start()
+
+    private void Awake()
     {
-        Initialize();
-        StartCoroutine(MoveToPlaceCoroutine("initialPlaceID"));
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+    private void Start()
+    {
+
+        Initialize();
+        _eventService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
+        StartCoroutine(MoveToPlaceCoroutine("cafe_seabreeze"));
+    }
+
     private void Initialize()
     {
-        // UIManager로부터 UI 패널 GameObject 가져오기
-        ArokaAnim placePanel = UIManager.Instance.PlacePanel;
-        ArokaAnim itemPanel = UIManager.Instance.ItemPanel;
-        ArokaAnim characterPanel = UIManager.Instance.CharacterPanel;
 
-        // PlaceManager 초기화
-        _placeManager = new PlaceManager();
-        _placeManager.Initialize(folderName: "PlaceDatas", mainPanel: placePanel);
+        _eventService = new EventService();
+        _eventService.Initialize();
 
-        // ItemManager 초기화
-        _itemManager = new ItemManager();
-        _itemManager.Initialize(folderName: "ItemDatas", mainPanel: itemPanel);
-        
-        // CharacterManager 초기화
-        _characterManager = new CharacterManager();
-        _characterManager.Initialize(folderName: "CharacterDatas", mainPanel: characterPanel);
+        _dialogueService = new DialogueService();
+        _dialogueService.Initialize();
 
-        // 기타 Manager들의 초기화...
+        // ItemService 초기화
+        _itemService = new ItemService();
+        _itemService.Initialize();
+
+        // PlaceService 초기화
+        _placeService = new PlaceService();
+        _placeService.Initialize();
+
+        // CharacterService 초기화
+        _characterService = new CharacterService();
+        _characterService.Initialize();
+
     }
-
     
-     private IEnumerator MoveToPlaceCoroutine(string placeID)
+    private IEnumerator MoveToPlaceCoroutine(string placeID)
     {
         // 해당 placeID에 해당하는 PlaceData 가져오기
-        PlaceData placeData = _placeManager.GetPlaceData(placeID);
+        PlaceData placeData = _placeService.GetPlaceData(placeID);
         if (placeData != null)
         {
             // 이동하는 로직 작성
             Debug.Log("Moving to place: " + placeData.PlaceID);
-            yield return null; // 예시로 하나의 프레임을 대기
+            _placeService.SetPlace(placeData);
+            _placeService.SetOnPanel(true, 1f);
+            yield return new WaitForSeconds(1f);
+
             Debug.Log("Arrived at place: " + placeData.PlaceID);
+            _dialogueService.SetOnPanel(true, 1f);
+            yield return new WaitForSeconds(1f);
         }
         else
         {
             Debug.LogError("Cannot find place with ID: " + placeID);
         }
     }
-    
 }
