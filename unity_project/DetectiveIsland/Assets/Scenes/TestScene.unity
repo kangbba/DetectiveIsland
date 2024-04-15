@@ -177,7 +177,7 @@ RectTransform:
   m_Children:
   - {fileID: 1111253079}
   - {fileID: 1792045022}
-  - {fileID: 900479435}
+  - {fileID: 951071996}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -750,7 +750,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887439552}
   m_CullTransparentMesh: 1
---- !u!1 &900479434
+--- !u!1 &951071995
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -758,9 +758,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 900479435}
-  - component: {fileID: 900479437}
-  - component: {fileID: 900479436}
+  - component: {fileID: 951071996}
+  - component: {fileID: 951071998}
+  - component: {fileID: 951071997}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -768,13 +768,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &900479435
+--- !u!224 &951071996
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900479434}
+  m_GameObject: {fileID: 951071995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -784,16 +784,16 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -628.68353, y: 428.63397}
-  m_SizeDelta: {x: 498.6329, y: 126.7321}
+  m_AnchoredPosition: {x: -753, y: 426}
+  m_SizeDelta: {x: 420.7666, y: 185.8049}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &900479436
+--- !u!114 &951071997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900479434}
+  m_GameObject: {fileID: 951071995}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD14C\uC2A4\uD2B8\uC52C\n"
+  m_text: TEST SCENE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
   m_sharedMaterial: {fileID: 4626242773714902045, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
@@ -834,15 +834,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -876,13 +876,13 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &900479437
+--- !u!222 &951071998
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900479434}
+  m_GameObject: {fileID: 951071995}
   m_CullTransparentMesh: 1
 --- !u!1 &963194225
 GameObject:
@@ -1121,7 +1121,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1700006080}
-  - {fileID: 1439212835}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1151815083
@@ -1178,7 +1177,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1151815082}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700006079
 GameObject:
@@ -1422,6 +1421,7 @@ SceneRoots:
   - {fileID: 686147189}
   - {fileID: 963194228}
   - {fileID: 334284981}
+  - {fileID: 1439212835}
   - {fileID: 1151815082}
   - {fileID: 662951372}
   - {fileID: 496861789}
