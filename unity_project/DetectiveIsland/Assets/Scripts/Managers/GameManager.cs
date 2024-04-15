@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private PlaceService _placeService;
     private CharacterService _characterService;
 
+    private bool isMoving = false;
 
     private void Awake()
     {
@@ -64,16 +65,20 @@ public class GameManager : MonoBehaviour
         PlaceData placeData = _placeService.GetPlaceData(placeID);
         if (placeData == null)
         {
-            Debug.LogError("Cannot find place with ID: " + placeID);
+            Debug.LogError($"Cannot find place with ID: {placeID}");
             yield break;
         }
+        if(isMoving){
+            Debug.LogError("이미 장소 이동중입니다");
+            yield break;
+        }
+        isMoving = true;
         // 이동하는 로직 작성
-        Debug.Log("Moving to place: " + placeData.PlaceID);
+        Debug.Log($"Arrived at place: {placeData.PlaceNameForUser} ({placeData.PlaceID})");
         _placeService.SetPlace(placeData);
         _placeService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("Arrived at place: " + placeData.PlaceID);
         _dialogueService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
@@ -84,6 +89,7 @@ public class GameManager : MonoBehaviour
 
         string testPlaceID = _placeService.CurPlaceData.PlaceID == "cafe_seabreeze" ? "port_entrance" :  "cafe_seabreeze";
 
+        isMoving = false;
         StartCoroutine(MoveToPlaceCoroutine(testPlaceID));
     }
 }
