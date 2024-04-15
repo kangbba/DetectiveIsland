@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialogue
+public class Dialogue : Element
 {
-    [SerializeField] private string _characterID;
-    [SerializeField] private List<Line> _lines;
+    public string characterID;
+    public List<Line> lines;
 
 }

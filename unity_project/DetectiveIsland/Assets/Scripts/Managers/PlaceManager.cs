@@ -1,18 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceManager : MonoBehaviour
+public class PlaceManager : Manager<PlaceData>
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Initialize(string folderName, GameObject mainPanel)
     {
-        
+        base.Initialize(folderName, mainPanel);
+        Debug.Log("PlaceManager initialized with place panel: " + MainPanel.name);
     }
-
-    // Update is called once per frame
-    void Update()
+    public PlaceData GetPlaceData(string placeID)
     {
-        
+        foreach (PlaceData place in _dataList)
+        {
+            if (place.PlaceID == placeID)
+            {
+                return place;
+            }
+        }
+        return null;
     }
 }
