@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e66c6366d904e98bc83428217d4fd7, type: 3}
+  m_Name: New Script Graph
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[{"hasDefaultValue":true,"defaultValue":{"$content":0.0,"$type":"System.Single"},"_type":"System.Single","key":"characterID","label":null,"summary":null,"hideLabel":false}],"valueOutputDefinitions":[],"title":"DF","summary":null,"pan":{"x":-12899.7,"y":-3484.282},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-387.0,"y":-185.0},"guid":"cd70deef-186a-4547-afc7-deb410fc1b45","$version":"A","$type":"Unity.VisualScripting.Start"},{"coroutine":false,"defaultValues":{},"position":{"x":-394.0,"y":-26.0},"guid":"cc4c6b44-d4e6-470b-84f4-78ae7d764f54","$version":"A","$type":"Unity.VisualScripting.Update"},{"type":"UnityEditor.MonoScript","value":{"$content":0,"$type":"UnityEngine.Object"},"defaultValues":{},"position":{"x":-177.0,"y":-114.0},"guid":"04836609-a194-4b0f-a242-5c49422d395f","$version":"A","$type":"Unity.VisualScripting.Literal"},{"defaultValues":{},"position":{"x":-9987.0,"y":-395.0},"guid":"09ec4a0b-ed55-4074-b003-124556d2dbbb","$version":"A","$type":"Unity.VisualScripting.CreateDictionary"},{"kind":"Graph","defaultValues":{"name":{"$content":"","$type":"System.String"}},"position":{"x":-9814.0,"y":-272.0},"guid":"df0260f6-2e07-46c3-a881-3b378a6d077c","$version":"A","$type":"Unity.VisualScripting.SetVariable"},{"type":"UnityEditor.MonoScript","value":{"$content":1,"$type":"UnityEngine.Object"},"defaultValues":{},"position":{"x":-13230.0,"y":-3718.0},"guid":"8faa7abf-088e-4937-a18f-87e25a328e81","$version":"A","$type":"Unity.VisualScripting.Literal"},{"position":{"xMin":-136.0,"yMin":-267.0,"xMax":-36.0,"yMax":-167.0},"title":"Sticky
+      Note","body":null,"colorTheme":"Classic","guid":"1cc46a4a-0c85-4059-90d3-f10df1d40d2f","$type":"Unity.VisualScripting.StickyNote"}],"$version":"A"}}'
+    _objectReferences:
+    - {fileID: 11500000, guid: 15858e4fa54564256acefcb5ee34430e, type: 3}
+    - {fileID: 11500000, guid: 15858e4fa54564256acefcb5ee34430e, type: 3}
