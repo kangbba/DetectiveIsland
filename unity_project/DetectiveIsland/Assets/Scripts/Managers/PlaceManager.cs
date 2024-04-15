@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlaceManager : Manager<PlaceData>
 {
-    public override void Initialize(string folderName, GameObject mainPanel)
+    public override void Initialize(string folderName, ArokaAnim mainPanel)
     {
         base.Initialize(folderName, mainPanel);
         Debug.Log("PlaceManager initialized with place panel: " + MainPanel.name);

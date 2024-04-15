@@ -169,7 +169,7 @@ public class ArokaTransform : MonoBehaviour
 
     #region Color
 
-    public void SetColor(Color targetColor, float totalTime = 0f, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0f)
+    public void SetImageColor(Color targetColor, float totalTime = 0f, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0f)
     {
         SetColorStop();
         if(totalTime == 0f){
@@ -177,7 +177,7 @@ public class ArokaTransform : MonoBehaviour
             image.color = targetColor;
         }
         else{
-           nowColorRoutine = StartCoroutine(SetColorRoutine(targetColor, totalTime, curvName, delayTime));
+           nowColorRoutine = StartCoroutine(SetImageColorRoutine(targetColor, totalTime, curvName, delayTime));
         }
     }
 
@@ -189,7 +189,7 @@ public class ArokaTransform : MonoBehaviour
         }
     }
 
-    private IEnumerator SetColorRoutine(Color targetColor, float totalTime, CurveManager.CurvName curvName, float delayTime = 0f)
+    private IEnumerator SetImageColorRoutine(Color targetColor, float totalTime, CurveManager.CurvName curvName, float delayTime = 0f)
     {
         yield return new WaitForSeconds(delayTime);
         Image image = GetComponent<Image>();
@@ -230,11 +230,11 @@ public class ArokaTransform : MonoBehaviour
             float curvPerone = animCurv.Evaluate(perone);
             if (isWorld)
             {
-                transform.rotation = Quaternion.Lerp(initialRot, targeRot, curvPerone);
+                transform.rotation = Quaternion.Slerp(initialRot, targeRot, curvPerone);
             }
             else
             {
-                transform.localRotation = Quaternion.Lerp(initialRot, targeRot, curvPerone);
+                transform.localRotation = Quaternion.Slerp(initialRot, targeRot, curvPerone);
             }
             if (perone >= 1)
             {

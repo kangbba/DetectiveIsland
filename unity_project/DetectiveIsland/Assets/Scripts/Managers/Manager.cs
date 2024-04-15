@@ -5,12 +5,12 @@ using System.IO;
 public class Manager<T> where T : ScriptableObject
 {
     protected List<T> _dataList;
-    protected GameObject _mainPanel;
+    protected ArokaAnim _mainPanel;
 
     public List<T> DataList => _dataList;
-    public GameObject MainPanel => _mainPanel;
+    public ArokaAnim MainPanel => _mainPanel;
 
-     public virtual void Initialize(string folderName, GameObject mainPanel)
+     public virtual void Initialize(string folderName, ArokaAnim mainPanel)
     {
         LoadDatas(folderName);
         _mainPanel = mainPanel;
@@ -36,11 +36,11 @@ public class Manager<T> where T : ScriptableObject
         }
     }
 
-    public void SetOnPanel(bool isActive)
+    public void SetOnPanel(bool isActive, float totalTime)
     {
         if (_mainPanel != null)
         {
-            _mainPanel.SetActive(isActive);
+            _mainPanel.SetAnim(isActive, totalTime);
         }
     }
 }

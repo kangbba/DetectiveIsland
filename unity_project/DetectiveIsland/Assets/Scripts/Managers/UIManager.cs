@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _placePanel;
-    [SerializeField] private GameObject _itemPanel;
-    [SerializeField] private GameObject _characterPanel;
-    [SerializeField] private GameObject _linePnael;
+    [SerializeField] private ArokaAnim _placePanel;
+    [SerializeField] private ArokaAnim _itemPanel;
+    [SerializeField] private ArokaAnim _characterPanel;
+    [SerializeField] private ArokaAnim _linePnael;
 
     private static UIManager _instance;
     public static UIManager Instance => _instance;
@@ -23,8 +23,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public GameObject PlacePanel => _placePanel;
-    public GameObject ItemPanel => _itemPanel;
-    public GameObject CharacterPanel => _characterPanel;
-    public GameObject LinePanel => _linePnael;
+    public ArokaAnim PlacePanel => _placePanel;
+    public ArokaAnim ItemPanel => _itemPanel;
+    public ArokaAnim CharacterPanel => _characterPanel;
+    public ArokaAnim LinePanel => _linePnael;
 }

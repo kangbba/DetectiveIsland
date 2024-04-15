@@ -115,9 +115,9 @@ namespace ArokaUtil {
             }
         }
     }
-    public static class UIAnimExtensions
+    public static class ArokaAnimExtensions
     {
-        public static void SetAnims(this UIAnim[] uiAnims, bool isOn, float totalTime)
+        public static void SetAnims(this ArokaAnim[] uiAnims, bool isOn, float totalTime)
         {
             for(int i = 0; i < uiAnims.Length; i++)
             {

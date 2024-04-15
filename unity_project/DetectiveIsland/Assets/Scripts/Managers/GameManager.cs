@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
@@ -20,21 +19,21 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         // UIManager로부터 UI 패널 GameObject 가져오기
-        GameObject placePanel = UIManager.Instance.PlacePanel;
-        GameObject itemPanel = UIManager.Instance.ItemPanel;
-        GameObject characterPanel = UIManager.Instance.CharacterPanel;
+        ArokaAnim placePanel = UIManager.Instance.PlacePanel;
+        ArokaAnim itemPanel = UIManager.Instance.ItemPanel;
+        ArokaAnim characterPanel = UIManager.Instance.CharacterPanel;
 
         // PlaceManager 초기화
         _placeManager = new PlaceManager();
-        _placeManager.Initialize("PlaceDatas", placePanel);
+        _placeManager.Initialize(folderName: "PlaceDatas", mainPanel: placePanel);
 
         // ItemManager 초기화
         _itemManager = new ItemManager();
-        _itemManager.Initialize("ItemDatas", itemPanel);
+        _itemManager.Initialize(folderName: "ItemDatas", mainPanel: itemPanel);
         
         // CharacterManager 초기화
         _characterManager = new CharacterManager();
-        _characterManager.Initialize("CharacterDatas", characterPanel);
+        _characterManager.Initialize(folderName: "CharacterDatas", mainPanel: characterPanel);
 
         // 기타 Manager들의 초기화...
     }
