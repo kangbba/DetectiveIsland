@@ -149,7 +149,9 @@ public class NodeEditor : EditorWindow
             GUI.Box(selectedNode.rect, "", EditorStyles.helpBox);
             GUI.color = Color.white;
         }
-    }
+    } 
+
+
 
     private Node GetNodeAtPosition(Vector2 position)
     {
