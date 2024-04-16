@@ -191,6 +191,31 @@ public class NodeEditor : EditorWindow
         GUILayout.EndHorizontal();
     }
 
+    private void SaveCurrentNodes()
+    {
+        if (nodes.Count > 0)
+        {
+            // Specify the initial directory as Application.dataPath to open in the Assets folder
+            string path = EditorUtility.SaveFilePanel("Save Nodes as JSON", Application.dataPath, "TestJson", "json");
+
+            // Check if the user has not cancelled the operation
+            if (!string.IsNullOrEmpty(path))
+            {
+                List<Element> elements = nodes.ToElements();
+                Scenario scenario = new Scenario(elements);
+
+                // Save the scenario object as a JSON file at the specified path
+                ArokaJsonUtil.SaveScenario(scenario, path);
+                Debug.Log("Nodes saved to JSON: " + path);
+            }
+        }
+        else
+        {
+            Debug.Log("No nodes to save.");
+        }
+    }
+
+
     private void ProcessEvents(Event e)
     {
         mousePosition = e.mousePosition;
@@ -314,36 +339,4 @@ public class NodeEditor : EditorWindow
         return null;
     }
 
-    private void SaveCurrentNodes()
-    {
-        if (nodes.Count > 0)
-        {
-            JsonUtilityHelper.SaveNodesToJson(nodes, "NodesData.json");
-            Debug.Log("Nodes saved to JSON.");
-        }
-        else
-        {
-            Debug.Log("No nodes to save.");
-        }
-    }
-}
-public static class JsonUtilityHelper
-{
-    public static void SaveNodesToJson(List<Node> nodes, string fileName)
-    {
-        string path = Path.Combine(Application.dataPath, fileName);
-        string json = JsonUtility.ToJson(new Serialization<Node>(nodes), true);
-        File.WriteAllText(path, json);
-        AssetDatabase.Refresh();
-    }
-
-    [System.Serializable]
-    private class Serialization<T>
-    {
-        public List<T> items;
-        public Serialization(List<T> items)
-        {
-            this.items = items;
-        }
-    }
 }
