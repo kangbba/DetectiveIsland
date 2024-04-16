@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
         ItemService.Initialize();
 
         PlaceService.Initialize();
+        
+        PlaceUIService.Initialize();
 
         CharacterService.Initialize();
  

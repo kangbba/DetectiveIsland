@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5331067995853520940}
-  - component: {fileID: 7029655056412186241}
   m_Layer: 0
   m_Name: "\uC54C\uD14C\uC5B4\uC758 \uD3D0\uAC00 \uAE4A\uC740\uACF3 "
   m_TagString: Untagged
@@ -32,20 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6786676255107948517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7029655056412186241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 528614777138423696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: ruined_deep
-  _placeNameForUser: "\uC54C\uD14C\uC5B4\uC758 \uD3D0\uAC00 \uAE4A\uC740\uACF3 "
 --- !u!1 &550404895585080050
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2511852861096297322}
-  - component: {fileID: 1166747645827145354}
   m_Layer: 0
   m_Name: "\uB3C4\uC2DC"
   m_TagString: Untagged
@@ -78,20 +62,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5220557626646381568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1166747645827145354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550404895585080050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: 
-  _placeNameForUser: 
 --- !u!1 &1096491220527295347
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5860251367014332583}
-  - component: {fileID: 2302141782984478742}
   m_Layer: 0
   m_Name: "\uB77C\uC774\uC5B8\uC758 \uC9D1"
   m_TagString: Untagged
@@ -124,20 +93,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5995427108877613188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2302141782984478742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096491220527295347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: ryan_house
-  _placeNameForUser: "\uB77C\uC774\uC5B8\uC758 \uC9D1"
 --- !u!1 &1290678345019283856
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5832516153313513573}
-  - component: {fileID: 8377908528881750586}
   m_Layer: 0
   m_Name: "\uB9C8\uC744\uAE38\uAC70\uB9AC 2"
   m_TagString: Untagged
@@ -171,20 +125,6 @@ Transform:
   - {fileID: 8656504132704745324}
   m_Father: {fileID: 5995427108877613188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8377908528881750586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290678345019283856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: town_street_2
-  _placeNameForUser: "\uB9C8\uC744\uAE38\uAC70\uB9AC 2"
 --- !u!1 &1599559428905681203
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +134,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8314521293035809509}
-  - component: {fileID: 8911066506555542961}
   m_Layer: 0
   m_Name: "\uD574\uBCC0 \uC0B0\uCC45\uB85C "
   m_TagString: Untagged
@@ -218,20 +157,6 @@ Transform:
   - {fileID: 5995427108877613188}
   m_Father: {fileID: 7583163795509066573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8911066506555542961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599559428905681203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: seaside_walkingway
-  _placeNameForUser: "\uD574\uBCC0 \uC0B0\uCC45\uB85C "
 --- !u!1 &2080869002772140577
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +166,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7207348487199128627}
-  - component: {fileID: 5302068359037261726}
   m_Layer: 0
   m_Name: "\uACF5\uC6D0\uC758 \uC870\uAC01\uC0C1 "
   m_TagString: Untagged
@@ -264,20 +188,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8656504132704745324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5302068359037261726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080869002772140577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park_statue
-  _placeNameForUser: "\uACF5\uC6D0\uC758 \uC870\uAC01\uC0C1 "
 --- !u!1 &2168135922157149022
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +197,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8502366932772718486}
-  - component: {fileID: 8321880096657664064}
   m_Layer: 0
   m_Name: "\uB808\uC2A4\uD1A0\uB791"
   m_TagString: Untagged
@@ -310,20 +219,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4373048519291871236}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8321880096657664064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168135922157149022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: port_restaurant
-  _placeNameForUser: "\uB808\uC2A4\uD1A0\uB791"
 --- !u!1 &2328419504486312067
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +228,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3575388617713824123}
-  - component: {fileID: 174719796414848098}
   m_Layer: 0
   m_Name: "\uB3C4\uC11C\uAD00 \uAE4A\uC740\uACF3 "
   m_TagString: Untagged
@@ -356,20 +250,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8141951075295305077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &174719796414848098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2328419504486312067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: library_deep
-  _placeNameForUser: "\uB3C4\uC11C\uAD00 \uAE4A\uC740\uACF3"
 --- !u!1 &2358550127647995607
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +259,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6786676255107948517}
-  - component: {fileID: 9115534819992203151}
   m_Layer: 0
   m_Name: "\uC54C\uD14C\uC5B4\uC758 \uD3D0\uAC00"
   m_TagString: Untagged
@@ -403,20 +282,6 @@ Transform:
   - {fileID: 5331067995853520940}
   m_Father: {fileID: 6106720342998529733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9115534819992203151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2358550127647995607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: ruined
-  _placeNameForUser: "\uC54C\uD14C\uC5B4\uC758 \uD3D0\uAC00"
 --- !u!1 &2408851163807608838
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7583163795509066573}
-  - component: {fileID: 3616868727693944220}
+  - component: {fileID: 7363608051650521790}
   m_Layer: 0
   m_Name: "\uD56D\uAD6C \uC785\uAD6C"
   m_TagString: Untagged
@@ -451,7 +316,7 @@ Transform:
   - {fileID: 8314521293035809509}
   m_Father: {fileID: 7226301146331722966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3616868727693944220
+--- !u!114 &7363608051650521790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -460,11 +325,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2408851163807608838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
+  m_Script: {fileID: 11500000, guid: 78616c412a21840cfa2f2231d69d3d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _placeID: port_entrance
-  _placeNameForUser: "\uD56D\uAD6C \uC785\uAD6C"
+  _placeNameForUser: "\uD56D\uAD6C\uC785\uAD6C"
+  _placeSprite: {fileID: 21300000, guid: 4757fddfb9567421fa9e9c6d4ea64e32, type: 3}
+  scaleFactor: 1
 --- !u!1 &3188704534602667540
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5220557626646381568}
   m_Layer: 0
-  m_Name: MapPrefab
+  m_Name: PlaceRoadmapPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,7 +374,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4338425681457482725}
-  - component: {fileID: 462345866584559529}
   m_Layer: 0
   m_Name: "\uACF5\uC6D0 \uAE4A\uC740 \uACF3"
   m_TagString: Untagged
@@ -531,20 +397,6 @@ Transform:
   - {fileID: 2370626966888172869}
   m_Father: {fileID: 1605437224725132511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &462345866584559529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3445058172804792753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park_deep
-  _placeNameForUser: "\uACF5\uC6D0 \uAE4A\uC740 \uACF3"
 --- !u!1 &3629077423717522742
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +406,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8141951075295305077}
-  - component: {fileID: 1342023092270538174}
   m_Layer: 0
   m_Name: "\uB3C4\uC11C\uAD00"
   m_TagString: Untagged
@@ -578,20 +429,6 @@ Transform:
   - {fileID: 3575388617713824123}
   m_Father: {fileID: 8038399017025791505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1342023092270538174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629077423717522742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: library
-  _placeNameForUser: "\uB3C4\uC11C\uAD00"
 --- !u!1 &4072683469849632339
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +438,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2370626966888172869}
-  - component: {fileID: 3177111607630883938}
   m_Layer: 0
   m_Name: "\uC9C0\uD558\uC2E4 \uC785\uAD6C"
   m_TagString: Untagged
@@ -625,20 +461,6 @@ Transform:
   - {fileID: 3326229335617712575}
   m_Father: {fileID: 4338425681457482725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3177111607630883938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4072683469849632339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park_underground_entrance
-  _placeNameForUser: "\uC9C0\uD558\uC2E4 \uC785\uAD6C"
 --- !u!1 &4495286269861673217
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +470,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225677306716920762}
-  - component: {fileID: 8647003591113820891}
   m_Layer: 0
   m_Name: "\uD56D\uAD6C \uBC16 1"
   m_TagString: Untagged
@@ -671,20 +492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8502388071242705320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8647003591113820891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4495286269861673217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: port_outside_1
-  _placeNameForUser: "\uD56D\uAD6C \uBC16 1"
 --- !u!1 &4756350854380406639
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +501,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 344432154772519485}
-  - component: {fileID: 4353022737718143742}
   m_Layer: 0
   m_Name: "\uB3C4\uC2DC \uC678\uACFD \uC785\uAD6C"
   m_TagString: Untagged
@@ -718,20 +524,6 @@ Transform:
   - {fileID: 3650073327239064909}
   m_Father: {fileID: 7226301146331722966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4353022737718143742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4756350854380406639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: town_outskirt
-  _placeNameForUser: "\uB3C4\uC2DC \uC678\uACFD \uC785\uAD6C"
 --- !u!1 &4930542092502179284
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +533,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8621814889753568456}
-  - component: {fileID: 7400737087655743897}
   m_Layer: 0
   m_Name: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 2"
   m_TagString: Untagged
@@ -765,20 +556,6 @@ Transform:
   - {fileID: 6106720342998529733}
   m_Father: {fileID: 3650073327239064909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7400737087655743897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4930542092502179284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: way_to_ruined_2
-  _placeNameForUser: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 2"
 --- !u!1 &5217505952212071392
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +565,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3326229335617712575}
-  - component: {fileID: 4758968973922649918}
   m_Layer: 0
   m_Name: "\uC9C0\uD558\uC2E4 \uACC4\uB2E8 "
   m_TagString: Untagged
@@ -811,20 +587,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2370626966888172869}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4758968973922649918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5217505952212071392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park_underground_stair
-  _placeNameForUser: "\uC9C0\uD558\uC2E4 \uACC4\uB2E8"
 --- !u!1 &5700582868179425983
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,7 +596,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1605437224725132511}
-  - component: {fileID: 1855497670484483915}
   m_Layer: 0
   m_Name: "\uACF5\uC6D0\uC758 \uC232\uAE38 "
   m_TagString: Untagged
@@ -858,20 +619,6 @@ Transform:
   - {fileID: 4338425681457482725}
   m_Father: {fileID: 8656504132704745324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1855497670484483915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5700582868179425983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park_woods_walkingway
-  _placeNameForUser: "\uACF5\uC6D0\uC758 \uC232\uAE38 "
 --- !u!1 &6077179930596097042
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +628,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4373048519291871236}
-  - component: {fileID: 6757641394048801058}
   m_Layer: 0
   m_Name: "\uD56D\uAD6C"
   m_TagString: Untagged
@@ -905,20 +651,6 @@ Transform:
   - {fileID: 8502366932772718486}
   m_Father: {fileID: 7583163795509066573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6757641394048801058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6077179930596097042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: port
-  _placeNameForUser: "\uD56D\uAD6C"
 --- !u!1 &6132828691788155503
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,7 +660,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3330078879025860190}
-  - component: {fileID: 4930864783696581563}
   m_Layer: 0
   m_Name: "\uBE0C\uB77C\uC774\uC5B8\uC758 \uBC14"
   m_TagString: Untagged
@@ -951,20 +682,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8656504132704745324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4930864783696581563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6132828691788155503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: bar
-  _placeNameForUser: "\uBE0C\uB77C\uC774\uC5B8\uC758 \uBC14"
 --- !u!1 &6427024051579295382
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +691,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7226301146331722966}
-  - component: {fileID: 8134969625936119180}
   m_Layer: 0
   m_Name: "\uC12C\uB9C8\uC744"
   m_TagString: Untagged
@@ -1000,20 +716,6 @@ Transform:
   - {fileID: 344432154772519485}
   m_Father: {fileID: 5220557626646381568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8134969625936119180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427024051579295382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: island_town
-  _placeNameForUser: "\uC12C\uB9C8\uC744"
 --- !u!1 &6675098593638889582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +725,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1292798261642338102}
-  - component: {fileID: 2239390111209838052}
   m_Layer: 0
   m_Name: "\uAE4C\uD398 \uC528\uBE0C\uB9AC\uC988"
   m_TagString: Untagged
@@ -1046,20 +747,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8560397518339169678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2239390111209838052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6675098593638889582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: cafe_seabreeze
-  _placeNameForUser: "\uAE4C\uD398 \uC528\uBE0C\uB9AC\uC988"
 --- !u!1 &7013224387138178067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +756,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8502388071242705320}
-  - component: {fileID: 5084199217147372118}
   m_Layer: 0
   m_Name: "\uD56D\uAD6C \uBC16 2"
   m_TagString: Untagged
@@ -1093,20 +779,6 @@ Transform:
   - {fileID: 1225677306716920762}
   m_Father: {fileID: 7226301146331722966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5084199217147372118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7013224387138178067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: port_outside_2
-  _placeNameForUser: "\uD56D\uAD6C \uBC16 2"
 --- !u!1 &7609685902689092348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +788,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8038399017025791505}
-  - component: {fileID: 5022381462285191548}
   m_Layer: 0
   m_Name: "\uB3C4\uC11C\uAD00 \uC785\uAD6C"
   m_TagString: Untagged
@@ -1140,20 +811,6 @@ Transform:
   - {fileID: 8141951075295305077}
   m_Father: {fileID: 5995427108877613188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5022381462285191548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7609685902689092348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: library_entrance
-  _placeNameForUser: "\uB3C4\uC11C\uAD00 \uC785\uAD6C"
 --- !u!1 &8176411670139873672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,7 +820,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5995427108877613188}
-  - component: {fileID: 1345284249786293710}
   m_Layer: 0
   m_Name: "\uB9C8\uC744\uAE38\uAC70\uB9AC 1"
   m_TagString: Untagged
@@ -1190,20 +846,6 @@ Transform:
   - {fileID: 5832516153313513573}
   m_Father: {fileID: 8314521293035809509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1345284249786293710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8176411670139873672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: town_street_1
-  _placeNameForUser: "\uB9C8\uC744\uAE38\uAC70\uB9AC 1"
 --- !u!1 &8269123879093202883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8560397518339169678}
-  - component: {fileID: 6087317589928056500}
+  - component: {fileID: 2634059435721020386}
   m_Layer: 0
   m_Name: "\uAE4C\uD398 \uC528\uBE0C\uB9AC\uC988 \uC55E"
   m_TagString: Untagged
@@ -1237,7 +879,7 @@ Transform:
   - {fileID: 1292798261642338102}
   m_Father: {fileID: 5995427108877613188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6087317589928056500
+--- !u!114 &2634059435721020386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1246,11 +888,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8269123879093202883}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
+  m_Script: {fileID: 11500000, guid: 78616c412a21840cfa2f2231d69d3d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _placeID: cafe_seabreeze_front
-  _placeNameForUser: "\uAE4C\uD398 \uC528\uBE0C\uB9AC\uC988 \uC55E"
+  _placeID: cafe_seabreeze
+  _placeNameForUser: "\uAE4C\uD398 \uC528\uBE0C\uB9AC\uC988"
+  _placeSprite: {fileID: 21300000, guid: e7522a71c0e69f043a5c7506b34b3711, type: 3}
+  scaleFactor: 1
 --- !u!1 &8400372889473141004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +904,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8656504132704745324}
-  - component: {fileID: 4238747156023705735}
   m_Layer: 0
   m_Name: "\uACF5\uC6D0"
   m_TagString: Untagged
@@ -1286,20 +929,6 @@ Transform:
   - {fileID: 3330078879025860190}
   m_Father: {fileID: 5832516153313513573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4238747156023705735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8400372889473141004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: park
-  _placeNameForUser: "\uACF5\uC6D0"
 --- !u!1 &8477783552392079734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +938,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6106720342998529733}
-  - component: {fileID: 2601639954835448818}
   m_Layer: 0
   m_Name: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 3"
   m_TagString: Untagged
@@ -1333,20 +961,6 @@ Transform:
   - {fileID: 6786676255107948517}
   m_Father: {fileID: 8621814889753568456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2601639954835448818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8477783552392079734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: way_to_ruined_3
-  _placeNameForUser: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 3"
 --- !u!1 &9087861096669045624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +970,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3650073327239064909}
-  - component: {fileID: 8592407239349855115}
   m_Layer: 0
   m_Name: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 1 "
   m_TagString: Untagged
@@ -1380,17 +993,3 @@ Transform:
   - {fileID: 8621814889753568456}
   m_Father: {fileID: 344432154772519485}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8592407239349855115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9087861096669045624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb06a3028b3e84eab95814701c848d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placeID: way_to_ruined_1
-  _placeNameForUser: "\uB3C4\uC2DC \uC678\uACFD\uC73C\uB85C \uAC00\uB294 \uAE38 1 "

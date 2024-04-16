@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlaceData
+public class PlaceData : MonoBehaviour
 {
     [SerializeField] private string _placeID;
     [SerializeField] private string _placeNameForUser;

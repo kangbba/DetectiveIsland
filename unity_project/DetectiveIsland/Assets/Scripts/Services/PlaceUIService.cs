@@ -5,17 +5,18 @@ using UnityEngine;
 public static class PlaceUIService
 {
     private static GameObject _placeRoadmap;
-    private static List<PlaceData> _placeDatas;
+    private static List<PlaceData> _placeDatas = new List<PlaceData>();
     private static PlaceUIPanel _placeUIPanelLeft; 
     private static PlaceUIPanel _placeUIPanelRight;
     private static List<PlaceButton> _curPlaceBtns = new List<PlaceButton>(); // List to store button components
+
+    public static List<PlaceData> PlaceDatas { get => _placeDatas; }
 
     public static void Initialize()
     {
         _placeUIPanelLeft = UIManager.Instance.PlaceUIPanelLeft;
         _placeUIPanelRight = UIManager.Instance.PlaceUIPanelRight;
         GameObject _placeRoadmapPrefab = Resources.Load<GameObject>("PlaceRoadmapPrefab");
-
         if (_placeRoadmapPrefab != null)
         {
             _placeRoadmap = GameObject.Instantiate(_placeRoadmapPrefab); // Instantiate the roadmap
