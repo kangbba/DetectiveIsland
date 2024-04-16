@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        CameraController.ShakeCamera(10f, 1f);
 
         _dialogueService.SetOnPanel(false, 1f);
         yield return new WaitForSeconds(1f);

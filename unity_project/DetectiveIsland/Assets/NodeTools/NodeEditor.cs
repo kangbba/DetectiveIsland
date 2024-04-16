@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,6 +36,12 @@ public class NodeEditor : EditorWindow
             selectedNode.rect.position = mousePosition - selectedNode.dragOffset + canvasOffset;
             Repaint();
         }
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Save Nodes to JSON"))
+        {
+            SaveCurrentNodes();
+        }
+        GUILayout.EndHorizontal();
     }
 
     private void ProcessEvents(Event e)
@@ -62,7 +69,6 @@ public class NodeEditor : EditorWindow
                         selectedNode = node;
                         if (e.clickCount == 2) // Double click
                         {
-                            SetNodeTitle(selectedNode);
                             e.Use();
                         }
                         else
@@ -118,8 +124,6 @@ public class NodeEditor : EditorWindow
     private void OnClickAddNode(Vector2 position)
     {
         LineNode newNode = new LineNode(position, 200, 100, "New Line Node");
-        newNode.emotionID = "Unknown"; // Default value
-        newNode.sentence = "Type sentence here"; // Default placeholder
         nodes.Add(newNode);
     }
 
@@ -165,12 +169,36 @@ public class NodeEditor : EditorWindow
         return null;
     }
 
-    private void SetNodeTitle(Node node)
+    private void SaveCurrentNodes()
     {
-        string newTitle = EditorGUILayout.TextField("Node Title", node.title);
-        if (newTitle != node.title)
+        if (nodes.Count > 0)
         {
-            node.title = newTitle;
+            JsonUtilityHelper.SaveNodesToJson(nodes, "NodesData.json");
+            Debug.Log("Nodes saved to JSON.");
+        }
+        else
+        {
+            Debug.Log("No nodes to save.");
+        }
+    }
+}
+public static class JsonUtilityHelper
+{
+    public static void SaveNodesToJson(List<Node> nodes, string fileName)
+    {
+        string path = Path.Combine(Application.dataPath, fileName);
+        string json = JsonUtility.ToJson(new Serialization<Node>(nodes), true);
+        File.WriteAllText(path, json);
+        AssetDatabase.Refresh();
+    }
+
+    [System.Serializable]
+    private class Serialization<T>
+    {
+        public List<T> items;
+        public Serialization(List<T> items)
+        {
+            this.items = items;
         }
     }
 }
