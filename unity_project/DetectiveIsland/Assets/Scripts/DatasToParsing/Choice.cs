@@ -13,4 +13,7 @@ public class Choice
         this._title = title;
         this._elements = elements;
     }
+
+    public string Title { get => _title; }
+    public List<Element> Elements { get => _elements; }
 }
