@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class TestManager : MonoBehaviour
 {
-    public List<Node> nodes;
+    public List<Node> nodes = new List<Node>();
 
     [ArokaButton]
     public void Save()
@@ -37,6 +37,7 @@ public class TestManager : MonoBehaviour
     public void ClearNodes()
     {
         nodes.Clear();
+        nodes = new List<Node>();
         savedScenario = null;
         loadedScenario = null;
     }

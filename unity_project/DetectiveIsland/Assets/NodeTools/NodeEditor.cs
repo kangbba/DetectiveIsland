@@ -4,11 +4,6 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using Formatting = Newtonsoft.Json.Formatting;
-public static class StoragePath
-{
-    public static string ScenarioPath => Application.dataPath;
-
-}
 
 
 public static class ArokaJsonUtil
