@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        CoroutineUtils.SetCoroutineExecutor(this);
+        ArokaCoroutineUtils.SetCoroutineExecutor(this);
         EventService.Initialize();
         DialogueService.Initialize();
         ItemService.Initialize();
@@ -85,21 +85,23 @@ public class GameManager : MonoBehaviour
             EventService.AFewSecondsLater();
             Debug.Log(EventService.CurEventTime.ToString());
             //이제 남은 데일리이벤트는 몇개일까?
-            Debug.Log($"총 {EventService.GetDailyEventPlans(EventService.CurEventTime.Date).Count} 개의 데일리이벤트가 있었습니다.)");
-            Debug.Log($"방금 한개 해서 총 {EventService.GetPassedDailyEventPlans(EventService.CurEventTime).Count} 개의 데일리이벤트를 처리했습니다.)");
+             // 이벤트별 상세 정보 출력
+            var dailyEvents = EventService.GetDailyEventPlans(EventService.CurEventTime.Date);
+            foreach (var plan in dailyEvents)
+            {
+                Debug.Log($"이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
+            }
 
-            EventTime a = new EventTime("2024-04-01", 9, 0); // 같은 시간
-            EventTime b = new EventTime("2024-04-01", 9, 0);
-            b.AddSeconds(); 
-            EventTime c = new EventTime("2024-04-02", 10, 00); 
-            EventTime d = new EventTime("2024-04-01", 10, 30); 
-            EventTime e = new EventTime("2024-04-02", 11, 0);
-            // 로그를 찍어서 각 시간 비교를 테스트
-            Debug.Log($"Testing if sameTime is past than currentTime: {a.IsPastThan(b)}"); 
-            Debug.Log($"Testing if sameTime is past than currentTime: {b.IsPastThan(c)}");
-            // Debug.Log($"Testing if sameTime is past than currentTime: {c.IsPastThan(d)}"); 
-            // Debug.Log($"Testing if sameTime is past than currentTime: {d.IsPastThan(e)}"); 
-            // Debug.Log($"Testing if sameTime is past than currentTime: {e.IsPastThan(a)}"); 
+            // 처리된 이벤트 목록 가져오기
+            var passedEvents = EventService.GetPassedDailyEventPlans(EventService.CurEventTime);
+            Debug.Log($"방금 한개 해서 총 {passedEvents.Count} 개의 데일리이벤트를 처리했습니다.");
+
+            // 처리된 이벤트별 상세 정보 출력
+            foreach (var plan in passedEvents)
+            {
+                Debug.Log($"처리된 이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
+            }
+
   
             //대화창 Off
             DialogueService.SetOnPanel(false, 1f);
@@ -122,8 +124,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ProcessEventRoutine(EventPlan eventPlan){
         Debug.Log("이벤트 실행이 돌입");
-        TextAsset textAsset = eventPlan.ScenarioFile;
-        Scenario scenario = ArokaJsonUtil.LoadScenario(eventPlan.ScenarioFile);
+        TextAsset scenarioFile = eventPlan.ScenarioFile;
+        Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
        
         List<Element> elements = scenario.Elements;
         foreach(Element element in elements){

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public static class CoroutineUtils
+public static class ArokaCoroutineUtils
 {
     private static MonoBehaviour coroutineExecutor;
 

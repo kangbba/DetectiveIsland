@@ -17,8 +17,8 @@ public static class DialogueService
         for(int i = 0 ; i < dialogue.Lines.Count ; i++){
             CharacterData characterPlan = CharacterService.GetCharacterData(dialogue.CharacterID);
             _dialoguePanel.SetCharacterText(dialogue.CharacterID, characterPlan.CharacterColor);
-            yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
-            yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
+            yield return ArokaCoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
+            yield return ArokaCoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
     }
 }

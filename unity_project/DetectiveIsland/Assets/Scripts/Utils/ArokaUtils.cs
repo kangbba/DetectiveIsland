@@ -10,7 +10,7 @@ using System.IO;
 
 namespace ArokaUtil {
 
-    public static class Utils
+    public static class ArokaUtils
     {
         public static List<T> LoadDatasFromFolder<T>(string folderName) where T : UnityEngine.Object
         {

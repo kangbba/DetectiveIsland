@@ -16,7 +16,7 @@ public static class ArokaJsonUtil
         {
             bool overwrite = EditorUtility.DisplayDialog(
                 "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
-                "A file already exists at " + fullPath + ". Do you want to overwrite it?",
+                $"A file already exists at {fullPath} Do you want to overwrite it?",
                 "네",
                 "취소"
             );
@@ -41,16 +41,18 @@ public static class ArokaJsonUtil
         Debug.Log("File saved: " + fullPath);
     }
     // 파일 경로를 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(string filePath)
+    public static Scenario LoadScenario(string fileName)
     {
-        if (!File.Exists(filePath))
+        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
+        if (!File.Exists(fullPath))
         {
-            Debug.LogError("File not found: " + filePath);
+            Debug.LogError($"File not found: {fullPath}");
             return null;
         }
-
-        string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(fullPath);
         return DeserializeScenario(json);   
+
+        
     }
     // TextAsset을 통해 시나리오를 로드합니다.
     public static Scenario LoadScenario(TextAsset jsonTextAsset)
@@ -65,7 +67,7 @@ public static class ArokaJsonUtil
     }
     // JSON 문자열을 역직렬화하여 Scenario 객체를 반환합니다.
     private static Scenario DeserializeScenario(string json)
-    {
+    { 
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,

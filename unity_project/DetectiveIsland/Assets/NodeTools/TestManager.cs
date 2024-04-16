@@ -17,7 +17,7 @@ public class TestManager : MonoBehaviour
 
         Debug.Log(nodes.ToElements().Count);
 
-        ArokaJsonUtil.SaveScenario(savedScenario, "TestJson");
+        ArokaJsonUtils.SaveScenario(savedScenario, "TestJson");
     }
 
 
@@ -28,7 +28,11 @@ public class TestManager : MonoBehaviour
     [ArokaButton]
     public void Load()
     {
-        loadedScenario = ArokaJsonUtil.LoadScenario("TestJson");
+        loadedScenario = ArokaJsonUtils.LoadScenario("TestJson");
+        if(loadedScenario == null){
+            Debug.LogWarning("loadedScenario is null");
+            return;
+        }
         Debug.Log(loadedScenario.Elements.Count);
 
     }
@@ -67,7 +71,7 @@ public class TestManager : MonoBehaviour
                 new List<Choice>() { 
                     new Choice("선택지 1", new List<Element>() { dialogue, dialogue }),
                     new Choice("선택지 2" , new List<Element>() { dialogue,  }),
-                    new Choice("선택지 3" , new List<Element>() {  })
+                    new Choice("선택지 3" , new List<Element>() {  dialogue })
                 }
             
             );

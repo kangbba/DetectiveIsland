@@ -11,7 +11,7 @@ public static class ItemService
     public static void Initialize()
     {       
         _itemPanel = UIManager.Instance.ItemPanel;
-        _itemDatas = Utils.LoadDatasFromFolder<ItemData>("ItemDatas");
+        _itemDatas = ArokaUtils.LoadDatasFromFolder<ItemData>("ItemDatas");
     }
     public static ItemData GetItemData(string itemID)
     {

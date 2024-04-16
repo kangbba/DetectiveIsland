@@ -10,7 +10,7 @@ public static class CharacterService
     public static void Initialize()
     {       
         _characterPanel = UIManager.Instance.CharacterPanel;
-        _characterDatas = Utils.LoadDatasFromFolder<CharacterData>("CharacterDatas");
+        _characterDatas = ArokaUtils.LoadDatasFromFolder<CharacterData>("CharacterDatas");
     }
     public static CharacterData GetCharacterData(string characterID)
     {

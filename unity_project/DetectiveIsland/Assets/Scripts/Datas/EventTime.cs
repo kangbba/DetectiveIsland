@@ -14,12 +14,10 @@ public class EventTime
     public string Date { get => _date; }
     public int Hour { get => _hour; }
     public int Minute { get => _minute; }
-    public int Sec { get => _sec; }
 
     [SerializeField] private string _date;
     [SerializeField] private int  _hour;
     [SerializeField] private int _minute;
-    private int _sec;
 
     // 생성자 정의
     public EventTime(string date, int hour, int minute)
@@ -31,7 +29,7 @@ public class EventTime
 
     public override string ToString()
     {
-        return $"{Year}-{Month:00}-{Day:00} {Hour:00}:{Minute:00}:{Sec:00}";
+        return $"{Year}-{Month:00}-{Day:00} {Hour:00}:{Minute:00}";
     }
     // 내용 비교를 위한 Equals 메서드 재정의
     public override bool Equals(object obj)
@@ -67,27 +65,24 @@ public class EventTime
         return default;
     }
 
-  
+  // 비교 로직을 보다 효율적으로 개선
     public bool IsPastThan(EventTime eventTime)
     {
-        if (Year < eventTime.Year) return true;
-        if (Year > eventTime.Year) return false;
-        if (Month < eventTime.Month) return true;
-        if (Month > eventTime.Month) return false;
-        if (Day < eventTime.Day) return true;
-        if (Day > eventTime.Day) return false;
-        if (Hour < eventTime.Hour) return true;
-        if (Hour > eventTime.Hour) return false;
-        if (Minute < eventTime.Minute) return true;
-        if (Minute > eventTime.Minute) return false;
-        if (Sec < eventTime.Sec) return true;
-        if (Sec > eventTime.Sec) return false;
-        return false; // 모든 항목이 동일한 경우
+        // 연도 비교
+        if (Year != eventTime.Year) 
+            return Year < eventTime.Year;
+        // 월 비교
+        if (Month != eventTime.Month) 
+            return Month < eventTime.Month;
+        // 일 비교
+        if (Day != eventTime.Day) 
+            return Day < eventTime.Day;
+        // 시간 비교
+        if (Hour != eventTime.Hour) 
+            return Hour < eventTime.Hour;
+        // 초 비교
+        return Minute < eventTime.Minute;
     }
 
-
-    public void AddSeconds(){
-        _sec = 30;
-    }
 
 }

@@ -44,7 +44,7 @@ public static class EventService
     public static void SetCurEventTime(EventTime eventTime)
     {
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
-        _curEventTime = eventTime;
+        _curEventTime = new EventTime(eventTime.Date, eventTime.Hour, eventTime.Minute);
     }
     public static EventPlan GetEventPlan(EventTime eventTime, string placeID){
         return _eventRoadmap.GetEventPlan(eventTime, placeID);
@@ -90,7 +90,7 @@ public static class EventService
 
         foreach (EventPlan plan in dailyEvents)
         {
-            if (IsEventPassed(plan))
+            if (plan.EventTime.IsPastThan(inputTime))
             {
                 passedEvents.Add(plan);
             }
@@ -99,18 +99,6 @@ public static class EventService
         return passedEvents;
     }
 
-    // 특정 이벤트 계획이 현재 이벤트 시간 기준으로 이미 완료되었는지 여부를 확인
-    public static bool IsEventPassed(EventPlan eventPlan)
-    {
-        if (_curEventTime == null)
-        {
-            Debug.LogError("Current event time is not set.");
-            return false;
-        }
-
-        // eventPlan의 EventTime이 _curEventTime보다 이전인지 확인
-        return eventPlan.EventTime.IsPastThan(_curEventTime);
-    }
 
     public static void AFewSecondsLater(){
         _curEventTime.AddSeconds();
