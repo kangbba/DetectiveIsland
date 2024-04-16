@@ -53,6 +53,29 @@ public class TestManager : MonoBehaviour
         nodes.Add(dialogueNode);
     }
 
+    [ArokaButton]
+    public void AddChoiceSetNode()
+    {
+        ChoiceSetNode choiceSetNode = new ChoiceSetNode(Vector3.zero, 0, 0, "ChoiceSetNode");
+        Dialogue dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "Choice"), new Line("Smile", "Test"), new Line("Smile", "초이스 테스트 시작! 뷁") });
+
+
+        ChoiceSet choiceSet = new ChoiceSet
+            (
+                new List<Dialogue>() { dialogue, dialogue },
+
+                new List<Choice>() { 
+                    new Choice("선택지 1", new List<Element>() { dialogue, dialogue }),
+                    new Choice("선택지 2" , new List<Element>() { dialogue,  }),
+                    new Choice("선택지 3" , new List<Element>() {  })
+                }
+            
+            );
+
+        choiceSetNode.choiceSet = choiceSet;
+        nodes.Add(choiceSetNode);
+    }
+
 
     [ArokaButton]
     public void AddAssetChangeNode()
@@ -75,12 +98,7 @@ public class TestManager : MonoBehaviour
         nodes.Add(positionChangeNode);
     }
 
-    [ArokaButton]
-    public void AddChoiceSetNode()
-    {
-        ChoiceSetNode choiceSetNode = new ChoiceSetNode(Vector3.zero, 0, 0, "ChoiceSetNode");
-        nodes.Add(choiceSetNode);
-    }
+  
 
 
 
