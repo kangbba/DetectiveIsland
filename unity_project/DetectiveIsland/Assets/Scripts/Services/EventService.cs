@@ -25,6 +25,8 @@ public class EventPlan
 public static class EventService
 {
     private static EventRoadMap _eventRoadmap;
+
+    public static List<EventPlan> EventPlans => _eventRoadmap.EventPlans;
     private static EventTime _curEventTime = null;
     public static EventTime CurEventTime { get => _curEventTime; }
 
@@ -46,10 +48,6 @@ public static class EventService
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
         _curEventTime = new EventTime(eventTime.Date, eventTime.Hour, eventTime.Minute);
     }
-    public static EventPlan GetEventPlan(EventTime eventTime, string placeID){
-        return _eventRoadmap.GetEventPlan(eventTime, placeID);
-    }
-
     public static EventPlan GetNextEventPlan(EventPlan currentEventPlan)
     {
         var eventPlans = _eventRoadmap.EventPlans; // 전체 이벤트 플랜 목록을 가져옵니다.
@@ -72,73 +70,54 @@ public static class EventService
     }
 
 
-
-    // 입력된 EventTime 보다 이전인 이벤트의 리스트를 반환하는 함수
-    public static List<EventPlan> GetPastEvents(EventTime inputTime)
+    // 입력된 EventTime 기준으로 이미 완료된 데일리 이벤트 플랜을 필터링하는 확장 메서드
+    public static List<EventPlan> EventTimeFilter(this List<EventPlan> eventPlans, EventTime inputTime, TimeRelation timeRelation)
     {
-        List<EventPlan> pastEvents = new List<EventPlan>();
-
-        foreach (EventPlan plan in _eventRoadmap.EventPlans)
-        {
-            if (!plan.EventTime.IsPastThan(inputTime))
-            {
-                pastEvents.Add(plan);
-            }
-        }
-
-        return pastEvents;
-    }
-    // 입력된 날짜에 해당하는 이벤트 계획들을 반환하는 함수
-    public static List<EventPlan> GetDailyEventPlans(string date)
-    {
-        List<EventPlan> dailyEvents = new List<EventPlan>();
-
-        foreach (EventPlan plan in _eventRoadmap.EventPlans)
-        {
-            if (plan.EventTime.Date == date)
-            {
-                dailyEvents.Add(plan);
-            }
-        }
-
-        return dailyEvents;
-    } 
-    
-    // 입력된 EventTime 기준으로 이미 완료된 데일리 이벤트 플랜을 반환
-    public static List<EventPlan> GetPassedDailyEventPlans(EventTime inputTime)
-    {
-        List<EventPlan> passedEvents = new List<EventPlan>();
-        List<EventPlan> dailyEvents = GetDailyEventPlans(inputTime.Date);
-
-        foreach (EventPlan plan in dailyEvents)
-        {
-            if (plan.EventTime.IsPastThan(inputTime))
-            {
-                passedEvents.Add(plan);
-            }
-        }
-
-        return passedEvents;
-    }
-    // 입력된 EventTime 기준으로 이미 완료된 데일리 이벤트 플랜을 반환
-    public static List<EventPlan> GetRemainedDailyEventPlans(EventTime inputTime)
-    {
-        List<EventPlan> passedEvents = new List<EventPlan>();
-        List<EventPlan> dailyEvents = GetDailyEventPlans(inputTime.Date);
-
-        foreach (EventPlan plan in dailyEvents)
-        {
-            if (plan.EventTime.IsPastThan(inputTime))
-            {
-                passedEvents.Add(plan);
-            }
-        }
-
-        return passedEvents;
+        return eventPlans.Where(plan => plan.EventTime.CompareTime(inputTime) == timeRelation && plan.EventTime.Date == inputTime.Date).ToList();
     }
 
     public static EventPlan GetFirstEventPlan(){
         return _eventRoadmap.EventPlans[0];
     }
 
+    public static List<EventPlan> GetEventPlansByDate(string date)
+    {
+        int year = int.Parse(date.Split('-')[0]);
+        int month = int.Parse(date.Split('-')[1]);
+        int day = int.Parse(date.Split('-')[2]);
+        
+        List<EventPlan> eventPlans = new List<EventPlan>();
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (plan.EventTime.CompareDate(year, month, day) == TimeRelation.Same)
+            {
+                eventPlans.Add(plan);
+            }
+        }
+        return eventPlans;
+    }
+    public static List<EventPlan> GetEventPlans(EventTime eventTime)
+    {
+        List<EventPlan> eventPlans = new List<EventPlan>();
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (plan.EventTime.Equals(eventTime))
+            {
+                eventPlans.Add(plan);
+            }
+        }
+        return eventPlans;
+    }
+
+    public static EventPlan GetEventPlan(EventTime eventTime, string placeID)
+    {
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (plan.EventTime.Equals(eventTime) && plan.PlaceID == placeID)
+            {
+                return plan;
+            }
+        }
+        return null;
+    }
 }

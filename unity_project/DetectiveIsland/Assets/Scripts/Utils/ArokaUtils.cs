@@ -121,24 +121,6 @@ namespace ArokaUtil {
         }
     }
 
-    public static class CollectionExtensions
-    {
-        public static void DestroyGameObjects<T>(this List<T> objectList) where T : UnityEngine.Object
-        {
-            for (int i = objectList.Count - 1; i >= 0; i--)
-            {
-                UnityEngine.Object.Destroy(objectList[i]);
-            }
-        }
-
-        public static void DestroyImmediateGameObjects<T>(this List<T> objectList) where T : UnityEngine.Object
-        {
-            for (int i = objectList.Count - 1; i >= 0; i--)
-            {
-                UnityEngine.Object.DestroyImmediate(objectList[i]);
-            }
-        }
-    }
     public static class ArokaAnimExtensions
     {
         public static void SetAnims(this ArokaAnim[] uiAnims, bool isOn, float totalTime)

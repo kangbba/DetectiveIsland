@@ -50,9 +50,23 @@ public class EventTime
     {
         return _date.GetHashCode() ^ _hour.GetHashCode() ^ _minute.GetHashCode();
     }
+// 시간의 전후 관계를 비교하여 enum 값으로 반환
+    public TimeRelation CompareDate(int year, int month, int day)
+    {
+        // 연도 비교
+        if (Year != year)
+            return Year < year ? TimeRelation.Past : TimeRelation.Future;
+        // 월 비교
+        if (Month != month)
+            return Month < month ? TimeRelation.Past : TimeRelation.Future;
+        // 일 비교
+        if (Day != day)
+            return Day < day ? TimeRelation.Past : TimeRelation.Future;
 
+        return TimeRelation.Same; // 모든 항목이 같을 경우
+    }
     // 시간의 전후 관계를 비교하여 enum 값으로 반환
-    public TimeRelation CompareTo(EventTime eventTime)
+    public TimeRelation CompareTime(EventTime eventTime)
     {
         // 연도 비교
         if (Year != eventTime.Year)

@@ -81,6 +81,7 @@ public static class ArokaJsonUtils
     public static void ScenarioLog(Scenario scenario){
         if (scenario != null && scenario.Elements != null)
         {
+            Debug.Log("///////////////////////////////////////////////////////////");
             Debug.Log("Load Complete, elements Count = " + scenario.Elements.Count);
             foreach (Element element in scenario.Elements)
             {
@@ -102,5 +103,6 @@ public static class ArokaJsonUtils
         {
             Debug.LogError("Failed to deserialize the JSON content into a Scenario object or the Elements list is null.");
         }
+        Debug.Log("///////////////////////////////////////////////////////////");
     }
 }

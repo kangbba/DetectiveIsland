@@ -7,8 +7,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private ItemPanel _itemPanel;
     [SerializeField] private PlacePanel _placePanel;
-    [SerializeField] private PlaceUIPanel _placeUIPanelLeft;
-    [SerializeField] private PlaceUIPanel _placeUIPanelRight;
+    [SerializeField] private PlaceUIPanel _placeUIPanel;
     [SerializeField] private CharacterPanel _characterPanel;
     [SerializeField] private DialoguePanel _dialoguePanel;
 
@@ -19,8 +18,7 @@ public class UIManager : MonoBehaviour
     public CharacterPanel CharacterPanel => _characterPanel;
     public DialoguePanel DialoguePanel => _dialoguePanel;
 
-    public PlaceUIPanel PlaceUIPanelLeft { get => _placeUIPanelLeft; }
-    public PlaceUIPanel PlaceUIPanelRight { get => _placeUIPanelRight; }
+    public PlaceUIPanel PlaceUIPanel { get => _placeUIPanel; }
 
     private void Awake()
     {
