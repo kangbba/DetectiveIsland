@@ -81,17 +81,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             
             yield return StartCoroutine(ProcessEventRoutine(eventPlan));
-            //대화로인해 30초정도 흘렀다.
-            Debug.Log(EventService.CurEventTime.ToString());
-            //이제 남은 데일리이벤트는 몇개일까?
-             // 이벤트별 상세 정보 출력
-            var dailyEvents = EventService.GetDailyEventPlans(EventService.CurEventTime.Date);
-            foreach (var plan in dailyEvents)
-            {
-                Debug.Log($"이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
-            }
+            //이벤트 완료!
+            EventService.SetCurEventTime(EventService.GetNextEventPlan(eventPlan).EventTime);
 
-            // 처리된 이벤트 목록 가져오기
+            //남은 이벤트 가져오기
             var passedEvents = EventService.GetPassedDailyEventPlans(EventService.CurEventTime);
             Debug.Log($"방금 한개 해서 총 {passedEvents.Count} 개의 데일리이벤트를 처리했습니다.");
 
