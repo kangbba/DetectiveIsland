@@ -14,7 +14,7 @@
         },
         {
           "EmotionID": "Smile",
-          "Sentence": "안녕"
+          "Sentence": "\uc548\ub155"
         }
       ]
     },
@@ -32,25 +32,7 @@
         },
         {
           "EmotionID": "Smile",
-          "Sentence": "안녕"
-        }
-      ]
-    },
-    {
-      "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": "Kate",
-      "Lines": [
-        {
-          "EmotionID": "Smile",
-          "Sentence": "Hi"
-        },
-        {
-          "EmotionID": "Smile",
-          "Sentence": "Hello"
-        },
-        {
-          "EmotionID": "Smile",
-          "Sentence": "안녕"
+          "Sentence": "\uc548\ub155"
         }
       ]
     }

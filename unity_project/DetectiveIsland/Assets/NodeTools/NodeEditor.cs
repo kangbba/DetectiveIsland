@@ -31,12 +31,13 @@ public static class ArokaJsonUtil
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
+            Formatting = Formatting.Indented,
+            StringEscapeHandling = StringEscapeHandling.EscapeNonAscii // Ensuring Hangul is not escaped
         };
 
         string json = JsonConvert.SerializeObject(scenario, settings);
         File.WriteAllText(fullPath, json);
-        AssetDatabase.Refresh(); // Refresh the Asset Database to include the new file.
+        AssetDatabase.Refresh();
         Debug.Log("File saved: " + fullPath);
     }
 
