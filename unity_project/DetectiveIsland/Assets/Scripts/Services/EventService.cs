@@ -22,13 +22,13 @@ public class EventPlan
     public EventTime EventTime { get => _eventTime;  }
 }
 
-public class EventService
+public static class EventService
 {
-    private EventRoadMap _eventRoadmap;
-    private EventTime _curEventTime = null;
-    public EventTime CurEventTime { get => _curEventTime; }
+    private static EventRoadMap _eventRoadmap;
+    private static EventTime _curEventTime = null;
+    public static EventTime CurEventTime { get => _curEventTime; }
 
-    public void Initialize()
+    public static void Initialize()
     {       
          _eventRoadmap = Resources.Load<EventRoadMap>("EventRoadMap/MainEventRoadMap");
         if (_eventRoadmap == null)
@@ -36,17 +36,17 @@ public class EventService
             Debug.LogError($"Failed to load EventRoadMap from Resources folder with filename: {"EventRoadMap"}");
         }
     }
-    public void SetCurEventTime(string date, int hour, int minute)
+    public static void SetCurEventTime(string date, int hour, int minute)
     {
         _curEventTime = new EventTime(date, hour, minute);
     }
 
-    public void SetCurEventTime(EventTime eventTime)
+    public static void SetCurEventTime(EventTime eventTime)
     {
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
         _curEventTime = eventTime;
     }
-    public EventPlan GetEventPlan(EventTime eventTime, string placeID){
+    public static EventPlan GetEventPlan(EventTime eventTime, string placeID){
         return _eventRoadmap.GetEventPlan(eventTime, placeID);
     }
 }

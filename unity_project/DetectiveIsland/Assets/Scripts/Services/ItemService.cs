@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using ArokaUtil;
 using UnityEngine;
 
-public class ItemService 
+public static class ItemService 
 {
-    private ItemPanel _itemPanel;
-    private List<ItemData> _itemDatas;
+    private static ItemPanel _itemPanel;
+    private static List<ItemData> _itemDatas;
 
-    public void Initialize()
+    public static void Initialize()
     {       
         _itemPanel = UIManager.Instance.ItemPanel;
         _itemDatas = Utils.LoadDatasFromFolder<ItemData>("ItemDatas");
     }
-    public ItemData GetItemData(string itemID)
+    public static ItemData GetItemData(string itemID)
     {
         foreach (ItemData item in _itemDatas)
         {
@@ -24,7 +24,7 @@ public class ItemService
         }
         return null;
     }
-    public void SetOnPanel(bool b, float totalTime){
+    public static void SetOnPanel(bool b, float totalTime){
         _itemPanel.SetAnim(b, totalTime);
     }
 }

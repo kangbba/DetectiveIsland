@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     public static GameManager Instance => _instance;
-
-    private EventService _eventService;
-    private DialogueService _dialogueService;
-    private ItemService _itemService;
-    private PlaceService _placeService;
-    private CharacterService _characterService;
 
     private bool isMoving = false;
 
@@ -30,67 +25,80 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        CoroutineUtils.SetCoroutineExecutor(this);
         Initialize();
-        _eventService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
+        EventService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
         StartCoroutine(MoveToPlaceCoroutine("cafe_seabreeze"));
+    }
+
+    private void Update(){
+        CameraController.AdjustCamera();
     }
 
     private void Initialize()
     {
+        EventService.Initialize();
 
-        _eventService = new EventService();
-        _eventService.Initialize();
+        DialogueService.Initialize();
 
-        _dialogueService = new DialogueService();
-        _dialogueService.Initialize();
+        ItemService.Initialize();
 
-        // ItemService 초기화
-        _itemService = new ItemService();
-        _itemService.Initialize();
+        PlaceService.Initialize();
 
-        // PlaceService 초기화
-        _placeService = new PlaceService();
-        _placeService.Initialize();
-
-        // CharacterService 초기화
-        _characterService = new CharacterService();
-        _characterService.Initialize();
-
+        CharacterService.Initialize();
+ 
     }
     
-    private IEnumerator MoveToPlaceCoroutine(string placeID)
-    {
+    public void Move(string placeID){
         // 해당 placeID에 해당하는 PlaceData 가져오기
-        PlaceData placeData = _placeService.GetPlaceData(placeID);
+        PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
         if (placeData == null)
         {
             Debug.LogError($"Cannot find place with ID: {placeID}");
-            yield break;
+            return;
         }
         if(isMoving){
             Debug.LogError("이미 장소 이동중입니다");
-            yield break;
+            return;
         }
         isMoving = true;
+        StartCoroutine(MoveToPlaceCoroutine(placeID));
         // 이동하는 로직 작성
+    }
+    private IEnumerator MoveToPlaceCoroutine(string placeID)
+    {
+        PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
         Debug.Log($"Arrived at place: {placeData.PlaceNameForUser} ({placeData.PlaceID})");
-        _placeService.SetPlace(placeData);
-        _placeService.SetOnPanel(true, 1f);
+
+        //배경 세팅
+        PlaceService.SetPlace(placeData);
+        PlaceService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
-        _dialogueService.SetOnPanel(true, 1f);
+        //대화창 On
+        DialogueService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-        CameraController.ShakeCamera(10f, 1f);
+        //이벤트가 있다면 실행
+        EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime, placeID);
+        if(eventPlan != null){
+            yield return StartCoroutine(ProcessEventRoutine(eventPlan));
+        }
 
-        _dialogueService.SetOnPanel(false, 1f);
+        //자유행동
+        
+
+        //대화창 Off
+        DialogueService.SetOnPanel(false, 1f);
         yield return new WaitForSeconds(1f);
 
-        string testPlaceID = _placeService.CurPlaceData.PlaceID == "cafe_seabreeze" ? "port_entrance" :  "cafe_seabreeze";
 
         isMoving = false;
-        StartCoroutine(MoveToPlaceCoroutine(testPlaceID));
+    }
+
+    public IEnumerator ProcessEventRoutine(EventPlan eventPlan){
+
+        TextAsset textAsset = eventPlan.ScenarioFile;
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
     }
 }
