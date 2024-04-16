@@ -32,7 +32,7 @@ public static class ArokaJsonUtil
         {
             TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.EscapeNonAscii // Ensuring Hangul is not escaped
+            StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
         };
 
         string json = JsonConvert.SerializeObject(scenario, settings);
@@ -50,7 +50,7 @@ public static class ArokaJsonUtil
         }
 
         string json = File.ReadAllText(filePath);
-        return DeserializeScenario(json);
+        return DeserializeScenario(json);   
     }
     // TextAsset을 통해 시나리오를 로드합니다.
     public static Scenario LoadScenario(TextAsset jsonTextAsset)
@@ -69,6 +69,8 @@ public static class ArokaJsonUtil
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
+            Formatting = Formatting.Indented,
+            StringEscapeHandling = StringEscapeHandling.Default
         };
         Scenario scenario = JsonConvert.DeserializeObject<Scenario>(json, settings);
         ScenarioLog(scenario);
