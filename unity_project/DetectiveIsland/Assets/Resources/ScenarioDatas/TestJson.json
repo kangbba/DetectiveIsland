@@ -18,28 +18,7 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "안녕"
-        }
-      ]
-    },
-    {
-      "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": "Kate",
-      "Lines": [
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "Hi"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "Hello"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "안녕"
+          "Sentence": "�ȳ� �ݰ��� ���� !"
         }
       ]
     }

@@ -86,8 +86,21 @@ public class GameManager : MonoBehaviour
             Debug.Log(EventService.CurEventTime.ToString());
             //이제 남은 데일리이벤트는 몇개일까?
             Debug.Log($"총 {EventService.GetDailyEventPlans(EventService.CurEventTime.Date).Count} 개의 데일리이벤트가 있었습니다.)");
-            Debug.Log($"방금 한개 해서 {EventService.GetPassedDailyEventPlans(EventService.CurEventTime).Count} 개의 데일리이벤트를 처리했습니다.)");
-            Debug.Log($"");
+            Debug.Log($"방금 한개 해서 총 {EventService.GetPassedDailyEventPlans(EventService.CurEventTime).Count} 개의 데일리이벤트를 처리했습니다.)");
+
+            EventTime a = new EventTime("2024-04-01", 9, 0); // 같은 시간
+            EventTime b = new EventTime("2024-04-01", 9, 0);
+            b.AddSeconds(); 
+            EventTime c = new EventTime("2024-04-02", 10, 00); 
+            EventTime d = new EventTime("2024-04-01", 10, 30); 
+            EventTime e = new EventTime("2024-04-02", 11, 0);
+            // 로그를 찍어서 각 시간 비교를 테스트
+            Debug.Log($"Testing if sameTime is past than currentTime: {a.IsPastThan(b)}"); 
+            Debug.Log($"Testing if sameTime is past than currentTime: {b.IsPastThan(c)}");
+            // Debug.Log($"Testing if sameTime is past than currentTime: {c.IsPastThan(d)}"); 
+            // Debug.Log($"Testing if sameTime is past than currentTime: {d.IsPastThan(e)}"); 
+            // Debug.Log($"Testing if sameTime is past than currentTime: {e.IsPastThan(a)}"); 
+  
             //대화창 Off
             DialogueService.SetOnPanel(false, 1f);
             yield return new WaitForSeconds(1f);
