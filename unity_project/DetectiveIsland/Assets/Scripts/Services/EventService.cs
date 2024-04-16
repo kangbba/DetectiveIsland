@@ -7,17 +7,17 @@ using UnityEngine;
 public class EventPlan
 {
     [SerializeField] private EventTime _eventTime;
-    [SerializeField] private PlaceData _placeData;
+    [SerializeField] private string _placeID;
     [SerializeField] private TextAsset _scenarioFile; // JSON 파일 경로 또는 이름
 
-    public EventPlan(EventTime eventTime, PlaceData placeData, TextAsset scenarioFile)
+    public EventPlan(EventTime eventTime, string placeID, TextAsset scenarioFile)
     {
         _eventTime = eventTime;
-        _placeData = placeData;
+        _placeID = placeID;
         _scenarioFile = scenarioFile;
     }
 
-    public PlaceData PlaceData { get => _placeData; }
+    public string PlaceID { get => _placeID; }
     public TextAsset ScenarioFile { get => _scenarioFile; }
     public EventTime EventTime { get => _eventTime;  }
 }
@@ -49,4 +49,75 @@ public static class EventService
     public static EventPlan GetEventPlan(EventTime eventTime, string placeID){
         return _eventRoadmap.GetEventPlan(eventTime, placeID);
     }
+
+
+    // 입력된 EventTime 보다 이전인 이벤트의 리스트를 반환하는 함수
+    public static List<EventPlan> GetPastEvents(EventTime inputTime)
+    {
+        List<EventPlan> pastEvents = new List<EventPlan>();
+
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (!plan.EventTime.IsPastThan(inputTime))
+            {
+                pastEvents.Add(plan);
+            }
+        }
+
+        return pastEvents;
+    }
+    // 입력된 날짜에 해당하는 이벤트 계획들을 반환하는 함수
+    public static List<EventPlan> GetDailyEventPlans(string date)
+    {
+        List<EventPlan> dailyEvents = new List<EventPlan>();
+
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (plan.EventTime.Date == date)
+            {
+                dailyEvents.Add(plan);
+            }
+        }
+
+        return dailyEvents;
+    } 
+    
+    // 입력된 EventTime 기준으로 이미 완료된 데일리 이벤트 플랜을 반환
+    public static List<EventPlan> GetPassedDailyEventPlans(EventTime inputTime)
+    {
+        List<EventPlan> passedEvents = new List<EventPlan>();
+        List<EventPlan> dailyEvents = GetDailyEventPlans(inputTime.Date);
+
+        foreach (EventPlan plan in dailyEvents)
+        {
+            if (IsEventPassed(plan))
+            {
+                passedEvents.Add(plan);
+            }
+        }
+
+        return passedEvents;
+    }
+
+    // 특정 이벤트 계획이 현재 이벤트 시간 기준으로 이미 완료되었는지 여부를 확인
+    public static bool IsEventPassed(EventPlan eventPlan)
+    {
+        if (_curEventTime == null)
+        {
+            Debug.LogError("Current event time is not set.");
+            return false;
+        }
+
+        // eventPlan의 EventTime이 _curEventTime보다 이전인지 확인
+        return eventPlan.EventTime.IsPastThan(_curEventTime);
+    }
+
+    public static void AFewSecondsLater(){
+        _curEventTime.AddSeconds();
+    }
+
+    public static EventPlan GetFirstEventPlan(){
+        return _eventRoadmap.EventPlans[0];
+    }
+
 }

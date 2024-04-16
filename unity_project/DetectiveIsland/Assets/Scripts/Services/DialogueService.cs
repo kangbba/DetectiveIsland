@@ -20,6 +20,5 @@ public static class DialogueService
             yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
             yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
-
     }
 }

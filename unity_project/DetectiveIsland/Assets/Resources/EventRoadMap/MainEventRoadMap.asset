@@ -17,17 +17,17 @@ MonoBehaviour:
       _date: 2024-04-01
       _hour: 9
       _minute: 0
-    _placeData: {fileID: 11400000, guid: 012524f9288814be6ab1f68ec4182c80, type: 2}
+    _placeID: port_entrance
     _scenarioFile: {fileID: 4900000, guid: 10f627d8911275040af15cf471a1e4a6, type: 3}
   - _eventTime:
       _date: 2024-04-01
       _hour: 10
       _minute: 0
-    _placeData: {fileID: 11400000, guid: 05330f556bf4d444fb149a4b21db68a1, type: 2}
-    _scenarioFile: {fileID: 0}
+    _placeID: cafe_seabreeze
+    _scenarioFile: {fileID: 4900000, guid: 7765cfa3bfe354468bffc6c82614ca08, type: 3}
   - _eventTime:
       _date: 2024-04-01
       _hour: 11
       _minute: 0
-    _placeData: {fileID: 11400000, guid: 608cf0c933a6c44d1a8f14b55750ad1c, type: 2}
-    _scenarioFile: {fileID: 0}
+    _placeID: port_entrance
+    _scenarioFile: {fileID: 4900000, guid: 407562fb4d0084629aea447787d5bb1c, type: 3}

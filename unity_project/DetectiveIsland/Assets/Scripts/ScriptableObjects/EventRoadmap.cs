@@ -39,7 +39,7 @@ public class EventRoadMap : ScriptableObject
     {
         foreach (EventPlan plan in _eventPlans)
         {
-            if (plan.EventTime.Equals(eventTime) && plan.PlaceData.PlaceID == placeID)
+            if (plan.EventTime.Equals(eventTime) && plan.PlaceID == placeID)
             {
                 return plan;
             }

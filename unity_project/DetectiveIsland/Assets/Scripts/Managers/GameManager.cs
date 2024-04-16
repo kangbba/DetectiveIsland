@@ -25,10 +25,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CoroutineUtils.SetCoroutineExecutor(this);
         Initialize();
-        EventService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
-        StartCoroutine(MoveToPlaceCoroutine("cafe_seabreeze"));
+        EventService.SetCurEventTime(EventService.GetFirstEventPlan().EventTime);
+        Move(EventService.GetFirstEventPlan().PlaceID);
     }
 
     private void Update(){
@@ -37,18 +36,13 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        CoroutineUtils.SetCoroutineExecutor(this);
         EventService.Initialize();
-
         DialogueService.Initialize();
-
         ItemService.Initialize();
-
         PlaceService.Initialize();
-        
         PlaceUIService.Initialize();
-
         CharacterService.Initialize();
- 
     }
     
     public void Move(string placeID){
@@ -77,15 +71,28 @@ public class GameManager : MonoBehaviour
         PlaceService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
-        //대화창 On
-        DialogueService.SetOnPanel(true, 1f);
-        yield return new WaitForSeconds(1f);
+       
 
         //이벤트가 있다면 실행
         EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime, placeID);
         if(eventPlan != null){
+            //대화창 On
+            DialogueService.SetOnPanel(true, 1f);
+            yield return new WaitForSeconds(1f);
+            
             yield return StartCoroutine(ProcessEventRoutine(eventPlan));
+            //대화로인해 30초정도 흘렀다.
+            EventService.AFewSecondsLater();
+            Debug.Log(EventService.CurEventTime.ToString());
+            //이제 남은 데일리이벤트는 몇개일까?
+            Debug.Log($"총 {EventService.GetDailyEventPlans(EventService.CurEventTime.Date).Count} 개의 데일리이벤트가 있었습니다.)");
+            Debug.Log($"방금 한개 해서 {EventService.GetPassedDailyEventPlans(EventService.CurEventTime).Count} 개의 데일리이벤트를 처리했습니다.)");
+            Debug.Log($"");
+            //대화창 Off
+            DialogueService.SetOnPanel(false, 1f);
+            yield return new WaitForSeconds(1f);
         }
+
 
         //자유행동
 
@@ -95,9 +102,6 @@ public class GameManager : MonoBehaviour
         PlaceUIService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
 
-        //대화창 Off
-        DialogueService.SetOnPanel(false, 1f);
-        yield return new WaitForSeconds(1f);
 
 
         isMoving = false;
@@ -117,7 +121,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ProcessElementRoutine(Element element){
         if(element is Dialogue){
-            yield return StartCoroutine(DialogueService.DisplayTextRoutine(element as Dialogue));
+            Dialogue dialogue = element as Dialogue;
+            Debug.Log($"{dialogue.CharacterID}가 말한다");
+            yield return StartCoroutine(DialogueService.DisplayTextRoutine(dialogue));
         }
         yield return null;
     }

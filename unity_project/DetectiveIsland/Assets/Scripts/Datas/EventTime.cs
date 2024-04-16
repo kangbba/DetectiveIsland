@@ -14,10 +14,12 @@ public class EventTime
     public string Date { get => _date; }
     public int Hour { get => _hour; }
     public int Minute { get => _minute; }
+    public int Sec { get => _sec; }
 
     [SerializeField] private string _date;
     [SerializeField] private int  _hour;
     [SerializeField] private int _minute;
+    private int _sec;
 
     // 생성자 정의
     public EventTime(string date, int hour, int minute)
@@ -27,6 +29,10 @@ public class EventTime
         _minute = minute;
     }
 
+    public override string ToString()
+    {
+        return $"{Year}-{Month:00}-{Day:00} {Hour:00}:{Minute:00}:{Sec:00}";
+    }
     // 내용 비교를 위한 Equals 메서드 재정의
     public override bool Equals(object obj)
     {
@@ -61,25 +67,27 @@ public class EventTime
         return default;
     }
 
-    // 입력된 EventTime보다 나중인지를 확인하는 메서드
-    public bool IsLaterThan(EventTime eventTime)
+  
+    public bool IsPastThan(EventTime eventTime)
     {
-        // 연도 비교
-        if (this.Year > eventTime.Year)
-            return true;
-        // 월 비교
-        if (this.Month > eventTime.Month)
-            return true;
-        // 일 비교
-        if (this.Day > eventTime.Day)
-            return true;
-        // 시간 비교
-        if (this._hour > eventTime.Hour)
-            return true;
-        // 분 비교
-        if (this._hour == eventTime.Hour && this._minute > eventTime.Minute)
-            return true;
-        
-        return false;
+        if (Year < eventTime.Year) return true;
+        if (Year > eventTime.Year) return false;
+        if (Month < eventTime.Month) return true;
+        if (Month > eventTime.Month) return false;
+        if (Day < eventTime.Day) return true;
+        if (Day > eventTime.Day) return false;
+        if (Hour < eventTime.Hour) return true;
+        if (Hour > eventTime.Hour) return false;
+        if (Minute < eventTime.Minute) return true;
+        if (Minute > eventTime.Minute) return false;
+        if (Sec < eventTime.Sec) return true;
+        if (Sec > eventTime.Sec) return false;
+        return false; // 모든 항목이 동일한 경우
     }
+
+
+    public void AddSeconds(){
+        _sec = 30;
+    }
+
 }
