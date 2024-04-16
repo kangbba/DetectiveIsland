@@ -160,21 +160,58 @@ public class NodeEditor : EditorWindow
     private bool isDraggingNode;
     private bool isPanning;
 
+
+
     [MenuItem("JNode/Create Json Node")]
     private static void OpenWindow()
     {
         NodeEditor window = GetWindow<NodeEditor>();
         window.titleContent = new GUIContent("JNode Editor");
     }
-
     private void OnEnable()
     {
         nodes = new List<Node>();
         canvasOffset = Vector2.zero;
     }
+    private const float gridSpacing = 20f;
+    private const float gridOpacity = 0.2f;
+    private const float gridThickness = 1f;
+
+    private void DrawGrid()
+    {
+        int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
+        int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
+
+        Handles.BeginGUI();
+        Handles.color = new Color(0.5f, 0.5f, 0.5f, gridOpacity);
+
+        Vector3 newOffset = new Vector3(canvasOffset.x % gridSpacing, canvasOffset.y % gridSpacing, 0);
+
+        for (int i = -1; i < widthDivs + 1; i++)
+        {
+            Handles.DrawLine(
+                new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset,
+                new Vector3(gridSpacing * i, position.height, 0) + newOffset
+            );
+        }
+
+        for (int j = -1; j < heightDivs + 1; j++)
+        {
+            Handles.DrawLine(
+                new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset,
+                new Vector3(position.width, gridSpacing * j, 0) + newOffset
+            );
+        }
+
+        Handles.color = Color.white;
+        Handles.EndGUI();
+    }
+
+
 
     private void OnGUI()
     {
+        DrawGrid();
         ProcessEvents(Event.current);
         DrawNodes();
 
@@ -195,8 +232,14 @@ public class NodeEditor : EditorWindow
     {
         if (nodes.Count > 0)
         {
-            // Specify the initial directory as Application.dataPath to open in the Assets folder
-            string path = EditorUtility.SaveFilePanel("Save Nodes as JSON", Application.dataPath, "TestJson", "json");
+            // Construct the path to the Resources/ScenarioDatas folder within the Assets directory
+            string resourcesPath = Path.Combine(Application.dataPath, "Resources/ScenarioDatas");
+
+            // Check if the directory exists; if not, default to the Assets folder
+            string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
+
+            // Open the save file dialog with the determined initial directory
+            string path = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
 
             // Check if the user has not cancelled the operation
             if (!string.IsNullOrEmpty(path))
@@ -214,6 +257,7 @@ public class NodeEditor : EditorWindow
             Debug.Log("No nodes to save.");
         }
     }
+
 
 
     private void ProcessEvents(Event e)
@@ -239,21 +283,11 @@ public class NodeEditor : EditorWindow
                     if (node != null)
                     {
                         selectedNode = node;
-                        if (e.clickCount == 2) // Double click
-                        {
-                            e.Use();
-                        }
-                        else
-                        {
-                            isDraggingNode = true;
-                            selectedNode.dragOffset = mousePosition - selectedNode.rect.position;
-                            e.Use();
-                        }
+                        e.Use();
                     }
                     else
                     {
                         selectedNode = null; // Clear selection if click outside any node
-                        isDraggingNode = false;
                     }
                 }
                 break;
@@ -269,7 +303,6 @@ public class NodeEditor : EditorWindow
             case EventType.MouseUp:
                 if (e.button == 2)
                     isPanning = false;
-                isDraggingNode = false;
                 break;
             case EventType.KeyDown:
                 if (e.keyCode == KeyCode.Delete && selectedNode != null)
@@ -313,19 +346,25 @@ public class NodeEditor : EditorWindow
     {
         foreach (var node in nodes)
         {
+            // 캔버스 오프셋을 적용하여 화면에 그릴 Rect 계산
             Rect adjustedRect = new Rect(node.rect.position + canvasOffset, node.rect.size);
-            node.rect = adjustedRect;
-            node.DrawNode();
-            node.rect.position -= canvasOffset; // Reset the node's rect for consistent logical operations
+
+            // 화면에 Node를 그립니다. 여기서는 실제 node.rect를 변경하지 않습니다.
+            GUI.Box(adjustedRect, node.title, EditorStyles.helpBox);
+
+            // 추가적인 노드의 GUI 요소들을 그리는 등의 작업을 수행할 수 있습니다.
         }
+
         if (selectedNode != null)
         {
-            // Highlight the selected node
+            // 선택된 노드에 대해 특별한 표시를 합니다.
             GUI.color = Color.cyan;
-            GUI.Box(selectedNode.rect, "", EditorStyles.helpBox);
+            GUI.Box(new Rect(selectedNode.rect.position + canvasOffset, selectedNode.rect.size), "", EditorStyles.helpBox);
             GUI.color = Color.white;
         }
-    } 
+    }
+
+
 
     private Node GetNodeAtPosition(Vector2 position)
     {

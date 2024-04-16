@@ -18,9 +18,9 @@ public class Node
 
     private static int nextID = 0;
 
-    public Node(Vector2 position, float width, float height, string title)
+    public Node(Vector2 position, float width, float height, string title )
     {
-        rect = new Rect(position.x, position.y, width, height);
+        rect = new Rect(position.x , position.y , width, height);
         this.title = title;
         ID = nextID++;
     }
@@ -49,9 +49,7 @@ public class Node
         // End the area inside the node
         GUILayout.EndArea();
     }
-
 }
-
 
 
 [System.Serializable]
