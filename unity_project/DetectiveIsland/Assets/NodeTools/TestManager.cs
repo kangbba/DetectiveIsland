@@ -46,7 +46,8 @@ public class TestManager : MonoBehaviour
     public void AddDialogueNode()
     {
         DialogueNode dialogueNode = new DialogueNode(Vector3.zero, 0, 0, "Dialogue");
-        dialogueNode.dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "Hi"), new Line("Smile", "Hello"), new Line("Smile", "�ȳ� �ݰ��� ���� !") });
+        //이건 주석이야 히히 ㅎㅎ !! 호호 ㅋㅋ ㄷㄷ
+        dialogueNode.dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "Hi"), new Line("Smile", "Hello"), new Line("Smile", "안녕 반가워 ㅎㅇ !") });
         Debug.Log(dialogueNode.dialogue);
         nodes.Add(dialogueNode);
     }
