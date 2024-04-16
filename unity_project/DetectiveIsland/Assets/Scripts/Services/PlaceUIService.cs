@@ -16,20 +16,28 @@ public static class PlaceUIService
     {
         _placeUIPanelLeft = UIManager.Instance.PlaceUIPanelLeft;
         _placeUIPanelRight = UIManager.Instance.PlaceUIPanelRight;
+
         GameObject _placeRoadmapPrefab = Resources.Load<GameObject>("PlaceRoadmapPrefab");
+        _placeRoadmap = GameObject.Instantiate(_placeRoadmapPrefab); // Instantiate the roadmap
         if (_placeRoadmapPrefab != null)
         {
-            _placeRoadmap = GameObject.Instantiate(_placeRoadmapPrefab); // Instantiate the roadmap
             TraverseChildren(_placeRoadmap.transform); // Traverse to find and store PlaceData
-            GameObject.Destroy(_placeRoadmap); // Optionally destroy the instance after extracting data
         }
-        else
-        {
-            Debug.LogError("Failed to load PlaceRoadmapPrefab. Please check the path and prefab existence.");
-        }
-
-        CreatePlaceButtons(); // Create buttons based on extracted PlaceData
         Debug.Log($"Loaded {_placeDatas.Count} place data from roadmap.");
+    }
+
+    public static void CreatePlaceButtons(){
+        _curPlaceBtns.Clear(); // Clear existing buttons if reinitializing
+        foreach (PlaceData placeData in _placeDatas)
+        {
+            PlaceButton buttonLeft = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelLeft.transform);
+            buttonLeft.Initialize(placeData);
+            _curPlaceBtns.Add(buttonLeft);
+
+            PlaceButton buttonRight = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelRight.transform);
+            buttonRight.Initialize(placeData);
+            _curPlaceBtns.Add(buttonRight);
+        }
     }
 
     private static void TraverseChildren(Transform parent)
@@ -42,20 +50,6 @@ public static class PlaceUIService
                 _placeDatas.Add(placeData);
             }
             TraverseChildren(child); // Recurse into each child
-        }
-    }
-    private static void CreatePlaceButtons()
-    {
-        _curPlaceBtns.Clear(); // Clear existing buttons if reinitializing
-        foreach (PlaceData placeData in _placeDatas)
-        {
-            PlaceButton buttonLeft = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelLeft.transform);
-            buttonLeft.Initialize(placeData);
-            _curPlaceBtns.Add(buttonLeft);
-
-            PlaceButton buttonRight = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelRight.transform);
-            buttonRight.Initialize(placeData);
-            _curPlaceBtns.Add(buttonRight);
         }
     }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _placeData: {fileID: 11400000, guid: 012524f9288814be6ab1f68ec4182c80, type: 2}
-    _scenarioFile: {fileID: 0}
+    _scenarioFile: {fileID: 4900000, guid: 10f627d8911275040af15cf471a1e4a6, type: 3}
   - _eventTime:
       _date: 2024-04-01
       _hour: 10

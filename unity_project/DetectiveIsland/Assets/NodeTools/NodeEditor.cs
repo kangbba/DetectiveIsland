@@ -15,10 +15,10 @@ public static class ArokaJsonUtil
         if (File.Exists(fullPath))
         {
             bool overwrite = EditorUtility.DisplayDialog(
-                "�Ȱ��� ������ �����մϴ�. ��¥ ����ðڽ��ϱ�?? ���� ������ �����˴ϴ�.",
+                "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
                 "A file already exists at " + fullPath + ". Do you want to overwrite it?",
-                "��",
-                "���"
+                "네",
+                "취소"
             );
 
             if (!overwrite)
@@ -30,7 +30,7 @@ public static class ArokaJsonUtil
 
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto,
+            TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
             StringEscapeHandling = StringEscapeHandling.EscapeNonAscii // Ensuring Hangul is not escaped
         };
@@ -40,25 +40,42 @@ public static class ArokaJsonUtil
         AssetDatabase.Refresh();
         Debug.Log("File saved: " + fullPath);
     }
-
-    public static Scenario LoadScenario(string fileName)
+    // 파일 경로를 통해 시나리오를 로드합니다.
+    public static Scenario LoadScenario(string filePath)
     {
-        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-
-        if (!File.Exists(fullPath))
+        if (!File.Exists(filePath))
         {
-            Debug.LogError("File not found: " + fullPath);
+            Debug.LogError("File not found: " + filePath);
             return null;
         }
 
-        string json = File.ReadAllText(fullPath);
+        string json = File.ReadAllText(filePath);
+        return DeserializeScenario(json);
+    }
+    // TextAsset을 통해 시나리오를 로드합니다.
+    public static Scenario LoadScenario(TextAsset jsonTextAsset)
+    {
+        if (jsonTextAsset == null)
+        {
+            Debug.LogError("No TextAsset provided.");
+            return null;
+        }
+
+        return DeserializeScenario(jsonTextAsset.text);
+    }
+    // JSON 문자열을 역직렬화하여 Scenario 객체를 반환합니다.
+    private static Scenario DeserializeScenario(string json)
+    {
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto // Ensure that type information is handled correctly
+            TypeNameHandling = TypeNameHandling.Objects,
         };
-
         Scenario scenario = JsonConvert.DeserializeObject<Scenario>(json, settings);
+        ScenarioLog(scenario);
+        return scenario;
+    }
 
+    public static void ScenarioLog(Scenario scenario){
         if (scenario != null && scenario.Elements != null)
         {
             Debug.Log("Load Complete, elements Count = " + scenario.Elements.Count);
@@ -82,7 +99,6 @@ public static class ArokaJsonUtil
         {
             Debug.LogError("Failed to deserialize the JSON content into a Scenario object or the Elements list is null.");
         }
-        return scenario;
     }
 }
 

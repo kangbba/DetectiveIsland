@@ -88,7 +88,12 @@ public class GameManager : MonoBehaviour
         }
 
         //자유행동
+
         
+        //이동가능버튼생성
+        PlaceUIService.CreatePlaceButtons();
+        PlaceUIService.SetOnPanel(true, 1f);
+        yield return new WaitForSeconds(1f);
 
         //대화창 Off
         DialogueService.SetOnPanel(false, 1f);
@@ -99,8 +104,21 @@ public class GameManager : MonoBehaviour
     }
 
     public IEnumerator ProcessEventRoutine(EventPlan eventPlan){
-
+        Debug.Log("이벤트 실행이 돌입");
         TextAsset textAsset = eventPlan.ScenarioFile;
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        Scenario scenario = ArokaJsonUtil.LoadScenario(eventPlan.ScenarioFile);
+       
+        List<Element> elements = scenario.Elements;
+        foreach(Element element in elements){
+            Debug.Log($"{elements.Count}중 {element.GetType()} 실행중");
+            yield return ProcessElementRoutine(element);
+        }
+    }
+
+    public IEnumerator ProcessElementRoutine(Element element){
+        if(element is Dialogue){
+            yield return StartCoroutine(DialogueService.DisplayTextRoutine(element as Dialogue));
+        }
+        yield return null;
     }
 }

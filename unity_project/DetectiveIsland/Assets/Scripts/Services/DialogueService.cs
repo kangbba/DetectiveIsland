@@ -18,6 +18,7 @@ public static class DialogueService
             CharacterData characterPlan = CharacterService.GetCharacterData(dialogue.CharacterID);
             _dialoguePanel.SetCharacterText(dialogue.CharacterID, characterPlan.CharacterColor);
             yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
+            yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
 
     }
