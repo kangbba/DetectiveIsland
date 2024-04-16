@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using ArokaUtil;
 using UnityEngine;
 
-public class CharacterService
+public static class CharacterService
 {
-    private CharacterPanel _characterPanel;
-    private List<CharacterData> _characterDatas;
+    private static CharacterPanel _characterPanel;
+    private static List<CharacterData> _characterDatas;
     
-    public void Initialize()
+    public static void Initialize()
     {       
         _characterPanel = UIManager.Instance.CharacterPanel;
         _characterDatas = Utils.LoadDatasFromFolder<CharacterData>("CharacterDatas");
     }
-    public CharacterData GetCharacterData(string characterID)
+    public static CharacterData GetCharacterData(string characterID)
     {
         foreach (CharacterData character in _characterDatas)
         {
@@ -23,7 +23,8 @@ public class CharacterService
         }
         return null;
     }
-    public void SetOnPanel(bool b, float totalTime){
+    public static void SetOnPanel(bool b, float totalTime){
         _characterPanel.SetAnim(b, totalTime);
     }
+
 }

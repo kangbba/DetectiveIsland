@@ -177,7 +177,7 @@ public class ArokaTransform : MonoBehaviour
             image.color = targetColor;
         }
         else{
-           nowColorRoutine = StartCoroutine(SetImageColorRoutine(targetColor, totalTime, curvName, delayTime));
+        nowColorRoutine = StartCoroutine(SetImageColorRoutine(targetColor, totalTime, curvName, delayTime));
         }
     }
     public void SetSpriteRendererColor(Color targetColor, float totalTime = 0f, CurveManager.CurvName curvName = CurveManager.CurvName.EASE_OUT, float delayTime = 0f)
@@ -188,7 +188,7 @@ public class ArokaTransform : MonoBehaviour
             sprite.color = targetColor;
         }
         else{
-           nowColorRoutine = StartCoroutine(SetSpriteRendererColorRoutine(targetColor, totalTime, curvName, delayTime));
+        nowColorRoutine = StartCoroutine(SetSpriteRendererColorRoutine(targetColor, totalTime, curvName, delayTime));
         }
     }
 

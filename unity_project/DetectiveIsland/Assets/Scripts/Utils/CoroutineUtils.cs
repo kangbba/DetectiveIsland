@@ -5,6 +5,7 @@ public static class CoroutineUtils
 {
     private static MonoBehaviour coroutineExecutor;
 
+
     // CoroutineExecutor 설정
     public static void SetCoroutineExecutor(MonoBehaviour executor)
     {
