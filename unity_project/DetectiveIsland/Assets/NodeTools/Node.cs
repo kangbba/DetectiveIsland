@@ -2,11 +2,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
+
+
+[System.Serializable]
 public class Node
 {
+    [System.NonSerialized]
     public Rect rect;
+    [System.NonSerialized]
     public string title;
+    [System.NonSerialized]
     public Vector2 dragOffset;
+    [System.NonSerialized]
     public int ID; // Unique ID for each node
 
     private static int nextID = 0;
@@ -21,10 +28,13 @@ public class Node
     // Function to draw the node GUI and its properties
     public virtual void DrawNode()
     {
-        GUI.Box(rect, title);
+        // Draw the node box without any title text
+        GUI.Box(rect, "");
+
+        // Start an area inside the node for additional GUI elements
         GUILayout.BeginArea(new Rect(rect.x + 10, rect.y + 20, rect.width - 20, rect.height - 40));
 
-        // Using reflection to expose fields dynamically
+        // Using reflection to expose fields dynamically for editing
         FieldInfo[] fields = this.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
         foreach (var field in fields)
         {
@@ -34,55 +44,109 @@ public class Node
                 string newValue = EditorGUILayout.TextField(field.Name, (string)value);
                 field.SetValue(this, newValue);
             }
-            // You can add more types as needed
+            // Additional field types can be added here as needed
         }
-
+        // End the area inside the node
         GUILayout.EndArea();
     }
-}
-public class LineNode : Node
-{
-    public Line line;
 
-    public LineNode(Vector2 position, float width, float height, string title)
-        : base(position, width, height, title)
+}
+
+
+
+[System.Serializable]
+public class ChoiceSetNode : Node
+{
+    public ChoiceSet choiceSet;
+    public ChoiceSetNode(Vector2 position, float width, float height, string title) : base(position, width, height, title)
     {
-        line = new Line("defaultEmotion", "defaultSentence");  // Initialize with default values
+
     }
 
-   public override void DrawNode()
+    public override void DrawNode()
+    {
+        base.DrawNode();
+    }
+}
+
+[System.Serializable]
+public class ItemDemandNode : Node
+{
+    public ItemDemand itemDemand;
+    public ItemDemandNode(Vector2 position, float width, float height, string title) : base(position, width, height, title)
+    {
+    }
+
+    public override void DrawNode()
+    {
+        base.DrawNode();
+    }
+}
+
+
+[System.Serializable]
+public class PositionChangeNode : Node
+{
+    public PositionChange positionChange;
+    public PositionChangeNode(Vector2 position, float width, float height, string title) : base(position, width, height, title)
+    {
+    }
+    public override void DrawNode()
+    {
+        base.DrawNode();
+    }
+}
+
+
+[System.Serializable]
+public class AssetChangeNode : Node
+{
+    public AssetChange assetChange;
+    public AssetChangeNode(Vector2 position, float width, float height, string title) : base(position, width, height, title)
+    {
+
+    }
+
+    public override void DrawNode()
+    {
+        base.DrawNode();  
+    }
+}
+
+
+[System.Serializable]
+public class DialogueNode : Node
+{
+    public Dialogue dialogue;
+    public string name;
+    public DialogueNode(Vector2 position, float width, float height, string title)
+        : base(position, width, height, title)
+    {
+
+    }
+    public override void DrawNode()
     {
         base.DrawNode();  // Draw the basic node box and start the layout area
 
         // Make sure to start a new GUI area inside the node's rectangle for additional fields
         GUILayout.BeginArea(new Rect(rect.x + 10, rect.y + 20, rect.width - 20, rect.height - 40));
 
-        if (line != null)
+        if (dialogue != null)
         {
             EditorGUI.BeginChangeCheck();  // Track changes to handle undo/redo properly
 
             // These fields are now inside the BeginArea/EndArea block
-            string newEmotionID = EditorGUILayout.TextField("Emotion ID", line.EmotionID);
-            string newSentence = EditorGUILayout.TextField("Sentence", line.Sentence);
+            string newEmotionID = EditorGUILayout.TextField("Emotion ID","??");
+            string newSentence = EditorGUILayout.TextField("Sentence", "??");
 
             if (EditorGUI.EndChangeCheck())
             {
-               // Undo.RecordObject(this, "Edit Line Node");  // Record changes for undo
-                line = new(newEmotionID, newSentence);
+                // Undo.RecordObject(this, "Edit Line Node");  // Record changes for undo
+                dialogue = new(newEmotionID,null);
             }
         }
 
         GUILayout.EndArea();  // End the GUI area for node content
     }
 
-}
-
-public class DialogueNode : Node
-{
-    public Dialogue dialogue;
-
-    public DialogueNode(Vector2 position, float width, float height, string title)
-        : base(position, width, height, title)
-    {
-    }
 }

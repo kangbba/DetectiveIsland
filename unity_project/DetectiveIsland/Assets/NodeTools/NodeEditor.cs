@@ -1,7 +1,138 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using Formatting = Newtonsoft.Json.Formatting;
+public static class StoragePath
+{
+    public static string ScenarioPath => Application.dataPath;
+
+}
+
+
+public static class ArokaJsonUtil
+{
+    public static void SaveScenario(Scenario scenario, string fileName)
+    {
+        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
+
+        if (File.Exists(fullPath))
+        {
+            bool overwrite = EditorUtility.DisplayDialog(
+                "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
+                "A file already exists at " + fullPath + ". Do you want to overwrite it?",
+                "네",
+                "취소"
+            );
+
+            if (!overwrite)
+            {
+                Debug.Log("File save cancelled.");
+                return;
+            }
+        }
+
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented
+        };
+
+        string json = JsonConvert.SerializeObject(scenario, settings);
+        File.WriteAllText(fullPath, json);
+        AssetDatabase.Refresh(); // Refresh the Asset Database to include the new file.
+        Debug.Log("File saved: " + fullPath);
+    }
+
+    public static Scenario LoadScenario(string fileName)
+    {
+        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
+
+        if (!File.Exists(fullPath))
+        {
+            Debug.LogError("File not found: " + fullPath);
+            return null;
+        }
+
+        string json = File.ReadAllText(fullPath);
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto // Ensure that type information is handled correctly
+        };
+
+        Scenario scenario = JsonConvert.DeserializeObject<Scenario>(json, settings);
+
+        if (scenario != null && scenario.Elements != null)
+        {
+            Debug.Log("Load Complete, elements Count = " + scenario.Elements.Count);
+            foreach (Element element in scenario.Elements)
+            {
+                if (element is Dialogue dialogue)
+                {
+                    Debug.Log($"Dialogue Element: CharacterID={dialogue.CharacterID}, Lines Count={dialogue.Lines.Count}");
+                    foreach (var line in dialogue.Lines)
+                    {
+                        Debug.Log($"Line: Emotion={line.EmotionID}, Text={line.Sentence}");
+                    }
+                }
+                else
+                {
+                    Debug.Log($"Unknown Element Type: {element.GetType().Name}");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Failed to deserialize the JSON content into a Scenario object or the Elements list is null.");
+        }
+        return scenario;
+    }
+}
+
+public static class NodeService
+{
+    public static List<Element> ToElements(this List<Node> nodes)
+    {
+
+        List<Element> list = new List<Element>();
+
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            Node node = nodes[i];
+            list.Add(node.ToProperElement());
+        }
+        return list;
+    }
+
+    public static Element ToProperElement(this Node node)
+    {
+        if (node is DialogueNode dialogueNode)
+        {
+            return dialogueNode.dialogue;
+        }
+        else if (node is ChoiceSetNode choiceSetNode)
+        {
+            return choiceSetNode.choiceSet;
+        }
+        else if (node is ItemDemandNode itemDemandNode)
+        {
+            return itemDemandNode.itemDemand;
+        }
+        else if (node is PositionChangeNode positionChangeNode)
+        {
+            return positionChangeNode.positionChange;
+        }
+        else if (node is AssetChangeNode assetChangeNode)
+        {
+            return assetChangeNode.assetChange; 
+        }
+        return null; 
+    }
+
+
+
+}
 
 public class NodeEditor : EditorWindow
 {
@@ -17,7 +148,7 @@ public class NodeEditor : EditorWindow
     private static void OpenWindow()
     {
         NodeEditor window = GetWindow<NodeEditor>();
-        window.titleContent = new GUIContent("Node Editor");
+        window.titleContent = new GUIContent("JNode Editor");
     }
 
     private void OnEnable()
@@ -113,7 +244,7 @@ public class NodeEditor : EditorWindow
     private void ProcessContextMenu()
     {
         GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent("Add Line Node"), false, () => OnClickAddNode(mousePosition - canvasOffset));
+        genericMenu.AddItem(new GUIContent("New Dialogue"), false, () => OnClickAddNode(mousePosition - canvasOffset));
         if (selectedNode != null)
         {
             genericMenu.AddItem(new GUIContent("Delete Node"), false, () => DeleteSelectedNode());
@@ -123,8 +254,8 @@ public class NodeEditor : EditorWindow
 
     private void OnClickAddNode(Vector2 position)
     {
-        LineNode newNode = new LineNode(position, 200, 100, "New Line Node");
-        nodes.Add(newNode);
+        DialogueNode dialogueNode = new DialogueNode(position, 200, 100, "Dialogue");
+        nodes.Add(dialogueNode);
     }
 
     private void DeleteSelectedNode()
@@ -154,8 +285,6 @@ public class NodeEditor : EditorWindow
             GUI.color = Color.white;
         }
     } 
-
-
 
     private Node GetNodeAtPosition(Vector2 position)
     {

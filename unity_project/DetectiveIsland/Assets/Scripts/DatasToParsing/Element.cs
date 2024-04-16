@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Element
+[System.Serializable]
+public class Element
 {
 
 }
