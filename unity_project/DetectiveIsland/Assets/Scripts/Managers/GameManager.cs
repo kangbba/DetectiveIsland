@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
             
             yield return StartCoroutine(ProcessEventRoutine(eventPlan));
             //대화로인해 30초정도 흘렀다.
-            EventService.AFewSecondsLater();
             Debug.Log(EventService.CurEventTime.ToString());
             //이제 남은 데일리이벤트는 몇개일까?
              // 이벤트별 상세 정보 출력

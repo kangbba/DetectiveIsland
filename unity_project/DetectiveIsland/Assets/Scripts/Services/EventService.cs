@@ -100,10 +100,6 @@ public static class EventService
     }
 
 
-    public static void AFewSecondsLater(){
-        _curEventTime.AddSeconds();
-    }
-
     public static EventPlan GetFirstEventPlan(){
         return _eventRoadmap.EventPlans[0];
     }
