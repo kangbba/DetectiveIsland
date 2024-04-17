@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace Aroka.EaseUtils{
     public static class ArokaEaseUtils
     {
-        private static Dictionary<(Transform, string), Coroutine> _coroutineMap = new Dictionary<(Transform, string), Coroutine>();
-        private static Dictionary<(Component, string), Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), Coroutine>();
+        private static Dictionary<(Transform, string), UnityEngine.Coroutine> _coroutineMap = new Dictionary<(Transform, string), UnityEngine.Coroutine>();
+        private static Dictionary<(Component, string), UnityEngine.Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), UnityEngine.Coroutine>();
 
 
         #region Position and Movement Extensions
@@ -270,25 +270,25 @@ namespace Aroka.EaseUtils{
         private static void StartOrReplaceCoroutine(Transform transform, string key, IEnumerator routine)
         {
             (Transform, string) coroutineKey = (transform, key);
-            if (_coroutineMap.TryGetValue(coroutineKey, out Coroutine currentCoroutine))
+            if (_coroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
             {
                 ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
                 _coroutineMap.Remove(coroutineKey);
             }
 
-            Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
+            UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
             _coroutineMap[coroutineKey] = newCoroutine;
         }
         private static void StartOrReplaceColorCoroutine(Component component, string key, IEnumerator routine)
             {
                 (Component, string) coroutineKey = (component, key);
-                if (_colorCoroutineMap.TryGetValue(coroutineKey, out Coroutine currentCoroutine))
+                if (_colorCoroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
                 {
-                    ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
-                    _colorCoroutineMap.Remove(coroutineKey);
+                ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
+                _colorCoroutineMap.Remove(coroutineKey);
                 }
 
-                Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
+            UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
                 _colorCoroutineMap[coroutineKey] = newCoroutine;
             }
 

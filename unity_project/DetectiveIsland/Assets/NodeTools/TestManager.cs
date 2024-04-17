@@ -57,29 +57,38 @@ public class TestManager : MonoBehaviour
         Debug.Log(dialogueNode.dialogue);
         nodes.Add(dialogueNode);
     }
+    [ArokaButton]
+    public void AddChoiceSetNode()
+    {
+        ChoiceSetNode choiceSetNode = new ChoiceSetNode(new Rect(), "ChoiceSetNode");
+        Dialogue dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "뭐를 먹고싶어?"), new Line("Smile", "골라봐")});
+
+        Dialogue dialogue1 = new Dialogue("Kate", new List<Line> { new Line("Smile", "선택지 1을 골랐구나"), new Line("Smile", "그거아주 좋은선택이야"), new Line("Smile", "잘했어") });
+        
+        Dialogue dialogue2 = new Dialogue("Kate", new List<Line> { new Line("Smile", "선택지 2을 골랐구나") });
+        Dialogue dialogue21 = new Dialogue("Mono", new List<Line> { new Line("Smile", "역시 이게 맞는선택이라고 생각했어"), new Line("Smile", "후훗") });
+        
+        Dialogue dialogue3 = new Dialogue("Kate", new List<Line> { new Line("Smile", "선택지 3을 골랐구나"), new Line("Smile", "...") });
+        Dialogue dialogue31 = new Dialogue("Mono", new List<Line> { new Line("Smile", "너 왜 말이없니")});
+
+
+        ChoiceSet choiceSet = new ChoiceSet
+            (
+                new List<Dialogue>() { dialogue, },
+
+                new List<Choice>() { 
+                    new Choice("선택지 1", new List<Element>() { dialogue1 }),
+                    new Choice("선택지 2" , new List<Element>() { dialogue2, dialogue21 }),
+                    new Choice("선택지 3" , new List<Element>() {  dialogue3, dialogue31 })
+                }
+
+            );
+
+        choiceSetNode.choiceSet = choiceSet;
+        nodes.Add(choiceSetNode);
+    }
     /*
-[ArokaButton]
-public void AddChoiceSetNode()
-{
-    ChoiceSetNode choiceSetNode = new ChoiceSetNode(Vector3.zero, 0, 0, "ChoiceSetNode");
-    Dialogue dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "Choice"), new Line("Smile", "Test"), new Line("Smile", "초이스 테스트 시작! 뷁") });
 
-
-    ChoiceSet choiceSet = new ChoiceSet
-        (
-            new List<Dialogue>() { dialogue, dialogue },
-
-            new List<Choice>() { 
-                new Choice("선택지 1", new List<Element>() { dialogue, dialogue }),
-                new Choice("선택지 2" , new List<Element>() { dialogue,  }),
-                new Choice("선택지 3" , new List<Element>() {  dialogue })
-            }
-
-        );
-
-    choiceSetNode.choiceSet = choiceSet;
-    nodes.Add(choiceSetNode);
-}
 
 
 [ArokaButton]

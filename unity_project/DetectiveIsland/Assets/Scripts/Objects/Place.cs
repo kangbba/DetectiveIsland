@@ -20,6 +20,6 @@ public class Place : SpriteEffector
     }
     public void Exit(float totalTime){
         FadeOut(totalTime);
-        Destroy(gameObject, totalTime);
+        Destroy(gameObject, totalTime + .1f);
     }
 }

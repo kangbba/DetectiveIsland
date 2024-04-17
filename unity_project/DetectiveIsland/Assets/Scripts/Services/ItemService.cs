@@ -27,4 +27,13 @@ public static class ItemService
     public static void SetOnPanel(bool b, float totalTime){
         _itemPanel.SetAnim(b, totalTime);
     }
+    public static IEnumerator AwaitItemBtnSelectedRoutine(){
+        _itemPanel.Initialize(_itemDatas, false);
+        SetOnPanel(true, 1f);
+        yield return new WaitForSeconds(1f);
+        yield return _itemPanel.AwaitItemBtnSelectedRoutine();
+        SetOnPanel(false, 1f);
+        yield return _itemPanel.SelectedItemData;
+    }
+
 }

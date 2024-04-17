@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Aroka.CoroutineUtils;
@@ -44,6 +45,9 @@ public class GameManager : MonoBehaviour
         PlaceService.Initialize();
         PlaceUIService.Initialize();
         CharacterService.Initialize();
+        ChoiceSetService.Initialize();
+
+
     }
     
     public void Move(string placeID){
@@ -64,6 +68,8 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator MoveToPlaceCoroutine(string placeID)
     {
+        // AwaitChoices의 결과를 직접 받아 처리
+
         //Place UI판넬 퇴장
         PlaceUIService.SetOnPanel(false, false, false, 1f);
         yield return new WaitForSeconds(1f);
@@ -126,8 +132,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("이벤트 실행이 돌입");
         TextAsset scenarioFile = eventPlan.ScenarioFile;
         Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
-       
         List<Element> elements = scenario.Elements;
+        yield return StartCoroutine(ProcessElementsRoutine(elements));
+    }
+
+    private IEnumerator ProcessElementsRoutine(List<Element> elements){
+
         foreach(Element element in elements){
             yield return ProcessElementRoutine(element);
         }
@@ -138,6 +148,68 @@ public class GameManager : MonoBehaviour
             Dialogue dialogue = element as Dialogue;
             yield return StartCoroutine(DialogueService.DisplayTextRoutine(dialogue));
         }
+        else if(element is ChoiceSet){
+
+            yield return new WaitForSeconds(1f);
+            ChoiceSet choiceSet = element as ChoiceSet;
+            foreach(Dialogue dialogue in choiceSet.Dialogues){
+                yield return StartCoroutine(DialogueService.DisplayTextRoutine(dialogue));
+            }
+
+            Choice selectedChoice = null;
+            yield return ArokaCoroutineUtils.AwaitCoroutine<Choice>(ChoiceSetService.MakeChoiceBtnsAndWaitRoutine(choiceSet), result => {
+                selectedChoice = result;
+            });
+            Debug.Log($"{selectedChoice.Title}을 골랐다!");
+
+
+            yield return StartCoroutine(ProcessElementsRoutine(selectedChoice.Elements));
+        }
+        else if(element is AssetChange){
+            
+            yield return new WaitForSeconds(1f);
+            ChoiceSet choiceSet = element as ChoiceSet;
+            foreach(Dialogue dialogue in choiceSet.Dialogues){
+                yield return StartCoroutine(DialogueService.DisplayTextRoutine(dialogue));
+            }
+
+            Choice selectedChoice = null;
+            yield return ArokaCoroutineUtils.AwaitCoroutine<Choice>(ChoiceSetService.MakeChoiceBtnsAndWaitRoutine(choiceSet), result => {
+                selectedChoice = result;
+            });
+            Debug.Log($"{selectedChoice.Title}을 골랐다!");
+
+            yield return StartCoroutine(ProcessElementsRoutine(selectedChoice.Elements));
+        }
+        else if(element is ItemDemand){
+            
+            while(true){
+
+                ItemDemand itemDemand = element as ItemDemand;
+                foreach(Dialogue dialogue in itemDemand.Dialogues){
+                    yield return StartCoroutine(DialogueService.DisplayTextRoutine(dialogue));
+                }
+
+                ItemData selectedItemData = null;
+                yield return ArokaCoroutineUtils.AwaitCoroutine<ItemData>(ItemService.AwaitItemBtnSelectedRoutine(), result => {
+                    selectedItemData = result;
+                });
+                Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
+                bool isCorrect = selectedItemData.ItemID == itemDemand.ItemID;
+                if(isCorrect){
+                    Debug.Log("정답이므로 elements 처리후 이 루프를 빠져나갈 예정");
+                    yield return StartCoroutine(ProcessElementsRoutine(itemDemand.SuccessElements));
+                    break;
+                }
+                else{
+                    Debug.Log("오답이므로 elements 처리후 이 루프가 반복될 예정");
+                    yield return StartCoroutine(ProcessElementsRoutine(itemDemand.FailElements));
+                }
+                
+            }
+        }
         yield return null;
     }
+    // 사용 예제
+
 }

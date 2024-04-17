@@ -108,10 +108,14 @@ public class DialogueNode : Node
 public class ChoiceSetNode : Node
 {
     public ChoiceSet choiceSet;
+<<<<<<< Updated upstream
     public ChoiceSetNode(Rect rect, string title) : base(rect, title)
     {
 
     }
+=======
+    public ChoiceSetNode(Rect rect, string title) : base(rect, title) { }
+>>>>>>> Stashed changes
 
     public override void DrawNode(Vector2 offset)
     {
@@ -119,10 +123,13 @@ public class ChoiceSetNode : Node
     }
 }
 
+
+
 [System.Serializable]
 public class ItemDemandNode : Node
 {
     public ItemDemand itemDemand;
+<<<<<<< Updated upstream
     public ItemDemandNode(Rect rect, string title) : base(rect, title)
     {
 
@@ -132,7 +139,15 @@ public class ItemDemandNode : Node
     {
         base.DrawNode(offset);
     }
+=======
+ 
+    public ItemDemandNode(Rect rect, string title) : base(rect, title) { }
+>>>>>>> Stashed changes
 }
+
+
+/*
+
 
 
 [System.Serializable]

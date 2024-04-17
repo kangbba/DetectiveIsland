@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
+using System;
 
 
 namespace Aroka.CoroutineUtils{
@@ -11,15 +13,15 @@ namespace Aroka.CoroutineUtils{
         {
             // 이 클래스는 특별한 로직을 가지지 않으며, 코루틴 실행을 위한 MonoBehaviour 기능만을 제공합니다.
         }
-        private static MonoBehaviour coroutineExecutor;
+        private static MonoBehaviour _coroutineExecutor;
         private static void CheckMonoBehaviourAndAssign()
         {
-            if (coroutineExecutor == null)
+            if (_coroutineExecutor == null)
             {
                 if (Application.isPlaying) // 플레이 모드에서만 실행
                 {
                     GameObject obj = new GameObject("CoroutineExecutor");
-                    coroutineExecutor = obj.AddComponent<DummyMonoBehaviour>();
+                    _coroutineExecutor = obj.AddComponent<DummyMonoBehaviour>();
                     UnityEngine.Object.DontDestroyOnLoad(obj); // 게임이 종료될 때까지 존재하도록 설정
                 }
                 else
@@ -31,23 +33,23 @@ namespace Aroka.CoroutineUtils{
 
 
         // 코루틴 시작
-        public static Coroutine StartCoroutine(IEnumerator routine)
+        public static UnityEngine.Coroutine StartCoroutine(IEnumerator routine)
         {
             CheckMonoBehaviourAndAssign();
-            return coroutineExecutor.StartCoroutine(routine);
+            return _coroutineExecutor.StartCoroutine(routine);
         }
         // 코루틴 정지
-        public static void StopCoroutine(Coroutine routine)
+        public static void StopCoroutine(UnityEngine.Coroutine routine)
         {
             CheckMonoBehaviourAndAssign();
-            coroutineExecutor.StopCoroutine(routine);
+            _coroutineExecutor.StopCoroutine(routine);
         }
 
         // 지정된 시간 후에 코루틴 시작
-        public static Coroutine StartCoroutineAfterDelay(float delay, IEnumerator routine)
+        public static UnityEngine.Coroutine StartCoroutineAfterDelay(float delay, IEnumerator routine)
         {
             CheckMonoBehaviourAndAssign();
-            return coroutineExecutor.StartCoroutine(DelayedCoroutine(delay, routine));
+            return _coroutineExecutor.StartCoroutine(DelayedCoroutine(delay, routine));
         }
 
         // 지연된 코루틴
@@ -55,7 +57,7 @@ namespace Aroka.CoroutineUtils{
         {
             CheckMonoBehaviourAndAssign();
             yield return new WaitForSeconds(delay);
-            yield return coroutineExecutor.StartCoroutine(routine);
+            yield return _coroutineExecutor.StartCoroutine(routine);
         }
 
         // 조건을 만족할 때까지 대기하는 코루틴
@@ -70,6 +72,24 @@ namespace Aroka.CoroutineUtils{
         {
             CheckMonoBehaviourAndAssign();
             yield return new WaitForSeconds(seconds);
+        }
+      
+         // 코루틴 실행 후 콜백을 사용하여 결과를 처리
+        public static Coroutine AwaitCoroutine<T>(IEnumerator routine, Action<T> onComplete)
+        {
+            CheckMonoBehaviourAndAssign();
+            return _coroutineExecutor.StartCoroutine(RunCoroutine(routine, onComplete));
+        }
+
+        private static IEnumerator RunCoroutine<T>(IEnumerator routine, Action<T> onComplete)
+        {
+            object result = null;
+            while (routine.MoveNext())
+            {
+                result = routine.Current;
+                yield return result; // 코루틴의 각 반환 값을 그대로 yield
+            }
+            onComplete((T)result);  // 코루틴의 최종 결과를 콜백으로 전달
         }
     }
 
