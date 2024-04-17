@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aroka.CoroutineUtils;
+using Aroka.JsonUtils;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -36,7 +38,6 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        ArokaCoroutineUtils.SetCoroutineExecutor(this);
         EventService.Initialize();
         DialogueService.Initialize();
         ItemService.Initialize();
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         if(isMoving){
-            Debug.LogError("이미 장소 이동중입니다");
+            Debug.LogWarning("이미 장소 이동중입니다");
             return;
         }
         isMoving = true;

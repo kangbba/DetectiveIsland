@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aroka.EaseUtils;
 using UnityEngine;
 
 public class Place : SpriteEffector
@@ -12,6 +13,7 @@ public class Place : SpriteEffector
         _placeData = placeData;
         base.Initialize();
         base.SetSprite(placeData.PlaceSprite);
+
     }
     public void Enter(float totalTime){
         FadeInFromStart(totalTime);

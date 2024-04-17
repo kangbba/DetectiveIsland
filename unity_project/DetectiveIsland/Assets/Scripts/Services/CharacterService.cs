@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ArokaUtil;
+using Aroka.ArokaUtils;
 using UnityEngine;
 
 public static class CharacterService

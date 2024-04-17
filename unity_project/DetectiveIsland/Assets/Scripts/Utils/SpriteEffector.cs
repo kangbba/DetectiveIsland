@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using ArokaUtil;
+using Aroka.ArokaUtils;
+using Aroka.EaseUtils;
 using UnityEngine;
 
 // SpriteEffector 클래스 정의
@@ -21,7 +22,7 @@ public class SpriteEffector : MonoBehaviour
     }
     protected void FadeIn(float totalTime)
     {
-        transform.ArokaTr().SetSpriteRendererColor(Color.white.ModifiedAlpha(1f), totalTime);
+        _spriteRenderer.EaseSpriteRendererColor(Color.white.ModifiedAlpha(1f), totalTime);
     }
     protected void FadeInFromStart(float totalTime)
     {
@@ -31,12 +32,12 @@ public class SpriteEffector : MonoBehaviour
     protected void FadeOut(float totalTime)
     {
         Debug.Log("FadeOut 호출됨");
-        transform.ArokaTr().SetSpriteRendererColor(Color.white.ModifiedAlpha(0f), totalTime);
+        _spriteRenderer.EaseSpriteRendererColor(Color.white.ModifiedAlpha(0f), totalTime);
     }
     protected void Red(float redStrengthPerone, float totalTime)
     {
         Debug.Log("FadeOut 호출됨");
-        transform.ArokaTr().SetSpriteRendererColor(Color.red.ModifiedAlpha(redStrengthPerone), totalTime);
+        _spriteRenderer.EaseSpriteRendererColor(Color.red.ModifiedAlpha(redStrengthPerone), totalTime);
     }
     protected void RedRestore(float totalTime)
     {

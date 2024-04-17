@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aroka.CoroutineUtils;
 using UnityEngine;
 
 public static class DialogueService

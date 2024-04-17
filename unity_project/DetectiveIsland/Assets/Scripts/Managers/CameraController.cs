@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Aroka.CoroutineUtils;
 
 public static class CameraController
 {

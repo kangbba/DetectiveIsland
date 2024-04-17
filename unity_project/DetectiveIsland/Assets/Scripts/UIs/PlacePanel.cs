@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using ArokaUtil;
+using Aroka.Anim;
 using UnityEngine;
 
 public class PlacePanel : ArokaAnim

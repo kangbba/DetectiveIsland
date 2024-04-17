@@ -6,9 +6,10 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
+using Aroka.Anim;
 
 
-namespace ArokaUtil {
+namespace Aroka.ArokaUtils {
 
     public static class ArokaUtils
     {
@@ -39,18 +40,6 @@ namespace ArokaUtil {
         {
             return Enum.GetValues(_type).Length;
         }
-        public static ArokaTransform ArokaTr(this Transform tr)
-        {
-            if (tr.GetComponent<ArokaTransform>() == null)
-            {
-                return tr.gameObject.AddComponent<ArokaTransform>();
-            }
-            else
-            {
-                return tr.GetComponent<ArokaTransform>();
-            }
-        }
-
     }
 
     public static class UIExtensions
