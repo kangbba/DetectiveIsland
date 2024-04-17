@@ -9,11 +9,14 @@ using UnityEngine;
 
 public class PlaceUIPanel : MonoBehaviour
 {
-    public ArokaAnim _placeUIPanelLeft;
-    public ArokaAnim _placeUIPanelRight;
-    public ArokaAnim _placeUIPanelUp;
 
-    public TextMeshProUGUI _curPlaceText;
+    [SerializeField] private PlaceButton _placeBtnPrefab;
+    [SerializeField] private ArokaAnim _placeUIPanelLeft;
+    [SerializeField] private ArokaAnim _placeUIPanelRight;
+    [SerializeField] private ArokaAnim _placeUIPanelUp;
+
+    [SerializeField] private TextMeshProUGUI _curPlaceText;
+
     private static List<PlaceButton> _curPlaceBtns = new List<PlaceButton>(); // List to store button components
 
     public void SetOnPanel(bool up, bool left, bool right, float totalTime){
@@ -43,7 +46,7 @@ public class PlaceUIPanel : MonoBehaviour
             PlaceData parentPlaceData = parentTransform.GetComponent<PlaceData>();
             if (parentPlaceData != null)
             {
-                PlaceButton buttonLeft = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelLeft.transform);
+                PlaceButton buttonLeft = GameObject.Instantiate(_placeBtnPrefab, _placeUIPanelLeft.transform);
                 buttonLeft.Initialize(parentPlaceData, moveAction);
                 _curPlaceBtns.Add(buttonLeft);
             }
@@ -64,7 +67,7 @@ public class PlaceUIPanel : MonoBehaviour
                 // 버튼의 Y 위치를 반대로 계산하여 위로 생성되도록 함
                 float buttonPosY = startingY - i * spacingBetweenButtons;
                 Vector3 anchordPosition = Vector3.up * buttonPosY;
-                PlaceButton buttonRight = GameObject.Instantiate(Resources.Load<PlaceButton>("PlaceButtonPrefab"), _placeUIPanelRight.transform);
+                PlaceButton buttonRight = GameObject.Instantiate(_placeBtnPrefab, _placeUIPanelRight.transform);
                 buttonRight.GetComponent<RectTransform>().anchoredPosition = anchordPosition;
                 buttonRight.Initialize(childPlaceData, moveAction);
                 _curPlaceBtns.Add(buttonRight);

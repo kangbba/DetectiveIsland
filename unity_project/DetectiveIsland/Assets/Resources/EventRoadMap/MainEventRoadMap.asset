@@ -18,7 +18,7 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _placeID: PortEntrance
-    _scenarioFile: {fileID: 4900000, guid: 70e21e1a4a0e7aa4f84ad5948d4d4a5a, type: 3}
+    _scenarioFile: {fileID: 4900000, guid: a3861c3fbcef543f18b43dd3f9628b1b, type: 3}
   - _eventTime:
       _date: 2024-04-02
       _hour: 9

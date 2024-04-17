@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -338, y: 99}
+  m_AnchoredPosition: {x: -390, y: 139}
   m_SizeDelta: {x: 255.9207, y: 283.6399}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267337686
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd35459e506d40aa891e8ad1334aee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _placeBtnPrefab: {fileID: 7349307483663651851, guid: a032854eef486425ea9ecda2d4c03070, type: 3}
   _placeUIPanelLeft: {fileID: 1347656746}
   _placeUIPanelRight: {fileID: 1810534236}
   _placeUIPanelUp: {fileID: 1764350278}
@@ -1731,8 +1732,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 172, y: 7}
-  m_SizeDelta: {x: 561.2272, y: 473.5284}
+  m_AnchoredPosition: {x: 5.949, y: -146.16}
+  m_SizeDelta: {x: 1047.8081, y: 294.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1307656436
 GameObject:
@@ -1771,13 +1772,15 @@ MonoBehaviour:
       width: 0
       height: 0
     title: Dialogue
+    isSelected: 0
   - rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
-    title: ChoiceSetNode
+    title: ItemDemandNode
+    isSelected: 0
   - rect:
       serializedVersion: 2
       x: 0
@@ -1785,6 +1788,23 @@ MonoBehaviour:
       width: 0
       height: 0
     title: Dialogue
+    isSelected: 0
+  - rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    title: ChoiceSetNode
+    isSelected: 0
+  - rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    title: Dialogue
+    isSelected: 0
 --- !u!4 &1307656438
 Transform:
   m_ObjectHideFlags: 0
@@ -2172,7 +2192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -339, y: -84}
+  m_AnchoredPosition: {x: -95, y: 237}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1727090971
@@ -2481,7 +2501,7 @@ MonoBehaviour:
   _selectedItemImg: {fileID: 267337686}
   _selectedItemNameText: {fileID: 1727090971}
   _selectedItemDescText: {fileID: 1860906902}
-  _exitBtn: {fileID: 0}
+  _exitBtn: {fileID: 793679636}
 --- !u!1 &1810534231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -42, y: -205}
+  m_AnchoredPosition: {x: 170, y: 90}
   m_SizeDelta: {x: 754.3848, y: 178.2015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860906902

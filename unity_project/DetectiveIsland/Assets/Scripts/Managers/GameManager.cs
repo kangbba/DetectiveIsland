@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             // 처리된 이벤트별 상세 정보 출력
             foreach (var plan in remainedEvents)
             {
-                Debug.Log($"처리된 이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
+                Debug.Log($"오늘 남은 이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
             }
 
   
