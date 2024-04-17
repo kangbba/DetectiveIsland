@@ -6,376 +6,144 @@ using UnityEngine;
 using Formatting = Newtonsoft.Json.Formatting;
 
 
-public static class ArokaJsonUtil
-{
-    public static void SaveScenario(Scenario scenario, string fileName)
-    {
-        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-
-        if (File.Exists(fullPath))
-        {
-            bool overwrite = EditorUtility.DisplayDialog(
-                "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
-                $"A file already exists at {fullPath} Do you want to overwrite it?",
-                "네",
-                "취소"
-            );
-
-            if (!overwrite)
-            {
-                Debug.Log("File save cancelled.");
-                return;
-            }
-        }
-
-        JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
-        };
-
-        string json = JsonConvert.SerializeObject(scenario, settings);
-        File.WriteAllText(fullPath, json);
-        AssetDatabase.Refresh();
-        Debug.Log("File saved: " + fullPath);
-    }
-    // 파일 경로를 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(string fileName)
-    {
-        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-        if (!File.Exists(fullPath))
-        {
-            Debug.LogError($"File not found: {fullPath}");
-            return null;
-        }
-        string json = File.ReadAllText(fullPath);
-        return DeserializeScenario(json);   
-
-        
-    }
-    // TextAsset을 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(TextAsset jsonTextAsset)
-    {
-        if (jsonTextAsset == null)
-        {
-            Debug.LogError("No TextAsset provided.");
-            return null;
-        }
-
-        return DeserializeScenario(jsonTextAsset.text);
-    }
-    // JSON 문자열을 역직렬화하여 Scenario 객체를 반환합니다.
-    private static Scenario DeserializeScenario(string json)
-    { 
-        JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.Default
-        };
-        Scenario scenario = JsonConvert.DeserializeObject<Scenario>(json, settings);
-        ScenarioLog(scenario);
-        return scenario;
-    }
-
-    public static void ScenarioLog(Scenario scenario){
-        if (scenario != null && scenario.Elements != null)
-        {
-            Debug.Log("Load Complete, elements Count = " + scenario.Elements.Count);
-            foreach (Element element in scenario.Elements)
-            {
-                if (element is Dialogue dialogue)
-                {
-                    Debug.Log($"Dialogue Element: CharacterID={dialogue.CharacterID}, Lines Count={dialogue.Lines.Count}");
-                    foreach (var line in dialogue.Lines)
-                    {
-                        Debug.Log($"Line: Emotion={line.EmotionID}, Text={line.Sentence}");
-                    }
-                }
-                else
-                {
-                    Debug.Log($"Unknown Element Type: {element.GetType().Name}");
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("Failed to deserialize the JSON content into a Scenario object or the Elements list is null.");
-        }
-    }
-}
-
-public static class NodeService
-{
-    public static List<Element> ToElements(this List<Node> nodes)
-    {
-
-        List<Element> list = new List<Element>();
-
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            Node node = nodes[i];
-            list.Add(node.ToProperElement());
-        }
-        return list;
-    }
-
-    public static Element ToProperElement(this Node node)
-    {
-        if (node is DialogueNode dialogueNode)
-        {
-            return dialogueNode.dialogue;
-        }
-        else if (node is ChoiceSetNode choiceSetNode)
-        {
-            return choiceSetNode.choiceSet;
-        }
-        else if (node is ItemDemandNode itemDemandNode)
-        {
-            return itemDemandNode.itemDemand;
-        }
-        else if (node is PositionChangeNode positionChangeNode)
-        {
-            return positionChangeNode.positionChange;
-        }
-        else if (node is AssetChangeNode assetChangeNode)
-        {
-            return assetChangeNode.assetChange; 
-        }
-        return null; 
-    }
-
-
-
-}
-
 public class NodeEditor : EditorWindow
 {
-    private List<Node> nodes;
+    private List<Node> nodes = new List<Node>();
     private Node selectedNode;
     private Vector2 mousePosition;
-    private Vector2 lastMouseDragPosition; // Track the last position of the mouse during a drag
+    private Vector2 lastMouseDragPosition;
     private Vector2 canvasOffset;
     private bool isDraggingNode;
-    private bool isPanning;
-
-
+    private bool isPanningCanvas;
 
     [MenuItem("JNode/Create Json Node")]
     private static void OpenWindow()
     {
-        NodeEditor window = GetWindow<NodeEditor>();
-        window.titleContent = new GUIContent("JNode Editor");
+        NodeEditor window = GetWindow<NodeEditor>("JNode Editor");
+        window.Show();
     }
-    private void OnEnable()
+
+    private void OnGUI()
     {
-        nodes = new List<Node>();
-        canvasOffset = Vector2.zero;
+        ProcessEvents(Event.current);
+        DrawGrid();
+        DrawNodes();
+        if (GUI.changed) Repaint();
     }
-    private const float gridSpacing = 20f;
-    private const float gridOpacity = 0.2f;
-    private const float gridThickness = 1f;
 
     private void DrawGrid()
     {
-        int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
-        int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
+        float gridSize = 20f;
+        float gridOpacity = 0.2f;
+        int widthDivs = Mathf.CeilToInt(position.width / gridSize);
+        int heightDivs = Mathf.CeilToInt(position.height / gridSize);
 
         Handles.BeginGUI();
         Handles.color = new Color(0.5f, 0.5f, 0.5f, gridOpacity);
 
-        Vector3 newOffset = new Vector3(canvasOffset.x % gridSpacing, canvasOffset.y % gridSpacing, 0);
-
-        for (int i = -1; i < widthDivs + 1; i++)
+        for (int i = 0; i <= widthDivs; i++)
         {
-            Handles.DrawLine(
-                new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset,
-                new Vector3(gridSpacing * i, position.height, 0) + newOffset
-            );
+            Handles.DrawLine(new Vector2(gridSize * i, 0) + canvasOffset, new Vector2(gridSize * i, position.height) + canvasOffset);
         }
-
-        for (int j = -1; j < heightDivs + 1; j++)
+        for (int j = 0; j <= heightDivs; j++)
         {
-            Handles.DrawLine(
-                new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset,
-                new Vector3(position.width, gridSpacing * j, 0) + newOffset
-            );
+            Handles.DrawLine(new Vector2(0, gridSize * j) + canvasOffset, new Vector2(position.width, gridSize * j) + canvasOffset);
         }
 
         Handles.color = Color.white;
         Handles.EndGUI();
     }
 
-
-
-    private void OnGUI()
+    private void DrawNodes()
     {
-        DrawGrid();
-        ProcessEvents(Event.current);
-        DrawNodes();
-
-        if (isDraggingNode && selectedNode != null)
+        foreach (var node in nodes)
         {
-            selectedNode.rect.position = mousePosition - selectedNode.dragOffset + canvasOffset;
-            Repaint();
-        }
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Save Nodes to JSON"))
-        {
-            SaveCurrentNodes();
-        }
-        GUILayout.EndHorizontal();
-    }
-
-    private void SaveCurrentNodes()
-    {
-        if (nodes.Count > 0)
-        {
-            // Construct the path to the Resources/ScenarioDatas folder within the Assets directory
-            string resourcesPath = Path.Combine(Application.dataPath, "Resources/ScenarioDatas");
-
-            // Check if the directory exists; if not, default to the Assets folder
-            string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
-
-            // Open the save file dialog with the determined initial directory
-            string path = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
-
-            // Check if the user has not cancelled the operation
-            if (!string.IsNullOrEmpty(path))
-            {
-                List<Element> elements = nodes.ToElements();
-                Scenario scenario = new Scenario(elements);
-
-                // Save the scenario object as a JSON file at the specified path
-                ArokaJsonUtil.SaveScenario(scenario, path);
-                Debug.Log("Nodes saved to JSON: " + path);
-            }
-        }
-        else
-        {
-            Debug.Log("No nodes to save.");
+            node.DrawNode(canvasOffset);
         }
     }
-
-
 
     private void ProcessEvents(Event e)
     {
-        mousePosition = e.mousePosition;
+        mousePosition = e.mousePosition - canvasOffset;
+
         switch (e.type)
         {
             case EventType.MouseDown:
-                if (e.button == 2) // Middle mouse button
+                if (e.button == 2) // Middle mouse button for panning
                 {
-                    isPanning = true;
+                    isPanningCanvas = true;
                     lastMouseDragPosition = e.mousePosition;
                     e.Use();
                 }
-                else if (e.button == 1) // Right click
+                else if (e.button == 1) // Right click for context menu
                 {
-                    ProcessContextMenu();
+                    ProcessContextMenu(e.mousePosition);
                     e.Use();
                 }
-                else if (e.button == 0) // Left click
+                else if (e.button == 0) // Left mouse button for selecting and dragging nodes
                 {
-                    Node node = GetNodeAtPosition(mousePosition - canvasOffset);
-                    if (node != null)
+                    selectedNode = null;
+                    foreach (var node in nodes)
                     {
-                        selectedNode = node;
-                        e.Use();
+                        if (node.rect.Contains(mousePosition))
+                        {
+                            selectedNode = node;
+                            isDraggingNode = true;
+                            lastMouseDragPosition = e.mousePosition;
+                            break;
+                        }
                     }
-                    else
+
+                    if (selectedNode == null)
                     {
-                        selectedNode = null; // Clear selection if click outside any node
+                        isPanningCanvas = true;
+                        lastMouseDragPosition = e.mousePosition;
                     }
+                    e.Use();
                 }
                 break;
+
             case EventType.MouseDrag:
-                if (isPanning && e.button == 2)
+                if (isPanningCanvas)
                 {
-                    Vector2 delta = e.mousePosition - lastMouseDragPosition;
-                    canvasOffset += delta;
+                    canvasOffset += e.mousePosition - lastMouseDragPosition;
                     lastMouseDragPosition = e.mousePosition;
-                    Repaint();
+                    e.Use();
+                }
+                else if (isDraggingNode && selectedNode != null)
+                {
+                    selectedNode.rect.position += e.mousePosition - lastMouseDragPosition;
+                    lastMouseDragPosition = e.mousePosition;
+                    e.Use();
                 }
                 break;
+
             case EventType.MouseUp:
-                if (e.button == 2)
-                    isPanning = false;
+                isDraggingNode = false;
+                isPanningCanvas = false;
+                e.Use();
                 break;
+
             case EventType.KeyDown:
                 if (e.keyCode == KeyCode.Delete && selectedNode != null)
                 {
                     nodes.Remove(selectedNode);
                     selectedNode = null;
-                    Repaint();
+                    e.Use();
                 }
                 break;
         }
     }
 
-    private void ProcessContextMenu()
+    private void ProcessContextMenu(Vector2 mousePos)
     {
-        GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent("New Dialogue"), false, () => OnClickAddNode(mousePosition - canvasOffset));
-        if (selectedNode != null)
-        {
-            genericMenu.AddItem(new GUIContent("Delete Node"), false, () => DeleteSelectedNode());
-        }
-        genericMenu.ShowAsContext();
+        GenericMenu menu = new GenericMenu();
+        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddNode(mousePos));
+        menu.ShowAsContext();
     }
 
-    private void OnClickAddNode(Vector2 position)
+    private void AddNode(Vector2 position)
     {
-        DialogueNode dialogueNode = new DialogueNode(position, 200, 100, "Dialogue");
-        nodes.Add(dialogueNode);
+        nodes.Add(new DialogueNode(new Rect(position.x, position.y, 200, 100), "Dialogue"));
     }
-
-    private void DeleteSelectedNode()
-    {
-        if (selectedNode != null)
-        {
-            nodes.Remove(selectedNode);
-            selectedNode = null;
-            Repaint();
-        }
-    }
-
-    private void DrawNodes()
-    {
-        foreach (var node in nodes)
-        {
-            // 캔버스 오프셋을 적용하여 화면에 그릴 Rect 계산
-            Rect adjustedRect = new Rect(node.rect.position + canvasOffset, node.rect.size);
-
-            // 화면에 Node를 그립니다. 여기서는 실제 node.rect를 변경하지 않습니다.
-            GUI.Box(adjustedRect, node.title, EditorStyles.helpBox);
-
-            // 추가적인 노드의 GUI 요소들을 그리는 등의 작업을 수행할 수 있습니다.
-        }
-
-        if (selectedNode != null)
-        {
-            // 선택된 노드에 대해 특별한 표시를 합니다.
-            GUI.color = Color.cyan;
-            GUI.Box(new Rect(selectedNode.rect.position + canvasOffset, selectedNode.rect.size), "", EditorStyles.helpBox);
-            GUI.color = Color.white;
-        }
-    }
-
-
-
-    private Node GetNodeAtPosition(Vector2 position)
-    {
-        foreach (var node in nodes)
-        {
-            if (node.rect.Contains(position))
-            {
-                return node;
-            }
-        }
-        return null;
-    }
-
 }
