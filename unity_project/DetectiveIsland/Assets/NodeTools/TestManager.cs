@@ -35,8 +35,8 @@ public class TestManager : MonoBehaviour
             return;
         }
         Debug.Log(loadedScenario.Elements.Count);
-
     }
+
 
     [ArokaButton]
     public void ClearNodes()

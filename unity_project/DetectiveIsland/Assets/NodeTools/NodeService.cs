@@ -23,25 +23,23 @@ public static class NodeService
         {
             return dialogueNode.dialogue;
         }
-        /*
-    else if (node is ChoiceSetNode choiceSetNode)
-    {
-        return choiceSetNode.choiceSet;
-    }
-    else if (node is ItemDemandNode itemDemandNode)
-    {
-        return itemDemandNode.itemDemand;
-    }
-    else if (node is PositionChangeNode positionChangeNode)
-    {
-        return positionChangeNode.positionChange;
-    }
-    else if (node is AssetChangeNode assetChangeNode)
-    {
-        return assetChangeNode.assetChange; 
-    }
-    return null; */
-
+        else if (node is ChoiceSetNode choiceSetNode)
+        {
+            return choiceSetNode.choiceSet;
+        }
+        else if (node is ItemDemandNode itemDemandNode)
+        {
+            return itemDemandNode.itemDemand;
+        }
+        else if (node is PositionChangeNode positionChangeNode)
+        {
+            return positionChangeNode.positionChange;
+        }
+        else if (node is AssetChangeNode assetChangeNode)
+        {
+            return assetChangeNode.assetChange;
+        }
         return null;
     }
+
 }

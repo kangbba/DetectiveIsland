@@ -8,15 +8,45 @@ using Newtonsoft.Json;
 namespace Aroka.JsonUtils{
     public static class ArokaJsonUtils
     {
-        public static void SaveScenario(Scenario scenario, string fileName)
+        public static void SaveToJson<T>(T objectToSave, string filePath)
         {
-            string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-
-            if (File.Exists(fullPath))
+            if (File.Exists(filePath))
             {
                 bool overwrite = EditorUtility.DisplayDialog(
                     "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
-                    $"A file already exists at {fullPath} Do you want to overwrite it?",
+                    $"A file already exists at {filePath}. Do you want to overwrite it?",
+                    "네",
+                    "취소"
+                );
+
+                if (!overwrite)
+                {
+                    Debug.Log("File save cancelled.");
+                    return;
+                }
+            }
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                Formatting = Formatting.Indented,
+                StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+            };
+
+            string json = JsonConvert.SerializeObject(objectToSave, settings);
+            File.WriteAllText(filePath, json);
+            AssetDatabase.Refresh();
+            Debug.Log("File saved: " + filePath);
+        }
+
+        public static void SaveScenario(Scenario scenario, string fillPath)
+        {
+
+            if (File.Exists(fillPath))
+            {
+                bool overwrite = EditorUtility.DisplayDialog(
+                    "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
+                    $"A file already exists at {fillPath} Do you want to overwrite it?",
                     "네",
                     "취소"
                 );
@@ -36,9 +66,9 @@ namespace Aroka.JsonUtils{
             };
 
             string json = JsonConvert.SerializeObject(scenario, settings);
-            File.WriteAllText(fullPath, json);
+            File.WriteAllText(fillPath, json);
             AssetDatabase.Refresh();
-            Debug.Log("File saved: " + fullPath);
+            Debug.Log("File saved: " + fillPath);
         }
         // 파일 경로를 통해 시나리오를 로드합니다.
         public static Scenario LoadScenario(string fileName)
@@ -51,8 +81,6 @@ namespace Aroka.JsonUtils{
             }
             string json = File.ReadAllText(fullPath);
             return DeserializeScenario(json);   
-
-            
         }
         // TextAsset을 통해 시나리오를 로드합니다.
         public static Scenario LoadScenario(TextAsset jsonTextAsset)
