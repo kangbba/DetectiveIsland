@@ -1,0 +1,49 @@
+{
+  "$type": "Scenario, Assembly-CSharp",
+  "Elements": [
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Kate",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "smile",
+          "Sentence": "Hello"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Kate",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "smile",
+          "Sentence": "Hello"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Kate",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "smile",
+          "Sentence": "Hello"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Kate",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "smile",
+          "Sentence": "Hello"
+        }
+      ]
+    }
+  ]
+}
