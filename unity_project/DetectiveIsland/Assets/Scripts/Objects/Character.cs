@@ -13,7 +13,9 @@ public class Character : SpriteEffector
     {
         base.FadeOut(0f);
         SetEmotion("Smile");
+        
         ////
+        ///
     }
 
     public void SetEmotion(string emotionID)
