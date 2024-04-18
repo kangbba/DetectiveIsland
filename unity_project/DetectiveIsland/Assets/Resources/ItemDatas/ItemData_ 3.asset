@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4205113ad3da34f049cc90ff290ba027, type: 3}
   m_Name: ItemData_ 3
   m_EditorClassIdentifier: 
-  _itemID: map
+  _itemID: Map
   _itemSprite: {fileID: 21300000, guid: bab69a9e8419b4a968dc6f22759f9179, type: 3}
   _itemNameForUser: "\uC9C0\uB3C4"
   _itemDescription: "\uB9C8\uC744\uC758 \uC9C0\uB3C4\uAC00 \uADF8\uB824\uC838\uC788\uC9C0\uB9CC,

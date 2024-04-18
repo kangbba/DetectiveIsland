@@ -33,12 +33,14 @@ public class ItemPanel : ArokaAnim
     // 아이템이 선택되었을 때 호출할 메서드
     public void Initialize(List<ItemData> itemDatas, bool exitable)
     {
-        _itemContainer.Display(null);
         _itemBtnsParent.DestroyAllChildren(); // Ensure all children are destroyed properly
         CreateItemButtons(itemDatas);
         bool isItemExist = itemDatas != null && itemDatas.Count > 0;
         if(isItemExist){
             _itemContainer.Display(itemDatas.Last());
+        }
+        else{
+            _itemContainer.Display(null);
         }
         _confirmBtn.gameObject.SetActive(false);
         _exitBtn.gameObject.SetActive(exitable);

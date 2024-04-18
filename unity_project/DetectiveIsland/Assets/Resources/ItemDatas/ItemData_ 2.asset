@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4205113ad3da34f049cc90ff290ba027, type: 3}
   m_Name: ItemData_ 2
   m_EditorClassIdentifier: 
-  _itemID: id_card
+  _itemID: IDCard
   _itemSprite: {fileID: 21300000, guid: bbf07171af43d40fdbe4475a365b08e0, type: 3}
   _itemNameForUser: "\uC2E0\uBD84\uC99D"
   _itemDescription: "\uC774\uAC78\uB85C \uC2E0\uBD84\uC744 \uC99D\uBA85\uD55C\uB2E4 "

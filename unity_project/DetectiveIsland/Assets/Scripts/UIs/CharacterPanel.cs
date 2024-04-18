@@ -101,13 +101,13 @@ public class CharacterPanel : MonoBehaviour
         switch (positionID)
         {
             case "Left":
-                newPosition = new Vector3(-17f, 0f, 0f); // 예시 위치, 필요에 따라 수정
+                newPosition = new Vector3(-12f, 0f, 0f); // 예시 위치, 필요에 따라 수정
                 break;
             case "Middle":
                 newPosition = new Vector3(0f, 0f, 0f); // 예시 위치, 필요에 따라 수정
                 break;
             case "Right":
-                newPosition = new Vector3(17f, 0f, 0f); // 예시 위치, 필요에 따라 수정
+                newPosition = new Vector3(12f, 0f, 0f); // 예시 위치, 필요에 따라 수정
                 break;
             // 필요에 따라 다른 위치 추가
         }

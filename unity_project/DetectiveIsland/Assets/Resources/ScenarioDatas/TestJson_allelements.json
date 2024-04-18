@@ -4,12 +4,7 @@
     {
       "$type": "PositionChange, Assembly-CSharp",
       "CharacterID": "Kate",
-      "PositionID": "Right"
-    },
-    {
-      "$type": "PositionChange, Assembly-CSharp",
-      "CharacterID": "Lisa",
-      "PositionID": "Middle"
+      "PositionID": "Left"
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -18,21 +13,63 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "Hi"
+          "Sentence": "안녕?"
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "Hello"
+          "Sentence": "내 이름은 케이트야"
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "뭐라뭐라 어쩌고 !"
+          "Sentence": "지금부터 간단한 대화 출력 테스트를 해볼거야"
         }
       ]
     },
-    null,
+    {
+      "$type": "PositionChange, Assembly-CSharp",
+      "CharacterID": "Lisa",
+      "PositionID": "Right"
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Lisa",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "안녕 ? "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "나는 리사라고 해"
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "만나서 반갑구나?"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Kate",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "우선 이걸 받아봐. 테스트니까."
+        }
+      ]
+    },
+    {
+      "$type": "AssetChange, Assembly-CSharp",
+      "GainType": "Gain",
+      "ItemID": "NotePad",
+      "GainAmount": "0"
+    },
     {
       "$type": "ChoiceSet, Assembly-CSharp",
       "Dialogues": [
@@ -43,12 +80,7 @@
             {
               "$type": "Line, Assembly-CSharp",
               "EmotionID": "Smile",
-              "Sentence": "뭐를 먹고싶어?"
-            },
-            {
-              "$type": "Line, Assembly-CSharp",
-              "EmotionID": "Smile",
-              "Sentence": "골라봐"
+              "Sentence": "우리가 지금부터 Choice 테스트 할건데 불만 없지 ?"
             }
           ]
         }
@@ -56,7 +88,7 @@
       "Choices": [
         {
           "$type": "Choice, Assembly-CSharp",
-          "Title": "선택지 1",
+          "Title": "불만 있다",
           "Elements": [
             {
               "$type": "Dialogue, Assembly-CSharp",
@@ -65,40 +97,64 @@
                 {
                   "$type": "Line, Assembly-CSharp",
                   "EmotionID": "Smile",
-                  "Sentence": "선택지 1을 골랐구나"
-                },
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "그거아주 좋은선택이야"
-                },
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "잘했어"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$type": "Choice, Assembly-CSharp",
-          "Title": "선택지 2",
-          "Elements": [
-            {
-              "$type": "Dialogue, Assembly-CSharp",
-              "CharacterID": "Kate",
-              "Lines": [
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "선택지 2을 골랐구나"
+                  "Sentence": "불만이 있다고? 정말 실망이야."
                 }
               ]
             },
             {
               "$type": "Dialogue, Assembly-CSharp",
-              "CharacterID": "Mono",
+              "CharacterID": "Lisa",
+              "Lines": [
+                {
+                  "$type": "Line, Assembly-CSharp",
+                  "EmotionID": "Smile",
+                  "Sentence": "정말... 말도안돼...."
+                }
+              ]
+            },
+            {
+              "$type": "Dialogue, Assembly-CSharp",
+              "CharacterID": "Lisa",
+              "Lines": [
+                {
+                  "$type": "Line, Assembly-CSharp",
+                  "EmotionID": "Smile",
+                  "Sentence": "하지만 테스트를위해 이걸 주긴 해야겠네.."
+                }
+              ]
+            },
+            {
+              "$type": "AssetChange, Assembly-CSharp",
+              "GainType": "Gain",
+              "ItemID": "Map",
+              "GainAmount": "0"
+            }
+          ]
+        },
+        {
+          "$type": "Choice, Assembly-CSharp",
+          "Title": "불만 없다",
+          "Elements": [
+            {
+              "$type": "Dialogue, Assembly-CSharp",
+              "CharacterID": "Kate",
+              "Lines": [
+                {
+                  "$type": "Line, Assembly-CSharp",
+                  "EmotionID": "Smile",
+                  "Sentence": "불만이 없어서 다행이야. 선물로 지도도 줄게"
+                }
+              ]
+            },
+            {
+              "$type": "AssetChange, Assembly-CSharp",
+              "GainType": "Gain",
+              "ItemID": "Map",
+              "GainAmount": "0"
+            },
+            {
+              "$type": "Dialogue, Assembly-CSharp",
+              "CharacterID": "Ryan",
               "Lines": [
                 {
                   "$type": "Line, Assembly-CSharp",
@@ -113,39 +169,6 @@
               ]
             }
           ]
-        },
-        {
-          "$type": "Choice, Assembly-CSharp",
-          "Title": "선택지 3",
-          "Elements": [
-            {
-              "$type": "Dialogue, Assembly-CSharp",
-              "CharacterID": "Kate",
-              "Lines": [
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "선택지 3을 골랐구나"
-                },
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "..."
-                }
-              ]
-            },
-            {
-              "$type": "Dialogue, Assembly-CSharp",
-              "CharacterID": "Mono",
-              "Lines": [
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "너 왜 말이없니"
-                }
-              ]
-            }
-          ]
         }
       ]
     },
@@ -156,17 +179,65 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "Hi"
+          "Sentence": "자 이제 조용해. "
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "Hello"
-        },
+          "Sentence": "다음 테스트는 지도를 골라봐 이벤트야"
+        }
+      ]
+    },
+    {
+      "$type": "ItemDemand, Assembly-CSharp",
+      "ItemID": "Map",
+      "Dialogues": [
         {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "뭐라뭐라 어쩌고 !"
+          "$type": "Dialogue, Assembly-CSharp",
+          "CharacterID": "Lisa",
+          "Lines": [
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Smile",
+              "Sentence": "맞을때까지 고르기만 하면 돼. 쉽지?"
+            }
+          ]
+        }
+      ],
+      "FailElements": [
+        {
+          "$type": "Dialogue, Assembly-CSharp",
+          "CharacterID": "Kate",
+          "Lines": [
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Smile",
+              "Sentence": "실망스럽구나"
+            },
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Smile",
+              "Sentence": "하지만 포기는 하지마.."
+            }
+          ]
+        }
+      ],
+      "SuccessElements": [
+        {
+          "$type": "Dialogue, Assembly-CSharp",
+          "CharacterID": "Kate",
+          "Lines": [
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Smile",
+              "Sentence": "이건 성공했을때 하는 반응이야"
+            },
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Smile",
+              "Sentence": "성공해서 축하해"
+            }
+          ]
         }
       ]
     }

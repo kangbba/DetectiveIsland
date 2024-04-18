@@ -40,7 +40,7 @@ public static class ItemService
 
         var ownItems = GetOwnItemDatas();
         if(ownItems != null && ownItems.Count > 0){
-            _itemPanel.Initialize(GetOwnItemDatas(), false);
+            _itemPanel.Initialize(ownItems, false);
             SetOnPanel(true, 0.1f);
             yield return new WaitForSeconds(.5f);
             ItemData selectedItemData = null;
@@ -99,17 +99,18 @@ public static class ItemService
         if(itemData.ItemID == "FriendShip"){
 
             if(assetChange.GainType == "Gain"){
-
+                
             }
             else if(assetChange.GainType == "Lose"){
             }
 
         }
         else{ 
-
+            OwnItem(itemData.ItemID, true);
             if(assetChange.GainType == "Gain"){
                 _itemOwnPanel.SetOn(true, 0.1f); // 패널을 활성화
                 _itemOwnPanel.ShowItem(itemData); // SetMessage 메서드는 ItemPanel에 정의되어 있어야 함
+                
                 yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
                 // 패널 비활성화
                 _itemOwnPanel.SetOn(false, 0.1f);

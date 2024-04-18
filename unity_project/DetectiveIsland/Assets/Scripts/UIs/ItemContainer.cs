@@ -15,14 +15,21 @@ public class ItemContainer
     // 아이템 데이터를 기반으로 UI 컴포넌트를 업데이트하는 메서드
     public void Display(ItemData itemData)
     {
-        if (itemNameText != null)
+        bool isItemExist = itemData != null;
+        itemNameText.gameObject.SetActive(isItemExist);
+        itemDescriptionText.gameObject.SetActive(isItemExist);
+        itemImage.gameObject.SetActive(isItemExist);
+        if(isItemExist){
+            if (itemNameText != null)
             itemNameText.text = itemData.ItemNameForUser;
 
-        if (itemDescriptionText != null)
-            itemDescriptionText.text = itemData.ItemDescription;
+            if (itemDescriptionText != null)
+                itemDescriptionText.text = itemData.ItemDescription;
 
-        if (itemImage != null)
-            itemImage.sprite = itemData.ItemSprite;
+            if (itemImage != null)
+                itemImage.sprite = itemData.ItemSprite;
+        }
+       
     }
 
 }

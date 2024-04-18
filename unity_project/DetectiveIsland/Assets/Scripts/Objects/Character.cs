@@ -11,17 +11,16 @@ public class Character : SpriteEffector
     // 캐릭터 초기화 메서드
     public void Initialize()
     {
-        base.FadeOut(0f);
         SetEmotion("Smile");
-        
-        ////
-        ///
+        base.FadeOut(0f);
     }
 
     public void SetEmotion(string emotionID)
     {
         EmotionData emotionData = _characterData.GetEmotionData(emotionID);
-
+        if(emotionData == null || emotionData.EmotionSprite == null){
+            Debug.LogWarning("emotionData 가 없거나, emotionData에 해당하는 sprite 없음");
+        }
         base.SetSprite(emotionData.EmotionSprite);
     }
 

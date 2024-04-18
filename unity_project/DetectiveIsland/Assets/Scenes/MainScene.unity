@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -390, y: 139}
-  m_SizeDelta: {x: 255.9207, y: 283.6399}
+  m_AnchoredPosition: {x: 0, y: 223}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &137237752
 MonoBehaviour:
@@ -232,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1240.7356, y: 716.8942}
+  m_AnchoredPosition: {x: 0, y: 33.8559}
+  m_SizeDelta: {x: 800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226296508
 MonoBehaviour:
@@ -256,7 +256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 1a5d8785d80a4ee42a2a4c8632436dc0, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f72b08eb1a04f56a50b926dd1364e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterParent: {fileID: 0}
+  _characterParent: {fileID: 496861789}
 --- !u!1 &574982655
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
     _localScale: {x: 0, y: 0, z: 0}
     _localRot: {x: 0, y: 0, z: 0, w: 1}
     _color: {r: 1, g: 1, b: 1, a: 1}
-  _placePrefab: {fileID: 0}
+  _placePrefab: {fileID: 3453876497108731117, guid: a7c7e68c13614494fbaf3de9c2dea03d, type: 3}
 --- !u!1 &686147186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,8 +1444,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145.6, y: 90}
-  m_SizeDelta: {x: 736.78, y: 178.2015}
+  m_AnchoredPosition: {x: 0, y: -177.33818}
+  m_SizeDelta: {x: 618.9048, y: 267.946}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913213978
 MonoBehaviour:
@@ -1467,7 +1467,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\uC544\uC774\uD15C \uC124\uBA85\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
   m_sharedMaterial: {fileID: 4626242773714902045, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
@@ -2127,23 +2127,7 @@ MonoBehaviour:
       y: 0
       width: 0
       height: 0
-    title: PositionChangeNode
-    isSelected: 0
-  - rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: PositionChangeNode
-    isSelected: 0
-  - rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: Dialogue
+    title: ItemDemandNode
     isSelected: 0
   - rect:
       serializedVersion: 2
@@ -2152,22 +2136,6 @@ MonoBehaviour:
       width: 0
       height: 0
     title: AssetChangeNode
-    isSelected: 0
-  - rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: ChoiceSetNode
-    isSelected: 0
-  - rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: Dialogue
     isSelected: 0
 --- !u!4 &1307656438
 Transform:
@@ -2278,18 +2246,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onState:
     _localPos: {x: 0, y: 0, z: 0}
-    _localScale: {x: 0, y: 0, z: 1}
+    _localScale: {x: 1, y: 1, z: 1}
     _localRot: {x: -0, y: -0, z: -0, w: 1}
     _color: {r: 1, g: 1, b: 1, a: 0}
   _offState:
     _localPos: {x: 0, y: 0, z: 0}
-    _localScale: {x: 0, y: 0, z: 0}
+    _localScale: {x: 0, y: 0, z: 1}
     _localRot: {x: -0, y: -0, z: -0, w: 1}
     _color: {r: 1, g: 1, b: 1, a: 0}
   itemContainer:
-    itemNameText: {fileID: 0}
-    itemDescriptionText: {fileID: 0}
-    itemImage: {fileID: 0}
+    itemNameText: {fileID: 1547467937}
+    itemDescriptionText: {fileID: 913213978}
+    itemImage: {fileID: 137237752}
 --- !u!1 &1347656741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,8 +2390,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145.60287, y: 232.58478}
-  m_SizeDelta: {x: 736.7844, y: 73.7294}
+  m_AnchoredPosition: {x: 0, y: 13}
+  m_SizeDelta: {x: 413.683, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1547467937
 MonoBehaviour:
@@ -2445,7 +2413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\uC544\uC774\uD15C \uC774\uB984\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
   m_sharedMaterial: {fileID: 4626242773714902045, guid: 668518d7125e14050ade7b90fb97aba0, type: 2}
@@ -2472,14 +2440,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.9
+  m_fontSize: 44.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2779,7 +2747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPanel: {fileID: 1792045026}
-  _itemOwnPanel: {fileID: 0}
+  _itemOwnPanel: {fileID: 1325496140}
   _placePanel: {fileID: 662951373}
   _placeUIPanel: {fileID: 308269329}
   _characterPanel: {fileID: 496861791}
@@ -3127,12 +3095,12 @@ MonoBehaviour:
   _itemBtnsParent: {fileID: 1262510782}
   _background: {fileID: 713317259}
   _itemContainer:
-    itemNameText: {fileID: 0}
-    itemDescriptionText: {fileID: 0}
-    itemImage: {fileID: 0}
-  _enterBtn: {fileID: 0}
-  _exitBtn: {fileID: 0}
-  _confirmBtn: {fileID: 0}
+    itemNameText: {fileID: 1727090971}
+    itemDescriptionText: {fileID: 1860906902}
+    itemImage: {fileID: 267337686}
+  _enterBtn: {fileID: 1934020903}
+  _exitBtn: {fileID: 793679638}
+  _confirmBtn: {fileID: 1664399939}
 --- !u!1 &1810534231
 GameObject:
   m_ObjectHideFlags: 0
