@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f72b08eb1a04f56a50b926dd1364e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterParent: {fileID: 496861789}
+  _characterParent: {fileID: 0}
 --- !u!1 &574982655
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
     _localScale: {x: 0, y: 0, z: 0}
     _localRot: {x: 0, y: 0, z: 0, w: 1}
     _color: {r: 1, g: 1, b: 1, a: 1}
-  _placePrefab: {fileID: 5192045345763311490, guid: c6679bd233b5248d6b9099ff89b58531, type: 3}
+  _placePrefab: {fileID: 0}
 --- !u!1 &686147186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2195,7 +2195,7 @@ GameObject:
   - component: {fileID: 1325496136}
   - component: {fileID: 1325496139}
   - component: {fileID: 1325496138}
-  - component: {fileID: 1325496137}
+  - component: {fileID: 1325496140}
   m_Layer: 5
   m_Name: ItemOwnPanel
   m_TagString: Untagged
@@ -2226,32 +2226,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1325496137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325496135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1e2a921f0b7649ca8da488cca6d4d92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onState:
-    _localPos: {x: 0, y: 0, z: 0}
-    _localScale: {x: 0, y: 0, z: 1}
-    _localRot: {x: -0, y: -0, z: -0, w: 1}
-    _color: {r: 1, g: 1, b: 1, a: 0}
-  _offState:
-    _localPos: {x: 0, y: 0, z: 0}
-    _localScale: {x: 0, y: 0, z: 0}
-    _localRot: {x: -0, y: -0, z: -0, w: 1}
-    _color: {r: 1, g: 1, b: 1, a: 0}
-  itemContainer:
-    itemNameText: {fileID: 1547467937}
-    itemDescriptionText: {fileID: 913213978}
-    itemImage: {fileID: 137237752}
 --- !u!114 &1325496138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2290,6 +2264,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325496135}
   m_CullTransparentMesh: 1
+--- !u!114 &1325496140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325496135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ecf5f7c11fb8e49ba6cd861e167629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onState:
+    _localPos: {x: 0, y: 0, z: 0}
+    _localScale: {x: 0, y: 0, z: 1}
+    _localRot: {x: -0, y: -0, z: -0, w: 1}
+    _color: {r: 1, g: 1, b: 1, a: 0}
+  _offState:
+    _localPos: {x: 0, y: 0, z: 0}
+    _localScale: {x: 0, y: 0, z: 0}
+    _localRot: {x: -0, y: -0, z: -0, w: 1}
+    _color: {r: 1, g: 1, b: 1, a: 0}
+  itemContainer:
+    itemNameText: {fileID: 0}
+    itemDescriptionText: {fileID: 0}
+    itemImage: {fileID: 0}
 --- !u!1 &1347656741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,7 +2779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPanel: {fileID: 1792045026}
-  _itemOwnPanel: {fileID: 1325496137}
+  _itemOwnPanel: {fileID: 0}
   _placePanel: {fileID: 662951373}
   _placeUIPanel: {fileID: 308269329}
   _characterPanel: {fileID: 496861791}
@@ -3127,12 +3127,12 @@ MonoBehaviour:
   _itemBtnsParent: {fileID: 1262510782}
   _background: {fileID: 713317259}
   _itemContainer:
-    itemNameText: {fileID: 1727090971}
-    itemDescriptionText: {fileID: 1860906902}
-    itemImage: {fileID: 267337686}
-  _enterBtn: {fileID: 1934020903}
-  _exitBtn: {fileID: 793679638}
-  _confirmBtn: {fileID: 1664399939}
+    itemNameText: {fileID: 0}
+    itemDescriptionText: {fileID: 0}
+    itemImage: {fileID: 0}
+  _enterBtn: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _confirmBtn: {fileID: 0}
 --- !u!1 &1810534231
 GameObject:
   m_ObjectHideFlags: 0

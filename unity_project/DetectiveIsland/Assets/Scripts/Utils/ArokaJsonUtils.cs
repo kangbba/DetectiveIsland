@@ -8,35 +8,38 @@ using Newtonsoft.Json;
 namespace Aroka.JsonUtils{
     public static class ArokaJsonUtils
     {
-        public static void SaveToJson<T>(T objectToSave, string filePath)
+        public static void SaveScenarioNode(ScenarioNode scenarioNode, string path)
         {
-            if (File.Exists(filePath))
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                bool overwrite = EditorUtility.DisplayDialog(
-                    "똑같은 파일이 존재합니다. 진짜 덮어쓰시겠습니까?? 기존 파일은 삭제됩니다.",
-                    $"A file already exists at {filePath}. Do you want to overwrite it?",
-                    "네",
-                    "취소"
-                );
+                TypeNameHandling = TypeNameHandling.Objects,
+                Formatting = Formatting.Indented,
+                Converters = new List<JsonConverter> { new Vector2Converter() },
+                StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+            };
 
-                if (!overwrite)
-                {
-                    Debug.Log("File save cancelled.");
-                    return;
-                }
+            string json = JsonConvert.SerializeObject(scenarioNode, settings);
+            File.WriteAllText(path, json);
+            AssetDatabase.Refresh();
+            Debug.Log("File saved: " + path);
+        }
+
+        public static ScenarioNode LoadScenarioNode(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                Debug.LogError($"File not found: {filePath}");
+                return null;
             }
+            string json = File.ReadAllText(filePath);
 
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
                 Formatting = Formatting.Indented,
-                StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+                StringEscapeHandling = StringEscapeHandling.Default
             };
-
-            string json = JsonConvert.SerializeObject(objectToSave, settings);
-            File.WriteAllText(filePath, json);
-            AssetDatabase.Refresh();
-            Debug.Log("File saved: " + filePath);
+            return JsonConvert.DeserializeObject<ScenarioNode>(json, settings);
         }
 
         public static void SaveScenario(Scenario scenario, string fileName)
@@ -70,6 +73,7 @@ namespace Aroka.JsonUtils{
             AssetDatabase.Refresh();
             Debug.Log("File saved: " + fileName);
         }
+
         // 파일 경로를 통해 시나리오를 로드합니다.
         public static Scenario LoadScenario(string fileName)
         {
@@ -93,6 +97,11 @@ namespace Aroka.JsonUtils{
 
             return DeserializeScenario(jsonTextAsset.text);
         }
+
+
+
+
+
         // JSON 문자열을 역직렬화하여 Scenario 객체를 반환합니다.
         private static Scenario DeserializeScenario(string json)
         { 
