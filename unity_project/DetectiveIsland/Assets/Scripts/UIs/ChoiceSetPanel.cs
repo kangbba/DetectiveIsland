@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aroka.Anim;
 using Aroka.ArokaUtils;
+using Aroka.EaseUtils;
 using UnityEngine;
 
 public class ChoiceSetPanel : MonoBehaviour
@@ -11,20 +12,21 @@ public class ChoiceSetPanel : MonoBehaviour
     [SerializeField] private ChoiceButton _choiceBtnPrefab;  // 버튼 프리팹
 
     private List<ChoiceButton> _curChoiceBtns = new List<ChoiceButton>();  // 생성된 버튼들의 리스트
-    private Choice _selectedChoice;  // 선택된 선택지
+    private ChoiceButton _selectedChoiceBtn;
 
     private ArokaAnim[] ChildrenAnims => transform.GetComponentsInChildren<ArokaAnim>();
 
-    public Choice SelectedChoice { get => _selectedChoice;  }
-
-    public IEnumerator AwaitChoiceBtnSelected()
+    public IEnumerator GetSelectedChoiceRoutine()
     {
-        _selectedChoice = null;
-        while (_selectedChoice == null)
+        OpenPanel(.2f);
+        yield return new WaitForSeconds(.2f);
+        _selectedChoiceBtn = null;
+        while (_selectedChoiceBtn == null)
         {
             yield return null;
         }
-        Debug.Log($"Selected choice: {_selectedChoice}");
+        yield return StartCoroutine(ClosePanelRoutine(_selectedChoiceBtn, .5f));
+        yield return _selectedChoiceBtn.Choice;
     }
     
     public void CreateChoiceBtns(ChoiceSet choiceSet)
@@ -58,16 +60,35 @@ public class ChoiceSetPanel : MonoBehaviour
     private void SelectChoice(string choiceTitle)
     {
         // _curChoiceBtns 리스트에서 choiceID와 일치하는 첫 번째 Choice 객체를 찾음
-        var selectedButton = _curChoiceBtns.FirstOrDefault(btn => btn.Choice.Title == choiceTitle);
+        var selectedButton = GetChoiceButton(choiceTitle);
         if (selectedButton != null)
         {
-            _selectedChoice = selectedButton.Choice;
-            Debug.Log($"Selected choice: {_selectedChoice.Title}");
+            _selectedChoiceBtn = selectedButton;
         }
     }
 
-    public void OpenPanel(bool b, float totalTime){
-        ChildrenAnims.SetAnims(b, totalTime);
+    private ChoiceButton GetChoiceButton(string choiceTitle){
+        return _curChoiceBtns.FirstOrDefault(btn => btn.Choice.Title == choiceTitle);
+    }
+
+    private void OpenPanel(float totalTime){
+        ChildrenAnims.SetAnims(true, totalTime);
+    }
+
+    private IEnumerator ClosePanelRoutine(ChoiceButton choiceButton, float totalTime){
+        for(int i = 0 ; i < _curChoiceBtns.Count ; i++){
+            ChoiceButton choiceBtn = _curChoiceBtns[i];
+            bool isIdentical = choiceBtn.Choice.Title == choiceButton.Choice.Title;
+            if(isIdentical){
+
+            }
+            else{
+                choiceBtn.transform.EaseLocalScale(Vector3.zero, totalTime);
+            }
+        }
+        yield return new WaitForSeconds(totalTime);
+        ChildrenAnims.SetAnims(false, .1f);
+        yield return new WaitForSeconds(.1f);
     }
 
 

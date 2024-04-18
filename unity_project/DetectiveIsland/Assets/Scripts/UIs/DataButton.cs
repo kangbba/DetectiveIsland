@@ -1,31 +1,62 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public abstract class DataButton : MonoBehaviour
 {
-    [SerializeField] protected Button _button; // 공통 버튼 컴포넌트
-    private string _btnKey;
+    [SerializeField] protected EventTrigger _eventTrigger; // 이벤트 트리거 컴포넌트
 
-    public string BtnKey { get => _btnKey; }
-    
-    // 클릭 이벤트를 설정하는 메서드
-    protected void SetupButton(string btnKey, Action<string> action)
+    public string BtnKey { get; protected set; }
+
+    public void Initialize(string btnKey)
     {
-        _btnKey = btnKey;
-        _button.onClick.AddListener(() => {
-            Debug.Log($"Button for {_btnKey} clicked!");
-            action(_btnKey);
+        BtnKey = btnKey;
+        if (_eventTrigger == null)
+        {
+            _eventTrigger = gameObject.AddComponent<EventTrigger>();
+        }
+    }
+
+    public void ConnectOnClick(Action<string> action)
+    {
+        EventTrigger.Entry clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+        clickEntry.callback.AddListener((eventData) => {
+            Debug.Log($"Button for {BtnKey} clicked!");
+            action(BtnKey);
         });
+        _eventTrigger.triggers.Add(clickEntry);
+    }
+
+    public void ConnectOnHover(Action<string> onEnterAction, Action<string> onExitAction)
+    {
+        // 마우스 오버 이벤트 추가 (PointerEnter)
+        EventTrigger.Entry enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+        enterEntry.callback.AddListener((eventData) => {
+            Debug.Log($"Mouse over {BtnKey}");
+            onEnterAction?.Invoke(BtnKey);
+        });
+        _eventTrigger.triggers.Add(enterEntry);
+
+        // 마우스 오버 이벤트 제거 (PointerExit)
+        EventTrigger.Entry exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+        exitEntry.callback.AddListener((eventData) => {
+            Debug.Log($"Mouse exit {BtnKey}");
+            onExitAction?.Invoke(BtnKey);
+        });
+        _eventTrigger.triggers.Add(exitEntry);
     }
 
     protected void OnDestroy()
     {
-        _button.onClick.RemoveAllListeners(); // 리스너 제거
+        if (_eventTrigger != null)
+        {
+            _eventTrigger.triggers.Clear();
+        }
     }
 
     public void SetInteractable(bool interactable)
     {
-        _button.interactable = interactable; // 버튼 상호작용 가능 상태 설정
+        // EventTrigger는 interactable에 따라 활성화 또는 비활성화됩니다
+        _eventTrigger.enabled = interactable;
     }
 }

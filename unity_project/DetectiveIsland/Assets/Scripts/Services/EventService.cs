@@ -48,27 +48,6 @@ public static class EventService
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
         _curEventTime = new EventTime(eventTime.Date, eventTime.Hour, eventTime.Minute);
     }
-    public static EventPlan GetNextEventPlan(EventPlan currentEventPlan)
-    {
-        var eventPlans = _eventRoadmap.EventPlans; // 전체 이벤트 플랜 목록을 가져옵니다.
-        int currentIndex = eventPlans.IndexOf(currentEventPlan); // 현재 이벤트 플랜의 인덱스를 찾습니다.
-
-        if (currentIndex == -1)
-        {
-            Debug.LogError("The current event plan is not found in the list.");
-            return null; // 현재 이벤트 플랜이 목록에 없는 경우
-        }
-
-        int nextIndex = currentIndex + 1; // 다음 이벤트 플랜의 인덱스
-        if (nextIndex < eventPlans.Count) // 다음 인덱스가 리스트 범위 내인지 확인
-        {
-            return eventPlans[nextIndex]; // 다음 이벤트 플랜 반환
-        }
-
-        Debug.Log("There is no next event plan. Reached the end of the list.");
-        return null; // 리스트의 끝이면 null 반환
-    }
-
 
     // 입력된 EventTime 기준으로 이미 완료된 데일리 이벤트 플랜을 필터링하는 확장 메서드
     public static List<EventPlan> EventTimeFilter(this List<EventPlan> eventPlans, EventTime inputTime, TimeRelation timeRelation)

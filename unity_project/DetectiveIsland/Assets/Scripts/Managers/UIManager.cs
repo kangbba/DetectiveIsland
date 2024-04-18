@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance => _instance;
     
     [SerializeField] private ItemPanel _itemPanel;
+    [SerializeField] private ItemOwnPanel _itemOwnPanel;
     [SerializeField] private PlacePanel _placePanel;
     [SerializeField] private PlaceUIPanel _placeUIPanel;
     [SerializeField] private CharacterPanel _characterPanel;
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour
 
     public PlaceUIPanel PlaceUIPanel { get => _placeUIPanel; }
     public ChoiceSetPanel ChoiceSetPanel { get => _choiceSetPanel; }
+    public ItemOwnPanel ItemOwnPanel { get => _itemOwnPanel; }
 
     private void Awake()
     {

@@ -7,17 +7,14 @@ using UnityEngine;
 // SpriteEffector 클래스 정의
 public class SpriteEffector : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
 
     public SpriteRenderer SpriteRenderer { get => _spriteRenderer; }
 
-    protected void Initialize(){
-        if(GetComponent<SpriteRenderer>() == null){
-             gameObject.AddComponent<SpriteRenderer>();
-        }
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    }
     protected void SetSprite(Sprite sprite){
+        if(_spriteRenderer == null){
+            return;
+        }
         _spriteRenderer.sprite = sprite;
     }
     protected void FadeIn(float totalTime)
@@ -31,7 +28,6 @@ public class SpriteEffector : MonoBehaviour
     }
     protected void FadeOut(float totalTime)
     {
-        Debug.Log("FadeOut 호출됨");
         _spriteRenderer.EaseSpriteRendererColor(Color.white.ModifiedAlpha(0f), totalTime);
     }
     protected void Red(float redStrengthPerone, float totalTime)

@@ -13,7 +13,7 @@ namespace Aroka.ArokaUtils {
 
     public static class ArokaUtils
     {
-        public static List<T> LoadDatasFromFolder<T>(string folderName) where T : UnityEngine.Object
+        public static List<T> LoadScriptableDatasFromFolder<T>(string folderName) where T : UnityEngine.Object
         {
             var dataList = new List<T>();
 
@@ -34,8 +34,23 @@ namespace Aroka.ArokaUtils {
             }
             return dataList;
         }
+        
+        public static List<T> LoadResourcesFromFolder<T>(string folderName) where T : UnityEngine.Object
+        {
+            var dataList = new List<T>();
 
+            // 폴더 내의 모든 리소스를 가져와 리스트에 추가
+            UnityEngine.Object[] resources = Resources.LoadAll(folderName, typeof(T));
 
+            foreach (UnityEngine.Object resource in resources)
+            {
+                // 가져온 리소스를 T 타입으로 캐스팅하여 리스트에 추가
+                dataList.Add(resource as T);
+            }
+
+            return dataList;
+        }
+        
         public static int EnumCount(this Type _type)
         {
             return Enum.GetValues(_type).Length;

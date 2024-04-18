@@ -5,17 +5,17 @@ using Aroka.Curves;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Aroka.EaseUtils{
+namespace Aroka.EaseUtils
+{
     public static class ArokaEaseUtils
     {
         private static Dictionary<(Transform, string), UnityEngine.Coroutine> _coroutineMap = new Dictionary<(Transform, string), UnityEngine.Coroutine>();
         private static Dictionary<(Component, string), UnityEngine.Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), UnityEngine.Coroutine>();
 
-
         #region Position and Movement Extensions
 
         public static void EasePos(this Transform transform, Vector3 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
-        {   
+        {
             if (totalTime == 0)
             {
                 transform.position = targetPos;
@@ -95,6 +95,7 @@ namespace Aroka.EaseUtils{
         #endregion
 
         #region Rotation Extensions
+
         public static void EaseRot(this Transform transform, Quaternion targetRotation, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
             if (totalTime == 0)
@@ -114,7 +115,7 @@ namespace Aroka.EaseUtils{
             }
             StartOrReplaceCoroutine(transform, "localRotation", EaseRotationRoutine(transform, targetRotation, totalTime, curvName, delayTime, true));
         }
-        
+
         public static void EaseRotEuler(this Transform transform, Vector3 targetEuler, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
             if (totalTime == 0)
@@ -125,7 +126,6 @@ namespace Aroka.EaseUtils{
             Quaternion targetRotation = Quaternion.Euler(targetEuler);
             StartOrReplaceCoroutine(transform, "rotation", EaseRotationRoutine(transform, targetRotation, totalTime, curvName, delayTime, false));
         }
-
 
         private static IEnumerator EaseRotationRoutine(Transform transform, Quaternion targetRot, float totalTime, ArokaCurves.CurvName curvName, float delayTime, bool isLocal)
         {
@@ -153,6 +153,7 @@ namespace Aroka.EaseUtils{
             else
                 transform.rotation = targetRot;
         }
+
         #endregion
 
         #region Anchored Position Extensions
@@ -160,7 +161,8 @@ namespace Aroka.EaseUtils{
         public static void EaseAnchoredPos(this Image image, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
             RectTransform rectTransform = image.rectTransform;
-            if(rectTransform == null){
+            if (rectTransform == null)
+            {
                 Debug.LogWarning("rect transform이 없으므로 호출하지 않습니다");
                 return;
             }
@@ -191,6 +193,7 @@ namespace Aroka.EaseUtils{
         }
 
         #endregion
+
         #region Color Extensions
 
         public static void EaseSpriteRendererColor(this SpriteRenderer spriteRenderer, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
@@ -244,26 +247,39 @@ namespace Aroka.EaseUtils{
                 float t = curve.Evaluate(elapsed / totalTime);
                 Color newColor = Color.Lerp(initialColor, targetColor, t);
 
-                if (component is SpriteRenderer)
-                    ((SpriteRenderer)component).color = newColor;
-                else if (component is Image)
-                    ((Image)component).color = newColor;
-                else if (component is MeshRenderer)
-                    ((MeshRenderer)component).material.color = newColor;
+                // GameObject가 파괴되지 않았는지 확인 후 컬러 설정
+                if (component != null)
+                {
+                    if (component is SpriteRenderer)
+                        ((SpriteRenderer)component).color = newColor;
+                    else if (component is Image)
+                        ((Image)component).color = newColor;
+                    else if (component is MeshRenderer)
+                        ((MeshRenderer)component).material.color = newColor;
+                }
+                else
+                {
+                    // GameObject가 파괴되었다면 코루틴 종료
+                    yield break;
+                }
 
                 yield return null;
             }
 
-            if (component is SpriteRenderer)
-                ((SpriteRenderer)component).color = targetColor;
-            else if (component is Image)
-                ((Image)component).color = targetColor;
-            else if (component is MeshRenderer)
-                ((MeshRenderer)component).material.color = targetColor;
+            // 코루틴 종료 후 최종 색상 설정
+            if (component != null)
+            {
+                if (component is SpriteRenderer)
+                    ((SpriteRenderer)component).color = targetColor;
+                else if (component is Image)
+                    ((Image)component).color = targetColor;
+                else if (component is MeshRenderer)
+                    ((MeshRenderer)component).material.color = targetColor;
+            }
         }
 
-        #endregion
 
+        #endregion
 
         #region Utility Methods
 
@@ -276,24 +292,35 @@ namespace Aroka.EaseUtils{
                 _coroutineMap.Remove(coroutineKey);
             }
 
+            if (transform == null)
+            {
+                Debug.LogWarning("Transform이 null입니다.");
+                return;
+            }
+
             UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
             _coroutineMap[coroutineKey] = newCoroutine;
         }
+
         private static void StartOrReplaceColorCoroutine(Component component, string key, IEnumerator routine)
+        {
+            (Component, string) coroutineKey = (component, key);
+            if (_colorCoroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
             {
-                (Component, string) coroutineKey = (component, key);
-                if (_colorCoroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
-                {
                 ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
                 _colorCoroutineMap.Remove(coroutineKey);
-                }
+            }
+
+            if (component == null)
+            {
+                Debug.LogWarning("Component가 null입니다.");
+                return;
+            }
 
             UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
-                _colorCoroutineMap[coroutineKey] = newCoroutine;
-            }
+            _colorCoroutineMap[coroutineKey] = newCoroutine;
+        }
 
         #endregion
     }
-
 }
-

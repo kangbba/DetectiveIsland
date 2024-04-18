@@ -11,9 +11,7 @@ public class Place : SpriteEffector
 
     public void Initialize(PlaceData placeData){
         _placeData = placeData;
-        base.Initialize();
         base.SetSprite(placeData.PlaceSprite);
-
     }
     public void Enter(float totalTime){
         FadeInFromStart(totalTime);

@@ -9,10 +9,11 @@ public class ChoiceButton : DataButton
 
     public Choice Choice { get => _choice; }
 
-    public void Initialize(Choice choice, Action<string> action)
+    public void Initialize(Choice choice, Action<string> onClickAction)
     {
         _choice = choice;
         _buttonText.text = choice.Title;
-        SetupButton(choice.Title, action);
+        base.Initialize(choice.Title);
+        base.ConnectOnClick(onClickAction);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aroka.CoroutineUtils;
 using UnityEngine;
 
 public static class ChoiceSetService
@@ -9,16 +10,16 @@ public static class ChoiceSetService
         _choiceSetPanel = UIManager.Instance.ChoiceSetPanel; 
     }
 
-    public static IEnumerator MakeChoiceBtnsAndWaitRoutine(ChoiceSet choiceSet){
+    public static IEnumerator ChoiceSetRoutine(ChoiceSet choiceSet){
+        foreach(Dialogue dialogue in choiceSet.Dialogues){
+            yield return ArokaCoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
+        }
         _choiceSetPanel.CreateChoiceBtns(choiceSet);
-        _choiceSetPanel.OpenPanel(true, 1f);
-        yield return new WaitForSeconds(1f);
-        yield return _choiceSetPanel.AwaitChoiceBtnSelected();
-        _choiceSetPanel.OpenPanel(false, 1f);
-        yield return _choiceSetPanel.SelectedChoice;
+        Choice selectedChoice = null;
+        yield return ArokaCoroutineUtils.AwaitCoroutine<Choice>(_choiceSetPanel.GetSelectedChoiceRoutine(), result => {
+            selectedChoice = result;
+        });
+        yield return selectedChoice;
     }
 
-    public static void OpenPanel(bool b, float totalTime){
-        _choiceSetPanel.OpenPanel(b, totalTime);
-    }
 }
