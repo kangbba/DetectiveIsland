@@ -2129,14 +2129,6 @@ MonoBehaviour:
       height: 0
     title: ItemDemandNode
     isSelected: 0
-  - rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: AssetChangeNode
-    isSelected: 0
 --- !u!4 &1307656438
 Transform:
   m_ObjectHideFlags: 0

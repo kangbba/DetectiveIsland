@@ -288,7 +288,7 @@ namespace Aroka.EaseUtils
             (Transform, string) coroutineKey = (transform, key);
             if (_coroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
             {
-                ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
+                CoroutineUtils.CoroutineUtils.StopCoroutine(currentCoroutine);
                 _coroutineMap.Remove(coroutineKey);
             }
 
@@ -298,7 +298,7 @@ namespace Aroka.EaseUtils
                 return;
             }
 
-            UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
+            UnityEngine.Coroutine newCoroutine = CoroutineUtils.CoroutineUtils.StartCoroutine(routine);
             _coroutineMap[coroutineKey] = newCoroutine;
         }
 
@@ -307,7 +307,7 @@ namespace Aroka.EaseUtils
             (Component, string) coroutineKey = (component, key);
             if (_colorCoroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
             {
-                ArokaCoroutineUtils.StopCoroutine(currentCoroutine);
+                CoroutineUtils.CoroutineUtils.StopCoroutine(currentCoroutine);
                 _colorCoroutineMap.Remove(coroutineKey);
             }
 
@@ -317,7 +317,7 @@ namespace Aroka.EaseUtils
                 return;
             }
 
-            UnityEngine.Coroutine newCoroutine = ArokaCoroutineUtils.StartCoroutine(routine);
+            UnityEngine.Coroutine newCoroutine = CoroutineUtils.CoroutineUtils.StartCoroutine(routine);
             _colorCoroutineMap[coroutineKey] = newCoroutine;
         }
 

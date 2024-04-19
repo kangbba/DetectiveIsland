@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Aroka.CoroutineUtils;
 using UnityEngine;
 
 [System.Serializable]
 public class EventPlan
 {
-    [SerializeField] private EventTime _eventTime;
-    [SerializeField] private string _placeID;
-    [SerializeField] private TextAsset _scenarioFile; // JSON 파일 경로 또는 이름
-
     public EventPlan(EventTime eventTime, string placeID, TextAsset scenarioFile)
     {
         _eventTime = eventTime;
@@ -17,20 +14,25 @@ public class EventPlan
         _scenarioFile = scenarioFile;
     }
 
-    public string PlaceID { get => _placeID; }
-    public TextAsset ScenarioFile { get => _scenarioFile; }
-    public EventTime EventTime { get => _eventTime;  }
+    [SerializeField] private    EventTime        _eventTime = null;
+    [SerializeField] private    string           _placeID = "";
+    [SerializeField] private    EventCondition   _eventCondition = null;
+    [SerializeField] private    TextAsset        _scenarioFile;
+
+    public string           PlaceID              { get => _placeID; }
+    public TextAsset        ScenarioFile         { get => _scenarioFile; }
+    public EventTime        EventTime            { get => _eventTime;  }
+    public EventCondition   EventCondition       { get => _eventCondition; }
 }
 
 public static class EventService
 {
-    private static EventRoadMap _eventRoadmap;
+    private static EventRoadMap         _eventRoadmap;
+    private static EventTime            _curEventTime = null;
+    public static List<EventPlan>       EventPlans   => _eventRoadmap.EventPlans;
+    public static EventTime             CurEventTime { get => _curEventTime; }
 
-    public static List<EventPlan> EventPlans => _eventRoadmap.EventPlans;
-    private static EventTime _curEventTime = null;
-    public static EventTime CurEventTime { get => _curEventTime; }
-
-    public static void Initialize()
+    public static void Load()
     {       
          _eventRoadmap = Resources.Load<EventRoadMap>("EventRoadMap/MainEventRoadMap");
         if (_eventRoadmap == null)
@@ -38,6 +40,7 @@ public static class EventService
             Debug.LogError($"Failed to load EventRoadMap from Resources folder with filename: {"EventRoadMap"}");
         }
     }
+
     public static void SetCurEventTime(string date, int hour, int minute)
     {
         _curEventTime = new EventTime(date, hour, minute);
@@ -99,4 +102,6 @@ public static class EventService
         }
         return null;
     }
+
+    
 }

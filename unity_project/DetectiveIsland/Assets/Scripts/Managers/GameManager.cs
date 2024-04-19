@@ -13,6 +13,19 @@ public class GameManager : MonoBehaviour
 
     private bool isMoving = false;
 
+    public enum EGamePhase
+    {
+        Enter,
+        ConditionWaiting,  
+        PlaceMoving,        
+        EventPlaying,
+        FreeActing,
+        Exit,
+    }
+
+    // Current phase state
+    private EGamePhase _curPhase;
+
     private void Awake()
     {
         if (_instance == null)
@@ -39,13 +52,13 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        EventService.Initialize();
-        DialogueService.Initialize();
-        ItemService.Initialize();
-        PlaceService.Initialize();
-        PlaceUIService.Initialize();
-        CharacterService.Initialize();
-        ChoiceSetService.Initialize();
+        EventService.Load();
+        DialogueService.Load();
+        ItemService.Load();
+        PlaceService.Load();
+        PlaceUIService.Load();
+        CharacterService.Load();
+        ChoiceSetService.Load();
     }
     
     public void Move(string placeID){
@@ -67,12 +80,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator MoveToPlaceCoroutine(string placeID)
     {
         // AwaitChoices의 결과를 직접 받아 처리
+        SetPhase(EGamePhase.Enter);
 
         //Place UI판넬 퇴장
         PlaceUIService.SetOnPanel(false, false, false, .5f);
         ItemService.SetOnPanel(false, 0f);
         yield return new WaitForSeconds(.5f);
 
+
+        SetPhase(EGamePhase.PlaceMoving); 
         PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
         Debug.Log($"Arrived at place: {placeData.PlaceNameForUser} ({placeData.PlaceID})");
 
@@ -84,40 +100,21 @@ public class GameManager : MonoBehaviour
         PlaceUIService.SetOnPanel(true, false, false, 1f);
         yield return new WaitForSeconds(1f);
 
-        //이 이벤트 제외하고 오늘 남은 이벤트 미리 가져오기
-
-        //이벤트가 있다면 실행
         EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime, placeID);
+        //이벤트가 있다면 
         if(eventPlan != null){
-            Debug.Log("이벤트가 발동됨");
-            //대화창 On
-            DialogueService.SetOnPanel(true, 1f);
-            CharacterService.ShowCharacters(1f);
+            SetPhase(EGamePhase.EventPlaying); 
+            TextAsset scenarioFile = eventPlan.ScenarioFile;
+            Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
+            CharacterService.InitializeCharacters(scenario.ScenarioInit.PositionInits, 1f);
             yield return new WaitForSeconds(1f);
-            
-            yield return StartCoroutine(ProcessEventRoutine(eventPlan));
-
-            //이벤트 완료!
-            var remainedEvents = EventService.GetEventPlansByDate(EventService.CurEventTime.Date).EventTimeFilter(EventService.CurEventTime, TimeRelation.Future);
-            // 처리된 이벤트별 상세 정보 출력
-            foreach (var plan in remainedEvents)
-            {
-                Debug.Log($"오늘 남은 이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime.ToString()}");
+            if(eventPlan.EventCondition.ActionType != EActionType.AutoPlay){
+               yield return StartCoroutine(EventProcessor.EventConditionRoutine(eventPlan.EventCondition));
             }
-
-            EventService.SetCurEventTime(remainedEvents[0].EventTime);
-  
-            //대화창 Off
-            DialogueService.SetOnPanel(false, 1f);
-            CharacterService.ClearCharacters(1f);
-            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
         }
-
-
-        //자유행동
-        ItemService.SetOnPanel(false, 0f);
-
-        
+        CharacterService.DestroyAllCharacters(1f);
+        SetPhase(EGamePhase.FreeActing); 
         //PlaceUI 판넬들 등장 및 이동가능버튼생성
         PlaceUIService.CreatePlaceButtons(placeID, Move);
         PlaceUIService.SetInteractablePlaceButtons(false);
@@ -125,69 +122,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         isMoving = false;
         PlaceUIService.SetInteractablePlaceButtons(true);
+
+        SetPhase(EGamePhase.Exit); 
     }
 
-    public IEnumerator ProcessEventRoutine(EventPlan eventPlan){
-        Debug.Log("이벤트 실행이 돌입");
-        TextAsset scenarioFile = eventPlan.ScenarioFile;
-        Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
-        List<Element> elements = scenario.Elements;
-        yield return StartCoroutine(ProcessElementsRoutine(elements));
+    // Implement the SetPhase method
+    private void SetPhase(EGamePhase newPhase)
+    {
+        _curPhase = newPhase;
+        Debug.Log($"Game phase set to: {_curPhase}");
     }
-
-    private IEnumerator ProcessElementsRoutine(List<Element> elements){
-
-        foreach(Element element in elements){
-            yield return ProcessElementRoutine(element);
-        }
-    }
-
-    public IEnumerator ProcessElementRoutine(Element element){
-
-        if(element is PositionChange){
-            PositionChange positionChange = element as PositionChange;
-            CharacterService.PositionChange(positionChange);
-        }
-        else if(element is Dialogue){
-            Dialogue dialogue = element as Dialogue;
-            yield return StartCoroutine(DialogueService.DialogueRoutine(dialogue));
-        }
-        else if(element is ChoiceSet){
-
-            ChoiceSet choiceSet = element as ChoiceSet;
-            Choice selectedChoice = null;
-            yield return ArokaCoroutineUtils.AwaitCoroutine<Choice>(ChoiceSetService.ChoiceSetRoutine(choiceSet), result => {
-                selectedChoice = result;
-            });
-            Debug.Log($"{selectedChoice.Title}을 골랐다!");
-            yield return StartCoroutine(ProcessElementsRoutine(selectedChoice.Elements));
-
-        }
-        else if(element is ItemDemand){
-
-            ItemDemand itemDemand = element as ItemDemand;
-            while(true){
-                bool isCorrect = false;
-                yield return ArokaCoroutineUtils.AwaitCoroutine<bool>(ItemService.ItemDemandRoutine(itemDemand), result => {
-                    isCorrect = result;
-                });
-                if(isCorrect){
-                    Debug.Log("정답이므로 elements 처리후 이 루프를 빠져나갈 예정");
-                    yield return ArokaCoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.SuccessElements));
-                    break;
-                }
-                else{
-                    Debug.Log("오답이므로 elements 처리후 이 루프가 반복될 예정");
-                    yield return ArokaCoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.FailElements));
-                }
-            }
-        }
-        else if(element is AssetChange){
-            AssetChange assetChange = element as AssetChange;
-            yield return StartCoroutine(ItemService.AssetChangeRoutine(assetChange));
-        }
-        yield return null;
-    }
-    // 사용 예제
-
 }

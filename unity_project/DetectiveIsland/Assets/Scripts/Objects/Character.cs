@@ -12,7 +12,6 @@ public class Character : SpriteEffector
     public void Initialize()
     {
         SetEmotion("Smile");
-        base.FadeOut(0f);
     }
 
     public void SetEmotion(string emotionID)
@@ -21,14 +20,8 @@ public class Character : SpriteEffector
         if(emotionData == null || emotionData.EmotionSprite == null){
             Debug.LogWarning("emotionData 가 없거나, emotionData에 해당하는 sprite 없음");
         }
-        base.SetSprite(emotionData.EmotionSprite);
+        base.SetSprite(emotionData.EmotionSprite, 0);
     }
-
-    private void OnMouseDown()
-    {
-        Debug.Log("Character clicked: " + gameObject.name);
-    }
-
     public void SetOn(bool b, float totalTime)
     {
         if (b)
@@ -39,5 +32,20 @@ public class Character : SpriteEffector
         {
             base.FadeOut(totalTime);
         }
+    }  
+    private void OnMouseDown()
+    {
+        Debug.Log("Character pressed: " + _characterData.CharacterNameForUser);
+        CharacterService.NotifyTalking(_characterData.CharacterID);
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse entered over character: " + _characterData.CharacterNameForUser);
+    }
+
+    private void OnMouseExit()
+    {
+        Debug.Log("Mouse exited over character: " + _characterData.CharacterNameForUser);
     }
 }

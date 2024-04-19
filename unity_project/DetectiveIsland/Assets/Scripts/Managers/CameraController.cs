@@ -37,10 +37,10 @@ public static class CameraController
         if (_shakeCoroutine != null)
         {
             // 이미 실행 중인 쉐이크 코루틴이 있다면 중지
-            ArokaCoroutineUtils.StopCoroutine(_shakeCoroutine);
+            CoroutineUtils.StopCoroutine(_shakeCoroutine);
         }
 
-        _shakeCoroutine = ArokaCoroutineUtils.StartCoroutine(ShakeCoroutine(magnitude, totalTime));
+        _shakeCoroutine = CoroutineUtils.StartCoroutine(ShakeCoroutine(magnitude, totalTime));
     }
     // main 카메라를 할당하는 함수
     private static void RegisterMainCamera()

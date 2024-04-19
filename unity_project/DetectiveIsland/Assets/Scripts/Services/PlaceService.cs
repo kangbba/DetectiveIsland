@@ -8,7 +8,7 @@ public static class PlaceService
 
     public static PlaceData CurPlaceData { get => _curPlaceData;  }
 
-    public static void Initialize()
+    public static void Load()
     {       
         _placePanel = UIManager.Instance.PlacePanel;
     }

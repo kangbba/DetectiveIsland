@@ -6,7 +6,7 @@ using UnityEngine;
 public static class DialogueService
 {
     private static DialoguePanel _dialoguePanel;
-    public static void Initialize(){
+    public static void Load(){
         _dialoguePanel = UIManager.Instance.DialoguePanel;
         _dialoguePanel.Initialize();
     }
@@ -18,8 +18,8 @@ public static class DialogueService
         for(int i = 0 ; i < dialogue.Lines.Count ; i++){
             CharacterData characterData = CharacterService.GetCharacterData(dialogue.CharacterID);
             _dialoguePanel.SetCharacterText(dialogue.CharacterID, characterData.CharacterColor);
-            yield return ArokaCoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
-            yield return ArokaCoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
+            yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
+            yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
     }
 }
