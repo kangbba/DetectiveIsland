@@ -34,6 +34,6 @@ public class OpenJNodeEditor
 
         JNodeEditor.OpenJNodeEditorWindow();
         window.Show();
-        JNodeEditor.LoadJNodeEditor(path, filename);
+        JNodeEditor.LoadJNodeEditorWindow(path, filename);
     }
 }

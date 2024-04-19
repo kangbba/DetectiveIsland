@@ -5,8 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Scenario
 {
-    public Scenario(List<Element> elements)
+    public Scenario(ScenarioInit scenarioInit, List<Element> elements )
     {
+        this._scenarioInit = scenarioInit;
         this._elements = elements;
     }
 

@@ -13,8 +13,8 @@ public class TestManager : MonoBehaviour
     [ArokaButton]
     public void Save()
     {
-
-        savedScenario = new Scenario(nodes.ToElements());
+        
+        savedScenario = new Scenario(null,nodes.ToElements());
 
         Debug.Log(nodes.ToElements().Count);
 

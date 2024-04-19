@@ -8,9 +8,26 @@ using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using Formatting = Newtonsoft.Json.Formatting;
 
-
+[InitializeOnLoad]
 public class JNodeEditor : EditorWindow
-{
+{/*
+    private void OnDestroy()
+    {
+        jNodeInstance.isOpened = false;
+    }
+    */
+
+    static JNodeEditor()
+    {
+        CreateJNodeInstance();
+        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        if (!jNodeInstance.isOpened)
+        {
+            return;
+        }
+        OpenJNodeEditorWindow();
+        LoadJNodeEditorWindow(jNodeInstance.recentPath,jNodeInstance.recentPath);
+    }
     private static JNodeInstance jNodeInstance;
 
     public static JNode JNode
@@ -70,7 +87,7 @@ public class JNodeEditor : EditorWindow
     }
 
 
-    private static void CreateJNodeInstance()
+    private static JNodeInstance CreateJNodeInstance()
     {
         if (jNodeInstance == null)
         {
@@ -80,6 +97,7 @@ public class JNodeEditor : EditorWindow
             AssetDatabase.Refresh();
         }
         jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        return jNodeInstance;
     }
 
     public void EditorControl(Event e)
@@ -109,11 +127,12 @@ public class JNodeEditor : EditorWindow
         window.Show();
     }
 
-    public static void LoadJNodeEditor(string filePath, string _recentOpenFileName)
+    public static void LoadJNodeEditorWindow(string filePath, string _recentOpenFileName)
     {
         Debug.Log("Load JNode   |   " + _recentOpenFileName + "    |    " + filePath);
         JNode jNode = ArokaJsonUtils.LoadJNode(filePath);
-        jNodeInstance.Initialize(_recentOpenFileName, jNode);
+        jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
+        jNodeInstance.isOpened = true;
         UpdateLastSavedSnapshot();
     }
 
@@ -290,8 +309,7 @@ public class JNodeEditor : EditorWindow
             {
                 List<Element> elements = JNode.Nodes.ToElements();
                 Debug.Log(elements.Count);
-                Scenario scenario = new Scenario(elements);
-
+                Scenario scenario = new Scenario(null,elements);
                 Debug.Log(scenario.Elements.Count);
 
                 // Save the scenario object as a JSON file at the specified path
@@ -446,6 +464,8 @@ public class JNodeEditor : EditorWindow
         GenericMenu menu = new GenericMenu();
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
         menu.ShowAsContext();
+
+
     }
 
     private void AddDialogueNode(Vector2 position)
