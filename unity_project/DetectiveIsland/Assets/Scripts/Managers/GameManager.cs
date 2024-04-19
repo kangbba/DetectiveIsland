@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         EventService.Load();
         DialogueService.Load();
         ItemService.Load();
+        ItemService.LoseAllItems();
         PlaceService.Load();
         PlaceUIService.Load();
         CharacterService.Load();
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
         SetPhase(EGamePhase.Enter);
 
         //Place UI판넬 퇴장
+        CharacterService.DestroyAllCharacters(1f);
         PlaceUIService.SetOnPanel(false, false, false, .5f);
         ItemService.SetOnPanel(false, 0f);
         yield return new WaitForSeconds(.5f);
@@ -101,27 +103,37 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime, placeID);
+        
         //이벤트가 있다면 
         if(eventPlan != null){
             SetPhase(EGamePhase.EventPlaying); 
             TextAsset scenarioFile = eventPlan.ScenarioFile;
             Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
+
             yield return StartCoroutine(EventProcessor.InitializeScenarioRoutine(scenario));
             yield return new WaitForSeconds(1f);
-            if(eventPlan.EventCondition.ActionType != EActionType.AutoPlay){
-               yield return StartCoroutine(EventProcessor.EventConditionRoutine(eventPlan.EventCondition));
-            }
+
+            yield return StartCoroutine(EventProcessor.ConditionCheckRoutine(eventPlan.EventEnterCondition));
             yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
+
+            //이벤트 완료!
+            var remainedEvents = EventService.GetEventPlansByDate(EventService.CurEventTime.Date).EventTimeFilter(EventService.CurEventTime, TimeRelation.Future);
+            foreach (var plan in remainedEvents)
+            {
+                Debug.Log($"오늘 남은 이벤트 ID: {plan.PlaceID}, 시간: {plan.EventTime}");
+            }
+            if(EventProcessor.TimeProcessConditionCheck(eventPlan.TimeProcessCondition)){
+                EventService.SetCurEventTime(remainedEvents[0].EventTime);
+            }
+            else{
+                
+            }
         }
         CharacterService.DestroyAllCharacters(1f);
         SetPhase(EGamePhase.FreeActing); 
         //PlaceUI 판넬들 등장 및 이동가능버튼생성
-        PlaceUIService.CreatePlaceButtons(placeID, Move);
-        PlaceUIService.SetInteractablePlaceButtons(false);
-        PlaceUIService.SetOnPanel(true, true, true, .3f);
-        yield return new WaitForSeconds(.3f);
+        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
         isMoving = false;
-        PlaceUIService.SetInteractablePlaceButtons(true);
 
         SetPhase(EGamePhase.Exit); 
     }

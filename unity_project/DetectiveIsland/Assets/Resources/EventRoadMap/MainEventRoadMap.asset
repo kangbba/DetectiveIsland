@@ -18,7 +18,10 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _placeID: PortEntrance
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: a3861c3fbcef543f18b43dd3f9628b1b, type: 3}
@@ -27,16 +30,22 @@ MonoBehaviour:
       _hour: 9
       _minute: 30
     _placeID: Restaurant
-    _eventCondition:
+    _eventEnterCondition:
       _actionType: 1
       _targetID: Rachel
+    _timeProcessCondition:
+      _actionType: 2
+      _targetID: IDCard
     _scenarioFile: {fileID: 4900000, guid: 3998289676c474c9abeccdabc31afe29, type: 3}
   - _eventTime:
       _date: 2024-04-01
       _hour: 10
       _minute: 0
     _placeID: CafeSeabreeze
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: 7765cfa3bfe354468bffc6c82614ca08, type: 3}
@@ -45,16 +54,22 @@ MonoBehaviour:
       _hour: 11
       _minute: 0
     _placeID: PortEntrance
-    _eventCondition:
+    _eventEnterCondition:
       _actionType: 0
-      _targetID: Kate
+      _targetID: 
+    _timeProcessCondition:
+      _actionType: 0
+      _targetID: 
     _scenarioFile: {fileID: 4900000, guid: a3861c3fbcef543f18b43dd3f9628b1b, type: 3}
   - _eventTime:
       _date: 2024-04-02
       _hour: 8
       _minute: 0
     _placeID: Port
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: 40161d2a2df3a401c965eb7045968bc6, type: 3}
@@ -63,7 +78,10 @@ MonoBehaviour:
       _hour: 12
       _minute: 0
     _placeID: Street2
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: 457b07b52e673478294cd6c23f2c0f51, type: 3}
@@ -72,7 +90,10 @@ MonoBehaviour:
       _hour: 15
       _minute: 0
     _placeID: Street1
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: e80f6033cd9fb49b0855c7656d95804c, type: 3}
@@ -81,7 +102,10 @@ MonoBehaviour:
       _hour: 17
       _minute: 0
     _placeID: RyanHouse
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: c0506e514d6648641a0acb681ce4af35, type: 3}
@@ -90,7 +114,10 @@ MonoBehaviour:
       _hour: 20
       _minute: 0
     _placeID: LibraryEntrance
-    _eventCondition:
+    _eventEnterCondition:
+      _actionType: 0
+      _targetID: 
+    _timeProcessCondition:
       _actionType: 0
       _targetID: 
     _scenarioFile: {fileID: 4900000, guid: 457b07b52e673478294cd6c23f2c0f51, type: 3}

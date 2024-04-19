@@ -41,11 +41,9 @@ public class Character : SpriteEffector
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse entered over character: " + _characterData.CharacterNameForUser);
     }
 
     private void OnMouseExit()
     {
-        Debug.Log("Mouse exited over character: " + _characterData.CharacterNameForUser);
     }
 }

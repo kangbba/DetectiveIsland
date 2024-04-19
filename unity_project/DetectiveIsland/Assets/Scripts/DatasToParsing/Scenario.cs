@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Scenario
 {
-    public Scenario(List<Element> elements )
+    private List<PositionChange> _positionChanges;
+    public Scenario(List<PositionChange> _positionChanges, List<Element> elements )
     {
         this._elements = elements;
     }

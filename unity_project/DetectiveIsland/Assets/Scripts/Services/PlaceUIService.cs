@@ -20,7 +20,13 @@ public static class PlaceUIService
         _placeRoadmap = GameObject.Instantiate(_placeRoadmapPrefab); // Instantiate the roadmap
         TraverseChildren(_placeRoadmap.transform); // Traverse to find and store PlaceData
     }
-
+    public static IEnumerator CreateAndShowPlaceBtns(string placeID, Action<string> moveAction){
+        _placeUIPanel.CreatePlaceButtons(placeID, moveAction);
+        _placeUIPanel.SetInteractablePlaceButtons(false);
+        _placeUIPanel.SetOnPanel(true, true, true, .3f);
+        yield return new WaitForSeconds(.3f);
+        _placeUIPanel.SetInteractablePlaceButtons(true);
+    }
     private static void TraverseChildren(Transform parent)
     {
         foreach (Transform child in parent)
@@ -62,17 +68,8 @@ public static class PlaceUIService
         _placeUIPanel.SetOnPanel(up, left, right, totalTime);
     }
 
-    public static void SetInteractablePlaceButtons(bool b)
-    {
-        _placeUIPanel.SetInteractablePlaceButtons(b);
-    }
-
     public static void SetCurPlaceText(string selectedPlaceID){
         _placeUIPanel.SetCurPlaceText(selectedPlaceID);
     }
-    public static void CreatePlaceButtons(string selectedPlaceID, Action<string> moveAction){
-        _placeUIPanel.CreatePlaceButtons(selectedPlaceID, moveAction);
-    }
-
 }
 

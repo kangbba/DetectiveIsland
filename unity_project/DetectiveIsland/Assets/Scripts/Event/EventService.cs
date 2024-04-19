@@ -4,33 +4,13 @@ using System.Linq;
 using Aroka.CoroutineUtils;
 using UnityEngine;
 
-[System.Serializable]
-public class EventPlan
-{
-    public EventPlan(EventTime eventTime, string placeID, TextAsset scenarioFile)
-    {
-        _eventTime = eventTime;
-        _placeID = placeID;
-        _scenarioFile = scenarioFile;
-    }
-
-    [SerializeField] private    EventTime        _eventTime = null;
-    [SerializeField] private    string           _placeID = "";
-    [SerializeField] private    EventCondition   _eventCondition = null;
-    [SerializeField] private    TextAsset        _scenarioFile;
-
-    public string           PlaceID              { get => _placeID; }
-    public TextAsset        ScenarioFile         { get => _scenarioFile; }
-    public EventTime        EventTime            { get => _eventTime;  }
-    public EventCondition   EventCondition       { get => _eventCondition; }
-}
 
 public static class EventService
 {
-    private static EventRoadMap         _eventRoadmap;
-    private static EventTime            _curEventTime = null;
-    public static List<EventPlan>       EventPlans   => _eventRoadmap.EventPlans;
-    public static EventTime             CurEventTime { get => _curEventTime; }
+    private static  EventRoadMap         _eventRoadmap;
+    private static  EventTime            _curEventTime     =   null;
+    public static   List<EventPlan>       EventPlans            { get =>  _eventRoadmap.EventPlans; }
+    public static   EventTime             CurEventTime          { get => _curEventTime;             }
 
     public static void Load()
     {       

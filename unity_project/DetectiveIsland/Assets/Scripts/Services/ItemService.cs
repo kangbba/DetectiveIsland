@@ -73,6 +73,17 @@ public static class ItemService
 
         return itemDatasOwn ?? new List<ItemData>();
     }
+    public static bool GetIfOwnItem(string itemID){
+        
+        ItemData item = GetItemData(itemID);
+        if (item != null){
+            return PlayerPrefs.GetInt(ItemOwnershipKeyPrefix + item.ItemID) == 1;
+        }
+        else{
+            Debug.LogError("해당 아이템 아이디의 아이템 찾을수없음");
+            return false;
+        }
+    }
 
     public static void OwnItem(string itemID, bool own)
     {

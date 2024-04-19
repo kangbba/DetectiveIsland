@@ -26,7 +26,7 @@ public class ItemPanel : ArokaAnim
     public ItemData ConfirmedItemData { get => _confirmedItemBtn == null ? null : _confirmedItemBtn.ItemData; }
 
     private void Start(){
-        _enterBtn.onClick.AddListener(OnClickedEnterBtn);
+    //    _enterBtn.onClick.AddListener(OnClickedEnterBtn);
         _exitBtn.onClick.AddListener(OnClickedExitBtn);
         _confirmBtn.onClick.AddListener(OnClickedConfirmBtn);
     }
@@ -47,7 +47,7 @@ public class ItemPanel : ArokaAnim
     }
 
     public void SetOn(bool b, float totalTime){
-        _enterBtn.gameObject.SetActive(!b);
+   //     _enterBtn.gameObject.SetActive(!b);
         SetAnim(b, totalTime);
     }
 
