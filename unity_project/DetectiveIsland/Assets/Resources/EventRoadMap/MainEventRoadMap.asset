@@ -29,8 +29,8 @@ MonoBehaviour:
     _placeID: Restaurant
     _eventCondition:
       _actionType: 1
-      _targetID: Kate
-    _scenarioFile: {fileID: 4900000, guid: 40161d2a2df3a401c965eb7045968bc6, type: 3}
+      _targetID: Rachel
+    _scenarioFile: {fileID: 4900000, guid: 3998289676c474c9abeccdabc31afe29, type: 3}
   - _eventTime:
       _date: 2024-04-01
       _hour: 10

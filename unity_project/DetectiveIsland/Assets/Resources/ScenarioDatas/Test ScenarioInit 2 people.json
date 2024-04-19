@@ -1,0 +1,19 @@
+{
+  "$type": "Scenario, Assembly-CSharp",
+  "Elements": [],
+  "ScenarioInit": {
+    "$type": "ScenarioInit, Assembly-CSharp",
+    "PositionInits": [
+      {
+        "$type": "PositionInit, Assembly-CSharp",
+        "CharacterID": "Lisa",
+        "PositionID": "Left"
+      },
+      {
+        "$type": "PositionInit, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "PositionID": "Right"
+      }
+    ]
+  }
+}

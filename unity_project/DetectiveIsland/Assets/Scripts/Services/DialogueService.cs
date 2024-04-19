@@ -10,6 +10,9 @@ public static class DialogueService
         _dialoguePanel = UIManager.Instance.DialoguePanel;
         _dialoguePanel.Initialize();
     }
+    public static void ClearPanel(){
+        _dialoguePanel.ClearPanel();
+    }
     public static void SetOnPanel(bool b, float totalTime){
         _dialoguePanel.SetAnim(b, totalTime);
     }

@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             SetPhase(EGamePhase.EventPlaying); 
             TextAsset scenarioFile = eventPlan.ScenarioFile;
             Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioFile);
-            CharacterService.InitializeCharacters(scenario.ScenarioInit.PositionInits, 1f);
+            yield return StartCoroutine(EventProcessor.InitializeScenarioRoutine(scenario));
             yield return new WaitForSeconds(1f);
             if(eventPlan.EventCondition.ActionType != EActionType.AutoPlay){
                yield return StartCoroutine(EventProcessor.EventConditionRoutine(eventPlan.EventCondition));

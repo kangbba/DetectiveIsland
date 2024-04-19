@@ -10,6 +10,7 @@ public static class EventProcessor
 
         Debug.Log("이벤트가 발동됨");
         //대화창 On
+        DialogueService.ClearPanel();
         DialogueService.SetOnPanel(true, 1f);
         yield return new WaitForSeconds(1f);
         
@@ -85,12 +86,18 @@ public static class EventProcessor
             yield return ProcessElementRoutine(element);
         }
     }
+    public static IEnumerator InitializeScenarioRoutine(Scenario scenario){
+        //임시로 첫 장면을 따오자.
+        List<Element> elements = scenario.Elements;
+        yield return ProcessElementRoutine(elements[0]);
+    }
 
-    private static IEnumerator ProcessElementRoutine(Element element){
+    public static IEnumerator ProcessElementRoutine(Element element){
 
         if(element is PositionChange){
             PositionChange positionChange = element as PositionChange;
-           // CharacterService.PositionChange(positionChange);
+            CharacterService.PositionChange(positionChange.CharacterID, positionChange.PositionID, 1f);
+            yield return new WaitForSeconds(1f);
         }
         else if(element is Dialogue){
             Dialogue dialogue = element as Dialogue;

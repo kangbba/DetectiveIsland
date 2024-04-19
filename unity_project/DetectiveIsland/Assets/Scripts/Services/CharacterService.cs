@@ -60,4 +60,8 @@ public static class CharacterService
         Debug.Log($"현재 말을 걸고 있는 캐릭터 {characterID} 이벤트로 발행");
         OnCharacterTalk?.Invoke(characterID);
     }
+
+    public static void PositionChange(string characterID, string positionID, float totalTime){
+        _characterPanel.PositionChange(characterID, positionID, totalTime);
+    }
 }
