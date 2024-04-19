@@ -12,7 +12,7 @@ public static class PlaceUIService
 
     public static List<PlaceData> PlaceDatas { get => _placeDatas; }
 
-    public static void Initialize()
+    public static void Load()
     {
         _placeUIPanel = UIManager.Instance.PlaceUIPanel;
 

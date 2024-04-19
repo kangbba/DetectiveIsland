@@ -11,11 +11,12 @@ public class SpriteEffector : MonoBehaviour
 
     public SpriteRenderer SpriteRenderer { get => _spriteRenderer; }
 
-    protected void SetSprite(Sprite sprite){
+    protected void SetSprite(Sprite sprite, int order){
         if(_spriteRenderer == null){
             return;
         }
         _spriteRenderer.sprite = sprite;
+        _spriteRenderer.sortingOrder = order;
     }
     protected void FadeIn(float totalTime)
     {

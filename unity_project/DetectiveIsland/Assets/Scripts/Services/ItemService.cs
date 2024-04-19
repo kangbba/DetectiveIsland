@@ -12,7 +12,7 @@ public static class ItemService
     private static List<ItemData> _itemDatas;
     private const string ItemOwnershipKeyPrefix = "item_owned_";  // 아이템 소유 정보의 키 접두어
 
-    public static void Initialize()
+    public static void Load()
     {       
         _itemPanel = UIManager.Instance.ItemPanel;
         _itemOwnPanel = UIManager.Instance.ItemOwnPanel;
@@ -35,7 +35,7 @@ public static class ItemService
     //<return string>
     public static IEnumerator ItemDemandRoutine(ItemDemand itemDemand){
         foreach(Dialogue dialogue in itemDemand.Dialogues){
-            yield return ArokaCoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
+            yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
         }
 
         var ownItems = GetOwnItemDatas();
@@ -44,7 +44,7 @@ public static class ItemService
             SetOnPanel(true, 0.1f);
             yield return new WaitForSeconds(.5f);
             ItemData selectedItemData = null;
-            yield return ArokaCoroutineUtils.AwaitCoroutine<ItemData>(_itemPanel.AwaitItemBtnSelectedRoutine(), result => {
+            yield return CoroutineUtils.AwaitCoroutine<ItemData>(_itemPanel.AwaitItemBtnSelectedRoutine(), result => {
                 selectedItemData = result;
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
             });

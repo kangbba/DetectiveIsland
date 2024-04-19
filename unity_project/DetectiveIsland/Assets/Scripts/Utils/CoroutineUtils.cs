@@ -6,7 +6,7 @@ using System;
 
 namespace Aroka.CoroutineUtils{
 
-    public static class ArokaCoroutineUtils
+    public static class CoroutineUtils
     {
         // 더미 MonoBehaviour 클래스 생성
         public class DummyMonoBehaviour : MonoBehaviour
@@ -30,23 +30,21 @@ namespace Aroka.CoroutineUtils{
                 }
             }
         }
-
-
         // 코루틴 시작
-        public static UnityEngine.Coroutine StartCoroutine(IEnumerator routine)
+        public static Coroutine StartCoroutine(IEnumerator routine)
         {
             CheckMonoBehaviourAndAssign();
             return _coroutineExecutor.StartCoroutine(routine);
         }
         // 코루틴 정지
-        public static void StopCoroutine(UnityEngine.Coroutine routine)
+        public static void StopCoroutine(Coroutine routine)
         {
             CheckMonoBehaviourAndAssign();
             _coroutineExecutor.StopCoroutine(routine);
         }
 
         // 지정된 시간 후에 코루틴 시작
-        public static UnityEngine.Coroutine StartCoroutineAfterDelay(float delay, IEnumerator routine)
+        public static Coroutine StartCoroutineAfterDelay(float delay, IEnumerator routine)
         {
             CheckMonoBehaviourAndAssign();
             return _coroutineExecutor.StartCoroutine(DelayedCoroutine(delay, routine));

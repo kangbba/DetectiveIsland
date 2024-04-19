@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Aroka.ArokaUtils;
 using UnityEngine;
@@ -7,7 +8,9 @@ public static class CharacterService
     private static CharacterPanel _characterPanel;
     private static List<Character> _characterPrefabs;
     
-    public static void Initialize()
+    public static event Action<string> OnCharacterTalk; // 말 걸리고있는 캐릭터 액션 모음
+
+    public static void Load()
     {       
         _characterPanel = UIManager.Instance.CharacterPanel;
         _characterPrefabs = ArokaUtils.LoadResourcesFromFolder<Character>("CharacterPrefabs");
@@ -37,16 +40,24 @@ public static class CharacterService
         Debug.LogWarning("캐릭터 데이터를 찾을수 없음");
         return null;
     }
-    public static void ShowCharacters(float totalTime){
-        _characterPanel.ShowCharacters(totalTime);
+    public static void InitializeCharacters(List<PositionInit> positionInits, float totalTime){
+        foreach(PositionInit positionInit in positionInits){
+            MakeCharacter(positionInit.CharacterID, positionInit.PositionID, totalTime);
+        }
     }
-    public static void ClearCharacters(float totalTime){
-        _characterPanel.ClearCharacters(totalTime);
+    public static void DestroyAllCharacters(float totalTime){
+        _characterPanel.DestroyAllCharacters(totalTime);
+    }
+    public static void MakeCharacter(string characterID, string positionID, float totalTime){
+        _characterPanel.MakeCharacter(characterID, positionID, totalTime);
+    }
+    public static void DestroyCharacter(string characterID, float totalTime){
+        _characterPanel.DestroyCharacter(characterID, totalTime);
     }
 
-    public static void PositionChange(PositionChange positionChange){
-         Debug.Log(positionChange.CharacterID + "/" + positionChange.PositionID);
-        _characterPanel.RepositionCharacter(positionChange.CharacterID, positionChange.PositionID);
+    public static void NotifyTalking(string characterID)
+    {
+        Debug.Log($"현재 말을 걸고 있는 캐릭터 {characterID} 이벤트로 발행");
+        OnCharacterTalk?.Invoke(characterID);
     }
-
 }
