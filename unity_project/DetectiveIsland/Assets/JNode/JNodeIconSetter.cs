@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class JNodeIconSetter : AssetPostprocessor
 {
+    /*
     // Path to the icon, make sure to adjust this to where you've saved your custom icon
     private static readonly string iconPath =  "Assets/JNode/Icons/jnode_icon.png";
 
@@ -23,7 +24,6 @@ public class JNodeIconSetter : AssetPostprocessor
 
     private static void AssignIcon(string assetPath)
     {
-        Debug.Log("Checking asset: " + assetPath);
         if (assetPath.EndsWith(".jnode"))
         {
             Debug.Log("Found .jnode file: " + assetPath);
@@ -44,6 +44,6 @@ public class JNodeIconSetter : AssetPostprocessor
             EditorGUIUtility.SetIconForObject(asset, iconTexture);
             Debug.Log("Icon set for asset: " + assetPath);
         }
-    }
+    }*/
 
 }

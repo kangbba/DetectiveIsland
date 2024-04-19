@@ -1,0 +1,267 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "Nodes": [
+    {
+      "$type": "Node, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "center": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "width": 0.0,
+        "height": 0.0,
+        "size": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 0.0,
+        "yMax": 0.0,
+        "left": 0.0,
+        "right": 0.0,
+        "top": 0.0,
+        "bottom": 0.0
+      },
+      "title": null,
+      "isSelected": false
+    },
+    {
+      "$type": "Node, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "center": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "width": 0.0,
+        "height": 0.0,
+        "size": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 0.0,
+        "yMax": 0.0,
+        "left": 0.0,
+        "right": 0.0,
+        "top": 0.0,
+        "bottom": 0.0
+      },
+      "title": null,
+      "isSelected": false
+    },
+    {
+      "$type": "Node, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "center": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "width": 0.0,
+        "height": 0.0,
+        "size": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 0.0,
+        "yMax": 0.0,
+        "left": 0.0,
+        "right": 0.0,
+        "top": 0.0,
+        "bottom": 0.0
+      },
+      "title": null,
+      "isSelected": false
+    },
+    {
+      "$type": "Node, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "center": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "width": 0.0,
+        "height": 0.0,
+        "size": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 0.0,
+        "yMax": 0.0,
+        "left": 0.0,
+        "right": 0.0,
+        "top": 0.0,
+        "bottom": 0.0
+      },
+      "title": null,
+      "isSelected": false
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 364.0,
+        "y": 213.0,
+        "position": {
+          "x": 364.0,
+          "y": 213.0
+        },
+        "center": {
+          "x": 464.0,
+          "y": 263.0
+        },
+        "min": {
+          "x": 364.0,
+          "y": 213.0
+        },
+        "max": {
+          "x": 564.0,
+          "y": 313.0
+        },
+        "width": 200.0,
+        "height": 100.0,
+        "size": {
+          "x": 200.0,
+          "y": 100.0
+        },
+        "xMin": 364.0,
+        "yMin": 213.0,
+        "xMax": 564.0,
+        "yMax": 313.0,
+        "left": 364.0,
+        "right": 564.0,
+        "top": 213.0,
+        "bottom": 313.0
+      },
+      "title": "Dialogue",
+      "isSelected": false
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 126.0,
+        "y": 262.0,
+        "position": {
+          "x": 126.0,
+          "y": 262.0
+        },
+        "center": {
+          "x": 226.0,
+          "y": 312.0
+        },
+        "min": {
+          "x": 126.0,
+          "y": 262.0
+        },
+        "max": {
+          "x": 326.0,
+          "y": 362.0
+        },
+        "width": 200.0,
+        "height": 100.0,
+        "size": {
+          "x": 200.0,
+          "y": 100.0
+        },
+        "xMin": 126.0,
+        "yMin": 262.0,
+        "xMax": 326.0,
+        "yMax": 362.0,
+        "left": 126.0,
+        "right": 326.0,
+        "top": 262.0,
+        "bottom": 362.0
+      },
+      "title": "Dialogue",
+      "isSelected": false
+    }
+  ]
+}

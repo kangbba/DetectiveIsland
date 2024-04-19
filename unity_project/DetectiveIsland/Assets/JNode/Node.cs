@@ -23,7 +23,6 @@ public class Node
 
     public void Select()
     {
-        Debug.Log(isSelected);
         isSelected = true;
     }
 

@@ -4,14 +4,13 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class ScenarioNode
+public class JNode
 {
     private List<Node> nodes;
 
+    public JNode(List<Node> nodes)
+    {
 
-    public ScenarioNode(List<Node> nodes)
-    { 
-         
 
         this.nodes = nodes;
     }

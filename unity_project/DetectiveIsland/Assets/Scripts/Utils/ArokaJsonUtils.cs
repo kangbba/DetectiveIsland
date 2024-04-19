@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Aroka.JsonUtils{
     public static class ArokaJsonUtils
     {
-        public static void SaveScenarioNode(ScenarioNode scenarioNode, string path)
+        public static void SaveJNode(JNode jNode, string path)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
@@ -18,13 +18,13 @@ namespace Aroka.JsonUtils{
                 StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
             };
 
-            string json = JsonConvert.SerializeObject(scenarioNode, settings);
+            string json = JsonConvert.SerializeObject(jNode, settings);
             File.WriteAllText(path, json);
             AssetDatabase.Refresh();
             Debug.Log("File saved: " + path);
         }
 
-        public static ScenarioNode LoadScenarioNode(string filePath)
+        public static JNode LoadJNode(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -37,9 +37,10 @@ namespace Aroka.JsonUtils{
             {
                 TypeNameHandling = TypeNameHandling.Objects,
                 Formatting = Formatting.Indented,
-                StringEscapeHandling = StringEscapeHandling.Default
+                StringEscapeHandling = StringEscapeHandling.Default,
+                Converters = new List<JsonConverter> { new Vector2Converter() },
             };
-            return JsonConvert.DeserializeObject<ScenarioNode>(json, settings);
+            return JsonConvert.DeserializeObject<JNode>(json, settings);
         }
 
         public static void SaveScenario(Scenario scenario, string fileName)
