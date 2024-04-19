@@ -8,26 +8,25 @@ using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using Formatting = Newtonsoft.Json.Formatting;
 
-[InitializeOnLoad]
 public class JNodeEditor : EditorWindow
-{/*
+{ 
+    /*
     private void OnDestroy()
     {
         jNodeInstance.isOpened = false;
     }
-    */
-
-    static JNodeEditor()
+   
+    private void OnEnable()
     {
         CreateJNodeInstance();
-        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
         if (!jNodeInstance.isOpened)
         {
             return;
         }
-        OpenJNodeEditorWindow();
-        LoadJNodeEditorWindow(jNodeInstance.recentPath,jNodeInstance.recentPath);
-    }
+        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        LoadJNodeEditorWindow(jNodeInstance.recentPath, jNodeInstance.recentPath);
+    }*/
+
     private static JNodeInstance jNodeInstance;
 
     public static JNode JNode
@@ -87,8 +86,8 @@ public class JNodeEditor : EditorWindow
     }
 
 
-    private static JNodeInstance CreateJNodeInstance()
-    {
+    private static void CreateJNodeInstance()
+    { 
         if (jNodeInstance == null)
         {
             jNodeInstance = ScriptableObject.CreateInstance<JNodeInstance>();
@@ -97,7 +96,6 @@ public class JNodeEditor : EditorWindow
             AssetDatabase.Refresh();
         }
         jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
-        return jNodeInstance;
     }
 
     public void EditorControl(Event e)
@@ -132,7 +130,6 @@ public class JNodeEditor : EditorWindow
         Debug.Log("Load JNode   |   " + _recentOpenFileName + "    |    " + filePath);
         JNode jNode = ArokaJsonUtils.LoadJNode(filePath);
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
-        jNodeInstance.isOpened = true;
         UpdateLastSavedSnapshot();
     }
 

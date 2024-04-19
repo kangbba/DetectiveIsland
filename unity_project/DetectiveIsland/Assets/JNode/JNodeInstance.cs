@@ -14,7 +14,6 @@ public  class JNodeInstance : ScriptableObject
     public bool isDraggingNode;
     public bool isPanningCanvas;
     public string recentPath;
-    public bool isOpened;
 
 
     public void Initialize(string recentPath, string _recentOpenFileName, JNode jNode)
