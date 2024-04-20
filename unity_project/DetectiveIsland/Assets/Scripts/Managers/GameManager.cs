@@ -106,31 +106,33 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime);
-        eventPlan.Initialize();
-        EventService.LogEventPlan(eventPlan);
+        if(eventPlan != null){
+            eventPlan.Initialize();
+            PlaceScenario placeScenario = eventPlan.GetPlaceScenario(placeID);
+            EventService.LogEventPlan(eventPlan);
 
-        PlaceScenario placeScenario = eventPlan.GetPlaceScenario(placeID);
-        if(placeScenario != null){
-            
-            if (!placeScenario.IsViewed || !placeScenario.IsAllSolved()) {
-                placeScenario.SetViewed(true);  
-                SetPhase(EGamePhase.EventPlaying);
-                Scenario scenario = ArokaJsonUtils.LoadScenario(placeScenario.ScenarioFile);
-                yield return StartCoroutine(StoryProcessor.ScenarioRoutine(scenario));
-            } 
-            else {
-                Debug.Log("한번 이상 열람된 이벤트");
-            }
-            // 이벤트 플랜의 나가는 조건이 모두 해결 되었는지 확인 후 시간 업데이트
-            if (eventPlan.IsAllSolved()) {
-                EventPlan curEventPlan = EventService.GetNextEventPlan(EventService.CurEventTime);
-                if(curEventPlan != null){
-                    EventTime nextEventTime = curEventPlan.EventTime;
-                    EventService.SetCurEventTime(nextEventTime);
+            if(placeScenario != null){
+                
+                if (!placeScenario.IsViewed || !placeScenario.IsAllSolved()) {
+                    placeScenario.SetViewed(true);  
+                    SetPhase(EGamePhase.EventPlaying);
+                    Scenario scenario = ArokaJsonUtils.LoadScenario(placeScenario.ScenarioFile);
+                    yield return StartCoroutine(StoryProcessor.ScenarioRoutine(scenario));
+                } 
+                else {
+                    Debug.Log("한번 이상 열람된 이벤트");
                 }
-                else{
-                    Debug.LogWarning("게임 엔딩 출력!");
-                    EventService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
+                // 이벤트 플랜의 나가는 조건이 모두 해결 되었는지 확인 후 시간 업데이트
+                if (eventPlan.IsAllSolved()) {
+                    EventPlan curEventPlan = EventService.GetNextEventPlan(EventService.CurEventTime);
+                    if(curEventPlan != null){
+                        EventTime nextEventTime = curEventPlan.EventTime;
+                        EventService.SetCurEventTime(nextEventTime);
+                    }
+                    else{
+                        Debug.LogWarning("게임 엔딩 출력!");
+                        EventService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
+                    }
                 }
             }
         }
