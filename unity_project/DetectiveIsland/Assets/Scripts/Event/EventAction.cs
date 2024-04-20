@@ -23,7 +23,24 @@ public class EventAction
     
     [SerializeField] private string             _targetID; // 대상 ID, 예: 캐릭터 이름, 아이템 ID
 
+
     public  EActionType  ActionType       => _actionType;
     public  string  TargetID         => _targetID;
+
+    public bool CheckActionFulfilled()
+    {
+        switch (_actionType)
+        {
+            case EActionType.Collect:
+                return CheckItemOwnership(_targetID);
+            default:
+                Debug.LogError("Unsupported action type for checking conditions.");
+                return false;
+        }
+    }
+    private bool CheckItemOwnership(string itemID)
+    {
+        return ItemService.GetIfOwnItem(itemID);
+    }
 }
 

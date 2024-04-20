@@ -1,25 +1,37 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public class EventPlan
 {
-    public EventPlan(EventTime eventTime, string placeID, TextAsset scenarioFile)
+    [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9 , 0); 
+    [SerializeField] private List<PlaceScenario> _placeScenarios = new List<PlaceScenario>();
+
+
+    public EventTime EventTime { get => _eventTime; }
+    public List<PlaceScenario> PlaceScenarios { get => _placeScenarios; }
+
+    public PlaceScenario GetPlaceScenario(string placeID)
     {
-        _eventTime = eventTime;
-        _placeID = placeID;
-        _scenarioFile = scenarioFile;
+        return _placeScenarios.FirstOrDefault(placeScenario => placeScenario.PlaceID == placeID);
+    }
+    public bool IsAllSolved()
+    {
+        foreach (PlaceScenario scenario in _placeScenarios)
+        {
+            if (!scenario.IsAllSolved())  // Assuming EventAction has a method to check its own condition
+            {
+                return false;  // If any condition is not met, return false
+            }
+        }
+        return true;  // All conditions are met
     }
 
-    [SerializeField] private    EventTime        _eventTime = null;
-    [SerializeField] private    string           _placeID = "";
-    [SerializeField] private    EventAction   _eventEnterCondition = null;
-    [SerializeField] private    EventAction   _timeProcessCondition = null;
-    [SerializeField] private    TextAsset        _scenarioFile;
-
-    public   string           PlaceID                { get => _placeID;              }
-    public   TextAsset        ScenarioFile           { get => _scenarioFile;         }
-    public   EventTime        EventTime              { get => _eventTime;            }
-    public   EventAction   EventEnterCondition       { get => _eventEnterCondition;  }
-    public   EventAction   TimeProcessCondition      { get => _timeProcessCondition; }
+    public void Initialize(){
+        foreach(PlaceScenario placeScenario in _placeScenarios){
+            placeScenario.SetViewed(false);
+        }
+    }
 }

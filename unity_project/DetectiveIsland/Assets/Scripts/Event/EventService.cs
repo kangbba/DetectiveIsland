@@ -20,7 +20,47 @@ public static class EventService
             Debug.LogError($"Failed to load EventRoadMap from Resources folder with filename: {"EventRoadMap"}");
         }
     }
+    public static void LogEventPlan(EventPlan eventPlan){
+        for(int i = 0 ; i < eventPlan.PlaceScenarios.Count ; i++){
+            if(i == 0 ){
+                 Debug.Log($"***************************");
+            }
+            PlaceScenario placeScenario = eventPlan.PlaceScenarios[i];
+            Debug.Log($"-----{i+1}번째 장소 시나리오 ----- ");
+            Debug.Log($"[장소 : {placeScenario.PlaceID}]");
+            Debug.Log($"[해결 여부 : {(placeScenario.IsAllSolved() ? "해결됨" : " 해결안됨")}]");
+            if(i == (eventPlan.PlaceScenarios.Count - 1) ){
+                 Debug.Log($"***************************");
+            }
+        }
+    }
+    public static EventPlan GetFirstEventPlan(){
+        return _eventRoadmap.EventPlans[0];
+    }
 
+    public static EventPlan GetEventPlan(EventTime eventTime)
+    {
+        foreach (EventPlan plan in _eventRoadmap.EventPlans)
+        {
+            if (plan.EventTime.Equals(eventTime))
+            {
+                return plan;
+            }
+        }
+        return null;
+    }
+    public static EventPlan GetNextEventPlan(EventTime eventTime)
+    {
+        EventPlan eventPlan = GetEventPlan(eventTime);
+        int currentIndex = EventPlans.IndexOf(eventPlan);
+        if (currentIndex == -1 || currentIndex + 1 >= EventPlans.Count)
+        {
+            Debug.LogWarning("Current EventPlan is the last one or not found.");
+            return null; 
+        }
+        return EventPlans[currentIndex + 1];
+    }
+    
     public static void SetCurEventTime(string date, int hour, int minute)
     {
         _curEventTime = new EventTime(date, hour, minute);
@@ -38,50 +78,23 @@ public static class EventService
         return eventPlans.Where(plan => plan.EventTime.CompareTime(inputTime) == timeRelation && plan.EventTime.Date == inputTime.Date).ToList();
     }
 
-    public static EventPlan GetFirstEventPlan(){
-        return _eventRoadmap.EventPlans[0];
-    }
 
-    public static List<EventPlan> GetEventPlansByDate(string date)
-    {
-        int year = int.Parse(date.Split('-')[0]);
-        int month = int.Parse(date.Split('-')[1]);
-        int day = int.Parse(date.Split('-')[2]);
+    // public static List<EventPlan> GetEventPlansByDate(string date)
+    // {
+    //     int year = int.Parse(date.Split('-')[0]);
+    //     int month = int.Parse(date.Split('-')[1]);
+    //     int day = int.Parse(date.Split('-')[2]);
         
-        List<EventPlan> eventPlans = new List<EventPlan>();
-        foreach (EventPlan plan in _eventRoadmap.EventPlans)
-        {
-            if (plan.EventTime.CompareDate(year, month, day) == TimeRelation.Same)
-            {
-                eventPlans.Add(plan);
-            }
-        }
-        return eventPlans;
-    }
-    public static List<EventPlan> GetEventPlans(EventTime eventTime)
-    {
-        List<EventPlan> eventPlans = new List<EventPlan>();
-        foreach (EventPlan plan in _eventRoadmap.EventPlans)
-        {
-            if (plan.EventTime.Equals(eventTime))
-            {
-                eventPlans.Add(plan);
-            }
-        }
-        return eventPlans;
-    }
-
-    public static EventPlan GetEventPlan(EventTime eventTime, string placeID)
-    {
-        foreach (EventPlan plan in _eventRoadmap.EventPlans)
-        {
-            if (plan.EventTime.Equals(eventTime) && plan.PlaceID == placeID)
-            {
-                return plan;
-            }
-        }
-        return null;
-    }
+    //     List<EventPlan> eventPlans = new List<EventPlan>();
+    //     foreach (EventPlan plan in _eventRoadmap.EventPlans)
+    //     {
+    //         if (plan.EventTime.CompareDate(year, month, day) == TimeRelation.Same)
+    //         {
+    //             eventPlans.Add(plan);
+    //         }
+    //     }
+    //     return eventPlans;
+    // }
 
     
 }

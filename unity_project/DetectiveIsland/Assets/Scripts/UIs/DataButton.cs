@@ -21,7 +21,6 @@ public abstract class DataButton : MonoBehaviour
     {
         EventTrigger.Entry clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         clickEntry.callback.AddListener((eventData) => {
-            Debug.Log($"Button for {BtnKey} clicked!");
             action(BtnKey);
         });
         _eventTrigger.triggers.Add(clickEntry);
@@ -32,7 +31,6 @@ public abstract class DataButton : MonoBehaviour
         // 마우스 오버 이벤트 추가 (PointerEnter)
         EventTrigger.Entry enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
         enterEntry.callback.AddListener((eventData) => {
-            Debug.Log($"Mouse over {BtnKey}");
             onEnterAction?.Invoke(BtnKey);
         });
         _eventTrigger.triggers.Add(enterEntry);
@@ -40,7 +38,6 @@ public abstract class DataButton : MonoBehaviour
         // 마우스 오버 이벤트 제거 (PointerExit)
         EventTrigger.Entry exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
         exitEntry.callback.AddListener((eventData) => {
-            Debug.Log($"Mouse exit {BtnKey}");
             onExitAction?.Invoke(BtnKey);
         });
         _eventTrigger.triggers.Add(exitEntry);

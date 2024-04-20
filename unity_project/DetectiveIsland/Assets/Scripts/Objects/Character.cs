@@ -35,8 +35,6 @@ public class Character : SpriteEffector
     }  
     private void OnMouseDown()
     {
-        Debug.Log("Character pressed: " + _characterData.CharacterNameForUser);
-        CharacterService.NotifyTalking(_characterData.CharacterID);
     }
 
     private void OnMouseEnter()
