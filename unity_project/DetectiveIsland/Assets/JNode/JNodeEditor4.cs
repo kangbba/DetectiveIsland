@@ -1,38 +1,18 @@
 using Aroka.JsonUtils;
 using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
-using Formatting = Newtonsoft.Json.Formatting;
 
-public class JNodeEditor : EditorWindow
-{ 
-    /*
-    private void OnDestroy()
-    {
-        jNodeInstance.isOpened = false;
-    }
-   
-    private void OnEnable()
-    {
-        CreateJNodeInstance();
-        if (!jNodeInstance.isOpened)
-        {
-            return;
-        }
-        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
-        LoadJNodeEditorWindow(jNodeInstance.recentPath, jNodeInstance.recentPath);
-    }*/
-
+public class JNodeEditor4 : EditorWindow
+{
     private static JNodeInstance jNodeInstance;
-
     public static JNode JNode
     {
         get => jNodeInstance.jNode;
-        set { if (jNodeInstance != null) jNodeInstance.jNode = value;}
+        set { if (jNodeInstance != null) jNodeInstance.jNode = value; }
     }
     public static string RecentOpenFileName
     {
@@ -72,8 +52,12 @@ public class JNodeEditor : EditorWindow
 
     private void OnGUI()
     {
+        
         DrawGrid();
+
+        
         DrawJNodeMenuBar();
+       
         EditorControl(Event.current);
 
         if (JNode != null)
@@ -86,8 +70,54 @@ public class JNodeEditor : EditorWindow
     }
 
 
+    private void DrawGrid()
+    {
+        float gridSize = 20f;
+        float gridOpacity = 0.2f;
+        int widthDivs = Mathf.CeilToInt(position.width / gridSize);
+        int heightDivs = Mathf.CeilToInt(position.height / gridSize);
+
+        Handles.BeginGUI();
+        Handles.color = new Color(0.5f, 0.5f, 0.5f, gridOpacity);
+
+        // Calculate the offset to start drawing the grid lines based on the canvasOffset
+        Vector2 offset = new Vector2(CanvasOffset.x % gridSize, CanvasOffset.y % gridSize);
+
+        for (int i = 0; i <= widthDivs; i++)
+        {
+            // Calculate the start and end points for vertical grid lines
+            float x = gridSize * i + offset.x;
+            Handles.DrawLine(new Vector2(x, 0), new Vector2(x, position.height));
+        }
+
+        for (int j = 0; j <= heightDivs; j++)
+        {
+            // Calculate the start and end points for horizontal grid lines
+            float y = gridSize * j + offset.y;
+            Handles.DrawLine(new Vector2(0, y), new Vector2(position.width, y));
+        }
+
+        Handles.color = Color.white;
+        Handles.EndGUI();
+    }
+
+    private void DrawNodes()
+    {
+        for (int i = 0; i < JNode.Nodes.Count; i++)
+        {
+            JNode.Nodes[i].DrawNode(CanvasOffset);  // 각 노드를 그림
+
+        }
+    }
+    public static void OpenJNodeEditorWindow()
+    {
+        JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
+        window.Show();
+        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        Debug.Log("Open JNode Editor" + window);
+    }
     private static void CreateJNodeInstance()
-    { 
+    {
         if (jNodeInstance == null)
         {
             jNodeInstance = ScriptableObject.CreateInstance<JNodeInstance>();
@@ -98,33 +128,6 @@ public class JNodeEditor : EditorWindow
         jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
     }
 
-    public void EditorControl(Event e)
-    {
-       
-        MousePosition = (e.mousePosition - CanvasOffset);
-
-        switch (e.type)
-        {
-            case EventType.KeyDown:
-                if (e.keyCode == KeyCode.W && (Event.current.command || Event.current.control))
-                {
-                    Event.current.Use();
-                    Close();
-                }
-                break;
-
-        }
-    }
-
-
-    public static void OpenJNodeEditorWindow()
-    {
-        Debug.Log("Open JNode Editor");
-        JNodeEditor window = GetWindow<JNodeEditor>("JNode Editor");
-        CreateJNodeInstance();
-        window.Show();
-    }
-
     public static void LoadJNodeEditorWindow(string filePath, string _recentOpenFileName)
     {
         Debug.Log("Load JNode   |   " + _recentOpenFileName + "    |    " + filePath);
@@ -133,10 +136,8 @@ public class JNodeEditor : EditorWindow
         UpdateLastSavedSnapshot();
     }
 
-
     public void DrawJNodeMenuBar()
     {
-
         Rect buttonArea = new Rect(10, 10, 1000, 30);  // Increased width
 
         GUILayout.BeginArea(buttonArea);
@@ -182,6 +183,36 @@ public class JNodeEditor : EditorWindow
         GUILayout.EndArea();
     }
 
+    private void ExportJson()
+    {
+        if (JNode.Nodes.Count > 0)
+        {
+
+            string resourcesPath = StoragePath.ScenarioPath;
+
+            string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
+
+            // Open the save file dialog with the determined initial directory
+            string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
+
+            // Check if the user has not cancelled the operation
+            if (!string.IsNullOrEmpty(path2))
+            {
+                List<Element> elements = JNode.Nodes.ToElements();
+                Debug.Log(elements.Count);
+                Scenario scenario = new Scenario(null, elements);
+                Debug.Log(scenario.Elements.Count);
+
+                // Save the scenario object as a JSON file at the specified path
+                ArokaJsonUtils.SaveScenario(scenario, path2);
+                Debug.Log("Nodes saved to JSON: " + path2);
+            }
+        }
+        else
+        {
+            Debug.Log("No nodes to save.");
+        }
+    }
     private static string lastSavedSnapshot;
     public static void UpdateLastSavedSnapshot()
     {
@@ -193,51 +224,6 @@ public class JNodeEditor : EditorWindow
             StringEscapeHandling = StringEscapeHandling.Default
         });
     }
-
-
-
-    private void CloseJNode()
-    {
-        if (Event.current.type == EventType.KeyDown)
-        {
-            if (Event.current.keyCode == KeyCode.W && (Event.current.command || Event.current.control))
-            {
-                Event.current.Use();
-
-                Close();
-            }
-        }
-    }
-
-
-    [MenuItem("Assets/Create/JNode/New JNode", false, 80)]
-    public static void CreateNewJNode()
-    {
-        string folderPath = AssetDatabase.GetAssetPath(Selection.activeObject);
-        if (!Directory.Exists(folderPath))
-        {
-            folderPath = Path.GetDirectoryName(folderPath);
-        }
-
-        string path = AssetDatabase.GenerateUniqueAssetPath(folderPath + "/NewJNode.jnode");
-
-        JNode jNode = new JNode(new List<Node>());
-        JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
-        };
-
-        string json = JsonConvert.SerializeObject(jNode, settings);
-
-        File.WriteAllText(path, json); // Creates an empty JSON object in the file.
-        AssetDatabase.Refresh();
-
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>(path);
-    }
-
     public static void SaveJNode()
     {
         string currentSnapshot = JsonConvert.SerializeObject(JNode, new JsonSerializerSettings
@@ -263,7 +249,6 @@ public class JNodeEditor : EditorWindow
             Debug.Log("No changes to save.");
         }
     }
-
     public static void SaveAsJNode()
     {
         string resourcesPath = StoragePath.JNodePath;
@@ -289,83 +274,38 @@ public class JNodeEditor : EditorWindow
         Debug.Log($"<color=green>Save Complete</color> " + RecentOpenFileName);
     }
 
-    private void ExportJson()
+
+    public void EditorControl(Event e)
     {
-        if (JNode.Nodes.Count > 0)
+        MousePosition = (e.mousePosition - CanvasOffset);
+
+        switch (e.type)
         {
+            case EventType.KeyDown:
+                if (e.keyCode == KeyCode.W && (Event.current.command || Event.current.control))
+                {
+                    Event.current.Use();
+                    Close();
+                }
+                break;
 
-            string resourcesPath = StoragePath.ScenarioPath;
+        }
+    }
 
-            string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
 
-            // Open the save file dialog with the determined initial directory
-            string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
 
-            // Check if the user has not cancelled the operation
-            if (!string.IsNullOrEmpty(path2))
+
+    private void CloseJNode()
+    {
+        if (Event.current.type == EventType.KeyDown)
+        {
+            if (Event.current.keyCode == KeyCode.W && (Event.current.command || Event.current.control))
             {
-                List<Element> elements = JNode.Nodes.ToElements();
-                Debug.Log(elements.Count);
-                Scenario scenario = new Scenario(null,elements);
-                Debug.Log(scenario.Elements.Count);
+                Event.current.Use();
 
-                // Save the scenario object as a JSON file at the specified path
-                ArokaJsonUtils.SaveScenario(scenario, path2);
-                Debug.Log("Nodes saved to JSON: " + path2);
+                Close();
             }
         }
-        else
-        {
-            Debug.Log("No nodes to save.");
-        }
-    }
-
-
-
-
-
-
-
-
-    private void DrawGrid()
-    {
-        float gridSize = 20f;
-        float gridOpacity = 0.2f;
-        int widthDivs = Mathf.CeilToInt(position.width / gridSize);
-        int heightDivs = Mathf.CeilToInt(position.height / gridSize);
-
-        Handles.BeginGUI();
-        Handles.color = new Color(0.5f, 0.5f, 0.5f, gridOpacity);
-
-        // Calculate the offset to start drawing the grid lines based on the canvasOffset
-        Vector2 offset = new Vector2(CanvasOffset.x % gridSize, CanvasOffset.y % gridSize);
-
-        for (int i = 0; i <= widthDivs; i++)
-        {
-            // Calculate the start and end points for vertical grid lines
-            float x = gridSize * i + offset.x;
-            Handles.DrawLine(new Vector2(x, 0), new Vector2(x, position.height));
-        }
-
-        for (int j = 0; j <= heightDivs; j++)
-        {
-            // Calculate the start and end points for horizontal grid lines
-            float y = gridSize * j + offset.y;
-            Handles.DrawLine(new Vector2(0, y), new Vector2(position.width, y));
-        }
-
-        Handles.color = Color.white;
-        Handles.EndGUI();
-    }
-
-    private void DrawNodes()
-    {
-        for (int i = 0; i < JNode.Nodes.Count; i++)
-        {
-            JNode.Nodes[i].DrawNode(CanvasOffset);  // 각 노드를 그림
-
-        }
-        
     }
 
 
@@ -373,7 +313,7 @@ public class JNodeEditor : EditorWindow
 
     private void ProcessEvents(Event e)
     {
-        MousePosition = (e.mousePosition - CanvasOffset) ;
+        MousePosition = (e.mousePosition - CanvasOffset);
 
         switch (e.type)
         {
@@ -391,7 +331,7 @@ public class JNodeEditor : EditorWindow
                 }
                 else if (e.button == 0) // Left mouse button for selecting and dragging nodes
                 {
-                   if(SelectedNode != null) SelectedNode.Deselect();
+                    if (SelectedNode != null) SelectedNode.Deselect();
                     SelectedNode = null;
 
                     foreach (var node in JNode.Nodes)
@@ -449,11 +389,9 @@ public class JNodeEditor : EditorWindow
                     Close();
                 }
                 break;
-              
+
         }
     }
-
-
 
 
     private void ProcessContextMenu(Vector2 mousePos)
@@ -471,4 +409,36 @@ public class JNodeEditor : EditorWindow
         dialogueNode.dialogue = new Dialogue("Kate", new List<Line>() { new Line("smile", "Hello") });
         JNode.Nodes.Add(dialogueNode);
     }
+
+    [MenuItem("Assets/Create/JNode/New JNode", false, 80)]
+    public static void CreateNewJNode()
+    {
+        string folderPath = AssetDatabase.GetAssetPath(Selection.activeObject);
+        if (!Directory.Exists(folderPath))
+        {
+            folderPath = Path.GetDirectoryName(folderPath);
+        }
+
+        string path = AssetDatabase.GenerateUniqueAssetPath(folderPath + "/NewJNode.jnode");
+
+        JNode jNode = new JNode(new List<Node>());
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Objects,
+            Formatting = Formatting.Indented,
+            StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+        };
+
+        string json = JsonConvert.SerializeObject(jNode, settings);
+
+        File.WriteAllText(path, json); // Creates an empty JSON object in the file.
+        AssetDatabase.Refresh();
+
+        EditorUtility.FocusProjectWindow();
+        Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>(path);
+    }
+
+
+
+
 }

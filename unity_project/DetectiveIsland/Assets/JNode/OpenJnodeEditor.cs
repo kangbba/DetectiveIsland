@@ -25,15 +25,9 @@ public class OpenJNodeEditor
 
     private static void OpenJNodeFile(string path)
     {
-        // Assuming NodeEditorWindow is the window you want to open
-        var window = EditorWindow.GetWindow<JNodeEditor>("JNode Editor");
-        string fileContents = System.IO.File.ReadAllText(path);
-        // Assuming LoadNodesFromJson is a method designed to handle the JSON data
-        // This line will need adjustment if LoadNodesFromJson doesn't exist or needs different parameters
+        Debug.Log("Try open JNode");
         string filename = System.IO.Path.GetFileName(path);
-
-        JNodeEditor.OpenJNodeEditorWindow();
-        window.Show();
-        JNodeEditor.LoadJNodeEditorWindow(path, filename);
+        JNodeEditor4.OpenJNodeEditorWindow();
+        JNodeEditor4.LoadJNodeEditorWindow(path, filename);
     }
 }
