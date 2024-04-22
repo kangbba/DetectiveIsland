@@ -33,8 +33,6 @@ public class Node
 
     public virtual void DrawNode(Vector2 offset)
     {
-     
-
     }
 }
 
@@ -98,7 +96,6 @@ public class DialogueNode : Node
         titleGS.alignment = TextAnchor.UpperCenter;
         titleGS.normal.textColor = Color.white;
         GUI.Label(nodeRect, title, titleGS);
-
 
         GUI.color = Color.white;
 

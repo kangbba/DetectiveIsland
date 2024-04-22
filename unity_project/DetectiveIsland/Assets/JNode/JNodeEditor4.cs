@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.Callbacks;
 
 public class JNodeEditor4 : EditorWindow
 {
@@ -49,26 +50,39 @@ public class JNodeEditor4 : EditorWindow
         get => jNodeInstance != null && jNodeInstance.isPanningCanvas;
         set { if (jNodeInstance != null) jNodeInstance.isPanningCanvas = value; }
     }
+    
+    [DidReloadScripts]
+    public static void ReloadEditor()
+    {
+        Debug.Log("Reloaded");
+        LoadJNodeInstance();
+    }
 
     private void OnGUI()
-    {
-        
-        DrawGrid();
+    {  
+        AutoSaveJNodeInstance();
+       
 
-        
-        DrawJNodeMenuBar();
+        DrawGrid();
+        DrawJNodeMenuBar();  
        
         EditorControl(Event.current);
 
         if (JNode != null)
         {
             DrawNodes();
-            ProcessEvents(Event.current);
+            ProcessEvents(Event.current); 
         }
-
+          
         if (GUI.changed) Repaint();
     }
-
+    public void AutoSaveJNodeInstance()
+    {
+        if (jNodeInstance != null && EditorUtility.IsDirty(jNodeInstance))
+        {
+            jNodeInstance.SaveChanges();
+        }
+    }
 
     private void DrawGrid()
     {
@@ -95,7 +109,7 @@ public class JNodeEditor4 : EditorWindow
             // Calculate the start and end points for horizontal grid lines
             float y = gridSize * j + offset.y;
             Handles.DrawLine(new Vector2(0, y), new Vector2(position.width, y));
-        }
+        } 
 
         Handles.color = Color.white;
         Handles.EndGUI();
@@ -106,26 +120,27 @@ public class JNodeEditor4 : EditorWindow
         for (int i = 0; i < JNode.Nodes.Count; i++)
         {
             JNode.Nodes[i].DrawNode(CanvasOffset);  // 각 노드를 그림
-
         }
     }
     public static void OpenJNodeEditorWindow()
     {
         JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
         window.Show();
-        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        LoadJNodeInstance();
         Debug.Log("Open JNode Editor" + window);
     }
-    private static void CreateJNodeInstance()
+
+    private static void LoadJNodeInstance()
     {
+        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        /*
         if (jNodeInstance == null)
         {
             jNodeInstance = ScriptableObject.CreateInstance<JNodeInstance>();
             AssetDatabase.CreateAsset(jNodeInstance, "Assets/JNode/JNodeInstance.asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-        }
-        jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+        }*/
     }
 
     public static void LoadJNodeEditorWindow(string filePath, string _recentOpenFileName)

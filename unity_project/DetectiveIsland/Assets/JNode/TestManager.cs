@@ -141,7 +141,7 @@ public class TestManager : MonoBehaviour
     public void AddPositionChangeNode()
     {
         PositionChangeNode positionChangeNode = new PositionChangeNode(new Rect(), "PositionChangeNode");
-        nodes.Add(positionChangeNode);
+        nodes.Add(positionChangeNode); 
     }
 
 /*
