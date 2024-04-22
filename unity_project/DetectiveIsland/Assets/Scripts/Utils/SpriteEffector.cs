@@ -20,7 +20,7 @@ public class SpriteEffector : MonoBehaviour
     }
     protected void FadeIn(float totalTime)
     {
-        _spriteRenderer.EaseSpriteRendererColor(Color.white.ModifiedAlpha(1f), totalTime);
+        _spriteRenderer.EaseColor(Color.white.ModifiedAlpha(1f), totalTime);
     }
     protected void FadeInFromStart(float totalTime)
     {
@@ -29,12 +29,12 @@ public class SpriteEffector : MonoBehaviour
     }
     protected void FadeOut(float totalTime)
     {
-        _spriteRenderer.EaseSpriteRendererColor(Color.white.ModifiedAlpha(0f), totalTime);
+        _spriteRenderer.EaseColor(Color.white.ModifiedAlpha(0f), totalTime);
     }
     protected void Red(float redStrengthPerone, float totalTime)
     {
         Debug.Log("FadeOut 호출됨");
-        _spriteRenderer.EaseSpriteRendererColor(Color.red.ModifiedAlpha(redStrengthPerone), totalTime);
+        _spriteRenderer.EaseColor(Color.red.ModifiedAlpha(redStrengthPerone), totalTime);
     }
     protected void RedRestore(float totalTime)
     {

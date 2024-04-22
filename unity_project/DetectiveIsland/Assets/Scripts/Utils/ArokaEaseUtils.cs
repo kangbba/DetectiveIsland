@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Aroka.CoroutineUtils;
 using Aroka.Curves;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -195,52 +196,22 @@ namespace Aroka.EaseUtils
         #endregion
 
         #region Color Extensions
-
-        public static void EaseSpriteRendererColor(this SpriteRenderer spriteRenderer, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
-        {
+        public static void EaseColor(this Component component, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0){
+            string componentKey = GetColorComponentKey(component);
             if (totalTime == 0)
             {
-                spriteRenderer.color = targetColor;
+                SetColor(component, targetColor);
                 return;
             }
-            StartOrReplaceColorCoroutine(spriteRenderer, "spriteColor", EaseColorRoutine(spriteRenderer, targetColor, totalTime, curvName, delayTime));
-        }
-
-        public static void EaseImageColor(this Image image, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
-        {
-            if (totalTime == 0)
-            {
-                image.color = targetColor;
-                return;
-            }
-            StartOrReplaceColorCoroutine(image, "imageColor", EaseColorRoutine(image, targetColor, totalTime, curvName, delayTime));
-        }
-
-        public static void EaseMeshRendererColor(this MeshRenderer meshRenderer, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
-        {
-            if (totalTime == 0)
-            {
-                meshRenderer.material.color = targetColor;
-                return;
-            }
-            StartOrReplaceColorCoroutine(meshRenderer, "meshRendererColor", EaseColorRoutine(meshRenderer, targetColor, totalTime, curvName, delayTime));
+            StartOrReplaceColorCoroutine(component, componentKey, EaseColorRoutine(component, targetColor, totalTime, curvName, delayTime));
         }
 
         private static IEnumerator EaseColorRoutine(Component component, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
             yield return new WaitForSeconds(delayTime);
             AnimationCurve curve = ArokaCurves.GetCurve(curvName);
-            Color initialColor = Color.white;
-
-            if (component is SpriteRenderer)
-                initialColor = ((SpriteRenderer)component).color;
-            else if (component is Image)
-                initialColor = ((Image)component).color;
-            else if (component is MeshRenderer)
-                initialColor = ((MeshRenderer)component).material.color;
-
+            Color initialColor = GetColor(component);
             float elapsed = 0;
-
             while (elapsed < totalTime)
             {
                 elapsed += Time.deltaTime;
@@ -250,12 +221,7 @@ namespace Aroka.EaseUtils
                 // GameObject가 파괴되지 않았는지 확인 후 컬러 설정
                 if (component != null)
                 {
-                    if (component is SpriteRenderer)
-                        ((SpriteRenderer)component).color = newColor;
-                    else if (component is Image)
-                        ((Image)component).color = newColor;
-                    else if (component is MeshRenderer)
-                        ((MeshRenderer)component).material.color = newColor;
+                    SetColor(component, newColor);
                 }
                 else
                 {
@@ -269,15 +235,106 @@ namespace Aroka.EaseUtils
             // 코루틴 종료 후 최종 색상 설정
             if (component != null)
             {
-                if (component is SpriteRenderer)
-                    ((SpriteRenderer)component).color = targetColor;
-                else if (component is Image)
-                    ((Image)component).color = targetColor;
-                else if (component is MeshRenderer)
-                    ((MeshRenderer)component).material.color = targetColor;
+                SetColor(component, targetColor);
             }
         }
-
+        private static string GetColorComponentKey(Component component)
+            {
+                if (component is SpriteRenderer)
+                {
+                    return "spriteColor";
+                }
+                else if (component is TextMeshProUGUI)
+                {
+                    return "textMeshProColor";
+                }
+                else if (component is Image)
+                {
+                    return "imageColor";
+                }
+                else if (component is MeshRenderer)
+                {
+                    return "meshRendererColor";
+                }
+                else
+                {
+                    // 기본 키 또는 예외 처리
+                    Debug.LogWarning("GetColorComponentKey called on a component that does not handle colors.");
+                    return null;
+                }
+            }
+        public static Color GetColor(Component component)
+        {
+            if (component is SpriteRenderer spriteRenderer)
+            {
+                return spriteRenderer.color;
+            }
+            else if (component is TextMeshProUGUI textMeshPro)
+            {
+                return textMeshPro.color;
+            }
+            else if (component is Image image)
+            {
+                return image.color;
+            }
+            else if (component is MeshRenderer meshRenderer)
+            {
+                // 주의: MeshRenderer는 Mesh에 적용된 첫 번째 Material의 색상을 반환합니다.
+                // 다중 Material을 사용하는 경우, 이 방법은 첫 번째 Material에만 적용됩니다.
+                return meshRenderer.material.color;
+            }
+            else
+            {
+                Debug.LogWarning("GetColor called on a component that does not have a color property.");
+                return default(Color); // 색상 속성이 없는 경우 기본 색상 반환
+            }
+        }
+        public static void SetColor(Component component, Color targetColor)
+        {
+            if (component is SpriteRenderer spriteRenderer)
+            {
+                spriteRenderer.color = targetColor;
+            }
+            else if (component is TextMeshProUGUI textMeshPro)
+            {
+                textMeshPro.color = targetColor;
+            }
+            else if (component is Image image)
+            {
+                image.color = targetColor;
+            }
+            else if (component is MeshRenderer meshRenderer)
+            {
+                meshRenderer.material.color = targetColor;
+            }
+            else
+            {
+                Debug.LogWarning("SetColor called on a component that does not have a color property.");
+            }
+        }
+        public static System.Type GetComponentType(this Transform transform)
+        {
+        if (transform.GetComponent<SpriteRenderer>() != null)
+        {
+            return typeof(SpriteRenderer);
+        }
+        else if (transform.GetComponent<TextMeshProUGUI>() != null)
+        {
+            return typeof(TextMeshProUGUI);
+        }
+        else if (transform.GetComponent<Image>() != null)
+        {
+            return typeof(Image);
+        }
+        else if (transform.GetComponent<MeshRenderer>() != null)
+        {
+            return typeof(MeshRenderer);
+        }
+        else
+        {
+            return null; // 색상 속성을 가진 컴포넌트가 없는 경우
+        }
+    }
 
         #endregion
 
