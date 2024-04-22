@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using Aroka.EaseUtils;
 
 public abstract class DataButton : MonoBehaviour
 {

@@ -15,7 +15,7 @@ public enum EItemPanelMode{
     SubmitMode,
 
 }
-public class ItemPanel : ArokaAnim
+public class ItemPanel : ArokaAnimParent
 {
     [SerializeField] private ItemButton _itemBtnPrefab; // 아이템 버튼 프리팹
     [SerializeField] private Transform _itemBtnsParent; // 버튼이 생성될 부모 컨테이너
@@ -62,7 +62,7 @@ public class ItemPanel : ArokaAnim
         SetOnEnterBtn(!b, totalTime);
         _submitBtn.gameObject.SetActive(itemPanelMode == EItemPanelMode.SubmitMode);
         _exitBtn.gameObject.SetActive(true);
-        transform.GetComponentsInChildren<ArokaAnim>(false).SetAnims(b, totalTime);
+        SetOnAllChildren(b, totalTime);
     }
 
    
@@ -84,13 +84,6 @@ public class ItemPanel : ArokaAnim
     }
     public void CreateItemButtons(List<ItemData> itemDatas)
     {
-        // 모든 자식 객체를 삭제
-        for(int i = _curItemBtns.Count - 1 ; i>= 0 ; i--){
-            Destroy(_curItemBtns[i].gameObject);
-        }
-        _curItemBtns.Clear();
-        _cursoredItemBtn = null;
-        _confirmedItemBtn = null;
         // 버튼 생성
         for (int i = 0; i < itemDatas.Count; i++)
         {
@@ -102,9 +95,25 @@ public class ItemPanel : ArokaAnim
             RectTransform btnRectTransform = itemBtn.GetComponent<RectTransform>();
             float spacing = 200; // 각 버튼 사이의 간격을 200으로 설정
             float xPosition = spacing * i; // i번째 버튼의 x 위치
-            btnRectTransform.anchoredPosition = new Vector2(xPosition, btnRectTransform.anchoredPosition.y);
+            Vector3 anchoredPos = new Vector2(xPosition, btnRectTransform.anchoredPosition.y);
+            btnRectTransform.anchoredPosition = anchoredPos;
+            ArokaAnim btnAnim = itemBtn.gameObject.AddComponent<ArokaAnim>();
+            btnAnim.RegisterOn(new AnimState(anchoredPos, Vector3.one, Quaternion.identity, Color.white));
+            btnAnim.RegisterOff(new AnimState(anchoredPos, Vector3.zero, Quaternion.identity, Color.white));
+            btnAnim.SetOnAnimFromOff(.3f);
         }
 
+    }
+    private void DestoryItemBtns(float totalTime){
+        // 모든 자식 객체를 삭제
+        for(int i = _curItemBtns.Count - 1 ; i>= 0 ; i--){
+            ArokaAnim btnAnim = _curItemBtns[i].gameObject.GetComponent<ArokaAnim>();
+            btnAnim.SetAnim(false, totalTime);
+            Destroy(_curItemBtns[i].gameObject, totalTime);
+        }
+        _curItemBtns.Clear();
+        _cursoredItemBtn = null;
+        _confirmedItemBtn = null;
     }
     private void OnClickedItem(string itemID){
         if(_cursoredItemBtn != null){
@@ -122,6 +131,7 @@ public class ItemPanel : ArokaAnim
     }
     private void OnClickedExitBtn(){
         OpenPanel(false,.3f, EItemPanelMode.CheckMode);
+        DestoryItemBtns(.3f);
         _isExitBtnPressed = true;
     }
     private void OnClickedConfirmBtn(){

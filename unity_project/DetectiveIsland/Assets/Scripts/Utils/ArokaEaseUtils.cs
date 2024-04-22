@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aroka.Anim;
 using Aroka.CoroutineUtils;
 using Aroka.Curves;
 using TMPro;
@@ -8,10 +9,20 @@ using UnityEngine.UI;
 
 namespace Aroka.EaseUtils
 {
+    public enum ObjectType
+    {
+        Button,
+        TextMeshProUGUI,
+        Image,         
+        SpriteRenderer, 
+        MeshRenderer,   
+        Normal         
+    }
     public static class ArokaEaseUtils
     {
-        private static Dictionary<(Transform, string), UnityEngine.Coroutine> _coroutineMap = new Dictionary<(Transform, string), UnityEngine.Coroutine>();
-        private static Dictionary<(Component, string), UnityEngine.Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), UnityEngine.Coroutine>();
+        private static Dictionary<(Transform, string), Coroutine> _coroutineMap = new Dictionary<(Transform, string), Coroutine>();
+        private static Dictionary<(Component, string), Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), Coroutine>();
+
 
         #region Position and Movement Extensions
 
@@ -158,10 +169,8 @@ namespace Aroka.EaseUtils
         #endregion
 
         #region Anchored Position Extensions
-
-        public static void EaseAnchoredPos(this Image image, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void EaseAnchoredPos(this RectTransform rectTransform, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
-            RectTransform rectTransform = image.rectTransform;
             if (rectTransform == null)
             {
                 Debug.LogWarning("rect transform이 없으므로 호출하지 않습니다");
@@ -175,7 +184,7 @@ namespace Aroka.EaseUtils
             StartOrReplaceCoroutine(rectTransform, "anchoredPosition", EaseAnchoredPositionRoutine(rectTransform, targetPos, totalTime, curvName, delayTime));
         }
 
-        private static IEnumerator EaseAnchoredPositionRoutine(RectTransform rectTransform, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName, float delayTime)
+        private static IEnumerator EaseAnchoredPositionRoutine(RectTransform rectTransform, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0F)
         {
             yield return new WaitForSeconds(delayTime);
             AnimationCurve curve = ArokaCurves.GetCurve(curvName);
@@ -196,145 +205,144 @@ namespace Aroka.EaseUtils
         #endregion
 
         #region Color Extensions
-        public static void EaseColor(this Component component, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0){
-            string componentKey = GetColorComponentKey(component);
-            if (totalTime == 0)
+
+        public static void EaseColor(this Transform tr, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        {
+            Component component = DetermineComponent(tr);
+            string key = GetComponentKey(component);
+
+            if (component == null || string.IsNullOrEmpty(key))
             {
+                Debug.LogWarning("No applicable component found for color easing on this transform.");
+                return;
+            }
+
+            if (totalTime == 0f)
+            {
+                // 즉시 목표 색상으로 설정
                 SetColor(component, targetColor);
                 return;
             }
-            StartOrReplaceColorCoroutine(component, componentKey, EaseColorRoutine(component, targetColor, totalTime, curvName, delayTime));
+
+            // 색상 변경 코루틴 시작
+            IEnumerator routine = EaseColorRoutine(component, targetColor, totalTime, curvName, delayTime);
+            StartOrReplaceColorCoroutine(component, key, routine);
+        }
+        public static void EaseSpriteColor(this SpriteRenderer spriteRend, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        {
+            string key = GetComponentKey(spriteRend);
+
+            if (spriteRend == null || string.IsNullOrEmpty(key))
+            {
+                Debug.LogWarning("No applicable component found for color easing on this transform.");
+                return;
+            }
+
+            if (totalTime == 0f)
+            {
+                // 즉시 목표 색상으로 설정
+                SetColor(spriteRend, targetColor);
+                return;
+            }
+
+            // 색상 변경 코루틴 시작
+            IEnumerator routine = EaseColorRoutine(spriteRend, targetColor, totalTime, curvName, delayTime);
+            StartOrReplaceColorCoroutine(spriteRend, key, routine);
+        }
+        private static string GetComponentKey(Component component)
+        {
+            if (component is SpriteRenderer)
+                return "spriteColor";
+            if (component is Image)
+                return "imageColor";
+            if (component is TextMeshProUGUI)
+                return "tmproColor";
+            if (component is Button)
+                return "buttonImageColor"; // Button 이미지 색상 변경을 위한 키
+
+            return string.Empty;
+        }
+        public static Color GetColor(Component component)
+        {
+            if (component is Image img)
+                return img.color;
+            if (component is TextMeshProUGUI tmp)
+                return tmp.color;
+            if (component is SpriteRenderer spr)
+                return spr.color;
+            if (component is Button btn)
+                return btn.image.color; // Button의 Image 컴포넌트 색상
+
+            Debug.LogWarning("GetColor called on unsupported component type.");
+            return Color.clear;
         }
 
-        private static IEnumerator EaseColorRoutine(Component component, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void SetColor(Component component, Color color)
         {
+            if (component is Image img)
+                img.color = color;
+            if (component is TextMeshProUGUI tmp)
+                tmp.color = color;
+            if (component is SpriteRenderer spr)
+                spr.color = color;
+            if (component is Button btn)
+                btn.image.color = color;
+        }
+
+        private static Component DetermineComponent(Transform tr)
+        {
+            if (tr.GetComponent<Button>() != null)
+                return tr.GetComponent<Button>().image; // Button 케이스 추가
+            if (tr.GetComponent<Image>() != null)
+                return tr.GetComponent<Image>();
+            if (tr.GetComponent<TextMeshProUGUI>() != null)
+                return tr.GetComponent<TextMeshProUGUI>();
+            if (tr.GetComponent<SpriteRenderer>() != null)
+                return tr.GetComponent<SpriteRenderer>();
+
+            return null;
+        }
+        private static IEnumerator EaseColorRoutine(Component component, Color targetColor, float totalTime, ArokaCurves.CurvName curvName , float delayTime )
+        {
+            // 지연 시간 처리
             yield return new WaitForSeconds(delayTime);
+
+            // 애니메이션 커브 가져오기
             AnimationCurve curve = ArokaCurves.GetCurve(curvName);
+
+            // 초기 색상 값 가져오기
             Color initialColor = GetColor(component);
-            float elapsed = 0;
+            float elapsed = 0; // 경과 시간 초기화
+
             while (elapsed < totalTime)
             {
+                // 경과 시간 갱신
                 elapsed += Time.deltaTime;
-                float t = curve.Evaluate(elapsed / totalTime);
+                float t = curve.Evaluate(elapsed / totalTime); // 커브를 이용해 시간 비율 계산
+
+
+                // 색상 보간
                 Color newColor = Color.Lerp(initialColor, targetColor, t);
 
-                // GameObject가 파괴되지 않았는지 확인 후 컬러 설정
+                // 컴포넌트가 여전히 유효한지 확인
                 if (component != null)
                 {
-                    SetColor(component, newColor);
+                    SetColor(component, newColor); // 새로운 색상 설정
                 }
                 else
                 {
-                    // GameObject가 파괴되었다면 코루틴 종료
-                    yield break;
+                    yield break; // 컴포넌트가 파괴되었다면 코루틴 종료
                 }
 
                 yield return null;
             }
 
-            // 코루틴 종료 후 최종 색상 설정
+            // 최종 색상 설정
             if (component != null)
             {
                 SetColor(component, targetColor);
             }
         }
-        private static string GetColorComponentKey(Component component)
-            {
-                if (component is SpriteRenderer)
-                {
-                    return "spriteColor";
-                }
-                else if (component is TextMeshProUGUI)
-                {
-                    return "textMeshProColor";
-                }
-                else if (component is Image)
-                {
-                    return "imageColor";
-                }
-                else if (component is MeshRenderer)
-                {
-                    return "meshRendererColor";
-                }
-                else
-                {
-                    // 기본 키 또는 예외 처리
-                    Debug.LogWarning("GetColorComponentKey called on a component that does not handle colors.");
-                    return null;
-                }
-            }
-        public static Color GetColor(Component component)
-        {
-            if (component is SpriteRenderer spriteRenderer)
-            {
-                return spriteRenderer.color;
-            }
-            else if (component is TextMeshProUGUI textMeshPro)
-            {
-                return textMeshPro.color;
-            }
-            else if (component is Image image)
-            {
-                return image.color;
-            }
-            else if (component is MeshRenderer meshRenderer)
-            {
-                // 주의: MeshRenderer는 Mesh에 적용된 첫 번째 Material의 색상을 반환합니다.
-                // 다중 Material을 사용하는 경우, 이 방법은 첫 번째 Material에만 적용됩니다.
-                return meshRenderer.material.color;
-            }
-            else
-            {
-                Debug.LogWarning("GetColor called on a component that does not have a color property.");
-                return default(Color); // 색상 속성이 없는 경우 기본 색상 반환
-            }
-        }
-        public static void SetColor(Component component, Color targetColor)
-        {
-            if (component is SpriteRenderer spriteRenderer)
-            {
-                spriteRenderer.color = targetColor;
-            }
-            else if (component is TextMeshProUGUI textMeshPro)
-            {
-                textMeshPro.color = targetColor;
-            }
-            else if (component is Image image)
-            {
-                image.color = targetColor;
-            }
-            else if (component is MeshRenderer meshRenderer)
-            {
-                meshRenderer.material.color = targetColor;
-            }
-            else
-            {
-                Debug.LogWarning("SetColor called on a component that does not have a color property.");
-            }
-        }
-        public static System.Type GetComponentType(this Transform transform)
-        {
-        if (transform.GetComponent<SpriteRenderer>() != null)
-        {
-            return typeof(SpriteRenderer);
-        }
-        else if (transform.GetComponent<TextMeshProUGUI>() != null)
-        {
-            return typeof(TextMeshProUGUI);
-        }
-        else if (transform.GetComponent<Image>() != null)
-        {
-            return typeof(Image);
-        }
-        else if (transform.GetComponent<MeshRenderer>() != null)
-        {
-            return typeof(MeshRenderer);
-        }
-        else
-        {
-            return null; // 색상 속성을 가진 컴포넌트가 없는 경우
-        }
-    }
 
         #endregion
 
@@ -359,10 +367,12 @@ namespace Aroka.EaseUtils
             _coroutineMap[coroutineKey] = newCoroutine;
         }
 
+
         private static void StartOrReplaceColorCoroutine(Component component, string key, IEnumerator routine)
         {
             (Component, string) coroutineKey = (component, key);
-            if (_colorCoroutineMap.TryGetValue(coroutineKey, out UnityEngine.Coroutine currentCoroutine))
+
+            if (_colorCoroutineMap.TryGetValue(coroutineKey, out Coroutine currentCoroutine))
             {
                 CoroutineUtils.CoroutineUtils.StopCoroutine(currentCoroutine);
                 _colorCoroutineMap.Remove(coroutineKey);
@@ -370,14 +380,16 @@ namespace Aroka.EaseUtils
 
             if (component == null)
             {
-                Debug.LogWarning("Component가 null입니다.");
+                Debug.LogWarning("Component가 null입니다. 코루틴을 시작할 수 없습니다.");
                 return;
             }
 
-            UnityEngine.Coroutine newCoroutine = CoroutineUtils.CoroutineUtils.StartCoroutine(routine);
+            Coroutine newCoroutine = CoroutineUtils.CoroutineUtils.StartCoroutine(routine);
             _colorCoroutineMap[coroutineKey] = newCoroutine;
         }
 
         #endregion
     }
+
+
 }

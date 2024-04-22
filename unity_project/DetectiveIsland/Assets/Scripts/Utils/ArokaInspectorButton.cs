@@ -25,11 +25,16 @@ public class MonoBehaviourEditor : Editor
                     if (attribute.PerformCheck(targetObject))
                     {
                         method.Invoke(targetObject, null);
+                        if(EditorUtility.IsDirty(target)){  
+                            EditorUtility.SetDirty(target);
+                            SceneView.RepaintAll();
+                        }
                     }
                     else
                     {
                         Debug.LogError(attribute.Error);
                     }
+      
                 }
             }
         }
@@ -43,7 +48,8 @@ public class ArokaButtonAttribute : Attribute
 
     public bool PerformCheck(UnityEngine.Object obj)
     {
-        return !PrefabUtility.IsPartOfPrefabAsset(obj);
+       // return !PrefabUtility.IsPartOfPrefabAsset(obj);
+        return true;
     }
 }
 

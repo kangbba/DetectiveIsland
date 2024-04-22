@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System;
+using Aroka.Anim;
+using Aroka.EaseUtils;
 
 public class PlaceButton : DataButton
 {
@@ -14,4 +16,5 @@ public class PlaceButton : DataButton
         base.Initialize(placeData.PlaceID);
         base.ConnectOnClick(onClickAction);
     }
+
 }

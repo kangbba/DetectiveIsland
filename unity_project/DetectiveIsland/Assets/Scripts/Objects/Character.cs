@@ -26,7 +26,7 @@ public class Character : SpriteEffector
     {
         if (b)
         {
-            base.FadeInFromStart(totalTime);
+            base.FadeIn(totalTime);
         }
         else
         {

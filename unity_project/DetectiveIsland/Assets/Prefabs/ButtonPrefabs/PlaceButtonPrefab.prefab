@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99dc2f23530f45d3bfde1c05763c81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _eventTrigger: {fileID: 0}
   _text: {fileID: 6780632085582178596}
-  _button: {fileID: 4159438515686140397}
 --- !u!1 &2843098226700640324
 GameObject:
   m_ObjectHideFlags: 0
