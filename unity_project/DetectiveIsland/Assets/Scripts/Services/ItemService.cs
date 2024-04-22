@@ -5,6 +5,11 @@ using Aroka.CoroutineUtils;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
+public enum EItemDemandResult{
+    Correct,
+    NotCorrect,
+    Canceled
+}
 public static class ItemService 
 {
     private static ItemPanel _itemPanel;
@@ -29,34 +34,33 @@ public static class ItemService
         }
         return null;
     }
-    public static void SetOnPanel(bool b, float totalTime){
-        _itemPanel.SetAnim(b, totalTime);
+    public static void OpenPanel(bool b, float totalTime, EItemPanelMode itemPanelMode){
+        _itemPanel.OpenPanel(b, totalTime, itemPanelMode);
     }
-    //<return string>
-    public static IEnumerator ItemDemandRoutine(ItemDemand itemDemand){
-        foreach(Dialogue dialogue in itemDemand.Dialogues){
-            yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
-        }
 
+    public static void SetOnEnterBtn(bool b, float totalTime){
+        _itemPanel.SetOnEnterBtn(b, totalTime);
+    }
+
+    public static IEnumerator GetSelectedItemFromItemDemand(ItemDemand itemDemand){
         var ownItems = GetOwnItemDatas();
         if(ownItems != null && ownItems.Count > 0){
             _itemPanel.Initialize(ownItems, false);
-            SetOnPanel(true, 0.1f);
+            OpenPanel(true, 0.2f, EItemPanelMode.SubmitMode);
             yield return new WaitForSeconds(.5f);
             ItemData selectedItemData = null;
             yield return CoroutineUtils.AwaitCoroutine<ItemData>(_itemPanel.AwaitItemBtnSelectedRoutine(), result => {
                 selectedItemData = result;
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
             });
-            SetOnPanel(false, 0.1f);
-            bool isCorrect = selectedItemData != null && selectedItemData.ItemID == itemDemand.ItemID;
-            yield return isCorrect;
+            OpenPanel(false, 0.2f, EItemPanelMode.SubmitMode);
+            yield return selectedItemData;
+            yield break;
         }
         else{
-            Debug.LogError("ownItems 없어서 일단 맞았다고 치겠음");
-            yield return true; //맞았다 치자.
+            yield return null;
+            yield break;
         }
-      
     }
     
     public static void LoseAllItems()

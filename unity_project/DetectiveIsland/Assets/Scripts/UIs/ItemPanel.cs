@@ -9,6 +9,12 @@ using Aroka.ArokaUtils;
 using System.Collections;
 using System.Threading;
 
+public enum EItemPanelMode{
+
+    CheckMode,    
+    SubmitMode,
+
+}
 public class ItemPanel : ArokaAnim
 {
     [SerializeField] private ItemButton _itemBtnPrefab; // 아이템 버튼 프리팹
@@ -17,23 +23,27 @@ public class ItemPanel : ArokaAnim
     [SerializeField] private ItemContainer _itemContainer; // 아이템 정보를 표시할 컨테이너
     [SerializeField] private Button _enterBtn;
     [SerializeField] private Button _exitBtn;
-    [SerializeField] private Button _confirmBtn;
+    [SerializeField] private Button _submitBtn;
     private List<ItemButton> _curItemBtns = new List<ItemButton>();
 
+    private bool _isExitBtnPressed = false;
     private ItemButton _cursoredItemBtn; // 현재 선택된 아이템 데이터
     private ItemButton _confirmedItemBtn; // 현재 선택확정 아이템 데이터
+
+    
 
     public ItemData ConfirmedItemData { get => _confirmedItemBtn == null ? null : _confirmedItemBtn.ItemData; }
 
     private void Start(){
-    //    _enterBtn.onClick.AddListener(OnClickedEnterBtn);
+        _enterBtn.onClick.AddListener(OnClickedEnterBtn);
         _exitBtn.onClick.AddListener(OnClickedExitBtn);
-        _confirmBtn.onClick.AddListener(OnClickedConfirmBtn);
+        _submitBtn.onClick.AddListener(OnClickedConfirmBtn);
     }
     // 아이템이 선택되었을 때 호출할 메서드
     public void Initialize(List<ItemData> itemDatas, bool exitable)
     {
-        _itemBtnsParent.DestroyAllChildren(); // Ensure all children are destroyed properly
+        _isExitBtnPressed = false;
+        _itemBtnsParent.DestroyAllChildren();
         CreateItemButtons(itemDatas);
         bool isItemExist = itemDatas != null && itemDatas.Count > 0;
         if(isItemExist){
@@ -42,23 +52,35 @@ public class ItemPanel : ArokaAnim
         else{
             _itemContainer.Display(null);
         }
-        _confirmBtn.gameObject.SetActive(false);
-        _exitBtn.gameObject.SetActive(exitable);
     }
 
-    public void SetOn(bool b, float totalTime){
-   //     _enterBtn.gameObject.SetActive(!b);
-        SetAnim(b, totalTime);
+    public void SetOnEnterBtn(bool b, float totalTime){
+        _enterBtn.GetComponent<ArokaAnim>().SetAnim(b, totalTime);
     }
 
+    public void OpenPanel(bool b, float totalTime, EItemPanelMode itemPanelMode){
+        SetOnEnterBtn(!b, totalTime);
+        _submitBtn.gameObject.SetActive(itemPanelMode == EItemPanelMode.SubmitMode);
+        _exitBtn.gameObject.SetActive(true);
+        transform.GetComponentsInChildren<ArokaAnim>(false).SetAnims(b, totalTime);
+    }
+
+   
     public IEnumerator AwaitItemBtnSelectedRoutine()
     {
         _confirmedItemBtn = null;
-        while (_confirmedItemBtn == null)
+        while (_confirmedItemBtn == null || _isExitBtnPressed)
         {
             yield return null;
         }
-        yield return _confirmedItemBtn.ItemData;
+        if(_isExitBtnPressed){
+            yield return null;
+            yield break;
+        }
+        else{
+            yield return _confirmedItemBtn.ItemData;
+            yield break;
+        }
     }
     public void CreateItemButtons(List<ItemData> itemDatas)
     {
@@ -91,21 +113,23 @@ public class ItemPanel : ArokaAnim
         _cursoredItemBtn = _curItemBtns.FirstOrDefault(btn => btn.ItemData.ItemID == itemID);
         _itemContainer.Display(_cursoredItemBtn.ItemData);
         _cursoredItemBtn.SetCursored(true);
-        _confirmBtn.gameObject.SetActive(true);
+        _submitBtn.gameObject.SetActive(true);
     }
     private void OnClickedEnterBtn(){
         Initialize(ItemService.GetOwnItemDatas(), true);
-        SetOn(true, .1f);
+        OpenPanel(true,.3f, EItemPanelMode.CheckMode);
+
     }
     private void OnClickedExitBtn(){
-        SetOn(false, .1f);
+        OpenPanel(false,.3f, EItemPanelMode.CheckMode);
+        _isExitBtnPressed = true;
     }
     private void OnClickedConfirmBtn(){
         if(_cursoredItemBtn == null){
             Debug.LogError("먼저 cursor 하세요");
             return;
         }
-        _confirmBtn.gameObject.SetActive(false);
+        _submitBtn.gameObject.SetActive(false);
         _confirmedItemBtn = _cursoredItemBtn;
     }
 }

@@ -53,14 +53,21 @@ public static class StoryProcessor
 
         }
         else if(element is ItemDemand){
-
             ItemDemand itemDemand = element as ItemDemand;
+            foreach(Dialogue dialogue in itemDemand.Dialogues){
+                yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
+            }
             while(true){
-                bool isCorrect = false;
-                yield return CoroutineUtils.AwaitCoroutine<bool>(ItemService.ItemDemandRoutine(itemDemand), result => {
-                    isCorrect = result;
+                ItemData selectedItemData = null;
+                yield return CoroutineUtils.AwaitCoroutine<ItemData>(ItemService.GetSelectedItemFromItemDemand(itemDemand), result => {
+                    selectedItemData = result;
                 });
-                if(isCorrect){
+                if(selectedItemData == null){
+                    Debug.Log("취소 버튼을 눌렀으므로 일단 이 루프를 빠져나갈 예정");
+                    yield return CoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.FailElements));
+                    break;
+                }
+                else if(selectedItemData.ItemID == itemDemand.ItemID){
                     Debug.Log("정답이므로 elements 처리후 이 루프를 빠져나갈 예정");
                     yield return CoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.SuccessElements));
                     break;

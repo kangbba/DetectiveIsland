@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
 using Aroka.Anim;
+using System.Linq;
 
 
 namespace Aroka.ArokaUtils {
@@ -88,6 +89,17 @@ namespace Aroka.ArokaUtils {
     }
     public static class TransformExtensions
     {
+        public static T[] GetComponentsInChildren<T>(this Component component, bool includeSelf) where T : Component
+        {
+            if (includeSelf)
+            {
+                return component.GetComponentsInChildren<T>();
+            }
+            else
+            {
+                return component.GetComponentsInChildren<T>().Where(c => c != component).ToArray();
+            }
+        }
         public static void DestroyAllChildren(this Transform tr)
         {
             for (int i = tr.childCount - 1; i >= 0; i--)
@@ -130,8 +142,8 @@ namespace Aroka.ArokaUtils {
         public static void SetAnims(this ArokaAnim[] uiAnims, bool isOn, float totalTime)
         {
             for(int i = 0; i < uiAnims.Length; i++)
-            {
-                uiAnims[i].SetAnim(isOn, totalTime);
+            {   
+                uiAnims[i].SetAnim(isOn, totalTime, true);
             }
         }
     }

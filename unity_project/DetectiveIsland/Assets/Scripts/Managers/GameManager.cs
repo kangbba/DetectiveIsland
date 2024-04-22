@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         //Place UI판넬 퇴장
         CharacterService.DestroyAllCharacters(1f);
         PlaceUIService.SetOnPanel(false, false, false, .5f);
-        ItemService.SetOnPanel(false, 0f);
+        ItemService.SetOnEnterBtn(false, .25f);
         yield return new WaitForSeconds(.5f);
 
 
@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
 
         CharacterService.DestroyAllCharacters(1f);
         //PlaceUI 판넬들 등장 및 이동가능버튼생성
+        ItemService.SetOnEnterBtn(true, .25f);
 
         SetPhase(EGamePhase.Exit); 
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
