@@ -4,7 +4,7 @@
     {
       "$type": "PositionChange, Assembly-CSharp",
       "CharacterID": "Kate",
-      "PositionID": "Left"
+      "PositionID": "Right"
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -23,14 +23,14 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "지금부터 간단한 대화 출력 테스트를 해볼거야"
+          "Sentence": "여긴 도서관이야"
         }
       ]
     },
     {
       "$type": "PositionChange, Assembly-CSharp",
       "CharacterID": "Lisa",
-      "PositionID": "Right"
+      "PositionID": "Left"
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -230,12 +230,12 @@
             {
               "$type": "Line, Assembly-CSharp",
               "EmotionID": "Smile",
-              "Sentence": "이건 성공했을때 하는 반응이야"
+              "Sentence": "오 눈이 삐지는 않았나보네?"
             },
             {
               "$type": "Line, Assembly-CSharp",
               "EmotionID": "Smile",
-              "Sentence": "성공해서 축하해"
+              "Sentence": "이제 레스토랑에가봐. 거기 레이첼이 있을수도 있으니, 가서 말을 걸어봐"
             }
           ]
         }

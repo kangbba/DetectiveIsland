@@ -10,10 +10,13 @@ public class DialoguePanel : ArokaAnim
     public TextMeshProUGUI _lineText;
     
     public void Initialize(){
-        _characterText.SetText("");
-        _lineText.SetText("");
+        ClearPanel();
     } 
 
+    public void ClearPanel(){
+        _characterText.SetText("");
+        _lineText.SetText("");
+    }
     public void SetCharacterText(string s, Color c){
         _characterText.color = c;
         _characterText.SetText(s);

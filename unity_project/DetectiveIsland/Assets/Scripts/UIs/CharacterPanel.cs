@@ -46,11 +46,23 @@ public class CharacterPanel : MonoBehaviour
             Debug.LogWarning("Character not found or already exited: " + characterID);
         }
     }
+
+    public void PositionChange(string characterID, string positionID, float totalTime ){
+        Character character = GetCharacter(characterID);
+        if(character == null){
+            MakeCharacter(characterID, positionID, totalTime);
+        }
+        else{
+            DestroyCharacter(characterID, totalTime);
+            MakeCharacter(characterID, positionID, totalTime);
+        }
+    }
     
     public void DestroyAllCharacters(float totalTime)
     {
-        foreach (Character character in _curCharacters)
+        for(int i = _curCharacters.Count - 1 ; i >= 0 ; i--)
         {
+            Character character = _curCharacters[i];
             DestroyCharacter(character.CharacterData.CharacterID, totalTime);
         }
     }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlaceData : MonoBehaviour
 {
-    
     [SerializeField] private string _placeID;
     [SerializeField] private Sprite _placeSprite;
     [Range(0,5)]

@@ -7,8 +7,8 @@ public class EventRoadMap : ScriptableObject
 {
     [SerializeField] private List<EventPlan> _eventPlans = new List<EventPlan>();
 
-    public EventPlan FirstEventPlan { get => _eventPlans[0]; }
-    public List<EventPlan> EventPlans => _eventPlans;
+    public  EventPlan       FirstEventPlan      { get => _eventPlans[0]; }
+    public  List<EventPlan> EventPlans          { get => _eventPlans; }
 }
 
 

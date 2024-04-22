@@ -35,17 +35,13 @@ public class Character : SpriteEffector
     }  
     private void OnMouseDown()
     {
-        Debug.Log("Character pressed: " + _characterData.CharacterNameForUser);
-        CharacterService.NotifyTalking(_characterData.CharacterID);
     }
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse entered over character: " + _characterData.CharacterNameForUser);
     }
 
     private void OnMouseExit()
     {
-        Debug.Log("Mouse exited over character: " + _characterData.CharacterNameForUser);
     }
 }

@@ -12,18 +12,18 @@ public enum TimeRelation
 [System.Serializable]
 public class EventTime
 { 
-    [SerializeField] private string _date;
-    [SerializeField] private int  _hour;
-    [SerializeField] private int _minute;
+    [SerializeField] private    string   _date;
+    [SerializeField] private     int     _hour;
+    [SerializeField] private     int     _minute;
 
     // 연도, 월, 일 속성 추가
     public int Year => int.Parse(Date.Split('-')[0]);
     public int Month => int.Parse(Date.Split('-')[1]);
     public int Day => int.Parse(Date.Split('-')[2]);
 
-    public string Date { get => _date; }
-    public int Hour { get => _hour; }
-    public int Minute { get => _minute; }
+    public  string      Date        { get => _date; }
+    public  int         Hour        { get => _hour; }
+    public  int         Minute      { get => _minute; }
 
     // 생성자 정의
     public EventTime(string date, int hour, int minute)

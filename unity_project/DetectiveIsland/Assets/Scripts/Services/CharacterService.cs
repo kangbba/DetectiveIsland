@@ -8,7 +8,6 @@ public static class CharacterService
     private static CharacterPanel _characterPanel;
     private static List<Character> _characterPrefabs;
     
-    public static event Action<string> OnCharacterTalk; // 말 걸리고있는 캐릭터 액션 모음
 
     public static void Load()
     {       
@@ -54,10 +53,7 @@ public static class CharacterService
     public static void DestroyCharacter(string characterID, float totalTime){
         _characterPanel.DestroyCharacter(characterID, totalTime);
     }
-
-    public static void NotifyTalking(string characterID)
-    {
-        Debug.Log($"현재 말을 걸고 있는 캐릭터 {characterID} 이벤트로 발행");
-        OnCharacterTalk?.Invoke(characterID);
+    public static void PositionChange(string characterID, string positionID, float totalTime){
+        _characterPanel.PositionChange(characterID, positionID, totalTime);
     }
 }
