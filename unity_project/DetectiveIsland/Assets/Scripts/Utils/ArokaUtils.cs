@@ -143,7 +143,7 @@ namespace Aroka.ArokaUtils {
         {
             for(int i = 0; i < uiAnims.Length; i++)
             {   
-                uiAnims[i].SetAnim(isOn, totalTime, true);
+                uiAnims[i].SetAnim(isOn, totalTime);
             }
         }
     }
@@ -281,13 +281,27 @@ namespace Aroka.ArokaUtils {
 
     }
 
-
+    public static class RectExtensions
+    {
+        public static Rect ModifiedX(this Rect rect, float n)
+        {
+            return new Rect(n, rect.y, rect.width, rect.height);
+        }
+        public static Rect ModifiedY(this Rect rect, float n)
+        {
+            return new Rect(rect.x, n, rect.width, rect.height);
+        }
+        public static Rect ModifiedWidth(this Rect rect, float n)
+        {
+            return new Rect(rect.x, rect.y, n, rect.height);
+        }
+        public static Rect ModifiedHeight(this Rect rect, float n)
+        {
+            return new Rect(rect.x, rect.y, rect.width, n);
+        }
+    }
     public static class VectorExtensions
     {
-        public static Vector3 ModifiedX(this Vector3 v, float n)
-        {
-            return new Vector3(n, v.y, v.z);
-        }
 
         public static Vector3 ModifiedY(this Vector3 v, float n)
         {

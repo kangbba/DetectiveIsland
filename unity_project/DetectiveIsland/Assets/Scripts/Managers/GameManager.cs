@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         DialogueService.Load();
         ItemService.Load();
         ItemService.LoseAllItems();
+        ItemUIService.Load();
         PlaceService.Load();
         PlaceUIService.Load();
         CharacterService.Load();
@@ -89,9 +90,9 @@ public class GameManager : MonoBehaviour
         SetPhase(EGamePhase.Enter);
 
         //Place UI판넬 퇴장
-        CharacterService.DestroyAllCharacters(1f);
+        CharacterService.DestroyAllCharacters(.5f);
         PlaceUIService.SetOnPanel(false, false, false, .5f);
-        ItemService.SetOnEnterBtn(false, .25f);
+        ItemUIService.HideItemCheckPanel();
         yield return new WaitForSeconds(.5f);
 
 
@@ -137,9 +138,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        ItemUIService.ShowItemCheckPanel();
         CharacterService.DestroyAllCharacters(1f);
         //PlaceUI 판넬들 등장 및 이동가능버튼생성
-        ItemService.SetOnEnterBtn(true, .25f);
+        yield return new WaitForSeconds(1f);
 
         SetPhase(EGamePhase.Exit); 
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");

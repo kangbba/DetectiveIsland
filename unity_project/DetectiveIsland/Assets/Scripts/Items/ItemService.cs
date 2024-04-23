@@ -12,15 +12,11 @@ public enum EItemDemandResult{
 }
 public static class ItemService 
 {
-    private static ItemPanel _itemPanel;
-    private static ItemOwnPanel _itemOwnPanel;
     private static List<ItemData> _itemDatas;
     private const string ItemOwnershipKeyPrefix = "item_owned_";  // 아이템 소유 정보의 키 접두어
 
     public static void Load()
     {       
-        _itemPanel = UIManager.Instance.ItemPanel;
-        _itemOwnPanel = UIManager.Instance.ItemOwnPanel;
         _itemDatas = ArokaUtils.LoadScriptableDatasFromFolder<ItemData>("ItemDatas");
     }
     public static ItemData GetItemData(string itemID)
@@ -33,34 +29,6 @@ public static class ItemService
             }
         }
         return null;
-    }
-    public static void OpenPanel(bool b, float totalTime, EItemPanelMode itemPanelMode){
-        _itemPanel.OpenPanel(b, totalTime, itemPanelMode);
-    }
-
-    public static void SetOnEnterBtn(bool b, float totalTime){
-        _itemPanel.SetOnEnterBtn(b, totalTime);
-    }
-
-    public static IEnumerator GetSelectedItemFromItemDemand(ItemDemand itemDemand){
-        var ownItems = GetOwnItemDatas();
-        if(ownItems != null && ownItems.Count > 0){
-            _itemPanel.Initialize(ownItems, false);
-            OpenPanel(true, 0.2f, EItemPanelMode.SubmitMode);
-            yield return new WaitForSeconds(.5f);
-            ItemData selectedItemData = null;
-            yield return CoroutineUtils.AwaitCoroutine<ItemData>(_itemPanel.AwaitItemBtnSelectedRoutine(), result => {
-                selectedItemData = result;
-                Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
-            });
-            OpenPanel(false, 0.2f, EItemPanelMode.SubmitMode);
-            yield return selectedItemData;
-            yield break;
-        }
-        else{
-            yield return null;
-            yield break;
-        }
     }
     
     public static void LoseAllItems()
@@ -99,7 +67,7 @@ public static class ItemService
             PlayerPrefs.Save();  // 변경 사항을 즉시 저장
         }
     }
- // 아이템 획득 후 정보를 보여주는 코루틴
+    
     public static IEnumerator AssetChangeRoutine(AssetChange assetChange)
     {
         ItemData itemData = GetItemData(assetChange.ItemID);
@@ -123,12 +91,9 @@ public static class ItemService
         else{ 
             OwnItem(itemData.ItemID, true);
             if(assetChange.GainType == "Gain"){
-                _itemOwnPanel.SetOn(true, 0.1f); // 패널을 활성화
-                _itemOwnPanel.ShowItem(itemData); // SetMessage 메서드는 ItemPanel에 정의되어 있어야 함
-                
+                ItemUIService.ShowItemOwnPanel(itemData);
                 yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-                // 패널 비활성화
-                _itemOwnPanel.SetOn(false, 0.1f);
+                ItemUIService.HideItemOwnPanel();
             }
             else if(assetChange.GainType == "Lose"){
 

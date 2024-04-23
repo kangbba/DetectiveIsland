@@ -58,24 +58,11 @@ public static class StoryProcessor
                 yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
             }
             while(true){
-                ItemData selectedItemData = null;
-                yield return CoroutineUtils.AwaitCoroutine<ItemData>(ItemService.GetSelectedItemFromItemDemand(itemDemand), result => {
-                    selectedItemData = result;
-                });
-                if(selectedItemData == null){
-                    Debug.Log("취소 버튼을 눌렀으므로 일단 이 루프를 빠져나갈 예정");
-                    yield return CoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.FailElements));
-                    break;
-                }
-                else if(selectedItemData.ItemID == itemDemand.ItemID){
-                    Debug.Log("정답이므로 elements 처리후 이 루프를 빠져나갈 예정");
-                    yield return CoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.SuccessElements));
-                    break;
-                }
-                else{
-                    Debug.Log("오답이므로 elements 처리후 이 루프가 반복될 예정");
-                    yield return CoroutineUtils.StartCoroutine(ProcessElementsRoutine(itemDemand.FailElements));
-                }
+                yield return ItemUIService.ItemDemandRoutine(
+                    targetItemID : itemDemand.ItemID,
+                    successAction : () => ProcessElementsRoutine(itemDemand.SuccessElements),
+                    failAction : () => ProcessElementsRoutine(itemDemand.FailElements)
+                );
             }
         }
         else if(element is AssetChange){

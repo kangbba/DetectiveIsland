@@ -16,7 +16,7 @@ namespace Aroka.Curves
             CUBIC
         }
 
-        private static Dictionary<CurvName, AnimationCurve> curves = new Dictionary<CurvName, AnimationCurve>()
+        private static Dictionary<CurvName, AnimationCurve> _curves = new Dictionary<CurvName, AnimationCurve>()
         {
             { CurvName.LINEAR, AnimationCurve.Linear(0, 0, 1, 1) },
             { CurvName.EASE_OUT, AnimationCurve.EaseInOut(0, 0, 1, 1) },
@@ -29,7 +29,7 @@ namespace Aroka.Curves
 
         public static AnimationCurve GetCurve(CurvName curveName)
         {
-            if (curves.TryGetValue(curveName, out AnimationCurve curve))
+            if (_curves.TryGetValue(curveName, out AnimationCurve curve))
             {
                 return curve;
             }

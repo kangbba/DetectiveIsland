@@ -76,7 +76,6 @@ namespace Aroka.Anim
     {
         [SerializeField] private AnimState _onState;
         [SerializeField] private AnimState _offState;
-        [SerializeField] private bool _manualControl;
 
         public ObjectType ObjectType { get => DetermineObjectType(transform); }
         private ObjectType DetermineObjectType(Transform transform)
@@ -168,12 +167,8 @@ namespace Aroka.Anim
                 _offState = currentState;
             }
         }
-        public void SetAnim(bool isOn, float totalTime, bool calledFromGroup = false)
+        public void SetAnim(bool isOn, float totalTime)
         {
-            if(calledFromGroup && _manualControl){
-                
-                return;
-            }
             AnimState targetState = isOn ? _onState : _offState;
             if(targetState == null){
                 Debug.LogWarning("Target State is null");
