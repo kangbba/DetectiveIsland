@@ -57,13 +57,12 @@ public static class StoryProcessor
             foreach(Dialogue dialogue in itemDemand.Dialogues){
                 yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
             }
-            while(true){
-                yield return ItemUIService.ItemDemandRoutine(
-                    targetItemID : itemDemand.ItemID,
-                    successAction : () => ProcessElementsRoutine(itemDemand.SuccessElements),
-                    failAction : () => ProcessElementsRoutine(itemDemand.FailElements)
-                );
-            }
+            yield return ItemUIService.ItemDemandRoutine(
+                targetItemID : itemDemand.ItemID,
+                successAction : () => ProcessElementsRoutine(itemDemand.SuccessElements),
+                failAction : () => ProcessElementsRoutine(itemDemand.FailElements),
+                cancelAction : () => ProcessElementsRoutine(itemDemand.FailElements)
+            );
         }
         else if(element is AssetChange){
             AssetChange assetChange = element as AssetChange;

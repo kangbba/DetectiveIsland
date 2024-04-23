@@ -74,6 +74,8 @@ namespace Aroka.Anim
 
     public class ArokaAnim : MonoBehaviour
     {
+        private bool _isOn;
+        private bool _isInitialized = false;
         [SerializeField] private AnimState _onState;
         [SerializeField] private AnimState _offState;
 
@@ -96,6 +98,7 @@ namespace Aroka.Anim
         private void Awake()
         {
             SetAnim(false, 0f);
+            _isInitialized = true;
         }
         private void Reset()
         {
@@ -174,6 +177,12 @@ namespace Aroka.Anim
                 Debug.LogWarning("Target State is null");
                 return;
             }
+            if(_isInitialized && _isOn == isOn){
+                return;
+            }
+            _isInitialized = true;
+            _isOn = isOn;
+            
             // 타입에 따라 분기하여 처리
             switch (ObjectType)
             {

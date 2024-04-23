@@ -20,10 +20,10 @@ public class ItemButton : DataButton
         {
             _previewImg.sprite = _itemData.ItemSprite;
         }
-        SetSelected(false);
+        SetSelectedImg(false);
     }
 
-    public void SetSelected(bool b){
+    public void SetSelectedImg(bool b){
         _cursoredImg.gameObject.SetActive(b);
     }
 }

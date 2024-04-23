@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         //Place UI판넬 퇴장
         CharacterService.DestroyAllCharacters(.5f);
         PlaceUIService.SetOnPanel(false, false, false, .5f);
-        ItemUIService.HideItemCheckPanel();
+        ItemUIService.HideItemCheckPanelEnterButton();
         yield return new WaitForSeconds(.5f);
 
 
@@ -103,11 +103,12 @@ public class GameManager : MonoBehaviour
         PlaceService.SetOnPanel(true, 1f);
 
         PlaceUIService.SetCurPlaceText(placeData.PlaceNameForUser);
-        PlaceUIService.SetOnPanel(true, false, false, 1f);
-        yield return new WaitForSeconds(1f);
+        PlaceUIService.SetOnPanel(true, false, false, .5f);
+        yield return new WaitForSeconds(.5f);
 
         EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime);
         if(eventPlan != null){
+            ItemUIService.HideItemCheckPanelEnterButton();
             eventPlan.Initialize();
             PlaceScenario placeScenario = eventPlan.GetPlaceScenario(placeID);
             EventService.LogEventPlan(eventPlan);
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
                 else {
                     Debug.Log("한번 이상 열람된 이벤트");
                 }
+                ///이벤트 종료///
                 // 이벤트 플랜의 나가는 조건이 모두 해결 되었는지 확인 후 시간 업데이트
                 if (eventPlan.IsAllSolved()) {
                     EventPlan curEventPlan = EventService.GetNextEventPlan(EventService.CurEventTime);
@@ -137,8 +139,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
-        ItemUIService.ShowItemCheckPanel();
+        else{
+        }
+        ItemUIService.HideItemCheckPanel();
         CharacterService.DestroyAllCharacters(1f);
         //PlaceUI 판넬들 등장 및 이동가능버튼생성
         yield return new WaitForSeconds(1f);
@@ -146,6 +149,7 @@ public class GameManager : MonoBehaviour
         SetPhase(EGamePhase.Exit); 
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
         yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
+        ItemUIService.ShowItemCheckPanelEnterButton();
         isMoving = false;
     }
 

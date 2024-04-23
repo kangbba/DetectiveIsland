@@ -12,13 +12,15 @@ public class ItemPanel : MonoBehaviour
     [SerializeField] protected ItemContainer _itemContainer;
     protected List<ItemButton> _curItemBtns = new List<ItemButton>();
     protected ItemButton _selectedItemBtn;
+    protected bool _isOpen = false;
 
     public ItemButton SelectedItemBtn { get => _selectedItemBtn; }
 
     protected virtual void Start()
     {
-        ShowPanel(false, 0f);
+        OpenPanel(false, 0f);
     }
+
 
     public void Initialize(List<ItemData> itemDatas)
     {
@@ -46,12 +48,17 @@ public class ItemPanel : MonoBehaviour
         {
             _itemContainer.Display(itemDatas.Last());
         }
-        ShowPanel(true, 0f);
     }
 
-    protected void ShowPanel(bool show, float totalTime)
+    public virtual void OpenPanel(bool isOpen, float totalTime)
     {
-        _arokaAnimParent.SetOnAllChildren(show, totalTime);
+        if (_isOpen == isOpen)
+        {
+            Debug.Log("이미 그 상태 입니다");
+            return;
+        }
+        _isOpen = isOpen;
+        _arokaAnimParent.SetOnAllChildren(isOpen, totalTime);
     }
 
     protected void DestroyItemBtns()
@@ -65,12 +72,24 @@ public class ItemPanel : MonoBehaviour
 
     protected virtual void OnClickedItem(string itemID)
     {
+        SetSelected(itemID);
+    }
+
+    protected void SetSelected(string itemID)
+    {
+        ItemButton foundItemBtn = _curItemBtns.FirstOrDefault(btn => btn.ItemData.ItemID == itemID);
+        if (foundItemBtn == null)
+        {
+            Debug.LogError("해당 ID의 버튼 찾을 수 없습니다");
+            return;
+        }
+        Debug.Log($"{itemID} Selected");
         if (_selectedItemBtn != null)
         {
-            _selectedItemBtn.SetSelected(false);
+            _selectedItemBtn.SetSelectedImg(false);
         }
-        _selectedItemBtn = _curItemBtns.FirstOrDefault(btn => btn.ItemData.ItemID == itemID);
+        _selectedItemBtn = foundItemBtn;
         _itemContainer.Display(_selectedItemBtn.ItemData);
-        _selectedItemBtn.SetSelected(true);
+        _selectedItemBtn.SetSelectedImg(true);
     }
 }
