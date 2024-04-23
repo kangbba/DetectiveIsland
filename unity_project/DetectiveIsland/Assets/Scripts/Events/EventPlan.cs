@@ -7,19 +7,19 @@ using UnityEngine;
 public class EventPlan
 {
     [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9 , 0); 
-    [SerializeField] private List<PlaceScenario> _placeScenarios = new List<PlaceScenario>();
+    [SerializeField] private List<EventPlacePlan> _placeScenarios = new List<EventPlacePlan>();
 
 
     public EventTime EventTime { get => _eventTime; }
-    public List<PlaceScenario> PlaceScenarios { get => _placeScenarios; }
+    public List<EventPlacePlan> PlaceScenarios { get => _placeScenarios; }
 
-    public PlaceScenario GetPlaceScenario(string placeID)
+    public EventPlacePlan GetPlaceScenario(string placeID)
     {
         return _placeScenarios.FirstOrDefault(placeScenario => placeScenario.PlaceID == placeID);
     }
     public bool IsAllSolved()
     {
-        foreach (PlaceScenario scenario in _placeScenarios)
+        foreach (EventPlacePlan scenario in _placeScenarios)
         {
             if (!scenario.IsAllSolved())  // Assuming EventAction has a method to check its own condition
             {
@@ -30,7 +30,7 @@ public class EventPlan
     }
 
     public void Initialize(){
-        foreach(PlaceScenario placeScenario in _placeScenarios){
+        foreach(EventPlacePlan placeScenario in _placeScenarios){
             placeScenario.SetViewed(false);
         }
     }

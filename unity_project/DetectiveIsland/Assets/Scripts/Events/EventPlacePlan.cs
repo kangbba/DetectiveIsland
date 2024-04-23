@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlaceScenario{
+public class EventPlacePlan{
      
     [SerializeField] private    string           _placeID = "";
     [SerializeField] private    TextAsset        _scenarioFile;

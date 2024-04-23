@@ -4,7 +4,7 @@ using Aroka.CoroutineUtils;
 using Aroka.JsonUtils;
 using UnityEngine;
 
-public static class StoryProcessor
+public static class EventProcessor
 {
     public static IEnumerator ScenarioRoutine(Scenario scenario){
 

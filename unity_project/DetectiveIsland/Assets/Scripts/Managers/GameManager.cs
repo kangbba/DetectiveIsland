@@ -41,8 +41,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 300;
         Initialize();
-        EventService.SetCurEventTime(EventService.GetFirstEventPlan().EventTime);
+        EventTime startingEventTime = EventService.GetFirstEventPlan().EventTime;
+        EventTimeService.SetCurEventTime(startingEventTime);
+        EventTimeUIService.SetEventTime(startingEventTime);
         Move(EventService.GetFirstEventPlan().PlaceScenarios[0].PlaceID);
     }
 
@@ -61,6 +64,8 @@ public class GameManager : MonoBehaviour
         PlaceUIService.Load();
         CharacterService.Load();
         ChoiceSetService.Load();
+        EventTimeService.Load();
+        EventTimeUIService.Load();
     }
     
     public void Move(string placeID){
@@ -83,7 +88,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
-        Debug.Log($"현재 시간 : {EventService.CurEventTime}");
+        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime}");
         Debug.Log($"장소 이동 : {placeData.PlaceNameForUser} ({placeData.PlaceID})");
         
         // AwaitChoices의 결과를 직접 받아 처리
@@ -106,11 +111,11 @@ public class GameManager : MonoBehaviour
         PlaceUIService.SetOnPanel(true, false, false, .5f);
         yield return new WaitForSeconds(.5f);
 
-        EventPlan eventPlan = EventService.GetEventPlan(EventService.CurEventTime);
+        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
         if(eventPlan != null){
             ItemUIService.HideItemCheckPanelEnterButton();
             eventPlan.Initialize();
-            PlaceScenario placeScenario = eventPlan.GetPlaceScenario(placeID);
+            EventPlacePlan placeScenario = eventPlan.GetPlaceScenario(placeID);
             EventService.LogEventPlan(eventPlan);
 
             if(placeScenario != null){
@@ -119,7 +124,7 @@ public class GameManager : MonoBehaviour
                     placeScenario.SetViewed(true);  
                     SetPhase(EGamePhase.EventPlaying);
                     Scenario scenario = ArokaJsonUtils.LoadScenario(placeScenario.ScenarioFile);
-                    yield return StartCoroutine(StoryProcessor.ScenarioRoutine(scenario));
+                    yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
                 } 
                 else {
                     Debug.Log("한번 이상 열람된 이벤트");
@@ -127,30 +132,27 @@ public class GameManager : MonoBehaviour
                 ///이벤트 종료///
                 // 이벤트 플랜의 나가는 조건이 모두 해결 되었는지 확인 후 시간 업데이트
                 if (eventPlan.IsAllSolved()) {
-                    EventPlan curEventPlan = EventService.GetNextEventPlan(EventService.CurEventTime);
+                    EventPlan curEventPlan = EventService.GetNextEventPlan(EventTimeService.CurEventTime);
                     if(curEventPlan != null){
                         EventTime nextEventTime = curEventPlan.EventTime;
-                        EventService.SetCurEventTime(nextEventTime);
+                        EventTimeService.SetCurEventTime(nextEventTime);
+                        EventTimeUIService.SetEventTime(nextEventTime);
                     }
                     else{
                         Debug.LogWarning("게임 엔딩 출력!");
-                        EventService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
+                        EventTimeService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
                     }
                 }
             }
         }
         else{
         }
-        ItemUIService.HideItemCheckPanel();
-        CharacterService.DestroyAllCharacters(1f);
-        //PlaceUI 판넬들 등장 및 이동가능버튼생성
-        yield return new WaitForSeconds(1f);
-
         SetPhase(EGamePhase.Exit); 
-        Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
-        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
         ItemUIService.ShowItemCheckPanelEnterButton();
+        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
+        CharacterService.DestroyAllCharacters(.5f);
         isMoving = false;
+        Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
     }
 
     // Implement the SetPhase method

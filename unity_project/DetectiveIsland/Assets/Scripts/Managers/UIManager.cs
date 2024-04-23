@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CharacterPanel _characterPanel;
     [SerializeField] private DialoguePanel _dialoguePanel;
     [SerializeField] private ChoiceSetPanel _choiceSetPanel;
+    [SerializeField] private EventTimeDisplayer _eventTimeDisplayer;
 
     public ItemCheckPanel ItemCheckPanel => _itemCheckPanel;
     public ItemDemandPanel ItemDemandPanel { get => _itemDemandPanel; }
@@ -27,7 +28,7 @@ public class UIManager : MonoBehaviour
     public DialoguePanel DialoguePanel { get => _dialoguePanel; }
     public PlacePanel PlacePanel { get => _placePanel; }
     public Button ItemCheckPanelEnterBtn { get => _itemCheckPanelEnterBtn;  }
-
+    public EventTimeDisplayer EventTimeDisplayer { get => _eventTimeDisplayer; }
     private void Awake()
     {
         if (_instance == null)

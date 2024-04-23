@@ -30,7 +30,7 @@ public class DialoguePanel : ArokaAnim
         {
             _lineText.text += letter;
             if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.03f);
         }
     }
 
