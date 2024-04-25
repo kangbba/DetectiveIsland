@@ -44,11 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9b9fd9f32918449abf5405a41922b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  _characterData:
-    _characterID: Ryan
-    _characterNameForUser: "\uB77C\uC774\uC5B8"
-    _characterColor: {r: 0, g: 0, b: 0, a: 0}
-    _emotionDatas:
-    - emotionID: Smile
-      emotionSprite: {fileID: 0}
+  _characterID: Ryan
+  _characterNameForUser: "\uB77C\uC774\uC5B8"
+  _characterColor: {r: 0, g: 0, b: 0, a: 0}
+  _characterEmotions: []

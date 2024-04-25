@@ -46,7 +46,12 @@ public class GameManager : MonoBehaviour
         EventTime startingEventTime = EventService.GetFirstEventPlan().EventTime;
         EventTimeService.SetCurEventTime(startingEventTime);
         EventTimeUIService.SetEventTime(startingEventTime);
-        Move(EventService.GetFirstEventPlan().PlaceScenarios[0].PlaceID);
+
+
+
+        EventService.AllEventResetViewed();
+
+        Move(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
     }
 
     private void Update(){
@@ -84,18 +89,22 @@ public class GameManager : MonoBehaviour
         StartCoroutine(MoveToPlaceCoroutine(placeID));
         // 이동하는 로직 작성
     }
+
+    IEnumerator QuestRoutine(){
+        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
+        yield return new WaitUntil(() => eventPlan.IsAllSolved());
+    }
     private IEnumerator MoveToPlaceCoroutine(string placeID)
     {
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
-        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime}");
+        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
         Debug.Log($"장소 이동 : {placeData.PlaceNameForUser} ({placeData.PlaceID})");
         
         // AwaitChoices의 결과를 직접 받아 처리
         SetPhase(EGamePhase.Enter);
 
         //Place UI판넬 퇴장
-        CharacterService.DestroyAllCharacters(.5f);
         PlaceUIService.SetOnPanel(false, false, false, .5f);
         ItemUIService.HideItemCheckPanelEnterButton();
         yield return new WaitForSeconds(.5f);
@@ -112,46 +121,47 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
 
         EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
-        if(eventPlan != null){
+        ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
+        if(eventPlan != null && scenarioData != null){
+            Debug.Log("단순한 후 시나리오가 있음");
             ItemUIService.HideItemCheckPanelEnterButton();
-            eventPlan.Initialize();
-            EventPlacePlan placeScenario = eventPlan.GetPlaceScenario(placeID);
-            EventService.LogEventPlan(eventPlan);
-
-            if(placeScenario != null){
-                
-                if (!placeScenario.IsViewed || !placeScenario.IsAllSolved()) {
-                    placeScenario.SetViewed(true);  
+            if(!scenarioData.IsAllSolved()){
+                Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioData.ScenarioFile);
+                if(scenarioData.IsViewed){
+                    Debug.Log($"봤던 시나리오이고 해결이 {scenarioData.IsAllSolved()}, 말걸기 필요");
+                    EventProcessor.PositionInits(CharacterService.GetLastPosition(scenario));
+                    yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
                     SetPhase(EGamePhase.EventPlaying);
-                    Scenario scenario = ArokaJsonUtils.LoadScenario(placeScenario.ScenarioFile);
                     yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
-                } 
-                else {
-                    Debug.Log("한번 이상 열람된 이벤트");
                 }
-                ///이벤트 종료///
-                // 이벤트 플랜의 나가는 조건이 모두 해결 되었는지 확인 후 시간 업데이트
-                if (eventPlan.IsAllSolved()) {
-                    EventPlan curEventPlan = EventService.GetNextEventPlan(EventTimeService.CurEventTime);
-                    if(curEventPlan != null){
-                        EventTime nextEventTime = curEventPlan.EventTime;
-                        EventTimeService.SetCurEventTime(nextEventTime);
-                        EventTimeUIService.SetEventTime(nextEventTime);
-                    }
-                    else{
-                        Debug.LogWarning("게임 엔딩 출력!");
-                        EventTimeService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
-                    }
+                else{
+                    Debug.Log("처음 마주친 시나리오");
+                    SetPhase(EGamePhase.EventPlaying);
+                    yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
                 }
+                scenarioData.SetViewed(true);  
+            }
+            if(eventPlan.IsAllSolved()){
+                EventPlan curEventPlan = EventService.GetNextEventPlan(EventTimeService.CurEventTime);
+                if(curEventPlan != null){
+                    EventTime nextEventTime = curEventPlan.EventTime;
+                    EventTimeService.SetCurEventTime(nextEventTime);
+                    EventTimeUIService.SetEventTime(nextEventTime);
+                }
+                else{
+                    Debug.LogWarning("게임 엔딩 출력!");
+                    EventTimeService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
+                }
+                CharacterService.DestoryAllCharacters();
+                SetPhase(EGamePhase.Exit); 
+                ItemUIService.ShowItemCheckPanelEnterButton();
             }
         }
         else{
+            Debug.Log("단순한 장소이동 호출");
         }
-        SetPhase(EGamePhase.Exit); 
-        ItemUIService.ShowItemCheckPanelEnterButton();
-        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
-        CharacterService.DestroyAllCharacters(.5f);
         isMoving = false;
+        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
     }
 

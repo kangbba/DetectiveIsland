@@ -1,59 +1,100 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public static class CharacterService
 {
     private static CharacterPanel _characterPanel;
-    private static List<Character> _characterPrefabs;
-    
+    private static List<CharacterData> _characterDatas; 
+    private static List<Character> _curCharacters = new List<Character>(); 
 
     public static void Load()
     {       
         _characterPanel = UIManager.Instance.CharacterPanel;
-        _characterPrefabs = ArokaUtils.LoadResourcesFromFolder<Character>("CharacterPrefabs");
-        Debug.Log("_characterPrefabs" + _characterPrefabs.Count);
+        _characterDatas = ArokaUtils.LoadScriptableDatasFromFolder<CharacterData>("CharacterDatas");
     }
-    public static Character GetCharacter(string characterID)
-    {
-        foreach (Character character in _characterPrefabs)
-        {
-            if (character.CharacterData.CharacterID == characterID)
-            {
-                return character;
-            }
-        }
-        Debug.LogWarning("캐릭터를 찾을수 없음");
-        return null;
-    }
+
+    // CharacterData 검색 함수
     public static CharacterData GetCharacterData(string characterID)
     {
-        foreach (Character character in _characterPrefabs)
+        return _characterDatas.FirstOrDefault(data => data.CharacterID == characterID);
+    }
+    public static Character GetInstancedCharacter(string characterID){
+
+        return _curCharacters.FirstOrDefault(character => character.CharacterID == characterID);
+
+    }
+    public static List<PositionChange> GetLastPosition(Scenario scenario)
+    {
+        Dictionary<string, PositionChange> positionChanges = new Dictionary<string, PositionChange>();
+
+        foreach (Element element in scenario.Elements)
         {
-            if (character.CharacterData.CharacterID == characterID)
+            if (element is PositionChange positionChange)
             {
-                return character.CharacterData;
+                positionChanges[positionChange.CharacterID] = positionChange; // 중복 시 최신 정보로 덮어씀
             }
         }
-        Debug.LogWarning("캐릭터 데이터를 찾을수 없음");
-        return null;
+
+        return new List<PositionChange>(positionChanges.Values);
     }
-    public static void InitializeCharacters(List<PositionInit> positionInits, float totalTime){
-        foreach(PositionInit positionInit in positionInits){
-            MakeCharacter(positionInit.CharacterID, positionInit.PositionID, totalTime);
+
+    public static void InstantiateCharacter(string characterID, string positionID)
+    {
+        CharacterData characterData = GetCharacterData(characterID);
+
+        if (characterData == null)
+        {
+            Debug.LogWarning("characterPlan not found: " + characterID);
+            return;
+        }
+
+        Character characterInstance = GameObject.Instantiate(characterData.CharacterPrefab, _characterPanel.transform);
+        characterInstance.Initialize(characterData.CharacterID);
+        characterInstance.transform.localPosition = CalculatePosition(positionID);
+        _curCharacters.Add(characterInstance);
+    }
+
+    public static void DestroyCharacter(string characterID)
+    {
+        Character character = GetInstancedCharacter(characterID);
+        if (character != null)
+        {
+            GameObject.Destroy(character.gameObject);
+            _curCharacters.Remove(character);
+        }
+        else
+        {
+            Debug.LogWarning("Character to destroy not found: " + characterID);
         }
     }
-    public static void DestroyAllCharacters(float totalTime){
-        _characterPanel.DestroyAllCharacters(totalTime);
+    public static void DestoryAllCharacters()
+    {
+        foreach (Character character in _curCharacters)
+        {
+            GameObject.Destroy(character.gameObject);
+        }
+        _curCharacters.Clear();
     }
-    public static void MakeCharacter(string characterID, string positionID, float totalTime){
-        _characterPanel.MakeCharacter(characterID, positionID, totalTime);
+    private static Vector3 CalculatePosition(string positionID)
+    {
+        Vector3 newPosition = Vector3.zero;
+        switch (positionID)
+        {
+            case "Left":
+                newPosition = new Vector3(-8f, 0f, 0f);
+                break;
+            case "Middle":
+                newPosition = new Vector3(0f, 0f, 0f);
+                break;
+            case "Right":
+                newPosition = new Vector3(8f, 0f, 0f);
+                break;
+        }
+        return newPosition;
     }
-    public static void DestroyCharacter(string characterID, float totalTime){
-        _characterPanel.DestroyCharacter(characterID, totalTime);
-    }
-    public static void PositionChange(string characterID, string positionID, float totalTime){
-        _characterPanel.PositionChange(characterID, positionID, totalTime);
-    }
+
 }

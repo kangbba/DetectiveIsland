@@ -1,47 +1,47 @@
-
+using System.Linq;
 using UnityEngine;
 
-public class Character : SpriteEffector
+public class Character : MonoBehaviour
 {
-    [SerializeField] private CharacterData _characterData;
+    [SerializeField] private CharacterEmotion[] _characterEmotions; // 감정 상태 배열
+    private CharacterEmotion _curCharacterEmotion; // 감정 상태 배열
 
-    public CharacterData CharacterData { get => _characterData; }
+    private string _characterID;
+    public string CharacterID { get => _characterID; }
 
-
-    // 캐릭터 초기화 메서드
-    public void Initialize()
+    public void Initialize(string characterID)
     {
-        SetEmotion("Smile");
-    }
-
-    public void SetEmotion(string emotionID)
-    {
-        EmotionData emotionData = _characterData.GetEmotionData(emotionID);
-        if(emotionData == null || emotionData.EmotionSprite == null){
-            Debug.LogWarning("emotionData 가 없거나, emotionData에 해당하는 sprite 없음");
-        }
-        base.SetSprite(emotionData.EmotionSprite, 0);
-    }
-    public void SetOn(bool b, float totalTime)
-    {
-        if (b)
+        _characterID = characterID;
+        foreach (var emotion in _characterEmotions)
         {
-            base.FadeIn(totalTime);
+            emotion.SetOn(false, 0f); // 나머지 감정은 즉시 숨김
         }
-        else
+    }
+
+    public void ChangeEmotion(string emotionID, float fadeTime)
+    {
+        CharacterEmotion foundEmotion = GetCharacterEmotion(emotionID);
+        if(foundEmotion == null){
+            return;
+        }
+        if(_curCharacterEmotion != null && _curCharacterEmotion.EmotionID == emotionID){
+            return;
+        }
+        if(_curCharacterEmotion != null){
+            _curCharacterEmotion.SetOn(false, fadeTime);
+        }
+        _curCharacterEmotion = foundEmotion;
+        _curCharacterEmotion.SetOn(true, fadeTime);
+    }
+
+    public CharacterEmotion GetCharacterEmotion(string emotionID){
+        return _characterEmotions.FirstOrDefault(emotion => emotion.EmotionID == emotionID );
+    }
+
+    public void Exit(float totalTime){
+        foreach (var emotion in _characterEmotions)
         {
-            base.FadeOut(totalTime);
+            emotion.SetOn(false, totalTime); // 나머지 감정은 즉시 숨김
         }
-    }  
-    private void OnMouseDown()
-    {
-    }
-
-    private void OnMouseEnter()
-    {
-    }
-
-    private void OnMouseExit()
-    {
     }
 }

@@ -130,16 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9b9fd9f32918449abf5405a41922b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 5645726735970682317}
-  _characterData:
-    _characterID: Rachel
-    _characterNameForUser: "\uB808\uC774\uCCBC"
-    _characterColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    _emotionDatas:
-    - emotionID: Smile
-      emotionSprite: {fileID: 21300000, guid: 017746914bfb04b2eb7cb6253611add0, type: 3}
-    - emotionID: Smile
-      emotionSprite: {fileID: 0}
+  _characterID: Rachel
+  _characterNameForUser: "\uB808\uC774\uCCBC"
+  _characterColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
+  _characterEmotions: []
 --- !u!61 &5152294211744448507
 BoxCollider2D:
   m_ObjectHideFlags: 0

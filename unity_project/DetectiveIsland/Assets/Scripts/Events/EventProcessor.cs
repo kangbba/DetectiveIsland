@@ -29,12 +29,14 @@ public static class EventProcessor
             yield return ProcessElementRoutine(element);
         }
     }
-
+    
     public static IEnumerator ProcessElementRoutine(Element element){
 
+        Debug.Log(element.GetType());
         if(element is PositionChange){
             PositionChange positionChange = element as PositionChange;
-            CharacterService.PositionChange(positionChange.CharacterID, positionChange.PositionID, 1f);
+            CharacterService.InstantiateCharacter(positionChange.CharacterID, positionChange.PositionID);
+
             yield return new WaitForSeconds(1f);
         }
         else if(element is Dialogue){
@@ -71,4 +73,9 @@ public static class EventProcessor
         yield return null;
     }
     
+    public static void PositionInits(List<PositionChange> positionChanges){
+        foreach(PositionChange positionChange in positionChanges){
+            CharacterService.InstantiateCharacter(positionChange.CharacterID, positionChange.PositionID);
+        }
+    }
 }

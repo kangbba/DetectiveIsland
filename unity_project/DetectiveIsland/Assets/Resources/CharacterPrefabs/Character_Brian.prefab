@@ -45,14 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9b9fd9f32918449abf5405a41922b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 6784921453243696450}
-  _characterData:
-    _characterID: Brian
-    _characterNameForUser: "\uBE0C\uB77C\uC774\uC5B8"
-    _characterColor: {r: 0.7028302, g: 0.8869087, b: 1, a: 1}
-    _emotionDatas:
-    - emotionID: Smile
-      emotionSprite: {fileID: 21300000, guid: e328ba5872d4346aca17b85738d12fc8, type: 3}
+  _characterID: Brian
+  _characterNameForUser: "\uBE0C\uB77C\uC774\uC5B8"
+  _characterColor: {r: 0.52705586, g: 0.6434322, b: 0.7924528, a: 1}
+  _characterEmotions: []
 --- !u!1 &7698200600803241757
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,16 @@ public static class DialogueService
     }
     public static IEnumerator DialogueRoutine(Dialogue dialogue){
 
+        string characterID = dialogue.CharacterID;
+        CharacterData characterData = CharacterService.GetCharacterData(characterID);
+        Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
+        bool isRyan = (characterID == "Ryan" || characterID == "Mono");
         for(int i = 0 ; i < dialogue.Lines.Count ; i++){
-            CharacterData characterData = CharacterService.GetCharacterData(dialogue.CharacterID);
-            _dialoguePanel.SetCharacterText(dialogue.CharacterID, characterData.CharacterColor);
+            Line line = dialogue.Lines[i];
+            if(instancedCharacter != null){
+                instancedCharacter.ChangeEmotion(line.EmotionID, 1f);
+            }
+            _dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
             yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
             yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }

@@ -19,16 +19,23 @@ public static class EventService
         }
     }
     public static void LogEventPlan(EventPlan eventPlan){
-        for(int i = 0 ; i < eventPlan.PlaceScenarios.Count ; i++){
+        for(int i = 0 ; i < eventPlan.ScenarioDatas.Count ; i++){
             if(i == 0 ){
                  Debug.Log($"***************************");
             }
-            EventPlacePlan placeScenario = eventPlan.PlaceScenarios[i];
+            ScenarioData placeScenario = eventPlan.ScenarioDatas[i];
             Debug.Log($"-----{i+1}번째 장소 시나리오 ----- ");
             Debug.Log($"[장소 : {placeScenario.PlaceID}]");
             Debug.Log($"[해결 여부 : {(placeScenario.IsAllSolved() ? "해결됨" : " 해결안됨")}]");
-            if(i == (eventPlan.PlaceScenarios.Count - 1) ){
+            if(i == (eventPlan.ScenarioDatas.Count - 1) ){
                  Debug.Log($"***************************");
+            }
+        }
+    }
+    public static void AllEventResetViewed(){
+        foreach(EventPlan eventPlan in EventPlans){
+            foreach(ScenarioData scenarioData in eventPlan.ScenarioDatas){
+                scenarioData.SetViewed(false);
             }
         }
     }

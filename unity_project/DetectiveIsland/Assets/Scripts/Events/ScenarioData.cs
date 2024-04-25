@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EventPlacePlan{
-     
+public class ScenarioData{
     [SerializeField] private    string           _placeID = "";
     [SerializeField] private    TextAsset        _scenarioFile;
     [SerializeField] private    List<EventAction> _solveConditions = new List<EventAction>();
@@ -24,7 +23,7 @@ public class EventPlacePlan{
                 return false;  // If any condition is not met, return false
             }
         }
-        return true;  // All conditions are met
+        return _isViewed;  // All conditions are met
     }
     public void ShowCharacters(){
     }
