@@ -75,7 +75,7 @@ public static class CharacterService
     {
         foreach (Character character in _curCharacters)
         {
-            GameObject.Destroy(character.gameObject);
+            character.FadeOutAndDestroy(1f);
         }
         _curCharacters.Clear();
     }

@@ -40,7 +40,7 @@ public class EventAction
     }
     private bool CheckItemOwnership(string itemID)
     {
-        return ItemService.GetIfOwnItem(itemID);
+        return ItemService.IsOwnItem(itemID);
     }
 }
 

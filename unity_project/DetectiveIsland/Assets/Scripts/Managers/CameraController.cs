@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using Aroka.CoroutineUtils;
+using Aroka.EaseUtils;
+using Aroka.ArokaUtils;
+using Aroka.Curves;
 
 public static class CameraController
 {
@@ -8,10 +11,13 @@ public static class CameraController
     private static Coroutine _shakeCoroutine;
     private static float _targetAspectRatio = 16f / 9f;  // Set this to your game's designed aspect ratio
 
+
+    public static void Load(){
+        _mainCamera = Camera.main;
+    }
     // 쉐이크 효과를 적용하는 코루틴
     public static IEnumerator ShakeCoroutine(float magnitude, float totalTime)
     {
-        RegisterMainCamera();
         Vector3 originalPos = _mainCamera.transform.position;
 
         float elapsed = 0f;
@@ -21,7 +27,8 @@ public static class CameraController
             float x = Random.Range(-1f, 1f) * magnitude;
             float y = Random.Range(-1f, 1f) * magnitude;
 
-            _mainCamera.transform.position = originalPos + new Vector3(x, y, originalPos.z);
+            Vector3 targetPos = originalPos + new Vector3(x, y, originalPos.z);
+            _mainCamera.transform.position = Vector3.Lerp(_mainCamera.transform.position, targetPos, Time.deltaTime * 10f);
 
             elapsed += Time.deltaTime;
 
@@ -29,6 +36,10 @@ public static class CameraController
         }
 
         _mainCamera.transform.position = originalPos;
+    }
+
+    public static void MoveX(float x, float totalTime){
+        _mainCamera.transform.EasePos(_mainCamera.transform.position.ModifiedX(x), totalTime, ArokaCurves.CurvName.EASE_OUT);
     }
 
     // 쉐이크 효과를 적용하는 함수
@@ -42,13 +53,6 @@ public static class CameraController
 
         _shakeCoroutine = CoroutineUtils.StartCoroutine(ShakeCoroutine(magnitude, totalTime));
     }
-    // main 카메라를 할당하는 함수
-    private static void RegisterMainCamera()
-    {
-        if(_mainCamera == null){
-           _mainCamera = Camera.main;
-        }
-    } 
     public static void AdjustCamera()
     {
         float windowAspect = (float)Screen.width / (float)Screen.height;

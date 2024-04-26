@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        CameraController.Load();
         EventService.Load();
         DialogueService.Load();
         ItemService.Load();
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
     
     public void Move(string placeID){
         // 해당 placeID에 해당하는 PlaceData 가져오기
-        PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
+        PlaceData placeData = PlaceService.GetPlaceData(placeID);
         if (placeData == null)
         {
             Debug.LogError($"Cannot find place with ID: {placeID}");
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator MoveToPlaceCoroutine(string placeID)
     {
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
-        PlaceData placeData = PlaceUIService.GetPlaceData(placeID);
+        PlaceData placeData = PlaceService.GetPlaceData(placeID);
         Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
         Debug.Log($"장소 이동 : {placeData.PlaceNameForUser} ({placeData.PlaceID})");
         
@@ -133,11 +134,13 @@ public class GameManager : MonoBehaviour
                     yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
                     SetPhase(EGamePhase.EventPlaying);
                     yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
+                    CharacterService.DestoryAllCharacters();
                 }
                 else{
                     Debug.Log("처음 마주친 시나리오");
                     SetPhase(EGamePhase.EventPlaying);
                     yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
+                    CharacterService.DestoryAllCharacters();
                 }
                 scenarioData.SetViewed(true);  
             }
@@ -152,7 +155,6 @@ public class GameManager : MonoBehaviour
                     Debug.LogWarning("게임 엔딩 출력!");
                     EventTimeService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
                 }
-                CharacterService.DestoryAllCharacters();
                 SetPhase(EGamePhase.Exit); 
                 ItemUIService.ShowItemCheckPanelEnterButton();
             }

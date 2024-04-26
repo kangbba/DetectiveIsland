@@ -303,9 +303,18 @@ namespace Aroka.ArokaUtils {
     public static class VectorExtensions
     {
 
+        public static Vector3 ModifiedX(this Vector3 v, float n)
+        {
+            return new Vector3(n, v.y, v.z);
+        }
         public static Vector3 ModifiedY(this Vector3 v, float n)
         {
             return new Vector3(v.x, n, v.z);
+        }
+
+        public static Vector3 ModifiedZ(this Vector3 v, float n)
+        {
+            return new Vector3(v.x, v.y, n);
         }
 
         public static Vector2 ModifiedX(this Vector2 v, float n)
@@ -318,15 +327,31 @@ namespace Aroka.ArokaUtils {
             return new Vector2(v.x, n);
         }
 
-        public static Vector3 ModifiedZ(this Vector2 v, float n)
+        public static Vector3Int ModifiedX(this Vector3Int v, int n)
         {
-            return new Vector3(v.x, v.y, n);
+            return new Vector3Int(n, v.y, v.z);
+        }
+        public static Vector3Int ModifiedY(this Vector3Int v, int n)
+        {
+            return new Vector3Int(v.x, n, v.z);
         }
 
-        public static Vector3 ModifiedZ(this Vector3 v, float n)
+        public static Vector3Int ModifiedZ(this Vector3Int v, int n)
         {
-            return new Vector3(v.x, v.y, n);
+            return new Vector3Int(v.x, v.y, n);
         }
+
+        public static Vector2Int ModifiedX(this Vector2Int v, int n)
+        {
+            return new Vector2Int(n, v.y);
+        }
+
+        public static Vector2Int ModifiedY(this Vector2Int v, int n)
+        {
+            return new Vector2Int(v.x, n);
+        }
+
+
 
         public static Color ModifiedAlpha(this Color c, float a)
         {

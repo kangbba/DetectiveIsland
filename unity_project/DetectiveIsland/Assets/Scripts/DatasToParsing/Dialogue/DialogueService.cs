@@ -19,16 +19,25 @@ public static class DialogueService
     public static IEnumerator DialogueRoutine(Dialogue dialogue){
 
         string characterID = dialogue.CharacterID;
+        bool isRyan = characterID == "Ryan" || characterID == "Mono";
         CharacterData characterData = CharacterService.GetCharacterData(characterID);
         Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
-        bool isRyan = (characterID == "Ryan" || characterID == "Mono");
+        if(instancedCharacter != null){
+            CameraController.MoveX(instancedCharacter.transform.position.x / 10f, 1f);
+        }
         for(int i = 0 ; i < dialogue.Lines.Count ; i++){
             Line line = dialogue.Lines[i];
             if(instancedCharacter != null){
+                Debug.Log("로그");
                 instancedCharacter.ChangeEmotion(line.EmotionID, 1f);
+                instancedCharacter.StartTalking();
             }
             _dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
             yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
+            if(instancedCharacter != null){
+                Debug.Log("로그2");
+                instancedCharacter.StopTalking();
+            }
             yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
     }

@@ -16,6 +16,7 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
     [SerializeField] private List<Sprite> _eyeSprites = new List<Sprite>();  // 눈 깜빡임 스프라이트 배열
     [SerializeField] private List<Sprite> _mouthSprites = new List<Sprite>();// 입 움직임 스프라이트 배열
 
+    private Coroutine _fadeRoutine;
     private Coroutine _blinkCoroutine;
     private Coroutine _talkingCoroutine;
 
@@ -30,33 +31,37 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
 
     public void SetOn(bool b, float totalTime){
         if(b){
-            FadeIn(totalTime);
+            Fade(true, totalTime);
             StartBlinking();
-            StartTalking(10f);
         }
         else{
-            FadeOut(totalTime);
+            Fade(false, totalTime);
             StopBlinking();
-            StopTalking();
         }
     }
-    private void FadeIn(float duration)
-    {
-        Debug.Log("Fadein");
-        _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), duration);
-        _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), duration);
-        _eyesRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), duration);
-        _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), duration);
+    private void Fade(bool b, float totalTime){
+        if(_fadeRoutine != null){
+            StopCoroutine(_fadeRoutine);
+        }
+        StartCoroutine(FadeRoutine(b, totalTime));
     }
 
-    // Fade out the emotion visual elements
-    private void FadeOut(float duration)
-    {
-        Debug.Log("FadeOut");
-        _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), duration);
-        _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), duration);
-        _eyesRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), duration);
-        _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), duration);
+    IEnumerator FadeRoutine(bool b, float totalTime){
+        if(b){
+            Debug.Log("Fadein");
+            _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
+            yield return new WaitForSeconds(totalTime);
+            _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), 0);
+            _eyesRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), 0);
+            _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), 0);
+        }
+        else{
+            Debug.Log("FadeOut");
+            _eyesRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
+            _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
+            _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
+            _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), totalTime);
+        }
     }
 
     private void StartBlinking()
@@ -86,6 +91,7 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         if (_talkingCoroutine != null)
             StopCoroutine(_talkingCoroutine);
         _talkingCoroutine = StartCoroutine(TalkingRoutine(totalTime));
+        Debug.Log("로그5");
         
     }
     public void StopTalking()
@@ -96,6 +102,7 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         if (_talkingCoroutine != null)
             StopCoroutine(_talkingCoroutine);
         SetMouthSprite(0); 
+        Debug.Log("로그6");
     }
 
     private IEnumerator BlinkingRoutine()
@@ -123,7 +130,7 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         while (accumTime < totalTime)
         {
             accumTime += Time.deltaTime;
-            if(accumTime > .2f){
+            if(accumTime > .1f){
                 SetMouthSprite(index);
                 index++;
                 accumTime = 0f;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Aroka.ArokaUtils;
 using Aroka.CoroutineUtils;
 using UnityEditorInternal.Profiling.Memory.Experimental;
@@ -13,7 +14,7 @@ public enum EItemDemandResult{
 public static class ItemService 
 {
     private static List<ItemData> _itemDatas;
-    private const string ItemOwnershipKeyPrefix = "item_owned_";  // 아이템 소유 정보의 키 접두어
+    private const string ITEM_OWNED_KEY = "item_owned_";  // 아이템 소유 정보의 키 접두어
 
     public static void Load()
     {       
@@ -21,14 +22,7 @@ public static class ItemService
     }
     public static ItemData GetItemData(string itemID)
     {
-        foreach (ItemData item in _itemDatas)
-        {
-            if (item.ItemID == itemID)
-            {
-                return item;
-            }
-        }
-        return null;
+        return _itemDatas.FirstOrDefault(itemData => itemData.ItemID == itemID);
     }
     
     public static void LoseAllItems()
@@ -40,16 +34,15 @@ public static class ItemService
 
     public static List<ItemData> GetOwnItemDatas()
     {
-        // PlayerPrefs에서 아이템 소유 여부를 확인하여 소유한 아이템만 반환
-        List<ItemData> itemDatasOwn = _itemDatas.FindAll(item => PlayerPrefs.GetInt(ItemOwnershipKeyPrefix + item.ItemID, 0) == 1);
-
+        List<ItemData> itemDatasOwn = _itemDatas.FindAll(item => PlayerPrefs.GetInt(ITEM_OWNED_KEY + item.ItemID, 0) == 1);
         return itemDatasOwn ?? new List<ItemData>();
     }
-    public static bool GetIfOwnItem(string itemID){
+    
+    public static bool IsOwnItem(string itemID){
         
         ItemData item = GetItemData(itemID);
         if (item != null){
-            return PlayerPrefs.GetInt(ItemOwnershipKeyPrefix + item.ItemID) == 1;
+            return PlayerPrefs.GetInt(ITEM_OWNED_KEY + item.ItemID) == 1;
         }
         else{
             Debug.LogError("해당 아이템 아이디의 아이템 찾을수없음");
@@ -63,7 +56,7 @@ public static class ItemService
         ItemData item = GetItemData(itemID);
         if (item != null)
         {
-            PlayerPrefs.SetInt(ItemOwnershipKeyPrefix + item.ItemID, own ? 1 : 0);
+            PlayerPrefs.SetInt(ITEM_OWNED_KEY + item.ItemID, own ? 1 : 0);
             PlayerPrefs.Save();  // 변경 사항을 즉시 저장
         }
     }

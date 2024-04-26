@@ -15,4 +15,4 @@ MonoBehaviour:
   _characterID: Lisa
   _characterPrefab: {fileID: 9034105406270865109, guid: 333c3695e9cb74d3eb7110663634c6cd, type: 3}
   _characterNameForUser: "\uB9AC\uC0AC"
-  _characterColor: {r: 0.9433962, g: 0.4494482, b: 0.61712587, a: 1}
+  _characterColor: {r: 0.9150943, g: 0.3927999, b: 0.4186189, a: 1}

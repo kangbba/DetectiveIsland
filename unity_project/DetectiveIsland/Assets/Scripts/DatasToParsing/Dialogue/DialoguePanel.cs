@@ -29,8 +29,11 @@ public class DialoguePanel : ArokaAnim
         foreach (char letter in str.ToCharArray())
         {
             _lineText.text += letter;
+            if(letter == '!'){
+                CameraController.ShakeCamera(3f, .3f);
+            }
             if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
-                yield return new WaitForSeconds(0.03f);
+                yield return new WaitForSeconds(0.06f);
         }
     }
 

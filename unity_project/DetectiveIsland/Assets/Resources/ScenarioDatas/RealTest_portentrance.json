@@ -39,12 +39,12 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "안녕 ? "
+          "Sentence": "안녕? "
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "나는 리사라고 해"
+          "Sentence": "나는 리사라고 해!"
         },
         {
           "$type": "Line, Assembly-CSharp",

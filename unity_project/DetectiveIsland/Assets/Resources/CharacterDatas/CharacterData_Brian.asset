@@ -15,4 +15,4 @@ MonoBehaviour:
   _characterID: Brian
   _characterPrefab: {fileID: 5203275759104995132, guid: d6832a4ea59d247db89ade15ef3aff06, type: 3}
   _characterNameForUser: "\uBE0C\uB77C\uC774\uC5B8"
-  _characterColor: {r: 0.50284797, g: 0.8484873, b: 0.9433962, a: 1}
+  _characterColor: {r: 0.5019608, g: 0.5591174, b: 0.94509804, a: 1}

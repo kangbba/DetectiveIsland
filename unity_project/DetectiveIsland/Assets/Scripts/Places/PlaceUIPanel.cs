@@ -33,7 +33,7 @@ public class PlaceUIPanel : MonoBehaviour
         DestroyPlaceButtons();
 
         
-        GameObject selectedGameObject = PlaceUIService.GetPlaceDataGameObject(selectedPlaceID);
+        GameObject selectedGameObject = PlaceService.GetPlaceDataGameObject(selectedPlaceID);
         if (selectedGameObject == null)
         {
             return; // 선택된 GameObject가 없으면 함수 종료

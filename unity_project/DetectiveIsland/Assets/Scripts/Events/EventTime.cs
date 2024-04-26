@@ -38,5 +38,10 @@ public class EventTime
     {
         return _date.GetHashCode() ^ _hour.GetHashCode() ^ _minute.GetHashCode();
     }
-// 시간의 전후 관계를 비교하여 enum 값으로 반환
+
+    public override string ToString()
+    {
+        return $"{Date} {Hour} {Minute}";
+    }
+    // 시간의 전후 관계를 비교하여 enum 값으로 반환
 }
