@@ -92,23 +92,12 @@
           "Elements": [
             {
               "$type": "Dialogue, Assembly-CSharp",
-              "CharacterID": "Kate",
-              "Lines": [
-                {
-                  "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "불만이 있다고? 정말 실망이야."
-                }
-              ]
-            },
-            {
-              "$type": "Dialogue, Assembly-CSharp",
               "CharacterID": "Lisa",
               "Lines": [
                 {
                   "$type": "Line, Assembly-CSharp",
-                  "EmotionID": "Smile",
-                  "Sentence": "정말... 말도안돼...."
+                  "EmotionID": "Stumped",
+                  "Sentence": "불만이 있다고? 정말 실망이야."
                 }
               ]
             },
@@ -207,16 +196,16 @@
       "FailElements": [
         {
           "$type": "Dialogue, Assembly-CSharp",
-          "CharacterID": "Kate",
+          "CharacterID": "Lisa",
           "Lines": [
             {
               "$type": "Line, Assembly-CSharp",
-              "EmotionID": "Smile",
-              "Sentence": "실망스럽구나"
+              "EmotionID": "Stumped",
+              "Sentence": "그게 아닌데.."
             },
             {
               "$type": "Line, Assembly-CSharp",
-              "EmotionID": "Smile",
+              "EmotionID": "Stumped",
               "Sentence": "하지만 포기는 하지마.."
             }
           ]
@@ -225,7 +214,7 @@
       "SuccessElements": [
         {
           "$type": "Dialogue, Assembly-CSharp",
-          "CharacterID": "Kate",
+          "CharacterID": "Lisa",
           "Lines": [
             {
               "$type": "Line, Assembly-CSharp",

@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Aroka.Anim;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class DialoguePanel : ArokaAnim
 {
     public TextMeshProUGUI _characterText;
     public TextMeshProUGUI _lineText;
+
+    public DialogueArrow _dialogueArrow;
     
     public void Initialize(){
         ClearPanel();
+        _dialogueArrow.gameObject.SetActive(false);
     } 
 
     public void ClearPanel(){
@@ -26,15 +30,19 @@ public class DialoguePanel : ArokaAnim
     {
         _lineText.text = "";
         _lineText.color = c;
+        _dialogueArrow.gameObject.SetActive(false);
         foreach (char letter in str.ToCharArray())
         {
             _lineText.text += letter;
             if(letter == '!'){
                 CameraController.ShakeCamera(3f, .3f);
             }
+            Debug.Log(_lineText.GetPreferredValues());
             if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
                 yield return new WaitForSeconds(0.06f);
         }
+        _dialogueArrow.gameObject.SetActive(true);
+        _dialogueArrow.SetAnchordPos(_lineText.GetPreferredValues());
     }
 
 }

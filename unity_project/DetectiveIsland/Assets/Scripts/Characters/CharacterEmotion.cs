@@ -22,11 +22,15 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
 
     public string EmotionID => _emotionID;
 
-    public void Initialize(){
-        _backgroundRenderer.gameObject.SetActive(true);
-        _faceRenderer.gameObject.SetActive(true);
-        _eyesRenderer.gameObject.SetActive(true);
-        _mouthRenderer.gameObject.SetActive(true);
+    private void Start(){
+        if(_backgroundRenderer != null)
+            _backgroundRenderer.gameObject.SetActive(true);
+        if(_faceRenderer != null)
+            _faceRenderer.gameObject.SetActive(true);
+        if(_eyesRenderer != null)
+            _eyesRenderer.gameObject.SetActive(true);
+        if(_mouthRenderer != null)
+            _mouthRenderer.gameObject.SetActive(true);
     }
 
     public void SetOn(bool b, float totalTime){
@@ -107,12 +111,12 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
 
     private IEnumerator BlinkingRoutine()
     {
-        int index = 0;
+        int index = 1;
         int spriteCount = _eyeSprites.Count;
         while (true)
         {
-            SetEyesSprite(index);
-           if(index % spriteCount == 0){
+            SetEyesSprite(index % spriteCount);
+            if(index % spriteCount == 0){
               yield return new WaitForSeconds(3f);
             }
             else{
@@ -125,13 +129,13 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
 
     private IEnumerator TalkingRoutine(float totalTime)
     {
-        int index = 0;
+        int index = 1;
         float accumTime = 0f;
         while (accumTime < totalTime)
         {
             accumTime += Time.deltaTime;
             if(accumTime > .1f){
-                SetMouthSprite(index);
+                SetMouthSprite(index % _mouthSprites.Count);
                 index++;
                 accumTime = 0f;
             }
@@ -140,11 +144,17 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         _talkingCoroutine = null;
     }
     private void SetMouthSprite(int index){
-        Sprite sprite = _mouthSprites[index % _mouthSprites.Count];
+        if(index >= _mouthSprites.Count){
+            return;
+        }
+        Sprite sprite = _mouthSprites[index];
         _mouthRenderer.sprite = sprite;
     }
     private void SetEyesSprite(int index){
-        Sprite sprite = _eyeSprites[index % _eyeSprites.Count];
+        if(index >= _eyeSprites.Count){
+            return;
+        }
+        Sprite sprite = _eyeSprites[index];
         _eyesRenderer.sprite = sprite;
     }
 

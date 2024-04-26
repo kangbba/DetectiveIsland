@@ -37,12 +37,6 @@ public static class PlaceService
         _placePanel.SetPlace(placeData);
     }
 
-    public static void SetOnPanel(bool b, float totalTime){
-        _placePanel.SetAnim(b, totalTime);
-    }
-
-    
-
     public static GameObject GetPlaceDataGameObject(string placeID)
     {
         foreach (PlaceData placeData in _placeDatas)

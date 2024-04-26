@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Aroka.Anim;
 using UnityEngine;
 
-public class PlacePanel : ArokaAnim
+public class PlacePanel : MonoBehaviour
 {
     [SerializeField] private Place _placePrefab;
     private Place _curPlace;

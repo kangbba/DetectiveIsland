@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
         _characterID = characterID;
         foreach (var emotion in _characterEmotions)
         {
+            emotion.gameObject.SetActive(true);
             emotion.SetOn(false, 0f); // 나머지 감정은 즉시 숨김
         }
     }
@@ -55,12 +56,10 @@ public class Character : MonoBehaviour
 
 
     public void StartTalking(){
-        Debug.Log("로그3");
         _curCharacterEmotion.StartTalking(5f);
     }
 
     public void StopTalking(){
-        Debug.Log("로그4");
         _curCharacterEmotion.StopTalking();
     }
 }

@@ -29,7 +29,7 @@ public static class DialogueService
             Line line = dialogue.Lines[i];
             if(instancedCharacter != null){
                 Debug.Log("로그");
-                instancedCharacter.ChangeEmotion(line.EmotionID, 1f);
+                instancedCharacter.ChangeEmotion(line.EmotionID, .3f);
                 instancedCharacter.StartTalking();
             }
             _dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);

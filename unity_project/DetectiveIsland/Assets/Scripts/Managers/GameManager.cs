@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
 
         //배경 세팅
         PlaceService.SetPlace(placeData);
-        PlaceService.SetOnPanel(true, 1f);
 
         PlaceUIService.SetCurPlaceText(placeData.PlaceNameForUser);
         PlaceUIService.SetOnPanel(true, false, false, .5f);
