@@ -6,8 +6,6 @@ using UnityEngine;
 [System.Serializable]
 public class JNode
 {
-    [SerializeField]
-    [SerializeReference]
     private List<Node> nodes = new List<Node>();
 
     public List<Node> Nodes

@@ -41,7 +41,6 @@ public class MonoBehaviourEditor : Editor
     }
 }
 
-
 public class ArokaButtonAttribute : Attribute
 {
     public string Error { get; set; } = "Cannot execute this function.";

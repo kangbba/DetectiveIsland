@@ -6,6 +6,8 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Callbacks;
+using UnityEditor.Experimental.GraphView;
+using System;
 
 public class JNodeEditor4 : EditorWindow
 {
@@ -14,6 +16,12 @@ public class JNodeEditor4 : EditorWindow
     {
         get => jNodeInstance.jNode;
         set { if (jNodeInstance != null) jNodeInstance.jNode = value; }
+    }
+
+    public static float ZoomScale
+    {
+        get => (float)(jNodeInstance?.zoomScale);
+        set { if (jNodeInstance != null) jNodeInstance.zoomScale = value; }
     }
     public static string RecentOpenFileName
     {
@@ -24,6 +32,12 @@ public class JNodeEditor4 : EditorWindow
     {
         get => jNodeInstance?.selectedNode;
         set { if (jNodeInstance != null) jNodeInstance.selectedNode = value; }
+    }
+
+    private static Node ConnectStartNode
+    {
+        get => jNodeInstance?.connectStartNode;
+        set { if (jNodeInstance != null) jNodeInstance.connectStartNode = value; }
     }
     private static Vector2 MousePosition
     {
@@ -61,11 +75,8 @@ public class JNodeEditor4 : EditorWindow
     private void OnGUI()
     {  
         AutoSaveJNodeInstance();
-       
-
         DrawGrid();
-        DrawJNodeMenuBar();  
-       
+        DrawJNodeMenuBar();
         EditorControl(Event.current);
 
         if (JNode != null)
@@ -73,14 +84,32 @@ public class JNodeEditor4 : EditorWindow
             DrawNodes();
             ProcessEvents(Event.current); 
         }
-          
+
+        DrawJNodeMenuBar();
+
         if (GUI.changed) Repaint();
     }
     public void AutoSaveJNodeInstance()
     {
         if (jNodeInstance != null && EditorUtility.IsDirty(jNodeInstance))
         {
+            Debug.Log("AutoSave");
             jNodeInstance.SaveChanges();
+        }
+    }
+
+    private void CenterCanvasOnNodes()
+    {
+        if (JNode != null && JNode.Nodes.Count > 0)
+        {
+            Vector2 sumPositions = Vector2.zero;
+            foreach (Node node in JNode.Nodes)
+            {
+                sumPositions += node.rect.center;
+            }
+            Vector2 averageCenter = sumPositions / JNode.Nodes.Count;
+            CanvasOffset = -averageCenter + new Vector2(position.width / 2, position.height / 2);
+            Debug.Log("Canvas centered to nodes");
         }
     }
 
@@ -119,9 +148,44 @@ public class JNodeEditor4 : EditorWindow
     {
         for (int i = 0; i < JNode.Nodes.Count; i++)
         {
-            JNode.Nodes[i].DrawNode(CanvasOffset);  // 각 노드를 그림
+            Node node = JNode.Nodes[i];
+            node.DrawNode(CanvasOffset);  // 각 노드를 그림
+
+          
         }
+
+        for (int i = 0; i < JNode.Nodes.Count; i++)
+        {
+            Node node = JNode.Nodes[i];
+
+            if (node.ChildConnectingPoint.isConnected )
+            {
+                float lineThickness = 5.0f;
+                Debug.Log(node);
+                Debug.Log(node.ChildConnectingPoint);
+                Debug.Log(node.ChildConnectingPoint.rect);
+
+                Debug.Log(node.ChildConnectingPoint);
+                Debug.Log(node.ChildConnectingPoint.ConnectedNodeId);
+                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId));
+                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint);
+
+
+                // Drawing a line
+                Handles.DrawAAPolyLine(lineThickness,
+                    new Vector3[] 
+                        {
+                            node.ChildConnectingPoint.rect.center,
+                            GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint.rect.center
+                        }
+                            );
+            }
+        }
+
+
     }
+
+
     public static void OpenJNodeEditorWindow()
     {
         JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
@@ -147,6 +211,7 @@ public class JNodeEditor4 : EditorWindow
     {
         Debug.Log("Load JNode   |   " + _recentOpenFileName + "    |    " + filePath);
         JNode jNode = ArokaJsonUtils.LoadJNode(filePath);
+        Debug.Log(jNode.Nodes.Count);
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
         UpdateLastSavedSnapshot();
     }
@@ -294,6 +359,12 @@ public class JNodeEditor4 : EditorWindow
     {
         MousePosition = (e.mousePosition - CanvasOffset);
 
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space)
+        {
+            CenterCanvasOnNodes();
+            e.Use();
+        }
+
         switch (e.type)
         {
             case EventType.KeyDown:
@@ -303,7 +374,6 @@ public class JNodeEditor4 : EditorWindow
                     Close();
                 }
                 break;
-
         }
     }
 
@@ -323,11 +393,21 @@ public class JNodeEditor4 : EditorWindow
         }
     }
 
-
+    private void DrawConnection(Node parent, Node child)
+    {
+        Vector2 start = new Vector2(parent.rect.x + parent.rect.width / 2, parent.rect.y + parent.rect.height);
+        Vector2 end = new Vector2(child.rect.x + child.rect.width / 2, child.rect.y);
+        Handles.DrawLine(start, end);
+    }
 
 
     private void ProcessEvents(Event e)
     {
+        if (EditorUtility.IsDirty(jNodeInstance))
+        {
+            return;
+        }
+        
         MousePosition = (e.mousePosition - CanvasOffset);
 
         switch (e.type)
@@ -351,14 +431,23 @@ public class JNodeEditor4 : EditorWindow
 
                     foreach (var node in JNode.Nodes)
                     {
+                        
                         if (node.rect.Contains(MousePosition))
                         {
+                            if (node.ChildConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
+                            {
+                                Debug.Log("node Cp Click");
+                                ConnectStartNode = node;
+                                LastMouseDragPosition = e.mousePosition;
+                                break;
+                            }
                             SelectedNode = node;
                             SelectedNode.Select();
                             IsDraggingNode = true;
                             LastMouseDragPosition = e.mousePosition;
                             break;
                         }
+                       
                     }
                     IsPanningCanvas = false;
 
@@ -388,6 +477,32 @@ public class JNodeEditor4 : EditorWindow
             case EventType.MouseUp:
                 IsDraggingNode = false;
                 IsPanningCanvas = false;
+
+                if (ConnectStartNode != null)
+                {
+                    bool connnected = false;
+                    foreach (var node in JNode.Nodes)
+                    {
+                        if (node == ConnectStartNode) continue;
+                        if (node.ParentConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
+                        {
+                            Debug.Log("Connect");
+                            ConnectStartNode.ConnectNodeToChild(node);
+                            node.ConnectNodeToParent(ConnectStartNode);
+                         
+                            ConnectStartNode = null;
+                            LastMouseDragPosition = e.mousePosition;
+                            connnected = true;
+                            break;
+                        }
+                    }
+
+                    if (!connnected)
+                    {
+                        ConnectStartNode.DeConnectNodeChild();
+                    }
+                }
+                ConnectStartNode = null;
                 e.Use();
                 break;
 
@@ -408,22 +523,37 @@ public class JNodeEditor4 : EditorWindow
         }
     }
 
-
     private void ProcessContextMenu(Vector2 mousePos)
     {
         GenericMenu menu = new GenericMenu();
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
         menu.ShowAsContext();
-
-
     }
 
     private void AddDialogueNode(Vector2 position)
     {
-        DialogueNode dialogueNode = new DialogueNode(new Rect(position.x, position.y, 200, 100), "Dialogue");
+        DialogueNode dialogueNode = new DialogueNode(new Rect(position.x, position.y, 200, 300), "Dialogue");
+        dialogueNode.SetGuid();
         dialogueNode.dialogue = new Dialogue("Kate", new List<Line>() { new Line("smile", "Hello") });
         JNode.Nodes.Add(dialogueNode);
     }
+    public Node GetNode(string id)
+    {
+        Debug.Log(id + " | " + JNode.Nodes.Count);
+        for (int i = 0; i < JNode.Nodes.Count; i++)
+        {
+            Node node = JNode.Nodes[i];
+            Debug.Log(node.title + " | "  + node.ID);
+
+            if (node.ID == id)
+            {
+                return node; // Node found
+            }
+        }
+        return null; // No node found with the given ID
+    }
+
+    private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
 
     [MenuItem("Assets/Create/JNode/New JNode", false, 80)]
     public static void CreateNewJNode()
@@ -437,11 +567,17 @@ public class JNodeEditor4 : EditorWindow
         string path = AssetDatabase.GenerateUniqueAssetPath(folderPath + "/NewJNode.jnode");
 
         JNode jNode = new JNode(new List<Node>());
+
+        StartNode startNode = new StartNode(new Rect(400, 100, 200, 100), "StartNode");
+        startNode.SetGuid();
+        jNode.Nodes.Add(startNode);
+
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+            StringEscapeHandling = StringEscapeHandling.Default, // Ensuring Hangul is not escaped
+            Converters = new List<JsonConverter> {  new Vector2Converter() }
         };
 
         string json = JsonConvert.SerializeObject(jNode, settings);
@@ -449,8 +585,18 @@ public class JNodeEditor4 : EditorWindow
         File.WriteAllText(path, json); // Creates an empty JSON object in the file.
         AssetDatabase.Refresh();
 
+        // Load the newly created .jnode file as an asset
+        TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+
+        
+        var iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(IconPath);
+        if (iconTexture != null && asset != null)
+        {
+            EditorGUIUtility.SetIconForObject(asset, iconTexture);
+        }
+
         EditorUtility.FocusProjectWindow();
-        Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>(path);
+        Selection.activeObject = asset; // Select the new asset in the project window
     }
 
 

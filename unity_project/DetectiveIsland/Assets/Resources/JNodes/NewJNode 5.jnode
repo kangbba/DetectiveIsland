@@ -1,0 +1,664 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 252.0,
+        "y": 134.0,
+        "position": {
+          "x": 252.0,
+          "y": 134.0
+        },
+        "center": {
+          "x": 352.0,
+          "y": 184.0
+        },
+        "min": {
+          "x": 252.0,
+          "y": 134.0
+        },
+        "max": {
+          "x": 452.0,
+          "y": 234.0
+        },
+        "width": 200.0,
+        "height": 100.0,
+        "size": {
+          "x": 200.0,
+          "y": 100.0
+        },
+        "xMin": 252.0,
+        "yMin": 134.0,
+        "xMax": 452.0,
+        "yMax": 234.0,
+        "left": 252.0,
+        "right": 452.0,
+        "top": 134.0,
+        "bottom": 234.0
+      },
+      "title": "StartNode",
+      "isSelected": false,
+      "ID": "db86103d-9fa4-4626-b79b-768ebc68875e",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "center": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "min": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "max": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 0.0,
+          "height": 0.0,
+          "size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "xMin": 0.0,
+          "yMin": 0.0,
+          "xMax": 0.0,
+          "yMax": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "top": 0.0,
+          "bottom": 0.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 363.0,
+          "y": 218.0,
+          "position": {
+            "x": 363.0,
+            "y": 218.0
+          },
+          "center": {
+            "x": 373.0,
+            "y": 228.0
+          },
+          "min": {
+            "x": 363.0,
+            "y": 218.0
+          },
+          "max": {
+            "x": 383.0,
+            "y": 238.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 363.0,
+          "yMin": 218.0,
+          "xMax": 383.0,
+          "yMax": 238.0,
+          "left": 363.0,
+          "right": 383.0,
+          "top": 218.0,
+          "bottom": 238.0
+        },
+        "connectedNodeId": "6ac0d161-ac62-4e62-9ed2-7846d73cb432",
+        "isConnected": true,
+        "ConnectedNodeId": "6ac0d161-ac62-4e62-9ed2-7846d73cb432"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 252.0,
+        "y": 252.0,
+        "position": {
+          "x": 252.0,
+          "y": 252.0
+        },
+        "center": {
+          "x": 352.0,
+          "y": 402.0
+        },
+        "min": {
+          "x": 252.0,
+          "y": 252.0
+        },
+        "max": {
+          "x": 452.0,
+          "y": 552.0
+        },
+        "width": 200.0,
+        "height": 300.0,
+        "size": {
+          "x": 200.0,
+          "y": 300.0
+        },
+        "xMin": 252.0,
+        "yMin": 252.0,
+        "xMax": 452.0,
+        "yMax": 552.0,
+        "left": 252.0,
+        "right": 452.0,
+        "top": 252.0,
+        "bottom": 552.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "ID": "6ac0d161-ac62-4e62-9ed2-7846d73cb432",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 363.0,
+          "y": 260.0,
+          "position": {
+            "x": 363.0,
+            "y": 260.0
+          },
+          "center": {
+            "x": 373.0,
+            "y": 270.0
+          },
+          "min": {
+            "x": 363.0,
+            "y": 260.0
+          },
+          "max": {
+            "x": 383.0,
+            "y": 280.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 363.0,
+          "yMin": 260.0,
+          "xMax": 383.0,
+          "yMax": 280.0,
+          "left": 363.0,
+          "right": 383.0,
+          "top": 260.0,
+          "bottom": 280.0
+        },
+        "connectedNodeId": "db86103d-9fa4-4626-b79b-768ebc68875e",
+        "isConnected": true,
+        "ConnectedNodeId": "db86103d-9fa4-4626-b79b-768ebc68875e"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 363.0,
+          "y": 536.0,
+          "position": {
+            "x": 363.0,
+            "y": 536.0
+          },
+          "center": {
+            "x": 373.0,
+            "y": 546.0
+          },
+          "min": {
+            "x": 363.0,
+            "y": 536.0
+          },
+          "max": {
+            "x": 383.0,
+            "y": 556.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 363.0,
+          "yMin": 536.0,
+          "xMax": 383.0,
+          "yMax": 556.0,
+          "left": 363.0,
+          "right": 383.0,
+          "top": 536.0,
+          "bottom": 556.0
+        },
+        "connectedNodeId": "cbd4fae5-acfd-4332-8b53-48f98254365b",
+        "isConnected": true,
+        "ConnectedNodeId": "cbd4fae5-acfd-4332-8b53-48f98254365b"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 251.0,
+        "y": 571.0,
+        "position": {
+          "x": 251.0,
+          "y": 571.0
+        },
+        "center": {
+          "x": 351.0,
+          "y": 721.0
+        },
+        "min": {
+          "x": 251.0,
+          "y": 571.0
+        },
+        "max": {
+          "x": 451.0,
+          "y": 871.0
+        },
+        "width": 200.0,
+        "height": 300.0,
+        "size": {
+          "x": 200.0,
+          "y": 300.0
+        },
+        "xMin": 251.0,
+        "yMin": 571.0,
+        "xMax": 451.0,
+        "yMax": 871.0,
+        "left": 251.0,
+        "right": 451.0,
+        "top": 571.0,
+        "bottom": 871.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "ID": "cbd4fae5-acfd-4332-8b53-48f98254365b",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 362.0,
+          "y": 579.0,
+          "position": {
+            "x": 362.0,
+            "y": 579.0
+          },
+          "center": {
+            "x": 372.0,
+            "y": 589.0
+          },
+          "min": {
+            "x": 362.0,
+            "y": 579.0
+          },
+          "max": {
+            "x": 382.0,
+            "y": 599.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 362.0,
+          "yMin": 579.0,
+          "xMax": 382.0,
+          "yMax": 599.0,
+          "left": 362.0,
+          "right": 382.0,
+          "top": 579.0,
+          "bottom": 599.0
+        },
+        "connectedNodeId": "6ac0d161-ac62-4e62-9ed2-7846d73cb432",
+        "isConnected": true,
+        "ConnectedNodeId": "6ac0d161-ac62-4e62-9ed2-7846d73cb432"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 362.0,
+          "y": 855.0,
+          "position": {
+            "x": 362.0,
+            "y": 855.0
+          },
+          "center": {
+            "x": 372.0,
+            "y": 865.0
+          },
+          "min": {
+            "x": 362.0,
+            "y": 855.0
+          },
+          "max": {
+            "x": 382.0,
+            "y": 875.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 362.0,
+          "yMin": 855.0,
+          "xMax": 382.0,
+          "yMax": 875.0,
+          "left": 362.0,
+          "right": 382.0,
+          "top": 855.0,
+          "bottom": 875.0
+        },
+        "connectedNodeId": "214c3f7a-1b7d-47db-8147-de6a52497391",
+        "isConnected": true,
+        "ConnectedNodeId": "214c3f7a-1b7d-47db-8147-de6a52497391"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 246.0,
+        "y": 903.0,
+        "position": {
+          "x": 246.0,
+          "y": 903.0
+        },
+        "center": {
+          "x": 346.0,
+          "y": 1053.0
+        },
+        "min": {
+          "x": 246.0,
+          "y": 903.0
+        },
+        "max": {
+          "x": 446.0,
+          "y": 1203.0
+        },
+        "width": 200.0,
+        "height": 300.0,
+        "size": {
+          "x": 200.0,
+          "y": 300.0
+        },
+        "xMin": 246.0,
+        "yMin": 903.0,
+        "xMax": 446.0,
+        "yMax": 1203.0,
+        "left": 246.0,
+        "right": 446.0,
+        "top": 903.0,
+        "bottom": 1203.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "ID": "214c3f7a-1b7d-47db-8147-de6a52497391",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 357.0,
+          "y": 911.0,
+          "position": {
+            "x": 357.0,
+            "y": 911.0
+          },
+          "center": {
+            "x": 367.0,
+            "y": 921.0
+          },
+          "min": {
+            "x": 357.0,
+            "y": 911.0
+          },
+          "max": {
+            "x": 377.0,
+            "y": 931.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 357.0,
+          "yMin": 911.0,
+          "xMax": 377.0,
+          "yMax": 931.0,
+          "left": 357.0,
+          "right": 377.0,
+          "top": 911.0,
+          "bottom": 931.0
+        },
+        "connectedNodeId": "cbd4fae5-acfd-4332-8b53-48f98254365b",
+        "isConnected": true,
+        "ConnectedNodeId": "cbd4fae5-acfd-4332-8b53-48f98254365b"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 357.0,
+          "y": 1187.0,
+          "position": {
+            "x": 357.0,
+            "y": 1187.0
+          },
+          "center": {
+            "x": 367.0,
+            "y": 1197.0
+          },
+          "min": {
+            "x": 357.0,
+            "y": 1187.0
+          },
+          "max": {
+            "x": 377.0,
+            "y": 1207.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 357.0,
+          "yMin": 1187.0,
+          "xMax": 377.0,
+          "yMax": 1207.0,
+          "left": 357.0,
+          "right": 377.0,
+          "top": 1187.0,
+          "bottom": 1207.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Kate",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "smile",
+            "Sentence": "Hello"
+          }
+        ]
+      },
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 624.0,
+        "y": 199.0,
+        "position": {
+          "x": 624.0,
+          "y": 199.0
+        },
+        "center": {
+          "x": 724.0,
+          "y": 349.0
+        },
+        "min": {
+          "x": 624.0,
+          "y": 199.0
+        },
+        "max": {
+          "x": 824.0,
+          "y": 499.0
+        },
+        "width": 200.0,
+        "height": 300.0,
+        "size": {
+          "x": 200.0,
+          "y": 300.0
+        },
+        "xMin": 624.0,
+        "yMin": 199.0,
+        "xMax": 824.0,
+        "yMax": 499.0,
+        "left": 624.0,
+        "right": 824.0,
+        "top": 199.0,
+        "bottom": 499.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "ID": "edaf1f8e-7ff0-4fb8-a808-3d2cb5f76da6",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 735.0,
+          "y": 207.0,
+          "position": {
+            "x": 735.0,
+            "y": 207.0
+          },
+          "center": {
+            "x": 745.0,
+            "y": 217.0
+          },
+          "min": {
+            "x": 735.0,
+            "y": 207.0
+          },
+          "max": {
+            "x": 755.0,
+            "y": 227.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 735.0,
+          "yMin": 207.0,
+          "xMax": 755.0,
+          "yMax": 227.0,
+          "left": 735.0,
+          "right": 755.0,
+          "top": 207.0,
+          "bottom": 227.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 735.0,
+          "y": 483.0,
+          "position": {
+            "x": 735.0,
+            "y": 483.0
+          },
+          "center": {
+            "x": 745.0,
+            "y": 493.0
+          },
+          "min": {
+            "x": 735.0,
+            "y": 483.0
+          },
+          "max": {
+            "x": 755.0,
+            "y": 503.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 735.0,
+          "yMin": 483.0,
+          "xMax": 755.0,
+          "yMax": 503.0,
+          "left": 735.0,
+          "right": 755.0,
+          "top": 483.0,
+          "bottom": 503.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      }
+    }
+  ]
+}

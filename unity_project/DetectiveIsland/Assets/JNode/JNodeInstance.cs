@@ -9,12 +9,17 @@ public  class JNodeInstance : ScriptableObject
     public JNode jNode;
     public string recentOpenFileName;
     public Node selectedNode;
+    public Node connectStartNode;
+
     public Vector2 mousePosition;
     public Vector2 lastMouseDragPosition;
     public Vector2 canvasOffset;
     public bool isDraggingNode;
     public bool isPanningCanvas;
     public string recentPath;
+
+    public float zoomScale = 1.0f;
+    public Vector2 zoomCoordsOrigin = Vector2.zero;
 
     public void Initialize(string recentPath, string _recentOpenFileName, JNode jNode)
     {
@@ -26,6 +31,8 @@ public  class JNodeInstance : ScriptableObject
         isDraggingNode = false;
         isPanningCanvas = false;
         recentOpenFileName = _recentOpenFileName;
+        connectStartNode = null;
+        selectedNode = null;
     }
 
 
