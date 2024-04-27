@@ -4,6 +4,7 @@ using System.Linq;
 using Aroka.Anim;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class ChoiceSetPanel : MonoBehaviour
@@ -16,17 +17,17 @@ public class ChoiceSetPanel : MonoBehaviour
 
     private ArokaAnim[] ChildrenAnims => transform.GetComponentsInChildren<ArokaAnim>();
 
-    public IEnumerator GetSelectedChoiceRoutine()
+    public async UniTask<Choice> GetSelectedChoiceTask()
     {
         OpenPanel(.2f);
-        yield return new WaitForSeconds(.2f);
+        await UniTask.WaitForSeconds(.2f);
         _selectedChoiceBtn = null;
         while (_selectedChoiceBtn == null)
         {
-            yield return null;
+            await UniTask.Yield();
         }
-        yield return StartCoroutine(ClosePanelRoutine(_selectedChoiceBtn, .5f));
-        yield return _selectedChoiceBtn.Choice;
+        await ClosePanelTask(_selectedChoiceBtn, 0.2f);
+        return _selectedChoiceBtn.Choice;
     }
     
     public void CreateChoiceBtns(ChoiceSet choiceSet)
@@ -75,7 +76,7 @@ public class ChoiceSetPanel : MonoBehaviour
         ChildrenAnims.SetAnims(true, totalTime);
     }
 
-    private IEnumerator ClosePanelRoutine(ChoiceButton choiceButton, float totalTime){
+    private async UniTask ClosePanelTask(ChoiceButton choiceButton, float totalTime){
         for(int i = 0 ; i < _curChoiceBtns.Count ; i++){
             ChoiceButton choiceBtn = _curChoiceBtns[i];
             bool isIdentical = choiceBtn.Choice.Title == choiceButton.Choice.Title;
@@ -86,9 +87,9 @@ public class ChoiceSetPanel : MonoBehaviour
                 choiceBtn.transform.EaseLocalScale(Vector3.zero, totalTime);
             }
         }
-        yield return new WaitForSeconds(totalTime);
+        await UniTask.WaitForSeconds(totalTime);
         ChildrenAnims.SetAnims(false, .1f);
-        yield return new WaitForSeconds(.1f);
+        await UniTask.WaitForSeconds(.1f);
     }
 
 

@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Aroka.Anim;
-using Aroka.CoroutineUtils;
 using Aroka.EaseUtils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,38 +71,33 @@ public static class ItemUIService
     public static void HideItemOwnPanel(){
         _itemOwnPanel.SetOn(false, .3f);
     }
-    public static IEnumerator ItemDemandRoutine(string targetItemID, Func<IEnumerator> successAction, Func<IEnumerator> failAction, Func<IEnumerator> cancelAction)
+    public static async UniTask ItemDemandTask(string targetItemID, Func<UniTask> successTask, Func<UniTask> failTask, Func<UniTask> cancelTask)
     {
         while(true){
             var ownItems = ItemService.GetOwnItemDatas();
             ShowItemDemandPanel(ownItems); // 보여주는데 필요한 시간 매개변수 추가
 
-            ItemData selectedItemData = null;
-            yield return CoroutineUtils.AwaitCoroutine<ItemData>(_itemDemandPanel.AwaitItemDataSelectedRoutine(), result =>
-            {
-                selectedItemData = result;
-            });
-
+            ItemData selectedItemData = await _itemDemandPanel.AwaitItemDataSelectedTask();
             HideItemDemandPanel(); // 숨기는데 필요한 시간 매개변수 추가
 
             if (selectedItemData == null)
             {
                 Debug.Log("취소 되었음 .");
-                yield return CoroutineUtils.StartCoroutine(cancelAction());
+                await cancelTask;
                 break;
             }
             else if (selectedItemData.ItemID == targetItemID)
             {
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
                 Debug.Log("정답이므로 elements 처리 후 이 루틴을 빠져나갈 예정");
-                yield return CoroutineUtils.StartCoroutine(successAction());
+                await successTask;
                 break;
             }
             else
             {
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
                 Debug.Log("오답이므로 elements 처리 후 이 루틴이 반복될 예정");
-                yield return CoroutineUtils.StartCoroutine(failAction());
+                await failTask;
             }
         }
         

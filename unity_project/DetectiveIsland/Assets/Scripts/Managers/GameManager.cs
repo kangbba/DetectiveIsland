@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Aroka.CoroutineUtils;
 using Aroka.JsonUtils;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -87,15 +87,15 @@ public class GameManager : MonoBehaviour
             return;
         }
         isMoving = true;
-        StartCoroutine(MoveToPlaceCoroutine(placeID));
+         MoveToPlaceUniTask(placeID);
         // 이동하는 로직 작성
     }
 
-    IEnumerator QuestRoutine(){
+    async UniTask QuestTask(){
         EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
-        yield return new WaitUntil(() => eventPlan.IsAllSolved());
+        await UniTask.WaitUntil(() => eventPlan.IsAllSolved());
     }
-    private IEnumerator MoveToPlaceCoroutine(string placeID)
+    private async UniTask MoveToPlaceUniTask(string placeID)
     {
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         PlaceData placeData = PlaceService.GetPlaceData(placeID);
@@ -106,9 +106,9 @@ public class GameManager : MonoBehaviour
         SetPhase(EGamePhase.Enter);
 
         //Place UI판넬 퇴장
-        PlaceUIService.SetOnPanel(false, false, false, .5f);
+        PlaceUIService.SetOnPanel(false, false, false, 500f);
         ItemUIService.HideItemCheckPanelEnterButton();
-        yield return new WaitForSeconds(.5f);
+        await UniTask.WaitForSeconds(.5f);
 
 
         SetPhase(EGamePhase.PlaceMoving); 
@@ -117,8 +117,8 @@ public class GameManager : MonoBehaviour
         PlaceService.SetPlace(placeData);
 
         PlaceUIService.SetCurPlaceText(placeData.PlaceNameForUser);
-        PlaceUIService.SetOnPanel(true, false, false, .5f);
-        yield return new WaitForSeconds(.5f);
+        PlaceUIService.SetOnPanel(true, false, false, 500);
+        await UniTask.WaitForSeconds(.5f);
 
         EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
         ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
@@ -130,15 +130,15 @@ public class GameManager : MonoBehaviour
                 if(scenarioData.IsViewed){
                     Debug.Log($"봤던 시나리오이고 해결이 {scenarioData.IsAllSolved()}, 말걸기 필요");
                     EventProcessor.PositionInits(CharacterService.GetLastPosition(scenario));
-                    yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                    await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
                     SetPhase(EGamePhase.EventPlaying);
-                    yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
+                    await EventProcessor.ScenarioTask(scenario);
                     CharacterService.DestoryAllCharacters();
                 }
                 else{
                     Debug.Log("처음 마주친 시나리오");
                     SetPhase(EGamePhase.EventPlaying);
-                    yield return StartCoroutine(EventProcessor.ScenarioRoutine(scenario));
+                    await EventProcessor.ScenarioTask(scenario);
                     CharacterService.DestoryAllCharacters();
                 }
                 scenarioData.SetViewed(true);  
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("단순한 장소이동 호출");
         }
         isMoving = false;
-        yield return StartCoroutine(PlaceUIService.CreateAndShowPlaceBtns(placeID, Move));
+        await PlaceUIService.CreateAndShowPlaceBtns(placeID, Move);
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
     }
 

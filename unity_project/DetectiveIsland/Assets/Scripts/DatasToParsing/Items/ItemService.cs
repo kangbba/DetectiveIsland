@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
-using Aroka.CoroutineUtils;
+using Cysharp.Threading.Tasks;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
@@ -61,13 +61,13 @@ public static class ItemService
         }
     }
     
-    public static IEnumerator AssetChangeRoutine(AssetChange assetChange)
+    public static async UniTask AssetChangeTask(AssetChange assetChange)
     {
         ItemData itemData = GetItemData(assetChange.ItemID);
         if (itemData == null)
         {
-            Debug.LogError("AssetChangeRoutine called with null ItemData");
-            yield break;
+            Debug.LogError("AssetChangeTask called with null ItemData");
+            return;
         }
         // 아이템 획득 정보를 UI 패널에 설정
         string message = $"{itemData.ItemNameForUser}을(를) 획득했습니다!";
@@ -85,7 +85,7 @@ public static class ItemService
             OwnItem(itemData.ItemID, true);
             if(assetChange.GainType == "Gain"){
                 ItemUIService.ShowItemOwnPanel(itemData);
-                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+                await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
                 ItemUIService.HideItemOwnPanel();
             }
             else if(assetChange.GainType == "Lose"){

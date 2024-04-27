@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.Collections;
-using Aroka.CoroutineUtils;
 using Aroka.EaseUtils;
 using Aroka.ArokaUtils;
 using Aroka.Curves;
+using Cysharp.Threading.Tasks;
+using System.Data.Common;
+using Aroka.CoroutineUtils;
 
 public static class CameraController
 {
     private static Camera _mainCamera;
-    private static Coroutine _shakeCoroutine;
+    private static Coroutine _shakeRoutine;
     private static float _targetAspectRatio = 16f / 9f;  // Set this to your game's designed aspect ratio
 
 
@@ -16,7 +18,7 @@ public static class CameraController
         _mainCamera = Camera.main;
     }
     // 쉐이크 효과를 적용하는 코루틴
-    public static IEnumerator ShakeCoroutine(float magnitude, float totalTime)
+    public static IEnumerator ShakeRoutine(float magnitude, float totalTime)
     {
         Vector3 originalPos = _mainCamera.transform.position;
 
@@ -45,13 +47,10 @@ public static class CameraController
     // 쉐이크 효과를 적용하는 함수
     public static void ShakeCamera(float magnitude, float totalTime)
     {
-        if (_shakeCoroutine != null)
-        {
-            // 이미 실행 중인 쉐이크 코루틴이 있다면 중지
-            CoroutineUtils.StopCoroutine(_shakeCoroutine);
+        if(_shakeRoutine != null){
+            CoroutineUtils.StopCoroutine(_shakeRoutine);
         }
-
-        _shakeCoroutine = CoroutineUtils.StartCoroutine(ShakeCoroutine(magnitude, totalTime));
+        _shakeRoutine = CoroutineUtils.StartCoroutine(ShakeRoutine(magnitude, totalTime));
     }
     public static void AdjustCamera()
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Aroka.CoroutineUtils;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public static class DialogueService
 {
@@ -16,7 +16,7 @@ public static class DialogueService
     public static void SetOnPanel(bool b, float totalTime){
         _dialoguePanel.SetAnim(b, totalTime);
     }
-    public static IEnumerator DialogueRoutine(Dialogue dialogue){
+    public static async UniTask DialogueTask(Dialogue dialogue){
 
         string characterID = dialogue.CharacterID;
         bool isRyan = characterID == "Ryan" || characterID == "Mono";
@@ -33,12 +33,12 @@ public static class DialogueService
                 instancedCharacter.StartTalking();
             }
             _dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-            yield return CoroutineUtils.StartCoroutine(_dialoguePanel.TypeLineRoutine(dialogue.Lines[i].Sentence, Color.white));
+            await _dialoguePanel.TypeLineTask(dialogue.Lines[i].Sentence, Color.white);
             if(instancedCharacter != null){
                 Debug.Log("로그2");
                 instancedCharacter.StopTalking();
             }
-            yield return CoroutineUtils.WaitUntil(()=> Input.GetMouseButtonDown(0));
+            await UniTask.WaitUntil(()=> Input.GetMouseButtonDown(0));
         }
     }
 }

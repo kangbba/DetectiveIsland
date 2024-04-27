@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Aroka.Anim;
 using Microsoft.Unity.VisualStudio.Editor;
+using Cysharp.Threading.Tasks;
 
 public class DialoguePanel : ArokaAnim
 {
@@ -26,7 +27,7 @@ public class DialoguePanel : ArokaAnim
         _characterText.SetText(s);
     }
     // 문장 출력을 위한 코루틴
-    public IEnumerator TypeLineRoutine(string str, Color c)
+    public async UniTask TypeLineTask(string str, Color c)
     {
         _lineText.text = "";
         _lineText.color = c;
@@ -38,7 +39,7 @@ public class DialoguePanel : ArokaAnim
                 CameraController.ShakeCamera(3f, .3f);
             }
             if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
-                yield return new WaitForSeconds(0.06f);
+                await UniTask.WaitForSeconds(0.06f);
         }
         _dialogueArrow.gameObject.SetActive(true);
         _dialogueArrow.SetAnchordPos(_lineText.GetPreferredValues());

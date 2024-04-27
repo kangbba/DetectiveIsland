@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using System.IO;
 using Aroka.Anim;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 
 namespace Aroka.ArokaUtils {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아야 함
@@ -17,8 +18,8 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
     [SerializeField] private List<Sprite> _mouthSprites = new List<Sprite>();// 입 움직임 스프라이트 배열
 
     private Coroutine _fadeRoutine;
-    private Coroutine _blinkCoroutine;
-    private Coroutine _talkingCoroutine;
+    private Coroutine _blinkRoutine;
+    private Coroutine _talkingRoutine;
 
     public string EmotionID => _emotionID;
 
@@ -47,10 +48,10 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         if(_fadeRoutine != null){
             StopCoroutine(_fadeRoutine);
         }
-        StartCoroutine(FadeRoutine(b, totalTime));
+        _fadeRoutine = StartCoroutine(FadeRoutine(b, totalTime));
     }
 
-    IEnumerator FadeRoutine(bool b, float totalTime){
+    private IEnumerator FadeRoutine(bool b, float totalTime){
         if(b){
             Debug.Log("Fadein");
             _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
@@ -65,50 +66,28 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
             _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
             _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
             _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), totalTime);
+            yield return new WaitForSeconds(totalTime);
         }
     }
 
     private void StartBlinking()
     {
+        StopBlinking();
         if(_eyeSprites == null || _eyeSprites.Count == 0){
             return;
         }
-        if (_blinkCoroutine != null)
-            StopCoroutine(_blinkCoroutine);
-        _blinkCoroutine = StartCoroutine(BlinkingRoutine());
+        _blinkRoutine = StartCoroutine(BlinkingRoutine());
     }
     private void StopBlinking()
     {
+        if(_blinkRoutine != null){
+            StopCoroutine(_blinkRoutine);
+        }
         if(_eyeSprites == null || _eyeSprites.Count == 0){
             return;
         }
-        if (_blinkCoroutine != null)
-            StopCoroutine(_blinkCoroutine);
         SetEyesSprite(0);
     }
-
-    public void StartTalking(float totalTime)
-    {
-        if(_mouthSprites == null || _mouthSprites.Count == 0){
-            return;
-        }
-        if (_talkingCoroutine != null)
-            StopCoroutine(_talkingCoroutine);
-        _talkingCoroutine = StartCoroutine(TalkingRoutine(totalTime));
-        Debug.Log("로그5");
-        
-    }
-    public void StopTalking()
-    {
-        if(_mouthSprites == null || _mouthSprites.Count == 0){
-            return;
-        }
-        if (_talkingCoroutine != null)
-            StopCoroutine(_talkingCoroutine);
-        SetMouthSprite(0); 
-        Debug.Log("로그6");
-    }
-
     private IEnumerator BlinkingRoutine()
     {
         int index = 1;
@@ -117,13 +96,33 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         {
             SetEyesSprite(index % spriteCount);
             if(index % spriteCount == 0){
-              yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(3f);
             }
             else{
-              yield return new WaitForSeconds(.2f);
+                yield return new WaitForSeconds(2f);
             }
             index++;
         }
+    }
+
+    public void StartTalking(float totalTime)
+    {
+        StopTalking();
+        if(_mouthSprites == null || _mouthSprites.Count == 0){
+            return;
+        }
+        _talkingRoutine = StartCoroutine(TalkingRoutine(totalTime));
+        
+    }
+    public void StopTalking()
+    {
+        if(_talkingRoutine != null){
+            StopCoroutine(_talkingRoutine);
+        }
+        if(_mouthSprites == null || _mouthSprites.Count == 0){
+            return;
+        }   
+        SetMouthSprite(0); 
     }
 
 
@@ -141,7 +140,6 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
             }
             yield return null;
         }
-        _talkingCoroutine = null;
     }
     private void SetMouthSprite(int index){
         if(index >= _mouthSprites.Count){

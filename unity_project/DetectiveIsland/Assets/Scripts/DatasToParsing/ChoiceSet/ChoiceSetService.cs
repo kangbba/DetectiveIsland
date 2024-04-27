@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Aroka.CoroutineUtils;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public static class ChoiceSetService
 {
     private static ChoiceSetPanel _choiceSetPanel;
@@ -10,16 +9,13 @@ public static class ChoiceSetService
         _choiceSetPanel = UIManager.Instance.ChoiceSetPanel; 
     }
 
-    public static IEnumerator ChoiceSetRoutine(ChoiceSet choiceSet){
+    public static async UniTask<Choice> ChoiceSetTask(ChoiceSet choiceSet){
         foreach(Dialogue dialogue in choiceSet.Dialogues){
-            yield return CoroutineUtils.StartCoroutine(DialogueService.DialogueRoutine(dialogue));
+            await DialogueService.DialogueTask(dialogue);
         }
         _choiceSetPanel.CreateChoiceBtns(choiceSet);
-        Choice selectedChoice = null;
-        yield return CoroutineUtils.AwaitCoroutine<Choice>(_choiceSetPanel.GetSelectedChoiceRoutine(), result => {
-            selectedChoice = result;
-        });
-        yield return selectedChoice;
+        Choice selectedChoice = await _choiceSetPanel.GetSelectedChoiceTask();
+        return selectedChoice;
     }
 
 }
