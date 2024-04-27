@@ -14,6 +14,6 @@ public class ChoiceSet : Element
         this._choices = choices;
     }
 
-    public List<Dialogue> Dialogues { get => _dialogues;}
-    public List<Choice> Choices { get => _choices; }
+    public List<Dialogue> Dialogues { get => _dialogues; set => _dialogues = value; }
+    public List<Choice> Choices { get => _choices; set => _choices = value; }
 }

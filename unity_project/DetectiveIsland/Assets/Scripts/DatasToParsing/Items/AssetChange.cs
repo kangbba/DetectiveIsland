@@ -16,8 +16,7 @@ public class AssetChange : Element
         this._itemAmount = itemAmount;
     }
 
-    public string GainType { get => _gainType; }
-    public string ItemID { get => _itemID; }
-    public uint ItemAmount { get => _itemAmount; }
-    
+    public string GainType { get => _gainType; set => _gainType = value; }
+    public string ItemID { get => _itemID; set => _itemID = value; }
+    public uint ItemAmount { get => _itemAmount; set => _itemAmount = value; }
 }

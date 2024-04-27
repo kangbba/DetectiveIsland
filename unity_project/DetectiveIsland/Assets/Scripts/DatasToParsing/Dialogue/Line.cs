@@ -12,6 +12,6 @@ public class Line
         this._sentence = sentence;
     }
 
-    public string EmotionID { get => _emotionID; }
-    public string Sentence { get => _sentence; }
+    public string EmotionID { get => _emotionID; set => _emotionID = value; }
+    public string Sentence { get => _sentence; set => _sentence = value; }
 }

@@ -15,6 +15,6 @@ public class Dialogue : Element
         this._lines = lines;
     }
 
-    public string CharacterID { get => _characterID;}
-    public List<Line> Lines { get => _lines; }
+    public string CharacterID { get => _characterID; set => _characterID = value; }
+    public List<Line> Lines { get => _lines; set => _lines = value; }
 }

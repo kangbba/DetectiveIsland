@@ -14,6 +14,6 @@ public class PositionChange : Element
         this._positionID = positionID;
     }
 
-    public string CharacterID { get => _characterID;  }
-    public string PositionID { get => _positionID;  }
+    public string CharacterID { get => _characterID; set => _characterID = value; }
+    public string PositionID { get => _positionID; set => _positionID = value; }
 }
