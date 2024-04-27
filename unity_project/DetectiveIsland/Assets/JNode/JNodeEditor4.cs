@@ -161,6 +161,7 @@ public class JNodeEditor4 : EditorWindow
             if (node.ChildConnectingPoint.isConnected )
             {
                 float lineThickness = 5.0f;
+                /*
                 Debug.Log(node);
                 Debug.Log(node.ChildConnectingPoint);
                 Debug.Log(node.ChildConnectingPoint.rect);
@@ -168,7 +169,7 @@ public class JNodeEditor4 : EditorWindow
                 Debug.Log(node.ChildConnectingPoint);
                 Debug.Log(node.ChildConnectingPoint.ConnectedNodeId);
                 Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId));
-                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint);
+                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint);*/
 
 
                 // Drawing a line
@@ -216,13 +217,8 @@ public class JNodeEditor4 : EditorWindow
         UpdateLastSavedSnapshot();
     }
 
-    public void DrawJNodeMenuBar()
+    public string GetCurrentSnapShot()
     {
-        Rect buttonArea = new Rect(10, 10, 1000, 30);  // Increased width
-
-        GUILayout.BeginArea(buttonArea);
-        GUILayout.BeginHorizontal();
-
         string currentSnapshot = JsonConvert.SerializeObject(JNode, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
@@ -230,8 +226,17 @@ public class JNodeEditor4 : EditorWindow
             Converters = new List<JsonConverter> { new Vector2Converter() },
             StringEscapeHandling = StringEscapeHandling.Default
         });
+        return currentSnapshot;
+    }
 
-        if (currentSnapshot != lastSavedSnapshot)
+    public void DrawJNodeMenuBar()
+    {
+        Rect buttonArea = new Rect(10, 10, 1000, 30);  // Increased width
+
+        GUILayout.BeginArea(buttonArea);
+        GUILayout.BeginHorizontal();
+
+        if (GetCurrentSnapShot() != lastSavedSnapshot)
         {
             GUI.color = Color.red;  // Green color for the Save button
         }
@@ -351,7 +356,9 @@ public class JNodeEditor4 : EditorWindow
     public static void Save(string path)
     {
         ArokaJsonUtils.SaveJNode(JNode, path);
+        UpdateLastSavedSnapshot();
         Debug.Log($"<color=green>Save Complete</color> " + RecentOpenFileName);
+
     }
 
 
@@ -515,8 +522,7 @@ public class JNodeEditor4 : EditorWindow
                 }
                 if (e.keyCode == KeyCode.W && (Event.current.command || Event.current.control))
                 {
-                    Event.current.Use();
-                    Close();
+                    OnDestroy();
                 }
                 break;
 
@@ -539,11 +545,9 @@ public class JNodeEditor4 : EditorWindow
     }
     public Node GetNode(string id)
     {
-        Debug.Log(id + " | " + JNode.Nodes.Count);
         for (int i = 0; i < JNode.Nodes.Count; i++)
         {
             Node node = JNode.Nodes[i];
-            Debug.Log(node.title + " | "  + node.ID);
 
             if (node.ID == id)
             {
@@ -551,6 +555,29 @@ public class JNodeEditor4 : EditorWindow
             }
         }
         return null; // No node found with the given ID
+    }
+
+    protected virtual void OnClosing()
+    {
+        Debug.Log("Try Exit");
+        if (GetCurrentSnapShot() != lastSavedSnapshot)
+        {
+            if (EditorUtility.DisplayDialog("Save Changes?",
+             "Do you want to save changes to the nodes before closing?",
+             "Save", "Don't Save"))
+            {
+                SaveJNode();  // 사용자가 "Save"를 선택했을 때 저장 함수 호출
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        OnClosing();
     }
 
     private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
