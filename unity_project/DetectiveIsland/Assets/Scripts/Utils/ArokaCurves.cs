@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Aroka.Curves
@@ -10,33 +9,36 @@ namespace Aroka.Curves
             LINEAR,
             EASE_OUT,
             EASE_IN,
+            EASE_IN_AND_OUT,
             EXPONENTIAL,
             SINE,
             QUADRATIC,
             CUBIC
         }
 
-        private static Dictionary<CurvName, AnimationCurve> _curves = new Dictionary<CurvName, AnimationCurve>()
-        {
-            { CurvName.LINEAR, AnimationCurve.Linear(0, 0, 1, 1) },
-            { CurvName.EASE_OUT, AnimationCurve.EaseInOut(0, 0, 1, 1) },
-            { CurvName.EASE_IN, AnimationCurve.EaseInOut(0, 1, 1, 1) },
-            { CurvName.EXPONENTIAL, ExponentialCurve() },
-            { CurvName.SINE, SineCurve() },
-            { CurvName.QUADRATIC, QuadraticCurve() },
-            { CurvName.CUBIC, CubicCurve() }
-        };
-
         public static AnimationCurve GetCurve(CurvName curveName)
         {
-            if (_curves.TryGetValue(curveName, out AnimationCurve curve))
+            switch (curveName)
             {
-                return curve;
-            }
-            else
-            {
-                Debug.LogWarning("Unknown curve name: " + curveName);
-                return null;
+                case CurvName.LINEAR:
+                    return AnimationCurve.Linear(0, 0, 1, 1);
+                case CurvName.EASE_OUT:
+                    return new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1, -2, -2));
+                case CurvName.EASE_IN:
+                    return new AnimationCurve(new Keyframe(0, 0, 2, 2), new Keyframe(1, 1));
+                case CurvName.EASE_IN_AND_OUT:
+                    return AnimationCurve.EaseInOut(0, 0, 1, 1);
+                case CurvName.EXPONENTIAL:
+                    return ExponentialCurve();
+                case CurvName.SINE:
+                    return SineCurve();
+                case CurvName.QUADRATIC:
+                    return QuadraticCurve();
+                case CurvName.CUBIC:
+                    return CubicCurve();
+                default:
+                    Debug.LogWarning("Unknown curve name: " + curveName);
+                    return null;
             }
         }
 

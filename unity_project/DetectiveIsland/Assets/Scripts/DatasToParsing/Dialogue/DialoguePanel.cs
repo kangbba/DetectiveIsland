@@ -37,7 +37,6 @@ public class DialoguePanel : ArokaAnim
             if(letter == '!'){
                 CameraController.ShakeCamera(3f, .3f);
             }
-            Debug.Log(_lineText.GetPreferredValues());
             if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
                 yield return new WaitForSeconds(0.06f);
         }
