@@ -83,21 +83,21 @@ public static class ItemUIService
             if (selectedItemData == null)
             {
                 Debug.Log("취소 되었음 .");
-                await cancelTask;
+                await cancelTask();
                 break;
             }
             else if (selectedItemData.ItemID == targetItemID)
             {
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
                 Debug.Log("정답이므로 elements 처리 후 이 루틴을 빠져나갈 예정");
-                await successTask;
+                await successTask();
                 break;
             }
             else
             {
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
                 Debug.Log("오답이므로 elements 처리 후 이 루틴이 반복될 예정");
-                await failTask;
+                await failTask();
             }
         }
         

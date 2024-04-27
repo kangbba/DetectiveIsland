@@ -22,6 +22,7 @@ public static class EventProcessor
         await UniTask.WaitForSeconds(1f);
 
     }
+
     private static async UniTask ProcessElementsTask(List<Element> elements){
 
         foreach(Element element in elements){
@@ -57,9 +58,9 @@ public static class EventProcessor
             }
             await ItemUIService.ItemDemandTask(
                 targetItemID : itemDemand.ItemID,
-                successTask : ProcessElementsTask(itemDemand.SuccessElements),
-                failTask : ProcessElementsTask(itemDemand.FailElements),
-                cancelTask : ProcessElementsTask(itemDemand.FailElements)
+                successTask : () => ProcessElementsTask(itemDemand.SuccessElements),
+                failTask :  () => ProcessElementsTask(itemDemand.FailElements),
+                cancelTask :  () => ProcessElementsTask(itemDemand.FailElements)
             );
         }
         else if(element is AssetChange){
