@@ -16,29 +16,37 @@ public static class DialogueService
     public static void SetOnPanel(bool b, float totalTime){
         _dialoguePanel.SetAnim(b, totalTime);
     }
-    public static async UniTask DialogueTask(Dialogue dialogue){
-
+    
+    public static async UniTask DialogueTask(Dialogue dialogue)
+    {
         string characterID = dialogue.CharacterID;
-        bool isRyan = characterID == "Ryan" || characterID == "Mono";
         CharacterData characterData = CharacterService.GetCharacterData(characterID);
         Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
-        if(instancedCharacter != null){
+
+        if (instancedCharacter != null)
+        {
             CameraController.MoveX(instancedCharacter.transform.position.x / 10f, 1f);
         }
-        for(int i = 0 ; i < dialogue.Lines.Count ; i++){
-            Line line = dialogue.Lines[i];
-            if(instancedCharacter != null){
-                Debug.Log("로그");
+
+        foreach (var line in dialogue.Lines)
+        {
+            if (instancedCharacter != null)
+            {
                 instancedCharacter.ChangeEmotion(line.EmotionID, .3f);
                 instancedCharacter.StartTalking();
             }
+
             _dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-            await _dialoguePanel.TypeLineTask(dialogue.Lines[i].Sentence, Color.white);
-            if(instancedCharacter != null){
-                Debug.Log("로그2");
+            await _dialoguePanel.TypeLineTask(line.Sentence, Color.white);
+
+            if (instancedCharacter != null)
+            {
                 instancedCharacter.StopTalking();
             }
-            await UniTask.WaitUntil(()=> Input.GetMouseButtonDown(0));
+
+            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
         }
     }
+
+
 }

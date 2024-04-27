@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         isMoving = true;
-         MoveToPlaceUniTask(placeID);
+        MoveToPlaceUniTask(placeID);
         // 이동하는 로직 작성
     }
 
