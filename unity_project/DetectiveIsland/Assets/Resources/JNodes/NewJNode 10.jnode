@@ -1,0 +1,128 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 400.0,
+        "y": 100.0,
+        "position": {
+          "x": 400.0,
+          "y": 100.0
+        },
+        "center": {
+          "x": 500.0,
+          "y": 150.0
+        },
+        "min": {
+          "x": 400.0,
+          "y": 100.0
+        },
+        "max": {
+          "x": 600.0,
+          "y": 200.0
+        },
+        "width": 200.0,
+        "height": 100.0,
+        "size": {
+          "x": 200.0,
+          "y": 100.0
+        },
+        "xMin": 400.0,
+        "yMin": 100.0,
+        "xMax": 600.0,
+        "yMax": 200.0,
+        "left": 400.0,
+        "right": 600.0,
+        "top": 100.0,
+        "bottom": 200.0
+      },
+      "title": "StartNode",
+      "isSelected": false,
+      "ID": "f0b08d2f-03b2-4340-b22e-9e74f75545a1",
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "center": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "min": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "max": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 0.0,
+          "height": 0.0,
+          "size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "xMin": 0.0,
+          "yMin": 0.0,
+          "xMax": 0.0,
+          "yMax": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "top": 0.0,
+          "bottom": 0.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "center": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "min": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "max": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 0.0,
+          "height": 0.0,
+          "size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "xMin": 0.0,
+          "yMin": 0.0,
+          "xMax": 0.0,
+          "yMax": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "top": 0.0,
+          "bottom": 0.0
+        },
+        "connectedNodeId": "",
+        "isConnected": false,
+        "ConnectedNodeId": ""
+      }
+    }
+  ]
+}

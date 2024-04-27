@@ -50,7 +50,7 @@ public class TestManager : MonoBehaviour
     [ArokaButton]
     public void AddDialogueNode()
     {
-        DialogueNode dialogueNode = new DialogueNode(new Rect(), "Dialogue");
+        DialogueNode dialogueNode = new DialogueNode(0,0, "Dialogue");
         //이건 주석이야 히히 ㅎㅎ !! 호호 ㅋㅋ ㄷㄷ
         dialogueNode.dialogue = new Dialogue("Kate", new List<Line> { new Line("Smile", "Hi"), new Line("Smile", "Hello"), new Line("Smile", "뭐라뭐라 어쩌고 !") });
         //괜히 주석달기 뷁 쉚

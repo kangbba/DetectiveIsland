@@ -438,16 +438,17 @@ public class JNodeEditor4 : EditorWindow
 
                     foreach (var node in JNode.Nodes)
                     {
-                        
+                        if (node.ChildConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
+                        {
+                            Debug.Log("node Cp Click");
+                            ConnectStartNode = node;
+                            LastMouseDragPosition = e.mousePosition;
+                            break;
+                        }
+
                         if (node.rect.Contains(MousePosition))
                         {
-                            if (node.ChildConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
-                            {
-                                Debug.Log("node Cp Click");
-                                ConnectStartNode = node;
-                                LastMouseDragPosition = e.mousePosition;
-                                break;
-                            }
+                           
                             SelectedNode = node;
                             SelectedNode.Select();
                             IsDraggingNode = true;
@@ -516,7 +517,16 @@ public class JNodeEditor4 : EditorWindow
             case EventType.KeyDown:
                 if (e.keyCode == KeyCode.Delete && SelectedNode != null)
                 {
+                    Debug.Log("Destory Node " + SelectedNode + " | " + JNode.Nodes.Count );
+                    if (GetNodeByChild(SelectedNode.ChildConnectingPoint.connectedNodeId) != null)
+                        GetNodeByChild(SelectedNode.ChildConnectingPoint.connectedNodeId).DeConnectNodeChild();
+                    if (GetNodeByParent(SelectedNode.ParentConnectingPoint.connectedNodeId) != null)
+                        GetNodeByParent(SelectedNode.ParentConnectingPoint.connectedNodeId).DeConnectNodeParent();
+                    SelectedNode.DeConnectNodeChild();
+                    SelectedNode.DeConnectNodeParent();
                     JNode.Nodes.Remove(SelectedNode);
+                    Debug.Log("Destory Node " + SelectedNode + " | " + JNode.Nodes.Count);
+
                     SelectedNode = null;
                     e.Use();
                 }
@@ -538,9 +548,9 @@ public class JNodeEditor4 : EditorWindow
 
     private void AddDialogueNode(Vector2 position)
     {
-        DialogueNode dialogueNode = new DialogueNode(new Rect(position.x, position.y, 200, 300), "Dialogue");
+        DialogueNode dialogueNode = new DialogueNode(position.x, position.y, "Dialogue");
         dialogueNode.SetGuid();
-        dialogueNode.dialogue = new Dialogue("Kate", new List<Line>() { new Line("smile", "Hello") });
+        dialogueNode.dialogue = new Dialogue("Mono", new List<Line>() { });
         JNode.Nodes.Add(dialogueNode);
     }
     public Node GetNode(string id)
@@ -550,6 +560,33 @@ public class JNodeEditor4 : EditorWindow
             Node node = JNode.Nodes[i];
 
             if (node.ID == id)
+            {
+                return node; // Node found
+            }
+        }
+        return null; // No node found with the given ID
+    }
+
+    public Node GetNodeByChild(string id)
+    {
+        for (int i = 0; i < JNode.Nodes.Count; i++)
+        {
+            Node node = JNode.Nodes[i];
+
+            if (node.ChildConnectingPoint.connectedNodeId == id)
+            {
+                return node; // Node found
+            }
+        }
+        return null; // No node found with the given ID
+    }
+    public Node GetNodeByParent(string id)
+    {
+        for (int i = 0; i < JNode.Nodes.Count; i++)
+        {
+            Node node = JNode.Nodes[i];
+
+            if (node.ParentConnectingPoint.connectedNodeId == id)
             {
                 return node; // Node found
             }

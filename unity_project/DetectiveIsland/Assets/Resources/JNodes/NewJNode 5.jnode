@@ -2,7 +2,7 @@
   "$type": "JNode, Assembly-CSharp",
   "Nodes": [
     {
-      "$type": "StartNode, Assembly-CSharp",
+      "$type": "Node, Assembly-CSharp",
       "rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
         "x": 530.0,
@@ -125,19 +125,7 @@
       }
     },
     {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "dialogue": {
-        "$type": "Dialogue, Assembly-CSharp",
-        "CharacterID": "Kate",
-        "Lines": [
-          {
-            "$type": "Line, Assembly-CSharp",
-            "EmotionID": "smile",
-            "Sentence": "Hello"
-          }
-        ]
-      },
-      "characterName": "Kate",
+      "$type": "Node, Assembly-CSharp",
       "rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
         "x": 544.0,
@@ -260,19 +248,7 @@
       }
     },
     {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "dialogue": {
-        "$type": "Dialogue, Assembly-CSharp",
-        "CharacterID": "Kate",
-        "Lines": [
-          {
-            "$type": "Line, Assembly-CSharp",
-            "EmotionID": "smile",
-            "Sentence": "Hello"
-          }
-        ]
-      },
-      "characterName": "Bryan",
+      "$type": "Node, Assembly-CSharp",
       "rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
         "x": 460.0,

@@ -188,21 +188,28 @@ public static class NodeGuiService
 public class DialogueNode : Node
 {
     public Dialogue dialogue;
-    public string characterName;
+    public float LineWidth => NodeSizeX;
+    public float LineHeight = 70;
+    public float LineVeritcalDist = 5;
 
-
-    public DialogueNode(Rect rect, string title) : base(rect, title)
+    public static float NodeSizeX
+    {
+        get
+        {
+            return 600;
+        }
+    }
+    public static float NodeSizeY = 150;
+    public DialogueNode(float x, float y, string title) : base(new Rect(x, y, NodeSizeX, NodeSizeY), title)
     {
 
     }
-
     public void DrawBackground(Rect nodeTotalRect)
     {
         GUIStyle boxGS = new GUIStyle();
         boxGS.normal.background = EditorGUIUtility.whiteTexture;
         boxGS.alignment = TextAnchor.UpperCenter;
         boxGS.padding = new RectOffset(10, 10, 10, 10);
-
         if (isSelected)
         {
             GUI.color = NodeColor.selectedColor;
@@ -215,7 +222,10 @@ public class DialogueNode : Node
         GUI.color = NodeColor.nodeBackgroundColor;
         GUI.Box(nodeTotalRect, "", boxGS);
     }
-
+    public void RefreshRect(Rect rect)
+    {
+        base.rect = rect;
+    }
     public void DrawTitle(Rect nodeTotalRect)
     {
 
@@ -235,82 +245,70 @@ public class DialogueNode : Node
             fontSize = 10,
             normal = { textColor = Color.white }
         };
-        GUIContent labelContent = new GUIContent("Character Name:");
+        GUIContent labelContent = new GUIContent("Character Type:");
         Vector2 labelSize_CharacterName = labelStyle.CalcSize(labelContent);
         GUI.Label(new Rect(nodeTotalRect.x, nodeTotalRect.y + 60, labelSize_CharacterName.x, 20), labelContent, labelStyle);
         // Character Name Input Field
-        characterName = GUI.TextField(new Rect(nodeTotalRect.x + labelSize_CharacterName.x + 5, nodeTotalRect.y + 60, nodeTotalRect.width - labelSize_CharacterName.x - 10, 20), characterName);
+        dialogue.CharacterID = GUI.TextField(new Rect(nodeTotalRect.x + labelSize_CharacterName.x + 5, nodeTotalRect.y + 60, nodeTotalRect.width - labelSize_CharacterName.x - 10, 20), dialogue.CharacterID);
     }
 
-    public void DrawAddLineButton(Rect nodeTotalRect)
+
+    private void DrawAddLineButton(Rect nodeRect)
     {
-        // Define the label style and text right within the function
+        float buttonYPosition = nodeRect.y + 105 + (dialogue.Lines.Count * (LineHeight + LineVeritcalDist)) ;
+        Rect buttonRect = new Rect(
+            nodeRect.x + (nodeRect.width - LineWidth) / 2,
+            buttonYPosition,
+            LineWidth,
+            LineHeight
+        );
+
+        if (GUI.Button(buttonRect, "Add Line"))
+            OnPlusButtonClicked();
+    }
+
+    private void DrawLines(Rect nodeRect)
+    {
+       
+
+        float yPos = nodeRect.y + 105;
+        for (int i = 0; i < dialogue.Lines.Count; i++)
+        {
+            Rect lineRect = new Rect(nodeRect.x + (nodeRect.width - LineWidth) / 2, yPos + (i * (LineHeight + LineVeritcalDist)), LineWidth, LineHeight);
+             GUIStyle lineLabelStyle = new GUIStyle(GUI.skin.label)
+        {
+            alignment = TextAnchor.UpperCenter,
+            fontSize = 10,
+            normal = { textColor = Color.yellow, background = DefaultTexture.GetFlatTexture(Color.yellow * Color.gray * Color.gray) }
+        };
+            GUI.Box(lineRect, "Line", lineLabelStyle);
+            DrawLineContent(i, lineRect);
+        }
+    }
+
+    private void DrawLineContent(int index, Rect lineRect)
+    {
         GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
         {
             alignment = TextAnchor.UpperCenter,
             fontSize = 10,
             normal = { textColor = Color.white }
         };
-        string labelText = "Character Name:";
-        GUIContent labelContent = new GUIContent(labelText);
-        Vector2 labelSize = labelStyle.CalcSize(labelContent);
-
-        // Calculate Y position based on where your label is actually positioned, adjust if needed
-        float labelYPosition = nodeTotalRect.y +35 + (dialogue.Lines.Count + 1) * 55 ;  // Example Y position
-        float buttonWidth = 200;
-        float buttonHeight = 50;
-
-        // Position the button centered relative to the node width, under the label
-        Rect plusButtonRect = new Rect(
-            nodeTotalRect.x + (nodeTotalRect.width - buttonWidth) / 2,  // Center horizontally
-            labelYPosition,  // Position below the label with a small gap
-            buttonWidth,
-            buttonHeight);
-
-        if (GUI.Button(plusButtonRect, "+"))
+        GUIStyle textFieldStyle = new GUIStyle()
         {
-            OnPlusButtonClicked(); // Function to handle the button click
-        }
-    }/*
-    public void DrawLine(Rect nodeTotalRect)
-    {
-        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
-        {
-            alignment = TextAnchor.UpperLeft,
-            fontSize = 10,
-            normal = { textColor = Color.white }
+            alignment = TextAnchor.MiddleLeft,
+            normal = { textColor = Color.white, background = DefaultTexture.GetFlatTexture(Color.gray * 0.25f) },
+            fontSize = 10
         };
-        Debug.Log(dialogue.Lines.Count);
-        GUI.Box(new Rect(nodeTotalRect.x, nodeTotalRect.y + 35 + (dialogue.Lines.Count * 55), 200, 50), "line");
-        // Character Name Input Field
-    }*/
-    public void DrawLine(Rect nodeTotalRect)
-    {
-        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
-        {
-            alignment = TextAnchor.UpperLeft,
-            fontSize = 10,
-            normal = { textColor = Color.white }
-        };
+        float initialLineContentsOffsetY = 20;
 
+        Line line = dialogue.Lines[index];
+        EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + initialLineContentsOffsetY, 80, 20), "Emotion ID:", labelStyle);
+        line.EmotionID = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY, 150, 20), line.EmotionID);
 
-        // Loop through all lines to draw each one
-        for (int i = 0; i < dialogue.Lines.Count; i++)
-        {
-            float offsetY = 35 + (i * 55); // Calculate Y offset for each line
-            Rect lineRect = new Rect(nodeTotalRect.x, nodeTotalRect.y + 35 + (dialogue.Lines.Count * 55), 200, 50);
-            GUI.Box(lineRect, "Line"); // Draw box for the line
-
-            // Emotion ID Input Field
-            GUIContent emotionLabelContent = new GUIContent("Emotion ID:");
-            GUI.Label(new Rect(nodeTotalRect.x + 5, nodeTotalRect.y + offsetY + 80, 80, 20), emotionLabelContent, labelStyle);
-            dialogue.Lines[i].EmotionID = (GUI.TextField(new Rect(nodeTotalRect.x + 85, nodeTotalRect.y + offsetY + 5, 110, 20), dialogue.Lines[i].EmotionID, 25));
-
-            // Sentence Input Field
-            GUIContent sentenceLabelContent = new GUIContent("Sentence:");
-            GUI.Label(new Rect(nodeTotalRect.x + 5, nodeTotalRect.y + offsetY + 100, 80, 20), sentenceLabelContent, labelStyle);
-            dialogue.Lines[i].Sentence = (GUI.TextField(new Rect(nodeTotalRect.x + 85, nodeTotalRect.y + offsetY + 5, 110, 20), dialogue.Lines[i].Sentence, 25));
-        }
+        EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + +initialLineContentsOffsetY+ 25, 80, 20), "Sentence:", labelStyle);
+        float calLength = NodeService.CalStringVisualSize(textFieldStyle, line.Sentence).x;
+        line.Sentence = EditorGUI.TextField(new Rect(lineRect.x + 85 , lineRect.y + initialLineContentsOffsetY + 25, 50 + calLength, 20), line.Sentence, textFieldStyle);
     }
 
 
@@ -319,23 +317,34 @@ public class DialogueNode : Node
         Color representColor = NodeColor.dialogueColor;
 
         base.DrawNode(offset );
-
-        Rect nodeTotalRect = new Rect((rect.position + offset ) , rect.size );
+        Vector2 rectSize = rect.size + new Vector2(0, (dialogue.Lines.Count + 1) * (LineHeight + LineVeritcalDist));
+        Rect nodeTotalRect = new Rect((rect.position + offset ) , rectSize);
         DrawBackground(nodeTotalRect);
         DrawTitle(nodeTotalRect);
         DrawCharacterType(nodeTotalRect);
         DrawAddLineButton(nodeTotalRect);
-        DrawLine(nodeTotalRect);
+        DrawLines(nodeTotalRect);
 
         GUI.color = Color.white;
         base.ParentConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + 12) + offset, representColor);
-        base.ChildConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + rect.height - 12) + offset, representColor);
+        base.ChildConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + rectSize.y - 12) + offset, representColor);
     }
    
 
     private void OnPlusButtonClicked()
     {
-        Debug.Log("Plus button clicked in Dialogue Node");
+        dialogue.Lines.Add(new Line("Smile", ""));
+    }
+}
+
+public static class DefaultTexture
+{
+    public static Texture2D GetFlatTexture(Color c)
+    {
+        Texture2D texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor/Icons/WhiteTexture.png");
+        texture2D.SetPixel(0, 0, c);
+        texture2D.Apply();
+        return texture2D;
     }
 }
 

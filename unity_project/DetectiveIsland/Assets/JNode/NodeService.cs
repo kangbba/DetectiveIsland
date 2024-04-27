@@ -8,6 +8,10 @@ using UnityEditor.AssetImporters;
 
 public static class NodeService
 {
+    public static Vector2 CalStringVisualSize(GUIStyle style, string st)
+    {
+        return style.CalcSize(new GUIContent(st));
+    }
     public static List<Element> ToElements(this List<Node> nodes)
     {
 
