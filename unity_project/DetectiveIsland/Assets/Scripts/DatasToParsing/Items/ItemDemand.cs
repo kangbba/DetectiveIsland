@@ -9,6 +9,7 @@ public class ItemDemand : Element
     private List<Dialogue> _dialogues;
     private List<Element> _successElements;
     private List<Element> _failElements;
+    private List<Element> _cancelElements;
 
     public ItemDemand(string itemID, List<Dialogue> dialogues, List<Element> successElements, List<Element> failElements)
     {
@@ -18,8 +19,10 @@ public class ItemDemand : Element
         this._failElements = failElements;
     }
 
-    public List<Element> FailElements { get => _failElements; set => _failElements = value; }
-    public List<Element> SuccessElements { get => _successElements; set => _successElements = value; }
     public string ItemID { get => _itemID; set => _itemID = value; }
     public List<Dialogue> Dialogues { get => _dialogues; set => _dialogues = value; }
+    public List<Element> FailElements { get => _failElements; set => _failElements = value; }
+    public List<Element> SuccessElements { get => _successElements; set => _successElements = value; }
+
+    public List<Element> CancelElements { get => _cancelElements; set => _cancelElements = value; }
 }

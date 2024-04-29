@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PositionChange : Element
+public class CharacterPosition
 {
     private string _characterID;
     private string _positionID;
 
-    public PositionChange(string characterID, string positionID)
+    public CharacterPosition(string characterID, string positionID)
     {
         this._characterID = characterID;
         this._positionID = positionID;

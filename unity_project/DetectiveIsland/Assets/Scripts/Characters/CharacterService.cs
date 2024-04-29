@@ -9,7 +9,9 @@ public static class CharacterService
 {
     private static CharacterPanel _characterPanel;
     private static List<CharacterData> _characterDatas; 
-    private static List<Character> _curCharacters = new List<Character>(); 
+    private static List<Character> _curCharacters = new List<Character>();
+
+    public static List<Character> CurCharacters { get => _curCharacters; set => _curCharacters = value; }
 
     public static void Load()
     {       
@@ -27,22 +29,8 @@ public static class CharacterService
         return _curCharacters.FirstOrDefault(character => character.CharacterID == characterID);
 
     }
-    public static List<PositionChange> GetLastPosition(Scenario scenario)
-    {
-        Dictionary<string, PositionChange> positionChanges = new Dictionary<string, PositionChange>();
 
-        foreach (Element element in scenario.Elements)
-        {
-            if (element is PositionChange positionChange)
-            {
-                positionChanges[positionChange.CharacterID] = positionChange; // 중복 시 최신 정보로 덮어씀
-            }
-        }
-
-        return new List<PositionChange>(positionChanges.Values);
-    }
-
-    public static void InstantiateCharacter(string characterID, string positionID)
+    public static void InstantiateCharacterThenFadeIn(string characterID, string positionID, string initialEmotionID, float totalTime)
     {
         CharacterData characterData = GetCharacterData(characterID);
 
@@ -53,17 +41,17 @@ public static class CharacterService
         }
 
         Character characterInstance = GameObject.Instantiate(characterData.CharacterPrefab, _characterPanel.transform);
-        characterInstance.Initialize(characterData.CharacterID);
-        characterInstance.transform.localPosition = CalculatePosition(positionID);
+        characterInstance.Initialize(characterData.CharacterID, positionID);
+        characterInstance.SetEmotion(initialEmotionID, totalTime);
         _curCharacters.Add(characterInstance);
     }
 
-    public static void DestroyCharacter(string characterID)
+    public static void FadeOutCharacterThenDestroy(string characterID, float totalTime)
     {
         Character character = GetInstancedCharacter(characterID);
         if (character != null)
         {
-            GameObject.Destroy(character.gameObject);
+            character.FadeOutAndDestroy(totalTime);
             _curCharacters.Remove(character);
         }
         else
@@ -71,30 +59,13 @@ public static class CharacterService
             Debug.LogWarning("Character to destroy not found: " + characterID);
         }
     }
-    public static void DestoryAllCharacters()
+    public static void AllCharacterFadeOutAndDestroy(float totalTime)
     {
         foreach (Character character in _curCharacters)
         {
-            character.FadeOutAndDestroy(1f);
+            character.FadeOutAndDestroy(totalTime);
         }
         _curCharacters.Clear();
-    }
-    private static Vector3 CalculatePosition(string positionID)
-    {
-        Vector3 newPosition = Vector3.zero;
-        switch (positionID)
-        {
-            case "Left":
-                newPosition = new Vector3(-8f, 0f, 0f);
-                break;
-            case "Middle":
-                newPosition = new Vector3(0f, 0f, 0f);
-                break;
-            case "Right":
-                newPosition = new Vector3(8f, 0f, 0f);
-                break;
-        }
-        return newPosition;
     }
 
 }

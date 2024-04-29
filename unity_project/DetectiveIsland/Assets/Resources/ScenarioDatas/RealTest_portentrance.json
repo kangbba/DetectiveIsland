@@ -2,9 +2,13 @@
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
     {
-      "$type": "PositionChange, Assembly-CSharp",
-      "CharacterID": "Kate",
-      "PositionID": "Right"
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPositions": [
+        {
+          "CharacterID": "Kate",
+          "PositionID": "Middle"
+        }
+      ]
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -28,9 +32,17 @@
       ]
     },
     {
-      "$type": "PositionChange, Assembly-CSharp",
-      "CharacterID": "Lisa",
-      "PositionID": "Left"
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPositions": [
+        {
+          "CharacterID": "Kate",
+          "PositionID": "Right"
+        },
+        {
+          "CharacterID": "Lisa",
+          "PositionID": "Left"
+        }
+      ]
     },
     {
       "$type": "Dialogue, Assembly-CSharp",

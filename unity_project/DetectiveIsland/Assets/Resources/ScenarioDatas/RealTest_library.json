@@ -2,9 +2,14 @@
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
     {
-      "$type": "PositionChange, Assembly-CSharp",
-      "CharacterID": "Lisa",
-      "PositionID": "Middle"
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPosition": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "여긴 도서관이야"
+        }
+      ]
     },
     {
       "$type": "Dialogue, Assembly-CSharp",

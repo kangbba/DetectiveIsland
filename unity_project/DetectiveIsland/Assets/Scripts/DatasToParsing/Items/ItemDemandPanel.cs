@@ -1,45 +1,28 @@
 using System.Collections;
+using System.Collections.Generic;
 using Aroka.Anim;
 using Aroka.ArokaUtils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum DemandExitType{
-    Correct,
-    Discorrect,
-    Cancelled,
-}
 public class ItemDemandPanel : ItemPanel
 {
+    [SerializeField] protected ArokaAnimParent _arokaAnimParent;
     [SerializeField] private Button _submitBtn;
     [SerializeField] private Button _exitBtn;
     private ItemButton _confirmedItemButton; // 사용자가 선택한 아이템 버튼
 
     private bool _isDemandCancel = false;
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         _submitBtn.onClick.AddListener(OnClickedSubmitBtn);
         _exitBtn.onClick.AddListener(OnClickedExitBtn);
     }
-
-    public void OnClickedExitBtn(){
-
-        base.OpenPanel(false, .3f);
-        _isDemandCancel = true;
-        
-    }
-
-    private void OnClickedSubmitBtn()
+    public async UniTask<ItemData> OpenItemDemandPanelAndWait()
     {
-        _confirmedItemButton = _selectedItemBtn; // 사용자가 선택한 아이템을 확정
-    }
-
-    // 이 메서드는 ItemData를 반환하는 코루틴으로 변경되었습니다.
-    public async UniTask<ItemData> AwaitItemDataSelectedTask()
-    {
+        OpenPanel();
         _isDemandCancel = false;
         _confirmedItemButton = null; // 초기화
 
@@ -48,17 +31,39 @@ public class ItemDemandPanel : ItemPanel
             await UniTask.Yield(); // 다음 프레임까지 대기
         }
 
+        ClosePanel();
+        await UniTask.WaitForSeconds(.3f);
+
         if (_confirmedItemButton != null)
         {
+            //무언가 선택하고 제출버튼을 누른 경우
             return _confirmedItemButton.ItemData; // 선택된 아이템 데이터 반환
         }
         else
         {
+            //취소로 나온 경우
             return null;
         }
     }
-    public override void OpenPanel(bool isOn, float totalTime){
-        base.OpenPanel(isOn, totalTime);
+
+    public void OnClickedExitBtn(){
+        ClosePanel();
+        _isDemandCancel = true;
+    }
+    private void OnClickedSubmitBtn()
+    {
+        _confirmedItemButton = _selectedItemBtn; 
+    }
+
+    public void OpenPanel()
+    {
+        List<ItemData> itemDatas = ItemService.GetOwnItemDatas();
+        base.Initialize(itemDatas);
+        _arokaAnimParent.SetOnAllChildren(true, .3f);
+    }
+    public void ClosePanel()
+    {
+        _arokaAnimParent.SetOnAllChildren(false, .3f);
     }
 
     private void Update(){

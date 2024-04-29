@@ -2,9 +2,13 @@
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
     {
-      "$type": "PositionChange, Assembly-CSharp",
-      "CharacterID": "Rachel",
-      "PositionID": "Middle"
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPositions": [
+        {
+          "CharacterID": "Rachel",
+          "PositionID": "Middle"
+        }
+      ]
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -44,7 +48,36 @@
                 {
                   "$type": "Line, Assembly-CSharp",
                   "EmotionID": "Smile",
-                  "Sentence": "시덥잖은 이유군."
+                  "Sentence": "시덥잖은 이유군. 화가나서 왼쪽으로 가야겠어!"
+                }
+              ]
+            },
+            {
+              "$type": "PositionInit, Assembly-CSharp",
+              "CharacterPositions": [
+                {
+                  "CharacterID": "Rachel",
+                  "PositionID": "Left"
+                }
+              ]
+            },
+            {
+              "$type": "Dialogue, Assembly-CSharp",
+              "CharacterID": "Rachel",
+              "Lines": [
+                {
+                  "$type": "Line, Assembly-CSharp",
+                  "EmotionID": "Smile",
+                  "Sentence": "이번엔 오른쪽이닷!"
+                }
+              ]
+            },
+            {
+              "$type": "PositionInit, Assembly-CSharp",
+              "CharacterPositions": [
+                {
+                  "CharacterID": "Rachel",
+                  "PositionID": "Right"
                 }
               ]
             }

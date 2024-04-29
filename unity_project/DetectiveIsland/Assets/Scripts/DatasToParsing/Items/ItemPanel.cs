@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ItemPanel : MonoBehaviour
 {
-    [SerializeField] protected ArokaAnimParent _arokaAnimParent;
     [SerializeField] protected ItemButton _itemBtnPrefab;
     [SerializeField] protected Transform _itemBtnsParent;
     [SerializeField] protected Image _background;
@@ -16,20 +15,20 @@ public class ItemPanel : MonoBehaviour
 
     public ItemButton SelectedItemBtn { get => _selectedItemBtn; }
 
-    protected virtual void Start()
-    {
-        OpenPanel(false, 0f);
-    }
-
-
-    public void Initialize(List<ItemData> itemDatas)
+    protected virtual void Initialize(List<ItemData> itemDatas)
     {
         _selectedItemBtn = null;
         DestroyItemBtns();
         CreateItemButtons(itemDatas);
     }
 
-    protected void CreateItemButtons(List<ItemData> itemDatas)
+
+    protected virtual void OnClickedItem(string itemID)
+    {
+        SetSelected(itemID);
+    }
+
+    private void CreateItemButtons(List<ItemData> itemDatas)
     {
         for (int i = 0; i < itemDatas.Count; i++)
         {
@@ -49,19 +48,7 @@ public class ItemPanel : MonoBehaviour
             _itemContainer.Display(itemDatas.Last());
         }
     }
-
-    public virtual void OpenPanel(bool isOpen, float totalTime)
-    {
-        if (_isOpen == isOpen)
-        {
-            Debug.Log("이미 그 상태 입니다");
-            return;
-        }
-        _isOpen = isOpen;
-        _arokaAnimParent.SetOnAllChildren(isOpen, totalTime);
-    }
-
-    protected void DestroyItemBtns()
+    private void DestroyItemBtns()
     {
         foreach (var btn in _curItemBtns)
         {
@@ -70,12 +57,7 @@ public class ItemPanel : MonoBehaviour
         _curItemBtns.Clear();
     }
 
-    protected virtual void OnClickedItem(string itemID)
-    {
-        SetSelected(itemID);
-    }
-
-    protected void SetSelected(string itemID)
+    private void SetSelected(string itemID)
     {
         ItemButton foundItemBtn = _curItemBtns.FirstOrDefault(btn => btn.ItemData.ItemID == itemID);
         if (foundItemBtn == null)

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class ArokaAnimParent : MonoBehaviour
 {
-    [SerializeField] private ArokaAnim[] _arokAnimsToExclude;
+    [SerializeField] private List<ArokaAnim> _arokAnimsToExclude = new List<ArokaAnim>();
     private ArokaAnim[] _arokaAnims;
 
     [ArokaButton]

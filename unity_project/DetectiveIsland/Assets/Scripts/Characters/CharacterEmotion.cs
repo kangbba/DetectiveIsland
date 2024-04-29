@@ -32,6 +32,8 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
             _eyesRenderer.gameObject.SetActive(true);
         if(_mouthRenderer != null)
             _mouthRenderer.gameObject.SetActive(true);
+        SetMouthSprite(0);
+        SetEyesSprite(0);
     }
 
     public void SetOn(bool b, float totalTime){
@@ -53,7 +55,6 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
 
     private IEnumerator FadeRoutine(bool b, float totalTime){
         if(b){
-            Debug.Log("Fadein");
             _backgroundRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
             yield return new WaitForSeconds(totalTime);
             _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), 0);
@@ -61,7 +62,6 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
             _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), 0);
         }
         else{
-            Debug.Log("FadeOut");
             _eyesRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
             _mouthRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
             _faceRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0);
@@ -122,12 +122,14 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         if(_mouthSprites == null || _mouthSprites.Count == 0){
             return;
         }   
+        Debug.Log("다문 입");
         SetMouthSprite(0); 
     }
 
 
     private IEnumerator TalkingRoutine(float totalTime)
     {
+        Debug.Log("여기 왜 호출");
         int index = 1;
         float accumTime = 0f;
         while (accumTime < totalTime)

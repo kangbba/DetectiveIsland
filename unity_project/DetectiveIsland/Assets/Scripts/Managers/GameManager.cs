@@ -61,17 +61,20 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         CameraController.Load();
-        EventService.Load();
-        DialogueService.Load();
-        ItemService.Load();
-        ItemService.LoseAllItems();
-        ItemUIService.Load();
-        PlaceService.Load();
-        PlaceUIService.Load();
-        CharacterService.Load();
-        ChoiceSetService.Load();
         EventTimeService.Load();
         EventTimeUIService.Load();
+        EventService.Load();
+        
+        ItemService.Load();
+        ItemService.LoseAllItems();
+        PlaceService.Load();
+        CharacterService.Load();
+
+
+        DialogueUI.Load();
+        ChoiceSetUI.Load();
+        ItemUI.Load();
+        PlaceUIService.Load();
     }
     
     public void Move(string placeID){
@@ -107,7 +110,7 @@ public class GameManager : MonoBehaviour
 
         //Place UI판넬 퇴장
         PlaceUIService.SetOnPanel(false, false, false, 500f);
-        ItemUIService.HideItemCheckPanelEnterButton();
+        ItemUI.HideItemCheckPanelEnterButton();
         await UniTask.WaitForSeconds(.5f);
 
 
@@ -124,24 +127,24 @@ public class GameManager : MonoBehaviour
         ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
         if(eventPlan != null && scenarioData != null){
             Debug.Log("단순한 후 시나리오가 있음");
-            ItemUIService.HideItemCheckPanelEnterButton();
+            ItemUI.HideItemCheckPanelEnterButton();
             if(!scenarioData.IsAllSolved()){
                 Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioData.ScenarioFile);
                 if(scenarioData.IsViewed){
                     Debug.Log($"봤던 시나리오이고 해결이 {scenarioData.IsAllSolved()}, 말걸기 필요");
-                    EventProcessor.PositionInits(CharacterService.GetLastPosition(scenario));
+                    await EventProcessor.ProcessPositionInit(EventProcessor.GetLastPositionInit(scenario));
                     await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
                     SetPhase(EGamePhase.EventPlaying);
                     await EventProcessor.ScenarioTask(scenario);
-                    CharacterService.DestoryAllCharacters();
                 }
                 else{
                     Debug.Log("처음 마주친 시나리오");
                     SetPhase(EGamePhase.EventPlaying);
                     await EventProcessor.ScenarioTask(scenario);
-                    CharacterService.DestoryAllCharacters();
                 }
                 scenarioData.SetViewed(true);  
+                CharacterService.AllCharacterFadeOutAndDestroy(1f);
+                await UniTask.WaitForSeconds(1f);
             }
             if(eventPlan.IsAllSolved()){
                 EventPlan curEventPlan = EventService.GetNextEventPlan(EventTimeService.CurEventTime);
@@ -155,7 +158,7 @@ public class GameManager : MonoBehaviour
                     EventTimeService.SetCurEventTime(new EventTime("2025-01-01", 09, 0));
                 }
                 SetPhase(EGamePhase.Exit); 
-                ItemUIService.ShowItemCheckPanelEnterButton();
+                ItemUI.ShowItemCheckPanelEnterButton();
             }
         }
         else{

@@ -7,7 +7,7 @@ using Aroka.EaseUtils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class ChoiceSetPanel : MonoBehaviour
+public class ChoiceSetPanel : ArokaAnimParent
 {
     [SerializeField] private Transform _choiceBtnsParent;  // 버튼들을 담을 부모 Transform
     [SerializeField] private ChoiceButton _choiceBtnPrefab;  // 버튼 프리팹
@@ -15,30 +15,40 @@ public class ChoiceSetPanel : MonoBehaviour
     private List<ChoiceButton> _curChoiceBtns = new List<ChoiceButton>();  // 생성된 버튼들의 리스트
     private ChoiceButton _selectedChoiceBtn;
 
-    private ArokaAnim[] ChildrenAnims => transform.GetComponentsInChildren<ArokaAnim>();
 
-    public async UniTask<Choice> GetSelectedChoiceTask()
+    public async UniTask<Choice> MakeChoiceBtnsAndWait(ChoiceSet choiceSet)
     {
-        OpenPanel(.2f);
-        await UniTask.WaitForSeconds(.2f);
+        CreateChoiceBtns(choiceSet);
+        OpenPanel();
+        await UniTask.WaitForSeconds(.1f);
         _selectedChoiceBtn = null;
         while (_selectedChoiceBtn == null)
         {
             await UniTask.Yield();
         }
-        await ClosePanelTask(_selectedChoiceBtn, 0.2f);
+        float fadeOutTime = .2f;
+        float selectedBtnDelayTime = .5f;
+        foreach(ChoiceButton choiceButton in _curChoiceBtns){
+            choiceButton.SetInteractable(false);
+            bool isIdentical = _selectedChoiceBtn.Choice.Title == choiceButton.Choice.Title;
+            Debug.Log(isIdentical);
+            if(isIdentical){
+                choiceButton.transform.EaseLocalScale(Vector3.zero, totalTime: fadeOutTime, delayTime: selectedBtnDelayTime);
+            }
+            else{
+                choiceButton.transform.EaseLocalScale(Vector3.zero, totalTime: fadeOutTime);
+            }
+        }
+        await UniTask.WaitForSeconds(fadeOutTime + selectedBtnDelayTime);
+        ClosePanel();
+        await UniTask.WaitForSeconds(1f);
+        DestroyChoiceBtns();
+
         return _selectedChoiceBtn.Choice;
     }
-    
-    public void CreateChoiceBtns(ChoiceSet choiceSet)
-    {
-        // 기존 버튼 제거
-        foreach (ChoiceButton btn in _curChoiceBtns)
-        {
-            Destroy(btn.gameObject);
-        }
-        _curChoiceBtns.Clear();
 
+    private void CreateChoiceBtns(ChoiceSet choiceSet)
+    {
         // 시작 위치 계산
         float startY = (choiceSet.Choices.Count - 1) * 100;
 
@@ -58,6 +68,14 @@ public class ChoiceSetPanel : MonoBehaviour
             _curChoiceBtns.Add(choiceButton);
         }
     }
+    private void DestroyChoiceBtns(){
+        // 기존 버튼 제거
+        foreach (ChoiceButton btn in _curChoiceBtns)
+        {
+            Destroy(btn.gameObject);
+        }
+        _curChoiceBtns.Clear();
+    }
     private void SelectChoice(string choiceTitle)
     {
         // _curChoiceBtns 리스트에서 choiceID와 일치하는 첫 번째 Choice 객체를 찾음
@@ -72,26 +90,12 @@ public class ChoiceSetPanel : MonoBehaviour
         return _curChoiceBtns.FirstOrDefault(btn => btn.Choice.Title == choiceTitle);
     }
 
-    private void OpenPanel(float totalTime){
-        ChildrenAnims.SetAnims(true, totalTime);
+    public void OpenPanel()
+    {
+        base.SetOnAllChildren(true, .1f);
     }
-
-    private async UniTask ClosePanelTask(ChoiceButton choiceButton, float totalTime){
-        for(int i = 0 ; i < _curChoiceBtns.Count ; i++){
-            ChoiceButton choiceBtn = _curChoiceBtns[i];
-            bool isIdentical = choiceBtn.Choice.Title == choiceButton.Choice.Title;
-            if(isIdentical){
-
-            }
-            else{
-                choiceBtn.transform.EaseLocalScale(Vector3.zero, totalTime);
-            }
-        }
-        await UniTask.WaitForSeconds(totalTime);
-        ChildrenAnims.SetAnims(false, .1f);
-        await UniTask.WaitForSeconds(.1f);
+    public void ClosePanel()
+    {
+        base.SetOnAllChildren(false, .1f);
     }
-
-
-
 }

@@ -26,7 +26,7 @@ namespace Aroka.EaseUtils
 
         #region Position and Movement Extensions
 
-        public static void EasePos(this Transform transform, Vector3 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void EasePos(this Transform transform, Vector3 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_IN_AND_OUT, float delayTime = 0)
         {
             if (totalTime == 0)
             {
@@ -36,7 +36,7 @@ namespace Aroka.EaseUtils
             StartOrReplaceCoroutine(transform, "position", EasePosRoutine(transform, targetPos, totalTime, curvName, delayTime, isWorld: true));
         }
 
-        public static void EaseLocalPos(this Transform transform, Vector3 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void EaseLocalPos(this Transform transform, Vector3 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_IN_AND_OUT, float delayTime = 0)
         {
             if (totalTime == 0)
             {
@@ -169,7 +169,7 @@ namespace Aroka.EaseUtils
         #endregion
 
         #region Anchored Position Extensions
-        public static void EaseAnchoredPos(this RectTransform rectTransform, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void EaseAnchoredPos(this RectTransform rectTransform, Vector2 targetPos, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_IN_AND_OUT, float delayTime = 0)
         {
             if (rectTransform == null)
             {
@@ -228,7 +228,7 @@ namespace Aroka.EaseUtils
             IEnumerator routine = EaseColorRoutine(component, targetColor, totalTime, curvName, delayTime);
             StartOrReplaceColorCoroutine(component, key, routine);
         }
-        public static void EaseSpriteColor(this SpriteRenderer spriteRend, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
+        public static void EaseSpriteColor(this SpriteRenderer spriteRend, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_IN_AND_OUT, float delayTime = 0)
         {
             string key = GetComponentKey(spriteRend);
 

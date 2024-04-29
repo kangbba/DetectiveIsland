@@ -1,4 +1,5 @@
 using System.Linq;
+using Aroka.EaseUtils;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -7,10 +8,15 @@ public class Character : MonoBehaviour
     private CharacterEmotion _curCharacterEmotion; // 감정 상태 배열
 
     private string _characterID;
+    private string _positionID;
     public string CharacterID { get => _characterID; }
+    public string PositionID { get => _positionID; }
 
-    public void Initialize(string characterID)
+    public void Initialize(string characterID, string positionID)
     {
+        _positionID = positionID;
+        SetPos(_positionID, 0f);
+        
         _characterID = characterID;
         foreach (var emotion in _characterEmotions)
         {
@@ -19,15 +25,13 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void FadeOutAndDestroy(float totalTime){
-        foreach(var emotion in _characterEmotions)
-        {
-            emotion.SetOn(false, totalTime);
-            Destroy(emotion.gameObject, totalTime);
-        }
+    public void SetPos(string positionID, float totalTime){
+        Vector3 targetLocalPos = CalculatePosition(positionID);
+        transform.EaseLocalPos(targetLocalPos, totalTime); ;
     }
-
-    public void ChangeEmotion(string targetEmotionID, float fadeTime)
+    
+    //Fade In 대신 SetEmotion 하면 원하는거 됩니다.    
+    public void SetEmotion(string targetEmotionID, float fadeTime)
     {
         CharacterEmotion targetEmotion = GetCharacterEmotion(targetEmotionID);
         if(targetEmotion == null){
@@ -43,6 +47,13 @@ public class Character : MonoBehaviour
         _curCharacterEmotion.SetOn(true, fadeTime);
     }
 
+    public void FadeOutAndDestroy(float totalTime){
+        foreach(var emotion in _characterEmotions)
+        {
+            emotion.SetOn(false, totalTime);
+            Destroy(emotion.gameObject, totalTime);
+        }
+    }
     public CharacterEmotion GetCharacterEmotion(string emotionID){
         return _characterEmotions.FirstOrDefault(emotion => emotion.EmotionID == emotionID );
     }
@@ -53,13 +64,28 @@ public class Character : MonoBehaviour
             emotion.SetOn(false, totalTime); // 나머지 감정은 즉시 숨김
         }
     }
-
-
     public void StartTalking(){
         _curCharacterEmotion.StartTalking(5f);
     }
 
     public void StopTalking(){
         _curCharacterEmotion.StopTalking();
+    }
+    private static Vector3 CalculatePosition(string positionID)
+    {
+        Vector3 newPosition = Vector3.zero;
+        switch (positionID)
+        {
+            case "Left":
+                newPosition = new Vector3(-8f, 0f, 0f);
+                break;
+            case "Middle":
+                newPosition = new Vector3(0f, 0f, 0f);
+                break;
+            case "Right":
+                newPosition = new Vector3(8f, 0f, 0f);
+                break;
+        }
+        return newPosition;
     }
 }

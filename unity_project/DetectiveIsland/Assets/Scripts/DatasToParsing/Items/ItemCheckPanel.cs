@@ -6,20 +6,26 @@ using UnityEngine.UI;
 public class ItemCheckPanel : ItemPanel
 {
 
+    [SerializeField] protected ArokaAnimParent _arokaAnimParent;
     [SerializeField] private Button _exitBtn;
     
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         _exitBtn.onClick.AddListener(OnClickedExitBtn);
     }
-
-    public override void OpenPanel(bool isOn, float totalTime){
-        base.OpenPanel(isOn, totalTime);
+    public void OpenPanel()
+    {
+        List<ItemData> itemDatas = ItemService.GetOwnItemDatas();
+        base.Initialize(itemDatas);
+        _arokaAnimParent.SetOnAllChildren(true, .3f);
+    }
+    public void ClosePanel()
+    {
+        _arokaAnimParent.SetOnAllChildren(false, .3f);
     }
 
     public void OnClickedExitBtn(){
-        base.OpenPanel(false, .3f);
+        ClosePanel();
     }
 
 }

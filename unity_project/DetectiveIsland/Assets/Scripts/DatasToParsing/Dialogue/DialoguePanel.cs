@@ -5,16 +5,8 @@ using TMPro;
 using Aroka.Anim;
 using Microsoft.Unity.VisualStudio.Editor;
 using Cysharp.Threading.Tasks;
-public interface IDialoguePanel
-{
-    void Initialize();
-    void ClearPanel();
-    void SetAnim(bool visible, float duration);
-    void SetCharacterText(string characterName, Color characterColor);
-    UniTask TypeLineTask(string sentence, Color color);
-}
 
-public class DialoguePanel : MonoBehaviour, IDialoguePanel
+public class DialoguePanel : MonoBehaviour
 {
     [SerializeField] private ArokaAnimParent _arokaAnimParent;
     [SerializeField] private TextMeshProUGUI _characterText;
@@ -53,9 +45,10 @@ public class DialoguePanel : MonoBehaviour, IDialoguePanel
         _dialogueArrow.gameObject.SetActive(true);
         _dialogueArrow.SetAnchordPos(_lineText.GetPreferredValues());
     }
-
-    public void SetAnim(bool visible, float duration)
-    {
-        _arokaAnimParent.SetOnAllChildren(visible, duration);
+    public void OpenPanel(float totalTime){
+        _arokaAnimParent.SetOnAllChildren(true, totalTime);
+    }
+    public void ClosePanel(float totalTime){
+        _arokaAnimParent.SetOnAllChildren(false, totalTime);
     }
 }
