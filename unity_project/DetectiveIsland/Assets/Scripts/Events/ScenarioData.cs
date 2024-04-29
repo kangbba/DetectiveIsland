@@ -18,7 +18,7 @@ public class ScenarioData{
     {
         foreach (EventAction action in _solveConditions)
         {
-            if (!action.CheckActionFulfilled())  // Assuming EventAction has a method to check its own condition
+            if (!action.IsActionCompleted())  // Assuming EventAction has a method to check its own condition
             {
                 return false;  // If any condition is not met, return false
             }

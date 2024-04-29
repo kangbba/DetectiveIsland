@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -198,6 +198,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76545838}
   m_CullTransparentMesh: 1
+--- !u!1 &154763212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 154763214}
+  - component: {fileID: 154763213}
+  m_Layer: 0
+  m_Name: PlacePanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &154763213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154763212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e77b28c171a4a9fb88ad3130db865a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &154763214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154763212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &180639472
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,51 +688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterParent: {fileID: 496861789}
---- !u!1 &662951369
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 662951372}
-  - component: {fileID: 662951373}
-  m_Layer: 0
-  m_Name: PlacePanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &662951372
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662951369}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &662951373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662951369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b170b1628a34e10b9234a89c554986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _placePrefab: {fileID: 3453876497108731117, guid: a7c7e68c13614494fbaf3de9c2dea03d, type: 3}
 --- !u!1 &686147186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,37 +1772,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304124347}
   m_CullTransparentMesh: 1
---- !u!1 &1353094295
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1353094296}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1353094296
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353094295}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446535846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,7 +2195,7 @@ MonoBehaviour:
   _itemDemandPanel: {fileID: 772457337488990810}
   _itemOwnPanel: {fileID: 561478028639022279}
   _itemCheckPanelEnterBtn: {fileID: 1130030964}
-  _placePanel: {fileID: 662951373}
+  _placePanel: {fileID: 154763213}
   _placeUIPanel: {fileID: 3832381599527409023}
   _characterPanel: {fileID: 496861791}
   _dialoguePanel: {fileID: 6754644066580032933}
@@ -3644,10 +3612,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd35459e506d40aa891e8ad1334aee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _placeBtnPrefab: {fileID: 7349307483663651851, guid: a032854eef486425ea9ecda2d4c03070, type: 3}
   _placeUIPanelLeft: {fileID: 6267625393321279660}
   _placeUIPanelRight: {fileID: 2317913862059274737}
   _placeUIPanelUp: {fileID: 4940814167667209056}
+  _placeUIPanelCenter: {fileID: 0}
   _curPlaceText: {fileID: 6038573708349303543}
 --- !u!224 &3929197322221659871
 RectTransform:
@@ -5478,6 +5446,5 @@ SceneRoots:
   - {fileID: 334284981}
   - {fileID: 1700006080}
   - {fileID: 1151815082}
-  - {fileID: 662951372}
+  - {fileID: 154763214}
   - {fileID: 496861789}
-  - {fileID: 1353094296}

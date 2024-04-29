@@ -34,7 +34,7 @@ public class ItemPanel : MonoBehaviour
         {
             ItemData itemData = itemDatas[i];
             ItemButton itemBtn = Instantiate(_itemBtnPrefab, _itemBtnsParent);
-            itemBtn.Initialize(itemData, OnClickedItem, null, null);
+            itemBtn.Initialize(itemData, OnClickedItem);
             _curItemBtns.Add(itemBtn);
 
             RectTransform btnRectTransform = itemBtn.GetComponent<RectTransform>();

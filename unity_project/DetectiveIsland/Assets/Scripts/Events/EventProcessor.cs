@@ -4,14 +4,91 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
+using Aroka.JsonUtils;
 
 public static class EventProcessor
 {
+    private static bool _isMoving = false;
+
+    public static async void Move(string placeID){
+        if(_isMoving){
+            Debug.LogWarning("이동중 또다른 Move 호출");
+            return;
+        }
+        _isMoving = true;
+        await MoveToPlaceUniTask(placeID);
+        // 이동하는 로직 작성
+    }
+    private static async UniTask MoveToPlaceUniTask(string placeID)
+    {
+        UIManager uiManager = UIManager.Instance;
+        Debug.Log($"----------------------------------------LOOP START----------------------------------------");
+        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
+        Debug.Log($"장소 이동 : {placeID})");
+        
+        PlaceService.SetPlace(placeID, .5f);
+        PlaceService.CurPlace.HidePlaceMoveBtns(0f);
+        uiManager.PlaceUIPanel.ClosePanel(.5f);
+
+        await UniTask.WaitForSeconds(.5f);
+
+        // AwaitChoices의 결과를 직접 받아 처리
+        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
+        ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
+        bool isEventExist = scenarioData != null;
+
+        if(isEventExist)
+        {
+            Debug.Log("장소로 이동 중 (이벤트가 있는 곳)");
+            Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioData.ScenarioFile);
+            if(!scenarioData.IsAllSolved()) // 미 해결 이벤트인경우
+            {
+                await ProcessPositionInit(GetFirstPositionInit(scenario));
+                if(scenarioData.IsViewed)
+                { // 이미 본 이벤트 일때는 상호작용을 통해 이벤트 진입
+                    Debug.Log("말걸기 상호작용 필요");
+                    await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                }
+                Debug.Log("이 이벤트를 열람 성공");
+                scenarioData.SetViewed(true);
+                await ScenarioTask(scenario);
+
+                //이 시나리오 태스크가 끝난 후 해결상태가 되었다면 시간 흘려보내기
+                if(scenarioData.IsAllSolved())
+                {
+                    Debug.Log("시나리오를 통해 시나리오의 통과조건을 완수했다!");
+                    if(eventPlan.IsAllSolved()){
+                        Debug.Log("이 시간대의 모든 이벤트가 해결 되었으므로 시간을 흘려보내겠다.");
+                        EventTimeService.SetEventTimeToNext(EventTimeService.CurEventTime);
+                    }
+                    else{
+                        Debug.Log("하지만 모든 이벤트가 해결된것은 아닌것같다");
+
+                    }
+                }
+            }
+        }
+        else{
+            Debug.Log("장소로 이동 중 (이벤트가 없는 곳)");
+        }
+
+        _isMoving = false;
+
+        Debug.Log("장소버튼 ON");
+        PlaceService.CurPlace.ShowPlaceMoveBtns(.5f);
+        uiManager.PlaceUIPanel.SetCurPlaceText(placeID);
+        uiManager.PlaceUIPanel.OpenPanel(.5f);
+        await UniTask.WaitForSeconds(.5f);
+
+        Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
+    }
+
+    
     //시나리오 Task 구조
     public static async UniTask ScenarioTask(Scenario scenario){
 
-        DialogueUI.DialoguePanel.ClearPanel();
-        DialogueUI.DialoguePanel.OpenPanel(1f);
+        UIManager.Instance.DialoguePanel.ClearPanel();
+        UIManager.Instance.DialoguePanel.OpenPanel(1f);
         await UniTask.WaitForSeconds(1f);
         //대화창 On
         
@@ -19,7 +96,7 @@ public static class EventProcessor
         List<Element> elements = scenario.Elements;
         await ProcessElementsTask(elements);
 
-        DialogueUI.DialoguePanel.ClosePanel(1f);
+        UIManager.Instance.DialoguePanel.ClosePanel(1f);
         await UniTask.WaitForSeconds(1f);
 
     }
@@ -79,7 +156,9 @@ public static class EventProcessor
     }
 
     public static async UniTask ProcessChoiceSet(ChoiceSet choiceSet){
-        ChoiceSetPanel choiceSetPanel = ChoiceSetUI.ChoiceSetPanel;
+
+        ChoiceSetPanel choiceSetPanel = UIManager.Instance.ChoiceSetPanel;
+
         foreach(Dialogue dialogue in choiceSet.Dialogues){
             await ProcessDialogue(dialogue);
         }
@@ -89,10 +168,11 @@ public static class EventProcessor
 
     public static async UniTask ProcessDialogue(Dialogue dialogue)
     {
+        DialoguePanel dialoguePanel = UIManager.Instance.DialoguePanel;
+
         string characterID = dialogue.CharacterID;
         CharacterData characterData = CharacterService.GetCharacterData(characterID);
         Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
-        DialoguePanel dialoguePanel = DialogueUI.DialoguePanel;
         if (instancedCharacter != null)
         {
             CameraController.MoveX(instancedCharacter.transform.position.x / 10f, 1f);
@@ -125,12 +205,12 @@ public static class EventProcessor
         }
 
         while(true){
-            ItemUI.ItemDemandPanel.OpenPanel(); 
+            UIManager.Instance.ItemDemandPanel.OpenPanel(); 
 
-            ItemData selectedItemData = await ItemUI.ItemDemandPanel.OpenItemDemandPanelAndWait();
+            ItemData selectedItemData = await  UIManager.Instance.ItemDemandPanel.OpenItemDemandPanelAndWait();
             Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
 
-            ItemUI.ItemDemandPanel.ClosePanel(); 
+            UIManager.Instance.ItemDemandPanel.ClosePanel(); 
 
             if (selectedItemData == null)
             {

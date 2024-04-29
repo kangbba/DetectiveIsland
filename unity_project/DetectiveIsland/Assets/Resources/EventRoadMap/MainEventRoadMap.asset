@@ -32,11 +32,11 @@ MonoBehaviour:
       _solveConditions:
       - _actionType: 2
         _targetID: IDCard
-      _isViewed: 1
+      _isViewed: 0
     - _placeID: Library
       _scenarioFile: {fileID: 4900000, guid: 1323161f479804326a3b626cda90130e, type: 3}
       _solveConditions: []
-      _isViewed: 1
+      _isViewed: 0
   - _eventTime:
       _date: 2024-04-02
       _hour: 9

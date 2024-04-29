@@ -1,94 +1,56 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Aroka.ArokaUtils;
 using UnityEngine;
 
-public static class PlaceService
+public class PlaceService : MonoBehaviour
 {
-    private static GameObject _placeRoadmap;
-    private static List<PlaceData> _placeDatas = new List<PlaceData>();
-    public static List<PlaceData> PlaceDatas { get => _placeDatas; }
+
     private static PlacePanel _placePanel;
-    private static PlaceData _curPlaceData;
-    private const string PLACE_UNLOCKED_KEY = "place_unlocked_";  // 아이템 소유 정보의 키 접두어
+    private static List<Place> _placePrefabs = new List<Place>();
+    private static Place _curPlace;
 
-    public static PlaceData CurPlaceData { get => _curPlaceData;  }
+    public static Place CurPlace { get => _curPlace; }
 
-    public static void Load()
-    {       
+    public static void Load(){
         _placePanel = UIManager.Instance.PlacePanel;
-        GameObject _placeRoadmapPrefab = Resources.Load<GameObject>("PlaceRoadmapPrefab");
-        _placeRoadmap = GameObject.Instantiate(_placeRoadmapPrefab); // Instantiate the roadmap
-        TraverseChildren(_placeRoadmap.transform); // Traverse to find and store PlaceData
-    }
-    private static void TraverseChildren(Transform parent)
-    {
-        foreach (Transform child in parent)
-        {
-            PlaceData placeData = child.GetComponent<PlaceData>();
-            if (placeData != null)
-            {
-                _placeDatas.Add(placeData);
-            }
-            TraverseChildren(child); // Recurse into each child
-        }
-    }
-    public static void SetPlace(PlaceData placeData)
-    {
-        _curPlaceData = placeData;
-        _placePanel.SetPlace(placeData);
+        _placePrefabs = ArokaUtils.LoadResourcesFromFolder<Place>("PlacePrefabs");
     }
 
-    public static GameObject GetPlaceDataGameObject(string placeID)
-    {
-        foreach (PlaceData placeData in _placeDatas)
-        {
-            if (placeData.PlaceID == placeID)
-            {
-                return placeData.gameObject;  // PlaceData 컴포넌트가 붙어 있는 GameObject 반환
-            }
+    public static Place GetPlacePrefab(string placeID){
+        Place place = _placePrefabs.FirstOrDefault(placePrefab => placePrefab.PlaceID == placeID);
+        if(place == null){
+            Debug.LogWarning($"{placeID} 이름의 Place 찾을수 없음");
         }
-        Debug.LogError($"No GameObject found with PlaceID: {placeID}");
-        return null;
+        return place;
+    }
+    public static void SetPlace(string placeID, float totalTime){
+
+        if(_curPlace != null){
+            FadeOutCurPlaceThenDestroy(totalTime);
+        }
+        _curPlace = InstantiatePlaceThenFadeIn(placeID, totalTime);
+    }
+    public static Place InstantiatePlaceThenFadeIn(string placeID, float totalTime){
+
+        Place placePrefab = GetPlacePrefab(placeID);
+        if(placePrefab  == null){
+            Debug.LogWarning($"{placeID}에 해당하는 Place Prefab 찾을 수 없음");
+        }
+        Place instancedPlace = Instantiate(placePrefab, _placePanel.transform);
+        instancedPlace.transform.localPosition = Vector3.zero;
+        instancedPlace.Initialize();
+        instancedPlace.FadeIn(totalTime);
+        return instancedPlace;
     }
 
-    public static PlaceData GetPlaceData(string placeID)
-    {
-        foreach (PlaceData place in _placeDatas)
-        {
-            if (place.PlaceID == placeID)
-            {
-                return place;
-            }
+    public static void FadeOutCurPlaceThenDestroy(float totalTime){
+        if(_curPlace == null){
+            Debug.LogWarning($"_curPlace 이 없음");
+            return;
         }
-        return null;
+        _curPlace.FadeOutAndDestroy(totalTime);
     }
 
-    public static List<PlaceData> GetUnlockedPlaceDatas()
-    {
-        List<PlaceData> placeDatasUnlocked = _placeDatas.FindAll(placeData => PlayerPrefs.GetInt(PLACE_UNLOCKED_KEY + placeData.PlaceID, 0) == 1);
-        return placeDatasUnlocked ?? new List<PlaceData>();
-    }
-    
-    public static bool IsUnlockedPlaceData(string placeID){
-        
-        PlaceData placeData = GetPlaceData(placeID);
-        if (placeData != null){
-            return PlayerPrefs.GetInt(PLACE_UNLOCKED_KEY + placeID) == 1;
-        }
-        else{
-            Debug.LogError("해당 장소 아이디의 장소를 찾을수없음");
-            return false;
-        }
-    }
-
-    public static void UnlockPlace(string placeID, bool own)
-    {
-        // 특정 아이템의 소유 여부를 설정
-        PlaceData placeData = GetPlaceData(placeID);
-        if (placeData != null)
-        {
-            PlayerPrefs.SetInt(PLACE_UNLOCKED_KEY + placeID, own ? 1 : 0);
-            PlayerPrefs.Save();  // 변경 사항을 즉시 저장
-        }
-    }
-    
 }

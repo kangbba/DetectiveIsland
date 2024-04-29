@@ -9,16 +9,17 @@ public abstract class DataButton : MonoBehaviour
 
     public string BtnKey { get; protected set; }
 
-    public void Initialize(string btnKey)
+    public void Initialize(string btnKey, Action<string> action)
     {
         BtnKey = btnKey;
         if (_eventTrigger == null)
         {
             _eventTrigger = gameObject.AddComponent<EventTrigger>();
         }
+        ConnectOnClick(action);
     }
 
-    public void ConnectOnClick(Action<string> action)
+    private void ConnectOnClick(Action<string> action)
     {
         EventTrigger.Entry clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         clickEntry.callback.AddListener((eventData) => {
@@ -27,7 +28,7 @@ public abstract class DataButton : MonoBehaviour
         _eventTrigger.triggers.Add(clickEntry);
     }
 
-    public void ConnectOnHover(Action<string> onEnterAction, Action<string> onExitAction)
+    private void ConnectOnHover(Action<string> onEnterAction, Action<string> onExitAction)
     {
         // 마우스 오버 이벤트 추가 (PointerEnter)
         EventTrigger.Entry enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };

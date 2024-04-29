@@ -84,9 +84,9 @@ public static class ItemService
         else{ 
             OwnItem(itemData.ItemID, true);
             if(assetChange.GainType == "Gain"){
-                ItemUI.ItemOwnPanel.OpenPanel(itemData);
+                UIManager.Instance.ItemOwnPanel.OpenPanel(itemData);
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
-                ItemUI.ItemOwnPanel.ClosePanel();
+                 UIManager.Instance.ItemOwnPanel.ClosePanel();
             }
             else if(assetChange.GainType == "Lose"){
 

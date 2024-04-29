@@ -52,36 +52,36 @@ public static class CameraController
         }
         _shakeRoutine = CoroutineUtils.StartCoroutine(ShakeRoutine(magnitude, totalTime));
     }
-    public static void AdjustCamera()
-    {
-        float windowAspect = (float)Screen.width / (float)Screen.height;
-        float scaleHeight = windowAspect / _targetAspectRatio;
-        Camera camera = Camera.main;
+    // public static void AdjustCamera()
+    // {
+    //     float windowAspect = (float)Screen.width / (float)Screen.height;
+    //     float scaleHeight = windowAspect / _targetAspectRatio;
+    //     Camera camera = Camera.main;
 
-        if (scaleHeight < 1.0f)  // When the screen is wider than your target aspect
-        {
-            Rect rect = camera.rect;
+    //     if (scaleHeight < 1.0f)  // When the screen is wider than your target aspect
+    //     {
+    //         Rect rect = camera.rect;
 
-            rect.width = 1.0f;
-            rect.height = scaleHeight;
-            rect.x = 0;
-            rect.y = (1.0f - scaleHeight) / 2.0f;
+    //         rect.width = 1.0f;
+    //         rect.height = scaleHeight;
+    //         rect.x = 0;
+    //         rect.y = (1.0f - scaleHeight) / 2.0f;
 
-            camera.rect = rect;
-        }
-        else  // When the screen is narrower than your target aspect
-        {
-            float scaleWidth = 1.0f / scaleHeight;
+    //         camera.rect = rect;
+    //     }
+    //     else  // When the screen is narrower than your target aspect
+    //     {
+    //         float scaleWidth = 1.0f / scaleHeight;
 
-            Rect rect = camera.rect;
+    //         Rect rect = camera.rect;
 
-            rect.width = scaleWidth;
-            rect.height = 1.0f;
-            rect.x = (1.0f - scaleWidth) / 2.0f;
-            rect.y = 0;
+    //         rect.width = scaleWidth;
+    //         rect.height = 1.0f;
+    //         rect.x = (1.0f - scaleWidth) / 2.0f;
+    //         rect.y = 0;
 
-            camera.rect = rect;
-        }
-    }
+    //         camera.rect = rect;
+    //     }
+    // }
 
 }

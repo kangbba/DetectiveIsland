@@ -10,11 +10,9 @@ public class ItemButton : DataButton
 
     public ItemData ItemData { get => _itemData; }
 
-    public void Initialize(ItemData itemData, Action<string> onClick, Action<string> onEnterMouse, Action<string> onExitMouse)
+    public void Initialize(ItemData itemData, Action<string> onClick)
     {
-        base.Initialize(itemData.ItemID);
-        base.ConnectOnClick(onClick);
-        base.ConnectOnHover(onEnterMouse, onExitMouse);
+        base.Initialize(itemData.ItemID, onClick);
         _itemData = itemData;
         if (_itemData.ItemSprite != null)
         {

@@ -1,22 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using UnityEngine;
 
-public class Place : SpriteEffector
+public class Place : MonoBehaviour
 {
-    private PlaceData _placeData;
+    [SerializeField] private string _placeID;
+    [SerializeField] private string _placeNameForUser;
+    [SerializeField] private SpriteRenderer _spriteRend;
 
-    public PlaceData PlaceData { get => _placeData; }
+    private List<EventActionWorldBtn> _eventActionBtns = new List<EventActionWorldBtn>();
 
-    public void Initialize(PlaceData placeData){
-        _placeData = placeData;
-        base.SetSprite(placeData.PlaceSprite, -1);
+    private void Start(){
+        _eventActionBtns = GetComponentsInChildren<EventActionWorldBtn>().ToList();
+        _spriteRend.sortingOrder = - 10;
+    }   
+
+    public string PlaceID => _placeID.Trim();
+
+    public string PlaceNameForUser => _placeNameForUser;
+
+    public void Initialize(){
+        _spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0f);
     }
-    public void Enter(float totalTime){
-        FadeInFromStart(totalTime);
+    public void FadeIn(float totalTime){
+        _spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
     }
-    public void Exit(float totalTime){
-        FadeOut(totalTime);
+    public void FadeOutAndDestroy(float totalTime){
+        _spriteRend.EaseSpriteColor(_spriteRend.color.ModifiedAlpha(0f), totalTime);
+    }
+
+    public void ShowPlaceMoveBtns(float totalTime){
+        foreach(EventActionWorldBtn btn in _eventActionBtns){
+            btn.SetOn(true, totalTime);
+        }
+    }
+    public void HidePlaceMoveBtns(float totalTime){
+        foreach(EventActionWorldBtn btn in _eventActionBtns){
+            btn.SetOn(false, totalTime);
+        }
     }
 }

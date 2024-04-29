@@ -13,7 +13,6 @@ public class ChoiceButton : DataButton
     {
         _choice = choice;
         _buttonText.text = choice.Title;
-        base.Initialize(choice.Title);
-        base.ConnectOnClick(onClickAction);
+        base.Initialize(choice.Title, onClickAction);
     }
 }

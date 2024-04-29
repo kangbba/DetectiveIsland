@@ -1,46 +1,79 @@
-using System;
 using UnityEngine;
-
 
 public enum EActionType
 {
     None = 0,
-    Talk = 1, 
-    Collect = 2,
-    Sleep = 3,
+    Collect = 1,
+    Move = 2,
 }
 
 [System.Serializable]
 public class EventAction
 {
+    [SerializeField] private EActionType _actionType; // Action type
+    [SerializeField] private string _targetID; // Target ID, e.g., character name, item ID
+
     public EventAction(EActionType actionType, string targetID)
     {
         _actionType = actionType;
         _targetID = targetID;
     }
 
-    [SerializeField] private EActionType     _actionType; // 유형
-    
-    [SerializeField] private string             _targetID; // 대상 ID, 예: 캐릭터 이름, 아이템 ID
+    public EActionType ActionType => _actionType;
+    public string TargetID => _targetID;
 
-
-    public  EActionType  ActionType       => _actionType;
-    public  string  TargetID         => _targetID;
-
-    public bool CheckActionFulfilled()
+    // Executes the appropriate action based on the action type
+    public void ExecuteAction()
     {
         switch (_actionType)
         {
             case EActionType.Collect:
-                return CheckItemOwnership(_targetID);
+                PerformCollectAction();
+                break;
+            case EActionType.Move:
+                PerformMoveAction();
+                break;
             default:
-                Debug.LogError("Unsupported action type for checking conditions.");
-                return false;
+                Debug.LogError("Unsupported action type: " + _actionType);
+                break;
         }
     }
-    private bool CheckItemOwnership(string itemID)
+
+    // Checks if the action has been successfully completed
+    public bool IsActionCompleted()
     {
-        return ItemService.IsOwnItem(itemID);
+        switch (_actionType)
+        {
+            case EActionType.Collect:
+                return CheckCollectCompleted();
+            case EActionType.Move:
+                return CheckMoveCompleted();
+            default:
+                Debug.LogError("Completion check not supported for action type:, always true " + _actionType);
+                return true;
+        }
+    }
+
+    private void PerformCollectAction()
+    {
+        ItemService.OwnItem(_targetID, true);  // Assuming Collect() tries to collect the item
+        Debug.Log("Attempting to collect item: " + _targetID);
+    }
+
+    private bool CheckCollectCompleted()
+    {
+        return ItemService.IsOwnItem(_targetID);  // Check if the item is now owned
+    }
+
+    private void PerformMoveAction()
+    {
+        Debug.Log("Moving to location: " + _targetID);
+        EventProcessor.Move(_targetID);
+        // Implement movement logic
+    }
+
+    private bool CheckMoveCompleted()
+    {
+        return PlaceService.CurPlace.PlaceID == _targetID;
     }
 }
-
