@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class TestManager : MonoBehaviour
 {
+    /*
     public List<Node> nodes = new List<Node>();
 
     [ArokaButton]
@@ -144,23 +145,12 @@ public class TestManager : MonoBehaviour
         nodes.Add(positionInitNode); 
     }
 
-/*
-
-
-
-
-
-
-*/
-
-
-
 
     [ArokaButton]
     public void Test()
     {
 
 
-    }
+    }*/
 }
 

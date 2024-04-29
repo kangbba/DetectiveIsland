@@ -105,7 +105,7 @@ public class JNodeEditor4 : EditorWindow
             Vector2 sumPositions = Vector2.zero;
             foreach (Node node in JNode.Nodes)
             {
-                sumPositions += node.rect.center;
+                sumPositions += node.Rect.center;
             }
             Vector2 averageCenter = sumPositions / JNode.Nodes.Count;
             CanvasOffset = -averageCenter + new Vector2(position.width / 2, position.height / 2);
@@ -402,8 +402,8 @@ public class JNodeEditor4 : EditorWindow
 
     private void DrawConnection(Node parent, Node child)
     {
-        Vector2 start = new Vector2(parent.rect.x + parent.rect.width / 2, parent.rect.y + parent.rect.height);
-        Vector2 end = new Vector2(child.rect.x + child.rect.width / 2, child.rect.y);
+        Vector2 start = new Vector2(parent.Rect.x + parent.Rect.width / 2, parent.Rect.y + parent.Rect.height);
+        Vector2 end = new Vector2(child.Rect.x + child.Rect.width / 2, child.Rect.y);
         Handles.DrawLine(start, end);
     }
 
@@ -446,7 +446,7 @@ public class JNodeEditor4 : EditorWindow
                             break;
                         }
 
-                        if (node.DetectorRect.Contains(MousePosition + CanvasOffset))
+                        if (node.Rect.Contains(MousePosition + CanvasOffset))
                         {
                           
                             SelectedNode = node;
@@ -476,7 +476,7 @@ public class JNodeEditor4 : EditorWindow
                 }
                 else if (IsDraggingNode && SelectedNode != null)
                 {
-                    SelectedNode.rect.position += e.mousePosition - LastMouseDragPosition;
+                    SelectedNode.position += e.mousePosition - LastMouseDragPosition;
                     LastMouseDragPosition = e.mousePosition;
                     e.Use();
                 }
@@ -543,16 +543,27 @@ public class JNodeEditor4 : EditorWindow
     {
         GenericMenu menu = new GenericMenu();
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
+        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(mousePos));
         menu.ShowAsContext();
     }
 
     private void AddDialogueNode(Vector2 position)
     {
-        DialogueNode dialogueNode = new DialogueNode(position.x, position.y, "Dialogue");
+        DialogueNode dialogueNode = new DialogueNode(position, "Dialogue");
         dialogueNode.SetGuid();
         dialogueNode.dialogue = new Dialogue("Mono", new List<Line>() { });
         JNode.Nodes.Add(dialogueNode);
     }
+
+
+    private void AddChoiceSetNode(Vector2 position)
+    {
+        ChoiceSetNode choiceSetNode = new ChoiceSetNode(position, "ChoiceSet");
+        choiceSetNode.SetGuid();
+        choiceSetNode.choiceSet = new ChoiceSet(new(),new());
+        JNode.Nodes.Add(choiceSetNode);
+    }
+
     public Node GetNode(string id)
     {
         for (int i = 0; i < JNode.Nodes.Count; i++)
@@ -632,7 +643,7 @@ public class JNodeEditor4 : EditorWindow
 
         JNode jNode = new JNode(new List<Node>());
 
-        StartNode startNode = new StartNode(new Rect(400, 100, 200, 100), "StartNode");
+        StartNode startNode = new StartNode(new Vector2(400, 100), "StartNode");
         startNode.SetGuid();
         jNode.Nodes.Add(startNode);
 
