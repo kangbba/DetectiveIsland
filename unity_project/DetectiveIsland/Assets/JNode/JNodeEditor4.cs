@@ -285,7 +285,7 @@ public class JNodeEditor4 : EditorWindow
             {
                 List<Element> elements = JNode.Nodes.ToElements();
                 Debug.Log(elements.Count);
-                Scenario scenario = new Scenario(null, elements);
+                Scenario scenario = new Scenario( elements);
                 Debug.Log(scenario.Elements.Count);
 
                 // Save the scenario object as a JSON file at the specified path
@@ -446,9 +446,9 @@ public class JNodeEditor4 : EditorWindow
                             break;
                         }
 
-                        if (node.rect.Contains(MousePosition))
+                        if (node.DetectorRect.Contains(MousePosition + CanvasOffset))
                         {
-                           
+                          
                             SelectedNode = node;
                             SelectedNode.Select();
                             IsDraggingNode = true;

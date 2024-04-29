@@ -14,7 +14,7 @@ public class TestManager : MonoBehaviour
     public void Save()
     {
         
-        savedScenario = new Scenario(null,nodes.ToElements());
+        savedScenario = new Scenario(nodes.ToElements());
 
         Debug.Log(nodes.ToElements().Count);
 
@@ -138,10 +138,10 @@ public class TestManager : MonoBehaviour
     }
 
     [ArokaButton]
-    public void AddPositionChangeNode()
+    public void AddPositionInitNode()
     {
-        PositionChangeNode positionChangeNode = new PositionChangeNode(new Rect(), "PositionChangeNode");
-        nodes.Add(positionChangeNode); 
+        PositionInitNode positionInitNode = new PositionInitNode(new Rect(), "PositionInitNode");
+        nodes.Add(positionInitNode); 
     }
 
 /*

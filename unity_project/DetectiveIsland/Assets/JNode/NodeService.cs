@@ -39,9 +39,9 @@ public static class NodeService
         {
             return itemDemandNode.itemDemand;
         }
-        else if (node is PositionChangeNode positionChangeNode)
+        else if (node is PositionInitNode positionInitNode)
         {
-            return positionChangeNode.positionChange;
+            return positionInitNode.positionInit;
         }
         else if (node is AssetChangeNode assetChangeNode)
         {

@@ -68,6 +68,7 @@ public class ConnectingPoint
 public class Node
 {
     public Rect rect;
+    public Rect DetectorRect;
     public string title;
     public bool isSelected;
     
@@ -110,6 +111,11 @@ public class Node
         }
     }
 
+    public void UpdateNodeDetect()
+    {
+
+    }
+
 
     public Node(Rect rect, string title)
     { 
@@ -122,8 +128,6 @@ public class Node
         id = Guid.NewGuid().ToString();
         Debug.Log("Set Guid Node" + " | " + title + " | " + id);
     }
-
-
 
     public void ConnectNodeToChild(Node node)
     {
@@ -222,10 +226,6 @@ public class DialogueNode : Node
         GUI.color = NodeColor.nodeBackgroundColor;
         GUI.Box(nodeTotalRect, "", boxGS);
     }
-    public void RefreshRect(Rect rect)
-    {
-        base.rect = rect;
-    }
     public void DrawTitle(Rect nodeTotalRect)
     {
 
@@ -269,8 +269,6 @@ public class DialogueNode : Node
 
     private void DrawLines(Rect nodeRect)
     {
-       
-
         float yPos = nodeRect.y + 105;
         for (int i = 0; i < dialogue.Lines.Count; i++)
         {
@@ -311,14 +309,15 @@ public class DialogueNode : Node
         line.Sentence = EditorGUI.TextField(new Rect(lineRect.x + 85 , lineRect.y + initialLineContentsOffsetY + 25, 50 + calLength, 20), line.Sentence, textFieldStyle);
     }
 
-
     public override void DrawNode(Vector2 offset)
     {
         Color representColor = NodeColor.dialogueColor;
 
-        base.DrawNode(offset );
-        Vector2 rectSize = rect.size + new Vector2(0, (dialogue.Lines.Count + 1) * (LineHeight + LineVeritcalDist));
-        Rect nodeTotalRect = new Rect((rect.position + offset ) , rectSize);
+        base.DrawNode(offset);
+        Vector2 rectSizeScaling = rect.size + new Vector2(0, (dialogue.Lines.Count + 1) * (LineHeight + LineVeritcalDist));
+
+        Rect nodeTotalRect = new Rect((rect.position + offset ) , rectSizeScaling);
+        DetectorRect = nodeTotalRect;
         DrawBackground(nodeTotalRect);
         DrawTitle(nodeTotalRect);
         DrawCharacterType(nodeTotalRect);
@@ -327,7 +326,7 @@ public class DialogueNode : Node
 
         GUI.color = Color.white;
         base.ParentConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + 12) + offset, representColor);
-        base.ChildConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + rectSize.y - 12) + offset, representColor);
+        base.ChildConnectingPoint.DrawSingleConnectionPoint(new Vector2(rect.x + rect.width / 2, rect.y + rectSizeScaling.y - 12) + offset, representColor);
     }
    
 
@@ -493,10 +492,10 @@ public class ItemDemandNode : Node
 
 
 [System.Serializable]
-public class PositionChangeNode : Node
+public class PositionInitNode : Node
 {
-    public PositionChange positionChange;
-    public PositionChangeNode(Rect rect, string title) : base(rect, title)
+    public PositionInit positionInit;
+    public PositionInitNode(Rect rect, string title) : base(rect, title)
     {
     }
 
