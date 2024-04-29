@@ -8,15 +8,22 @@ using UnityEngine;
 public class ItemDemandNode : Node
 {
     public ItemDemand itemDemand;
-    public ItemDemandNode(Rect rect, string title) : base(title)
+    public ItemDemandNode(Vector2 pos, string title) : base(title)
     {
-
+        UpdateNodeSize(CalNodeSize());
+        UpdateNodePosition(pos);
     }
+    public override Vector2 CalNodeSize()
+    {
+        return new Vector2(200, 100);
+    }
+
 
     public override void DrawNode(Vector2 offset)
     {
-        base.DrawNode(offset);
         Color representColor = NodeColor.itemDemandColor;
+        base.DrawNode(offset);
+        base.DrawNodeLayout(representColor);
 
 
         DrawConnectionPoints(representColor, true, true);

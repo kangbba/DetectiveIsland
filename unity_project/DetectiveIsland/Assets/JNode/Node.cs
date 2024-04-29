@@ -4,6 +4,7 @@ using UnityEngine;
 using Aroka.ArokaUtils;
 using Color = UnityEngine.Color;
 using System;
+using System.Drawing;
 
 [System.Serializable]
 public class ConnectingPoint
@@ -60,80 +61,145 @@ public class ConnectingPoint
 
 
 [System.Serializable]
-public class Node
+public abstract class Node
 {
     public Vector2 nodeSize;
     public Vector2 position;
     public Vector2 offset;
-
-    public Rect Rect
-    {
-        get
-        {
-            return new Rect(position + offset, nodeSize);
-        }
-    }
-
-    public void UpdateNodePosition(Vector2 position)
-    {
-        this.position = position;
-    }
-
-    public void UpdateNodeSize(Vector2 size)
-    {
-        nodeSize = size;
-    }
-    public void UpdateNodeSizeX(int i)
-    {
-        nodeSize.x = i;
-    }
-    public void UpdateNodeSizeY(int i)
-    {
-        nodeSize.y = i;
-    }
-
     public string title;
     public bool isSelected;
-    
+
+    private bool rectNeedsUpdate = true;
+    private Rect cachedRect;
     private string id;
-    public string ID
-    {
-        get
-        {
-            return id;
-        }
-        set
-        {
-            id = value;
-        }
-    }
 
     private ConnectingPoint _parentConnectingPoint;
     public ConnectingPoint ParentConnectingPoint
     {
-        get
-        {
-            return _parentConnectingPoint ?? (_parentConnectingPoint = new ConnectingPoint());
-        }
-        set
-        {
-            _parentConnectingPoint = value;
-        }
+        get => _parentConnectingPoint ??= new ConnectingPoint();
+        set => _parentConnectingPoint = value;
     }
 
     private ConnectingPoint _childConnectingPoint;
     public ConnectingPoint ChildConnectingPoint
     {
+        get => _childConnectingPoint ??= new ConnectingPoint();
+        set => _childConnectingPoint = value;
+    }
+
+    public Rect Rect
+    {
         get
         {
-            return _childConnectingPoint ?? (_childConnectingPoint = new ConnectingPoint());
-        }
-        set
-        {
-            _childConnectingPoint = value;
+            if (rectNeedsUpdate)
+            {
+                cachedRect = new Rect(position + offset, nodeSize);
+                rectNeedsUpdate = false;
+            }
+            return cachedRect;
         }
     }
 
+    public string ID
+    {
+        get => id;
+        set
+        {
+            id = value;
+            Debug.Log($"Set Guid Node | {title} | {id}");
+        }
+    }
+
+    public Node(string title)
+    {
+        this.title = title;
+    }
+
+    public void SetGuid()
+    {
+        ID = Guid.NewGuid().ToString(); 
+    }
+
+    public abstract Vector2 CalNodeSize();
+
+    public void UpdateNodePosition(Vector2 newPosition)
+    {
+        if (position != newPosition)
+        {
+            position = newPosition;
+            rectNeedsUpdate = true;
+        }
+    }
+
+    public void UpdateNodeSize(Vector2 newSize)
+    {
+        if (nodeSize != newSize)
+        {
+            nodeSize = newSize;
+            rectNeedsUpdate = true;
+        }
+    }
+
+    public void UpdateOffset(Vector2 newOffset)
+    {
+        if (offset != newOffset)
+        {
+
+            offset = newOffset;
+            rectNeedsUpdate = true;
+        }
+    }
+
+    public virtual void DrawNode(Vector2 offset)
+    {
+        UpdateOffset(offset);
+    }
+
+    public void DrawNodeLayout(Color color)
+    {
+        DrawSelectionBox(Rect, color);
+        DrawBackground(Rect);
+        DrawTitle(Rect, title);
+        UpdateNodeSize(CalNodeSize());
+    }
+
+
+    private void DrawSelectionBox(Rect nodeRect, Color representColor)
+    {
+        GUIStyle boxGS = new GUIStyle();
+        boxGS.normal.background = EditorGUIUtility.whiteTexture;
+        boxGS.alignment = TextAnchor.UpperCenter;
+        boxGS.padding = new RectOffset(10, 10, 10, 10);
+
+        if (isSelected)
+        {
+            GUI.color = NodeColor.selectedColor;
+            GUI.Box(nodeRect.AdjustSize(10, 10), "", boxGS);
+        }
+
+        GUI.color = representColor;
+        GUI.Box(nodeRect.AdjustSize(2, 2), "", boxGS);
+    }
+
+    private void DrawBackground(Rect nodeRect)
+    {
+        GUIStyle boxGS = new GUIStyle();
+        boxGS.normal.background = EditorGUIUtility.whiteTexture;
+        boxGS.alignment = TextAnchor.UpperCenter;
+        boxGS.padding = new RectOffset(10, 10, 10, 10);
+
+        GUI.color = NodeColor.nodeBackgroundColor;
+        GUI.Box(nodeRect, "", boxGS);
+        GUI.color = Color.white;
+    }
+
+    private void DrawTitle(Rect nodeRect, string title)
+    {
+        GUIStyle titleGS = new GUIStyle();
+        titleGS.alignment = TextAnchor.UpperCenter;
+        titleGS.normal.textColor = Color.white;
+        GUI.Label(nodeRect.ModifiedY(nodeRect.y + 30), title, titleGS);
+    }
     public void DrawConnectionPoints(Color representColor, bool parentSide, bool childSide)
     {
         if (parentSide)
@@ -143,16 +209,6 @@ public class Node
     }
 
 
-    public Node(string title)
-    { 
-        this.title = title;
-    }
-
-    public void SetGuid()
-    {
-        id = Guid.NewGuid().ToString();
-        Debug.Log("Set Guid Node" + " | " + title + " | " + id);
-    }
 
     public void ConnectNodeToChild(Node node)
     {
@@ -183,10 +239,6 @@ public class Node
     public void Deselect()
     { 
         isSelected = false;
-    }
-    public virtual void DrawNode(Vector2 offset)
-    {
-        this.offset = offset;
     }
 }
 

@@ -14,40 +14,11 @@ public class DialogueNode : Node
     public float LineHeight = 70;
     public float LineVeritcalDist = 5;
 
-    public DialogueNode(Vector2 initialPos, string title) : base(title)
+    public DialogueNode(Vector2 pos, string title) : base(title)
     {
-        base.UpdateNodePosition(initialPos);
-        base.UpdateNodeSize(CalNodeSize());
+        UpdateNodeSize(CalNodeSize());
+        UpdateNodePosition(pos);
     }
-    public void DrawBackground(Rect nodeTotalRect)
-    {
-        GUIStyle boxGS = new GUIStyle();
-        boxGS.normal.background = EditorGUIUtility.whiteTexture;
-        boxGS.alignment = TextAnchor.UpperCenter;
-        boxGS.padding = new RectOffset(10, 10, 10, 10);
-        if (isSelected)
-        {
-            GUI.color = NodeColor.selectedColor;
-            GUI.Box(nodeTotalRect.AdjustSize(10, 10), "", boxGS);
-        }
-
-        GUI.color = NodeColor.dialogueColor;
-        GUI.Box(nodeTotalRect.AdjustSize(2, 2), "", boxGS);
-
-        GUI.color = NodeColor.nodeBackgroundColor;
-        GUI.Box(nodeTotalRect, "", boxGS);
-    }
-    public void DrawTitle(Rect nodeTotalRect)
-    {
-
-        //타이틀
-        GUI.color = Color.white;
-        GUIStyle titleGS = new GUIStyle();
-        titleGS.alignment = TextAnchor.UpperCenter;
-        titleGS.normal.textColor = Color.white;
-        GUI.Label(nodeTotalRect.ModifiedY(nodeTotalRect.y + 30), title, titleGS);
-    }
-
     public void DrawCharacterType(Rect nodeTotalRect)
     {
         GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
@@ -120,11 +91,11 @@ public class DialogueNode : Node
         line.Sentence = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY + 25, 50 + calLength, 20), line.Sentence, textFieldStyle);
     }
 
-    public Vector2 CalNodeSize()
+    public override Vector2 CalNodeSize()
     {
         if (dialogue == null || dialogue.Lines == null)
         {
-            return new Vector2(600, 150);
+            return  new Vector2(600, 150);
         }
         return new Vector2(600, 150) + new Vector2(0, (dialogue.Lines.Count + 1) * (LineHeight + LineVeritcalDist));
     }
@@ -132,14 +103,10 @@ public class DialogueNode : Node
     public override void DrawNode(Vector2 offset)
     {
         Color representColor = NodeColor.dialogueColor;
-
-        Vector2 caledSize = CalNodeSize();
-        UpdateNodeSize(caledSize);
-
         base.DrawNode(offset);
+        base.DrawNodeLayout(representColor);
 
-        DrawBackground(Rect);
-        DrawTitle(Rect);
+        
         DrawCharacterType(Rect);
         DrawAddLineButton(Rect);
         DrawLines(Rect);
@@ -153,4 +120,5 @@ public class DialogueNode : Node
     {
         dialogue.Lines.Add(new Line("Smile", ""));
     }
+
 }

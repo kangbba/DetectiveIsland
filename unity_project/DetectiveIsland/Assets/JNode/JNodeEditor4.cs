@@ -476,7 +476,7 @@ public class JNodeEditor4 : EditorWindow
                 }
                 else if (IsDraggingNode && SelectedNode != null)
                 {
-                    SelectedNode.position += e.mousePosition - LastMouseDragPosition;
+                    SelectedNode.UpdateNodePosition(SelectedNode.position + e.mousePosition - LastMouseDragPosition);
                     LastMouseDragPosition = e.mousePosition;
                     e.Use();
                 }
@@ -544,24 +544,51 @@ public class JNodeEditor4 : EditorWindow
         GenericMenu menu = new GenericMenu();
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
         menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(mousePos));
+        menu.AddItem(new GUIContent("Add AssetChange Node"), false, () => AddAssetChangeNode(mousePos));
+        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AddItemDemandNode(mousePos));
+        menu.AddItem(new GUIContent("Add PositionInit Node "), false, () => AddPositionInitNode(mousePos));
+
         menu.ShowAsContext();
     }
-
     private void AddDialogueNode(Vector2 position)
     {
-        DialogueNode dialogueNode = new DialogueNode(position, "Dialogue");
-        dialogueNode.SetGuid();
-        dialogueNode.dialogue = new Dialogue("Mono", new List<Line>() { });
-        JNode.Nodes.Add(dialogueNode);
+        DialogueNode node = new DialogueNode(position, "Dialogue");
+        node.SetGuid();
+        node.dialogue = new Dialogue("Mono", new List<Line>() { });
+        JNode.Nodes.Add(node);
     }
 
 
     private void AddChoiceSetNode(Vector2 position)
     {
-        ChoiceSetNode choiceSetNode = new ChoiceSetNode(position, "ChoiceSet");
-        choiceSetNode.SetGuid();
-        choiceSetNode.choiceSet = new ChoiceSet(new(),new());
-        JNode.Nodes.Add(choiceSetNode);
+        ChoiceSetNode node = new ChoiceSetNode(position, "Choice Set");
+        node.SetGuid();
+        node.choiceSet = new ChoiceSet(new(),new());
+        JNode.Nodes.Add(node);
+    }
+
+    private void AddAssetChangeNode(Vector2 position)
+    {
+        AssetChangeNode node = new AssetChangeNode(position, "Asset Change");
+        node.SetGuid();
+        node.assetChange = new("","",1);
+        JNode.Nodes.Add(node);
+    }
+
+    private void AddItemDemandNode(Vector2 position)
+    {
+        ItemDemandNode node = new ItemDemandNode(position, "Item Demand");
+        node.SetGuid();
+        node.itemDemand = new("",new(),new(),new());
+        JNode.Nodes.Add(node);
+    }
+
+    private void AddPositionInitNode(Vector2 position)
+    {
+        PositionInitNode node = new PositionInitNode(position, "Position Init");
+        node.SetGuid();
+        node.positionInit = new(new());
+        JNode.Nodes.Add(node);
     }
 
     public Node GetNode(string id)
