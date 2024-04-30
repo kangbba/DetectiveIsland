@@ -122,14 +122,12 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
         if(_mouthSprites == null || _mouthSprites.Count == 0){
             return;
         }   
-        Debug.Log("다문 입");
         SetMouthSprite(0); 
     }
 
 
     private IEnumerator TalkingRoutine(float totalTime)
     {
-        Debug.Log("여기 왜 호출");
         int index = 1;
         float accumTime = 0f;
         while (accumTime < totalTime)

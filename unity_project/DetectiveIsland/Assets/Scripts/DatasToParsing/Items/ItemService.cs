@@ -61,38 +61,4 @@ public static class ItemService
         }
     }
     
-    public static async UniTask AssetChangeTask(AssetChange assetChange)
-    {
-        ItemData itemData = GetItemData(assetChange.ItemID);
-        if (itemData == null)
-        {
-            Debug.LogError("AssetChangeTask called with null ItemData");
-            return;
-        }
-        // 아이템 획득 정보를 UI 패널에 설정
-        string message = $"{itemData.ItemNameForUser}을(를) 획득했습니다!";
-
-        if(itemData.ItemID == "FriendShip"){
-
-            if(assetChange.GainType == "Gain"){
-                
-            }
-            else if(assetChange.GainType == "Lose"){
-            }
-
-        }
-        else{ 
-            OwnItem(itemData.ItemID, true);
-            if(assetChange.GainType == "Gain"){
-                UIManager.Instance.ItemOwnPanel.OpenPanel(itemData);
-                await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
-                 UIManager.Instance.ItemOwnPanel.ClosePanel();
-            }
-            else if(assetChange.GainType == "Lose"){
-
-            }
-
-        }
-       
-    }
 }

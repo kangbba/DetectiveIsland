@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
 
 
-        EventService.AllEventResetViewed();
+        EventService.AllEventReset();
 
         EventProcessor.Move(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
     }
@@ -72,13 +72,6 @@ public class GameManager : MonoBehaviour
         CharacterService.Load();
     }
     
-
-    async UniTask QuestTask(){
-        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
-        await UniTask.WaitUntil(() => eventPlan.IsAllSolved());
-    }
-    
-
     // Implement the SetPhase method
     private void SetPhase(EGamePhase newPhase)
     {

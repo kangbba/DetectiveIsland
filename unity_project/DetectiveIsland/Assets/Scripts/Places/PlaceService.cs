@@ -4,9 +4,10 @@ using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
 
-public class PlaceService : MonoBehaviour
+public static class PlaceService 
 {
 
+    private static PlaceUIPanel _placeUIPanel;
     private static PlacePanel _placePanel;
     private static List<Place> _placePrefabs = new List<Place>();
     private static Place _curPlace;
@@ -15,6 +16,7 @@ public class PlaceService : MonoBehaviour
 
     public static void Load(){
         _placePanel = UIManager.Instance.PlacePanel;
+        _placeUIPanel = UIManager.Instance.PlaceUIPanel;
         _placePrefabs = ArokaUtils.LoadResourcesFromFolder<Place>("PlacePrefabs");
     }
 
@@ -38,7 +40,7 @@ public class PlaceService : MonoBehaviour
         if(placePrefab  == null){
             Debug.LogWarning($"{placeID}에 해당하는 Place Prefab 찾을 수 없음");
         }
-        Place instancedPlace = Instantiate(placePrefab, _placePanel.transform);
+        Place instancedPlace = GameObject.Instantiate(placePrefab, _placePanel.transform);
         instancedPlace.transform.localPosition = Vector3.zero;
         instancedPlace.Initialize();
         instancedPlace.FadeIn(totalTime);
@@ -51,6 +53,15 @@ public class PlaceService : MonoBehaviour
             return;
         }
         _curPlace.FadeOutAndDestroy(totalTime);
+    }
+
+    public static void InstantiateMovingBtnsUI(List<PlacePoint> placePoints){
+
+        _placeUIPanel.InstantiateMovingBtns(placePoints);
+    }
+    public static void DestroyMovingBtnsUI(){
+
+        _placeUIPanel.DestroyMovingBtns();
     }
 
 }

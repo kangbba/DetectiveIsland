@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using Aroka.EaseUtils;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Aroka.Anim
@@ -182,7 +184,16 @@ namespace Aroka.Anim
             }
             _isInitialized = true;
             _isOn = isOn;
-            
+
+            Button[] allBtns = GetComponentsInChildren<Button>();
+            EventTrigger[] allEventTriggers = GetComponentsInChildren<EventTrigger>();
+            foreach(Button btn in allBtns){
+                btn.interactable = isOn;
+            }
+            foreach(EventTrigger eventTrigger in allEventTriggers){
+                eventTrigger.enabled = isOn;
+            }
+
             // 타입에 따라 분기하여 처리
             switch (ObjectType)
             {
@@ -192,7 +203,6 @@ namespace Aroka.Anim
                     transform.EaseLocalScale(targetState.LocalScale, totalTime);
                     transform.EaseRot(targetState.LocalRot, totalTime);
                     transform.EaseColor(targetState.Color, totalTime);
-                    btn.interactable = isOn;
                     break;
                 case ObjectType.TextMeshProUGUI:
                     TextMeshProUGUI tmpro = GetComponent<TextMeshProUGUI>();

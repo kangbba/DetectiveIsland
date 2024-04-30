@@ -205,7 +205,7 @@
           ]
         }
       ],
-      "FailElements": [
+        "FailElements": [
         {
           "$type": "Dialogue, Assembly-CSharp",
           "CharacterID": "Lisa",
@@ -223,7 +223,7 @@
           ]
         }
       ],
-      "SuccessElements": [
+        "SuccessElements": [
         {
           "$type": "Dialogue, Assembly-CSharp",
           "CharacterID": "Lisa",
@@ -237,6 +237,19 @@
               "$type": "Line, Assembly-CSharp",
               "EmotionID": "Smile",
               "Sentence": "이제 레스토랑에가봐. 거기 레이첼이 있을수도 있으니, 가서 말을 걸어봐"
+            }
+          ]
+        }
+      ],
+        "CancelElements": [
+        {
+          "$type": "Dialogue, Assembly-CSharp",
+          "CharacterID": "Lisa",
+          "Lines": [
+            {
+              "$type": "Line, Assembly-CSharp",
+              "EmotionID": "Stumped",
+              "Sentence": "취소했구나"
             }
           ]
         }

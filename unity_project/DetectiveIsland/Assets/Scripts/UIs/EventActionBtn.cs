@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class EventActionBtn : MonoBehaviour
 {
-    [SerializeField] private EventAction _eventActionOnPressed;
     [SerializeField] private Button _button; // Reference to the Button component
+    private EventAction _eventActionOnPressed;
 
-    void Start()
-    {
+    public void Initialize(EventAction eventAction){
+        _eventActionOnPressed = eventAction;
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(ExecuteEventAction);
     }

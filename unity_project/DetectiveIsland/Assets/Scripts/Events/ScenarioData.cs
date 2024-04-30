@@ -7,27 +7,56 @@ using UnityEngine;
 public class ScenarioData{
     [SerializeField] private    string           _placeID = "";
     [SerializeField] private    TextAsset        _scenarioFile;
-    [SerializeField] private    List<EventAction> _solveConditions = new List<EventAction>();
-    [SerializeField] private    bool         _isViewed;
-    public   List<EventAction> ExitConditions { get => _solveConditions; } 
-    public   string           PlaceID             { get => _placeID;              }
-    public   TextAsset        ScenarioFile        { get => _scenarioFile;         }
-    public bool IsViewed { get => _isViewed; }
 
-    public bool IsAllSolved()
+    [SerializeField]  private bool _isEntered = false;
+    [SerializeField]  private bool _isExited = false;
+
+    [SerializeField] private List<EventAction> _solveConditions = new List<EventAction>();
+    [SerializeField] private List<EventAction> _doneEventActions = new List<EventAction>(); // 완료된 이벤트 액션을 추적합니다.
+
+    public   string           PlaceID             {     get => _placeID;         }
+    public   TextAsset        ScenarioFile        {     get => _scenarioFile;    }
+    
+    public PositionInit RecentPositionInit { get; set; }
+
+    public bool IsEntered { get => _isEntered; set => _isEntered = value; }
+    public bool IsExited { get => _isExited; set => _isExited = value; }
+
+    // 외부에서 이 메소드를 호출하여 완료된 액션을 등록
+    public void ExecuteActionThenAdd(EventAction actionToExecute)
     {
-        foreach (EventAction action in _solveConditions)
+        Debug.Log($"{actionToExecute.ActionType} {actionToExecute.TargetID} 의 행동을 추가했다.");
+        actionToExecute.ExecuteAction();
+        _doneEventActions.Add(actionToExecute);
+    }
+
+    public void ResetScenarioData(){
+        IsEntered = false;
+        IsExited = false;
+        _doneEventActions.Clear();
+    }
+
+
+    public bool IsSolved
+    {
+        get
         {
-            if (!action.IsActionCompleted())  // Assuming EventAction has a method to check its own condition
+            foreach (EventAction condition in _solveConditions)
             {
-                return false;  // If any condition is not met, return false
+                bool isConditionMet = false;
+                foreach (EventAction doneAction in _doneEventActions)
+                {
+                    if (doneAction.ActionType == condition.ActionType && doneAction.TargetID == condition.TargetID)
+                    {
+                        isConditionMet = true;
+                        break;
+                    }
+                }
+                if (!isConditionMet)
+                    return false;
             }
+            return true;
         }
-        return _isViewed;  // All conditions are met
     }
-    public void ShowCharacters(){
-    }
-    public void SetViewed(bool b){
-        _isViewed = b;
-    }
+
 }

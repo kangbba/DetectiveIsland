@@ -13,6 +13,7 @@ public static class CameraController
     private static Coroutine _shakeRoutine;
     private static float _targetAspectRatio = 16f / 9f;  // Set this to your game's designed aspect ratio
 
+    public static Camera MainCamera { get => _mainCamera; }
 
     public static void Load(){
         _mainCamera = Camera.main;

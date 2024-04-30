@@ -29,6 +29,21 @@ public class Character : MonoBehaviour
         Vector3 targetLocalPos = CalculatePosition(positionID);
         transform.EaseLocalPos(targetLocalPos, totalTime); ;
     }
+
+    public void FadeInCurrentEmotion(float totalTime){
+        if(_curCharacterEmotion == null){
+            Debug.LogWarning("_curCharacterEmotion NULL");  
+            return;
+        }
+        _curCharacterEmotion.SetOn(true, totalTime);
+    }
+    public void FadeOutCurrentEmotion(float totalTime){
+        if(_curCharacterEmotion == null){
+            Debug.LogWarning("_curCharacterEmotion NULL");    
+            return;
+        }
+        _curCharacterEmotion.SetOn(false, totalTime);
+    }
     
     //Fade In 대신 SetEmotion 하면 원하는거 됩니다.    
     public void SetEmotion(string targetEmotionID, float fadeTime)
@@ -44,25 +59,15 @@ public class Character : MonoBehaviour
             _curCharacterEmotion.SetOn(false, fadeTime);
         }
         _curCharacterEmotion = targetEmotion;
-        _curCharacterEmotion.SetOn(true, fadeTime);
+        FadeInCurrentEmotion(fadeTime);
     }
 
     public void FadeOutAndDestroy(float totalTime){
-        foreach(var emotion in _characterEmotions)
-        {
-            emotion.SetOn(false, totalTime);
-            Destroy(emotion.gameObject, totalTime);
-        }
+        FadeOutCurrentEmotion(totalTime);
+        Destroy(gameObject, totalTime);
     }
     public CharacterEmotion GetCharacterEmotion(string emotionID){
         return _characterEmotions.FirstOrDefault(emotion => emotion.EmotionID == emotionID );
-    }
-
-    public void Exit(float totalTime){
-        foreach (var emotion in _characterEmotions)
-        {
-            emotion.SetOn(false, totalTime); // 나머지 감정은 즉시 숨김
-        }
     }
     public void StartTalking(){
         _curCharacterEmotion.StartTalking(5f);

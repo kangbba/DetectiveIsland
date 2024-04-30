@@ -21,7 +21,7 @@ public class EventPlan
     {
         foreach (ScenarioData scenario in _scenarioDatas)
         {
-            if (!scenario.IsAllSolved())  // Assuming EventAction has a method to check its own condition
+            if (!scenario.IsSolved)  // Assuming EventAction has a method to check its own condition
             {
                 return false;  // If any condition is not met, return false
             }
@@ -29,9 +29,10 @@ public class EventPlan
         return true;  // All conditions are met
     }
 
-    public void Initialize(){
-        foreach(ScenarioData placeScenario in _scenarioDatas){
-            placeScenario.SetViewed(false);
+    public void Reset(){
+        foreach(ScenarioData placeScenario in _scenarioDatas)
+        {
+            placeScenario.ResetScenarioData();
         }
     }
 }

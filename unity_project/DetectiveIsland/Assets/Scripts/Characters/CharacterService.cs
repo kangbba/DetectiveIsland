@@ -68,4 +68,19 @@ public static class CharacterService
         _curCharacters.Clear();
     }
 
+    public static void AllCharacterFadeIn(float totalTime){
+
+        foreach (Character character in _curCharacters)
+        {
+            character.FadeInCurrentEmotion(totalTime);
+        }
+    }
+    public static void AllCharacterFadeOut(float totalTime){
+        
+        foreach (Character character in _curCharacters)
+        {
+            character.FadeOutCurrentEmotion(totalTime);
+        }
+    }
+
 }

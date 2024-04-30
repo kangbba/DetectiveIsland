@@ -17,27 +17,6 @@ public static class EventService
             Debug.LogError($"Failed to load EventRoadMap from Resources folder with filename: {"EventRoadMap"}");
         }
     }
-    public static void LogEventPlan(EventPlan eventPlan){
-        for(int i = 0 ; i < eventPlan.ScenarioDatas.Count ; i++){
-            if(i == 0 ){
-                 Debug.Log($"***************************");
-            }
-            ScenarioData placeScenario = eventPlan.ScenarioDatas[i];
-            Debug.Log($"-----{i+1}번째 장소 시나리오 ----- ");
-            Debug.Log($"[장소 : {placeScenario.PlaceID}]");
-            Debug.Log($"[해결 여부 : {(placeScenario.IsAllSolved() ? "해결됨" : " 해결안됨")}]");
-            if(i == (eventPlan.ScenarioDatas.Count - 1) ){
-                 Debug.Log($"***************************");
-            }
-        }
-    }
-    public static void AllEventResetViewed(){
-        foreach(EventPlan eventPlan in EventPlans){
-            foreach(ScenarioData scenarioData in eventPlan.ScenarioDatas){
-                scenarioData.SetViewed(false);
-            }
-        }
-    }
     public static EventPlan GetFirstEventPlan(){
         return _eventRoadmap.EventPlans[0];
     }
@@ -63,6 +42,12 @@ public static class EventService
             return null; 
         }
         return EventPlans[currentIndex + 1];
+    }
+
+    public static void AllEventReset(){
+        foreach(EventPlan eventPlan in EventPlans){
+            eventPlan.Reset();
+        }
     }
 
     
