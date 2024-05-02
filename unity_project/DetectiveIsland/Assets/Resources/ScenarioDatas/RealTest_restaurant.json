@@ -118,6 +118,19 @@
                   ]
                 }
               ],
+              "CancelElements": [
+                {
+                  "$type": "Dialogue, Assembly-CSharp",
+                  "CharacterID": "Rachel",
+                  "Lines": [
+                    {
+                      "$type": "Line, Assembly-CSharp",
+                      "EmotionID": "Smile",
+                      "Sentence": "왜 취소해!"
+                    }
+                  ]
+                }
+              ],
               "SuccessElements": [
                 {
                   "$type": "Dialogue, Assembly-CSharp",

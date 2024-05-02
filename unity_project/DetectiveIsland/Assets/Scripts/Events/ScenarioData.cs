@@ -58,5 +58,12 @@ public class ScenarioData{
             return true;
         }
     }
+    public bool IsSolvedAndExited
+    {
+        get
+        {
+            return IsExited && IsSolved;
+        }
+    }
 
 }

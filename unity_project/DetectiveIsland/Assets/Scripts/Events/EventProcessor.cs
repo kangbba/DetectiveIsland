@@ -44,7 +44,7 @@ public static class EventProcessor
             Debug.Log("장소로 이동 중 (이벤트가 있는 곳)");
             Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioData.ScenarioFile);
             _curScenarioData = scenarioData;
-            if(!scenarioData.IsSolved)
+            if(!scenarioData.IsSolvedAndExited)
             {
                 Debug.Log("미 해결 이벤트인경우");
                 if(scenarioData.IsEntered || scenarioData.IsExited)
@@ -76,7 +76,7 @@ public static class EventProcessor
                 }
             }
             else{
-                Debug.Log("이미 해결된 장소임");
+                Debug.Log("이미 해결되고 시나리오르 다 본 장소임");
             }
         }
         else{
