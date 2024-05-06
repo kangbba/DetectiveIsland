@@ -12,24 +12,6 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
-
-    private UIManager _uiManager;
-
-    private bool isMoving = false;
-
-    public enum EGamePhase
-    {
-        Enter,
-        ConditionWaiting,  
-        PlaceMoving,        
-        EventPlaying,
-        FreeActing,
-        Exit,
-    }
-
-    // Current phase state
-    private EGamePhase _curPhase;
-
     private void Awake()
     {
         if (_instance == null)
@@ -41,7 +23,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        _uiManager = UIManager.Instance;
     }
 
     private void Start()
@@ -70,11 +51,5 @@ public class GameManager : MonoBehaviour
         ItemService.LoseAllItems();
         PlaceService.Load();
         CharacterService.Load();
-    }
-    
-    // Implement the SetPhase method
-    private void SetPhase(EGamePhase newPhase)
-    {
-        _curPhase = newPhase;
     }
 }
