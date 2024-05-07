@@ -564,7 +564,6 @@ public class JNodeEditor4 : EditorWindow
     {
         ChoiceSetNode node = new ChoiceSetNode(position, "Choice Set");
         node.SetGuid();
-        node.choiceSet = new ChoiceSet(new(),new());
         JNode.Nodes.Add(node);
     }
 
@@ -580,7 +579,6 @@ public class JNodeEditor4 : EditorWindow
     {
         ItemDemandNode node = new ItemDemandNode(position, "Item Demand");
         node.SetGuid();
-        node.itemDemand = new("",new(),new(),new());
         JNode.Nodes.Add(node);
     }
 

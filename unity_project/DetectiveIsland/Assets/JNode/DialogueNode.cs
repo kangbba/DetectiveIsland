@@ -12,7 +12,6 @@ public class DialogueNode : Node
     public float LineHeight = 70;
     public float LineVeritcalDist = 5;
 
-
     public override Element ToElement()
     {
         return dialogue;

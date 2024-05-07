@@ -1,16 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 
 [System.Serializable]
 public class ItemDemandNode : Node
 {
-    public ItemDemand itemDemand;
+    public string itemId;
+    public List<DialogueNode> dialogueNodes = new List<DialogueNode>(); 
+    public List<Node> successNodes = new List<Node>();
+    public List<Node> failNodes = new List<Node>();
+    public List<Node> cancelNodes = new List<Node>();
 
     public override Element ToElement()
     {
+        List<Dialogue> dialogues = new List<Dialogue>();
+
+        for (int i = 0; i < dialogueNodes.Count; i++)
+        {
+            dialogues.Add(dialogueNodes[i].ToElement() as Dialogue);
+        }
+
+        ItemDemand itemDemand = new ItemDemand(itemId, dialogues, successNodes.ToElements(), failNodes.ToElements());
+
         return itemDemand;
     }
     public ItemDemandNode(Vector2 pos, string title) : base(title)

@@ -5,27 +5,47 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+
+public class ChoicePlan
+{
+    public string title;
+    public List<Node> nodes;
+}
+
 [System.Serializable]
 public class ChoiceSetNode : Node
 {
     public List<DialogueNode> dialogueNodes = new List<DialogueNode>();
-    public List<ChoiceNode> choiceNodes = new List<ChoiceNode>();
-    public ChoiceSet choiceSet;
+    public List<ChoicePlan> choicePlans;
+
+    public void AddChoicePlan()
+    {
+       
+    }
 
     public override Element ToElement()
     {
+        ChoiceSet choiceSet = new ChoiceSet(null,null);
         choiceSet.Dialogues = new List<Dialogue>();
         for (int i = 0; i < dialogueNodes.Count; i++)
         {
-            choiceSet.Dialogues.Add(dialogueNodes[i].dialogue);
+            choiceSet.Dialogues.Add(dialogueNodes[i].ToElement() as Dialogue);
         }
+
         choiceSet.Choices = new List<Choice>();
-        for (int i = 0; i < choiceNodes.Count; i++)
+        for (int i = 0; i < choicePlans.Count; i++)
         {
-            choiceSet.Choices.Add(choiceNodes[i].choice);
+            Choice choice = new Choice(choicePlans[i].title,null);
+            for (int j = 0; j < choicePlans[i].nodes.Count; j++)
+            {
+                choice.Elements.Add(choicePlans[i].nodes[j].ToElement());
+            }
+            choiceSet.Choices.Add(choice);
         }
         return choiceSet;
     }
+
+
 
     public ChoiceSetNode(Vector2 pos, string title) : base(title)
     {
