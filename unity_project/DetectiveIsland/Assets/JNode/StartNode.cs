@@ -30,4 +30,9 @@ public class StartNode : Node
 
         DrawConnectionPoints(representColor, false, true);
     }
+
+    public override Element ToElement()
+    {
+        return null;
+    }
 }

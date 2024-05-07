@@ -9,6 +9,12 @@ using UnityEngine;
 public class PositionInitNode : Node
 {
     public PositionInit positionInit;
+
+    public override Element ToElement()
+    {
+        return positionInit;
+    }
+
     public PositionInitNode(Vector2 pos, string title) : base(title)
     {
         UpdateNodeSize(CalNodeSize());

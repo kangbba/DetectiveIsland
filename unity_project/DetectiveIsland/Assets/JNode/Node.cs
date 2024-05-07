@@ -5,6 +5,7 @@ using Aroka.ArokaUtils;
 using Color = UnityEngine.Color;
 using System;
 using System.Drawing;
+using UnityEditor.Experimental.GraphView;
 
 [System.Serializable]
 public class ConnectingPoint
@@ -19,6 +20,11 @@ public class ConnectingPoint
         {
             return connectedNodeId;
         }
+    }
+    
+    public bool IsContainRect(Vector2 pos)
+    {
+        return rect.Contains(pos);
     }
 
     public ConnectingPoint()
@@ -58,8 +64,6 @@ public class ConnectingPoint
     }
 }
 
-
-
 [System.Serializable]
 public abstract class Node
 {
@@ -68,6 +72,7 @@ public abstract class Node
     public Vector2 offset;
     public string title;
     public bool isSelected;
+    public float NodeCenterX => position.x + nodeSize.x * 0.5f;
 
     private bool rectNeedsUpdate = true;
     private Rect cachedRect;
@@ -117,10 +122,11 @@ public abstract class Node
 
     public void SetGuid()
     {
-        ID = Guid.NewGuid().ToString(); 
+        ID = Guid.NewGuid().ToString();
     }
 
     public abstract Vector2 CalNodeSize();
+    public abstract Element ToElement();
 
     public void UpdateNodePosition(Vector2 newPosition)
     {
@@ -200,29 +206,34 @@ public abstract class Node
         titleGS.normal.textColor = Color.white;
         GUI.Label(nodeRect.ModifiedY(nodeRect.y + 30), title, titleGS);
     }
+
+
     public void DrawConnectionPoints(Color representColor, bool parentSide, bool childSide)
     {
         if (parentSide)
+        {
             ParentConnectingPoint.DrawSingleConnectionPoint(new Vector2(Rect.x + Rect.width / 2, Rect.y + 12), representColor);
+
+        }
         if (childSide)
+        {
             ChildConnectingPoint.DrawSingleConnectionPoint(new Vector2(Rect.x + Rect.width / 2, Rect.y + Rect.height - 12), representColor);
+
+        }
     }
-
-
 
     public void ConnectNodeToChild(Node node)
     {
         ChildConnectingPoint.Connect(node.id);
     }
+
     public void ConnectNodeToParent(Node node)
     {
-       
         ParentConnectingPoint.Connect(node.id);
     }
 
     public void DeConnectNodeChild()
     {
-      
         ChildConnectingPoint.DeConnect();
     }
 
@@ -237,7 +248,7 @@ public abstract class Node
     }
 
     public void Deselect()
-    { 
+    {
         isSelected = false;
     }
 }

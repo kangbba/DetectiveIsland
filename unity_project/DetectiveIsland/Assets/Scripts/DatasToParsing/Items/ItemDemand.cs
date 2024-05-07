@@ -23,6 +23,5 @@ public class ItemDemand : Element
     public List<Dialogue> Dialogues { get => _dialogues; set => _dialogues = value; }
     public List<Element> FailElements { get => _failElements; set => _failElements = value; }
     public List<Element> SuccessElements { get => _successElements; set => _successElements = value; }
-
     public List<Element> CancelElements { get => _cancelElements; set => _cancelElements = value; }
 }

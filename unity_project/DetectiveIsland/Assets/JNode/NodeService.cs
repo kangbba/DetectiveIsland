@@ -9,6 +9,16 @@ using UnityEditor;
 
 public static class NodeService
 {
+    public static float CalNodesSizeY(List<Node> nodes)
+    {
+        float totalHeight = 0;
+        foreach (Node node in nodes)
+        {
+            totalHeight += node.CalNodeSize().y;
+        }
+        return totalHeight;
+    }
+
     public static Vector2 CalStringVisualSize(GUIStyle style, string st)
     {
         return style.CalcSize(new GUIContent(st));
@@ -30,23 +40,23 @@ public static class NodeService
     {
         if (node is DialogueNode dialogueNode)
         {
-            return dialogueNode.dialogue;
+            return dialogueNode.ToElement();
         }
         else if (node is ChoiceSetNode choiceSetNode)
         {
-            return choiceSetNode.choiceSet;
+            return choiceSetNode.ToElement();
         }
         else if (node is ItemDemandNode itemDemandNode)
         {
-            return itemDemandNode.itemDemand;
+            return itemDemandNode.ToElement();
         }
         else if (node is PositionInitNode positionInitNode)
         {
-            return positionInitNode.positionInit;
+            return positionInitNode.ToElement();
         }
         else if (node is AssetChangeNode assetChangeNode)
         {
-            return assetChangeNode.assetChange;
+            return assetChangeNode.ToElement();
         } 
         else{
             return null;

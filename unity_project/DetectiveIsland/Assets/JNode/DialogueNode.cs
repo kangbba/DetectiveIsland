@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
-
 [System.Serializable]
 public class DialogueNode : Node
 {
@@ -14,10 +12,17 @@ public class DialogueNode : Node
     public float LineHeight = 70;
     public float LineVeritcalDist = 5;
 
+
+    public override Element ToElement()
+    {
+        return dialogue;
+    }
     public DialogueNode(Vector2 pos, string title) : base(title)
     {
         UpdateNodeSize(CalNodeSize());
         UpdateNodePosition(pos);
+        ParentConnectingPoint = new ConnectingPoint();
+        ChildConnectingPoint = new ConnectingPoint();
     }
     public void DrawCharacterType(Rect nodeTotalRect)
     {
@@ -29,7 +34,10 @@ public class DialogueNode : Node
         };
         GUIContent labelContent = new GUIContent("Character Type:");
         Vector2 labelSize_CharacterName = labelStyle.CalcSize(labelContent);
-        GUI.Label(new Rect(nodeTotalRect.x, nodeTotalRect.y + 60, labelSize_CharacterName.x, 20), labelContent, labelStyle);
+
+        EditorGUI.LabelField(new Rect(nodeTotalRect.x, nodeTotalRect.y + 60, labelSize_CharacterName.x, 20), labelContent, labelStyle);
+
+        // GUI.Label(new Rect(nodeTotalRect.x, nodeTotalRect.y + 60, labelSize_CharacterName.x, 20), labelContent, labelStyle);
         // Character Name Input Field
         dialogue.CharacterID = GUI.TextField(new Rect(nodeTotalRect.x + labelSize_CharacterName.x + 5, nodeTotalRect.y + 60, nodeTotalRect.width - labelSize_CharacterName.x - 10, 20), dialogue.CharacterID);
     }
@@ -37,12 +45,13 @@ public class DialogueNode : Node
 
     private void DrawAddLineButton(Rect nodeRect)
     {
+        float buttonSize = 80;
         float buttonYPosition = nodeRect.y + 105 + (dialogue.Lines.Count * (LineHeight + LineVeritcalDist));
         Rect buttonRect = new Rect(
-            nodeRect.x + (nodeRect.width - LineWidth) / 2,
+            nodeRect.x + nodeRect.width * 0.5f - buttonSize * 0.5f,
             buttonYPosition,
-            LineWidth,
-            LineHeight
+            buttonSize,
+            buttonSize * 0.5f
         );
 
         if (GUI.Button(buttonRect, "Add Line"))
@@ -54,17 +63,38 @@ public class DialogueNode : Node
         float yPos = nodeRect.y + 105;
         for (int i = 0; i < dialogue.Lines.Count; i++)
         {
-            Rect lineRect = new Rect(nodeRect.x + (nodeRect.width - LineWidth) / 2, yPos + (i * (LineHeight + LineVeritcalDist)), LineWidth, LineHeight);
+            // Calculate the rectangle for the line
+            Rect lineRect = new Rect(nodeRect.x + (nodeRect.width - nodeRect.width) / 2, yPos + (i * (LineHeight + LineVeritcalDist)), nodeRect.width, LineHeight);
+
+            // Create and style the label
             GUIStyle lineLabelStyle = new GUIStyle(GUI.skin.label)
             {
                 alignment = TextAnchor.UpperCenter,
                 fontSize = 10,
-                normal = { textColor = Color.yellow, background = Texture.GetBoxTexture(Color.yellow * Color.gray * Color.gray) }
+                normal = { textColor = Color.yellow, background = Texture.GetBoxTexture(Color.white * 0.2f)}
             };
+
+            // Draw the box for the line text
             GUI.Box(lineRect, "Line", lineLabelStyle);
+
+            // Draw the content for the line
             DrawLineContent(i, lineRect);
+
+            // Calculate the rectangle for the minus button
+            float buttonWidth = 20;
+            float buttonHeight = 20;
+            float buttonX = lineRect.xMax - buttonWidth - 5;
+            float buttonY = lineRect.y - LineHeight * 0.5f + 15 + (lineRect.height - buttonHeight) / 2;
+            Rect buttonRect = new Rect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+            // Draw the minus button and check if it's clicked
+            if (GUI.Button(buttonRect, "X"))
+            {
+                OnMinusButtonClicked(dialogue.Lines[i]);
+            }
         }
     }
+
 
     private void DrawLineContent(int index, Rect lineRect)
     {
@@ -106,6 +136,8 @@ public class DialogueNode : Node
         base.DrawNode(offset);
         base.DrawNodeLayout(representColor);
 
+
+
         
         DrawCharacterType(Rect);
         DrawAddLineButton(Rect);
@@ -121,4 +153,8 @@ public class DialogueNode : Node
         dialogue.Lines.Add(new Line("Smile", ""));
     }
 
+    private void OnMinusButtonClicked(Line line)
+    {
+        dialogue.Lines.Remove(line);
+    }
 }

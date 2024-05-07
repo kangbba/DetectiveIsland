@@ -8,6 +8,13 @@ using static UnityEditor.PlayerSettings;
 public class AssetChangeNode : Node
 {
     public AssetChange assetChange;
+
+
+    public override Element ToElement()
+    {
+        return assetChange;
+    }
+
     public AssetChangeNode(Vector2 pos, string title) : base(title)
     {
         UpdateNodeSize(CalNodeSize());
@@ -31,4 +38,5 @@ public class AssetChangeNode : Node
 
         DrawConnectionPoints(representColor, true, true);
     }
+
 }

@@ -8,6 +8,11 @@ using UnityEngine;
 public class ItemDemandNode : Node
 {
     public ItemDemand itemDemand;
+
+    public override Element ToElement()
+    {
+        return itemDemand;
+    }
     public ItemDemandNode(Vector2 pos, string title) : base(title)
     {
         UpdateNodeSize(CalNodeSize());

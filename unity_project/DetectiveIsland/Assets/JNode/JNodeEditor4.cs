@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using System;
+using System.Linq;
 
 public class JNodeEditor4 : EditorWindow
 {
@@ -150,36 +151,27 @@ public class JNodeEditor4 : EditorWindow
         {
             Node node = JNode.Nodes[i];
             node.DrawNode(CanvasOffset);  // 각 노드를 그림
-
-          
         }
 
         for (int i = 0; i < JNode.Nodes.Count; i++)
         {
             Node node = JNode.Nodes[i];
 
-            if (node.ChildConnectingPoint.isConnected )
+            // Iterate over each ChildConnectingPoint in the list
+            ConnectingPoint connectingPoint = node.ChildConnectingPoint;
+            if (connectingPoint.isConnected)
             {
                 float lineThickness = 5.0f;
-                /*
-                Debug.Log(node);
-                Debug.Log(node.ChildConnectingPoint);
-                Debug.Log(node.ChildConnectingPoint.rect);
-
-                Debug.Log(node.ChildConnectingPoint);
-                Debug.Log(node.ChildConnectingPoint.ConnectedNodeId);
-                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId));
-                Debug.Log(GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint);*/
-
-
-                // Drawing a line
-                Handles.DrawAAPolyLine(lineThickness,
-                    new Vector3[] 
+                // Assume GetNode returns a Node object based on an ID and it handles null cases appropriately
+                Node connectedParentNode = GetNode(connectingPoint.ConnectedNodeId);
+                if (connectedParentNode != null)
+                {
+                    Handles.DrawAAPolyLine(lineThickness, new Vector3[]
                         {
-                            node.ChildConnectingPoint.rect.center,
-                            GetNode(node.ChildConnectingPoint.ConnectedNodeId).ParentConnectingPoint.rect.center
-                        }
-                            );
+                        connectingPoint.rect.center,
+                        connectedParentNode.ParentConnectingPoint.rect.center
+                        });
+                }
             }
         }
 
@@ -284,14 +276,21 @@ public class JNodeEditor4 : EditorWindow
             if (!string.IsNullOrEmpty(path2))
             {
                 List<Element> elements = JNode.Nodes.ToElements();
+                elements.RemoveAt(0);
                 Debug.Log(elements.Count);
-                Scenario scenario = new Scenario( elements);
+                Scenario scenario = new Scenario(elements);
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    Debug.Log(elements[i]);
+                }
                 Debug.Log(scenario.Elements.Count);
 
                 // Save the scenario object as a JSON file at the specified path
                 ArokaJsonUtils.SaveScenario(scenario, path2);
                 Debug.Log("Nodes saved to JSON: " + path2);
             }
+
+            
         }
         else
         {
@@ -448,14 +447,13 @@ public class JNodeEditor4 : EditorWindow
 
                         if (node.Rect.Contains(MousePosition + CanvasOffset))
                         {
-                          
                             SelectedNode = node;
                             SelectedNode.Select();
                             IsDraggingNode = true;
                             LastMouseDragPosition = e.mousePosition;
                             break;
                         }
-                       
+
                     }
                     IsPanningCanvas = false;
 
@@ -497,7 +495,7 @@ public class JNodeEditor4 : EditorWindow
                             Debug.Log("Connect");
                             ConnectStartNode.ConnectNodeToChild(node);
                             node.ConnectNodeToParent(ConnectStartNode);
-                         
+
                             ConnectStartNode = null;
                             LastMouseDragPosition = e.mousePosition;
                             connnected = true;
@@ -507,6 +505,7 @@ public class JNodeEditor4 : EditorWindow
 
                     if (!connnected)
                     {
+                        Debug.Log("De Connect");
                         ConnectStartNode.DeConnectNodeChild();
                     }
                 }
@@ -518,10 +517,12 @@ public class JNodeEditor4 : EditorWindow
                 if (e.keyCode == KeyCode.Delete && SelectedNode != null)
                 {
                     Debug.Log("Destory Node " + SelectedNode + " | " + JNode.Nodes.Count );
-                    if (GetNodeByChild(SelectedNode.ChildConnectingPoint.connectedNodeId) != null)
-                        GetNodeByChild(SelectedNode.ChildConnectingPoint.connectedNodeId).DeConnectNodeChild();
-                    if (GetNodeByParent(SelectedNode.ParentConnectingPoint.connectedNodeId) != null)
-                        GetNodeByParent(SelectedNode.ParentConnectingPoint.connectedNodeId).DeConnectNodeParent();
+                    
+                    if (GetNodeByChild(SelectedNode.ID) != null)
+                        GetNodeByChild(SelectedNode.ID).DeConnectNodeChild();
+                    if (GetNodeByParent(SelectedNode.ID) != null)
+                        GetNodeByParent(SelectedNode.ID).DeConnectNodeParent();
+
                     SelectedNode.DeConnectNodeChild();
                     SelectedNode.DeConnectNodeParent();
                     JNode.Nodes.Remove(SelectedNode);
@@ -604,13 +605,13 @@ public class JNodeEditor4 : EditorWindow
         }
         return null; // No node found with the given ID
     }
-
+    
     public Node GetNodeByChild(string id)
     {
         for (int i = 0; i < JNode.Nodes.Count; i++)
         {
             Node node = JNode.Nodes[i];
-
+            
             if (node.ChildConnectingPoint.connectedNodeId == id)
             {
                 return node; // Node found

@@ -1,53 +1,15 @@
 {
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
-    null,
     {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": "Mono",
-      "Lines": [
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "2323"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "asasas"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"
-        }
-      ]
+      "Lines": []
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": "Mono",
-      "Lines": [
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": ""
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": ""
-        }
-      ]
-    },
-    {
-      "$type": "ChoiceSet, Assembly-CSharp",
-      "Dialogues": [],
-      "Choices": []
+      "Lines": []
     }
   ]
 }
