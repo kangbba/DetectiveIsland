@@ -51,7 +51,7 @@
     {
       "$type": "ItemModify, Assembly-CSharp",
       "IsGain": true,
-      "Id": "NotePad",
+      "Id": "note_pad",
       "Amount": 1
     }
   ]

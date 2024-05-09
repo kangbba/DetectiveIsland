@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: JNodeInstance
   m_EditorClassIdentifier: 
   jNode: {}
-  recentOpenFileName: FirstScenarioTest.jnode
-  recentPath: Assets/Resources/JNodes/FirstScenarioTest.jnode
+  recentOpenFileName: TestScenario.jnode
+  recentPath: Assets/Resources/JNodes/TestScenario.jnode

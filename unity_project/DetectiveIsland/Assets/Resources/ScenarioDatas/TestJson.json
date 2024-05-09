@@ -18,16 +18,6 @@
       ]
     },
     {
-      "$type": "PositionInit, Assembly-CSharp",
-      "CharacterPositions": [
-        {
-          "$type": "CharacterPosition, Assembly-CSharp",
-          "CharacterID": "Lisa",
-          "PositionID": "Middle"
-        }
-      ]
-    },
-    {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": "Lisa",
       "Lines": [
@@ -40,19 +30,18 @@
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
           "Sentence": "어때 내가 잘 말하고있지?"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Sad",
-          "Sentence": "아이템을 줄게"
         }
       ]
     },
     {
-      "$type": "ItemModify, Assembly-CSharp",
-      "IsGain": true,
-      "Id": "NotePad",
-      "Amount": 1
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPositions": [
+        {
+          "$type": "CharacterPosition, Assembly-CSharp",
+          "CharacterID": "Lisa",
+          "PositionID": "Left"
+        }
+      ]
     }
   ]
 }

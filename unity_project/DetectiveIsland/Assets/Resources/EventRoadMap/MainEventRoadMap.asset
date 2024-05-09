@@ -18,18 +18,12 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _scenarioDatas:
-    - _placeID: PortEntrance
-      _scenarioFile: {fileID: 4900000, guid: a3861c3fbcef543f18b43dd3f9628b1b, type: 3}
+    - _placeID: TestPlace
+      _scenarioFile: {fileID: 4900000, guid: 40a463c1e3d494ef197114f53ecaa4ab, type: 3}
       _isEntered: 1
-      _isExited: 1
+      _isExited: 0
       _solveConditions: []
-      _doneEventActions:
-      - _actionType: 1
-        _targetID: NotePad
-      - _actionType: 1
-        _targetID: Map
-      - _actionType: 2
-        _targetID: Map
+      _doneEventActions: []
   - _eventTime:
       _date: 2024-04-01
       _hour: 10
@@ -37,16 +31,12 @@ MonoBehaviour:
     _scenarioDatas:
     - _placeID: Restaurant
       _scenarioFile: {fileID: 4900000, guid: 3998289676c474c9abeccdabc31afe29, type: 3}
-      _isEntered: 1
-      _isExited: 1
+      _isEntered: 0
+      _isExited: 0
       _solveConditions:
       - _actionType: 1
         _targetID: IDCard
-      _doneEventActions:
-      - _actionType: 2
-        _targetID: NotePad
-      - _actionType: 1
-        _targetID: IDCard
+      _doneEventActions: []
     - _placeID: Library
       _scenarioFile: {fileID: 4900000, guid: 1323161f479804326a3b626cda90130e, type: 3}
       _isEntered: 0
