@@ -516,7 +516,10 @@ public class JNodeEditor4 : EditorWindow
                 break;
 
             case EventType.KeyDown:
-                if (e.keyCode == KeyCode.Delete && SelectedNode != null)
+                bool isDeleteCommand = (e.keyCode == KeyCode.Delete && Application.platform != RuntimePlatform.OSXEditor) ||
+                             (e.command && e.keyCode == KeyCode.Backspace && Application.platform == RuntimePlatform.OSXEditor);
+
+                if (isDeleteCommand && SelectedNode != null)
                 {
                     Debug.Log("Destory Node " + SelectedNode + " | " + Nodes.Count );
                     
