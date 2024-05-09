@@ -264,33 +264,50 @@ public class JNodeEditor4 : EditorWindow
     {
         if (Nodes.Count > 0)
         {
-
             string resourcesPath = StoragePath.ScenarioPath;
 
             string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
 
-            // Open the save file dialog with the determined initial directory
             string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
 
-            // Check if the user has not cancelled the operation
             if (!string.IsNullOrEmpty(path2))
             {
-                List<Element> elements = Nodes.ToElements();
-                elements.RemoveAt(0);
+                Node startNode = Nodes[0];
+                if (GetNode(startNode.ChildConnectingPoint.connectedNodeId) == null)
+                {
+                    EditorUtility.DisplayDialog("Missing Connection",
+                                                              "The Start Node must be connected. Please check your nodes.",
+                                                              "OK"); return; 
+                }
+
+                Node parentNode = startNode;
+                List<Node> connectedNode = new List<Node>();
+                while (true)
+                {
+                    Node childNode = GetNode(parentNode.ChildConnectingPoint.connectedNodeId);
+
+                    if (childNode == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        connectedNode.Add(childNode);
+                        parentNode = childNode;
+                    }
+                }
+
+                List<Element> elements = connectedNode.ToElements();
                 Debug.Log(elements.Count);
                 Scenario scenario = new Scenario(elements);
                 for (int i = 0; i < elements.Count; i++)
                 {
                     Debug.Log(elements[i]);
                 }
-                Debug.Log(scenario.Elements.Count);
-
                 // Save the scenario object as a JSON file at the specified path
                 ArokaJsonUtils.SaveScenario(scenario, path2);
                 Debug.Log("Nodes saved to JSON: " + path2);
             }
-
-            
         }
         else
         {
@@ -372,7 +389,7 @@ public class JNodeEditor4 : EditorWindow
             CenterCanvasOnNodes();
             e.Use();
         }
-
+         
         switch (e.type)
         {
             case EventType.KeyDown:
