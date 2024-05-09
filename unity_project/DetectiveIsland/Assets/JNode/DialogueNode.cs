@@ -9,9 +9,12 @@ public class DialogueNode : Node
 {
     public Dialogue dialogue;
     public float LineWidth => nodeSize.x;
-    public float LineHeight = 70;
     public float LineVeritcalDist = 5;
 
+    private float LineHeight => (_lineSentenceHeight + _emotionTextFieldHeight) * 1.5f;
+    private const float _lineSentenceWidth = 300;
+    private float _lineSentenceHeight = 60;
+    private float _emotionTextFieldHeight = 20;
     public override Element ToElement()
     {
         return dialogue;
@@ -25,6 +28,7 @@ public class DialogueNode : Node
     }
     public void DrawCharacterType(Rect nodeTotalRect)
     {
+
         GUIStyle textFieldStyle = new GUIStyle()
         {
             alignment = TextAnchor.MiddleLeft,
@@ -102,29 +106,44 @@ public class DialogueNode : Node
 
 
     private void DrawLineContent(int index, Rect lineRect)
-    {
+    {        
         GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
         {
             alignment = TextAnchor.UpperCenter,
             fontSize = 10,
             normal = { textColor = Color.white }
         };
-        GUIStyle textFieldStyle = new GUIStyle()
+        GUIStyle textFieldStyle = new GUIStyle(EditorStyles.textField)
         {
             alignment = TextAnchor.MiddleLeft,
             normal = { textColor = Color.white, background = Texture.GetBoxTexture(Color.gray * 0.25f) },
             fontSize = 10
         };
+        GUIStyle textAreaFieldStyle = new GUIStyle(EditorStyles.textArea)
+        {
+            alignment = TextAnchor.UpperLeft,
+            normal = { textColor = Color.white, background = Texture.GetBoxTexture(Color.gray * 0.25f) },
+            fontSize = 10,
+        };
+
         float initialLineContentsOffsetY = 20;
 
         Line line = dialogue.Lines[index];
         EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + initialLineContentsOffsetY, 80, 20), "Emotion ID:", labelStyle);
         line.EmotionID = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY, 150, 20), line.EmotionID, textFieldStyle);
 
-        EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + +initialLineContentsOffsetY + 25, 80, 20), "Sentence:", labelStyle);
-        float calLength = NodeService.CalStringVisualSize(textFieldStyle, line.Sentence).x;
-        line.Sentence = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY + 25, 50 + calLength, 20), line.Sentence, textFieldStyle);
+        EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + initialLineContentsOffsetY + 25, 80, 20), "Sentence:", labelStyle);
+        // Vector2 calSize = NodeService.CalStringVisualSize(textFieldStyle, line.Sentence);
+        // line.Sentence = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY + 25, _lineSentenceWidth, _lineSentenceHeight), line.Sentence, textFieldStyle);
+        
+        // if(Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return){
+        //     Debug.Log("엔터");
+        //     Event.current.Use();
+        // }
+        Rect textFieldRect = new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY + 25, _lineSentenceWidth, _lineSentenceHeight);
+        line.Sentence = EditorGUI.TextArea(textFieldRect, line.Sentence, textAreaFieldStyle);
     }
+    
 
     public override Vector2 CalNodeSize()
     {
