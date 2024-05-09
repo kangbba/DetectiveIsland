@@ -13,16 +13,11 @@ using System.Linq;
 public class JNodeEditor4 : EditorWindow
 {
     private static JNodeInstance jNodeInstance;
-    public static JNode JNode
-    {
-        get => jNodeInstance.jNode;
-        set { if (jNodeInstance != null) jNodeInstance.jNode = value; }
-    }
 
-    public static float ZoomScale
+    public static List<Node> Nodes
     {
-        get => (float)(jNodeInstance?.zoomScale);
-        set { if (jNodeInstance != null) jNodeInstance.zoomScale = value; }
+        get => (jNodeInstance?.Nodes);
+        set { if (jNodeInstance != null) jNodeInstance.Nodes = value; }
     }
     public static string RecentOpenFileName
     {
@@ -31,84 +26,86 @@ public class JNodeEditor4 : EditorWindow
     }
     private static Node SelectedNode
     {
-        get => jNodeInstance?.selectedNode;
-        set { if (jNodeInstance != null) jNodeInstance.selectedNode = value; }
+        get => jNodeInstance? .editorUIState.selectedNode;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.selectedNode = value; }
     }
 
     private static Node ConnectStartNode
     {
-        get => jNodeInstance?.connectStartNode;
-        set { if (jNodeInstance != null) jNodeInstance.connectStartNode = value; }
+        get => jNodeInstance?.editorUIState.connectStartNode;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.connectStartNode = value; }
     }
     private static Vector2 MousePosition
     {
-        get => jNodeInstance?.mousePosition ?? Vector2.zero;
-        set { if (jNodeInstance != null) jNodeInstance.mousePosition = value; }
+        get => jNodeInstance?.editorUIState.mousePosition ?? Vector2.zero;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.mousePosition = value; }
     }
     private static Vector2 LastMouseDragPosition
     {
-        get => jNodeInstance?.lastMouseDragPosition ?? Vector2.zero;
-        set { if (jNodeInstance != null) jNodeInstance.lastMouseDragPosition = value; }
+        get => jNodeInstance?.editorUIState.lastMouseDragPosition ?? Vector2.zero;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.lastMouseDragPosition = value; }
     }
     private static Vector2 CanvasOffset
     {
-        get => jNodeInstance?.canvasOffset ?? Vector2.zero;
-        set { if (jNodeInstance != null) jNodeInstance.canvasOffset = value; }
+        get => jNodeInstance?.editorUIState.canvasOffset ?? Vector2.zero;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.canvasOffset = value; }
     }
     private static bool IsDraggingNode
     {
-        get => jNodeInstance != null && jNodeInstance.isDraggingNode;
-        set { if (jNodeInstance != null) jNodeInstance.isDraggingNode = value; }
+        get => jNodeInstance != null && jNodeInstance.editorUIState.isDraggingNode;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.isDraggingNode = value; }
     }
     private static bool IsPanningCanvas
     {
-        get => jNodeInstance != null && jNodeInstance.isPanningCanvas;
-        set { if (jNodeInstance != null) jNodeInstance.isPanningCanvas = value; }
+        get => jNodeInstance != null && jNodeInstance.editorUIState.isPanningCanvas;
+        set { if (jNodeInstance != null) jNodeInstance.editorUIState.isPanningCanvas = value; }
     }
     
     [DidReloadScripts]
     public static void ReloadEditor()
     {
         Debug.Log("Reloaded");
-        LoadJNodeInstance();
+        LoadJNodeInstance(); 
+           
+        LoadJNodeEditorWindow(jNodeInstance.recentPath ,RecentOpenFileName);
+        UpdateLastSavedSnapshot(); 
     }
 
     private void OnGUI()
-    {  
-        AutoSaveJNodeInstance();
+    {
         DrawGrid();
         DrawJNodeMenuBar();
         EditorControl(Event.current);
-
-        if (JNode != null)
+        if (jNodeInstance != null)
         {
             DrawNodes();
             ProcessEvents(Event.current); 
         }
-
         DrawJNodeMenuBar();
-
         if (GUI.changed) Repaint();
+        AutoSaveJNodeInstance();
+
     }
     public void AutoSaveJNodeInstance()
     {
+          
         if (jNodeInstance != null && EditorUtility.IsDirty(jNodeInstance))
         {
-            Debug.Log("AutoSave");
             jNodeInstance.SaveChanges();
+            Debug.Log("AutoSave");
         }
     }
 
     private void CenterCanvasOnNodes()
     {
-        if (JNode != null && JNode.Nodes.Count > 0)
+        if (jNodeInstance != null && Nodes.Count > 0)
         {
             Vector2 sumPositions = Vector2.zero;
-            foreach (Node node in JNode.Nodes)
+            foreach (Node node in Nodes)
             {
                 sumPositions += node.Rect.center;
             }
-            Vector2 averageCenter = sumPositions / JNode.Nodes.Count;
+            Vector2 averageCenter = sumPositions / Nodes.Count;
             CanvasOffset = -averageCenter + new Vector2(position.width / 2, position.height / 2);
             Debug.Log("Canvas centered to nodes");
         }
@@ -146,16 +143,17 @@ public class JNodeEditor4 : EditorWindow
     }
 
     private void DrawNodes()
-    {
-        for (int i = 0; i < JNode.Nodes.Count; i++)
+    {  
+         
+        for (int i = 0; i < Nodes.Count; i++)
         {
-            Node node = JNode.Nodes[i];
+            Node node = Nodes[i];
             node.DrawNode(CanvasOffset);  // 각 노드를 그림
         }
 
-        for (int i = 0; i < JNode.Nodes.Count; i++)
+        for (int i = 0; i < Nodes.Count; i++)
         {
-            Node node = JNode.Nodes[i];
+            Node node = Nodes[i];
 
             // Iterate over each ChildConnectingPoint in the list
             ConnectingPoint connectingPoint = node.ChildConnectingPoint;
@@ -184,12 +182,14 @@ public class JNodeEditor4 : EditorWindow
         JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
         window.Show();
         LoadJNodeInstance();
+
         Debug.Log("Open JNode Editor" + window);
     }
 
     private static void LoadJNodeInstance()
-    {
+    { 
         jNodeInstance = AssetDatabase.LoadAssetAtPath<JNodeInstance>("Assets/JNode/JNodeInstance.asset");
+
         /*
         if (jNodeInstance == null)
         {
@@ -211,7 +211,7 @@ public class JNodeEditor4 : EditorWindow
 
     public string GetCurrentSnapShot()
     {
-        string currentSnapshot = JsonConvert.SerializeObject(JNode, new JsonSerializerSettings
+        string currentSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
@@ -262,7 +262,7 @@ public class JNodeEditor4 : EditorWindow
 
     private void ExportJson()
     {
-        if (JNode.Nodes.Count > 0)
+        if (Nodes.Count > 0)
         {
 
             string resourcesPath = StoragePath.ScenarioPath;
@@ -275,7 +275,7 @@ public class JNodeEditor4 : EditorWindow
             // Check if the user has not cancelled the operation
             if (!string.IsNullOrEmpty(path2))
             {
-                List<Element> elements = JNode.Nodes.ToElements();
+                List<Element> elements = Nodes.ToElements();
                 elements.RemoveAt(0);
                 Debug.Log(elements.Count);
                 Scenario scenario = new Scenario(elements);
@@ -300,7 +300,7 @@ public class JNodeEditor4 : EditorWindow
     private static string lastSavedSnapshot;
     public static void UpdateLastSavedSnapshot()
     {
-        lastSavedSnapshot = JsonConvert.SerializeObject(JNode, new JsonSerializerSettings
+        lastSavedSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
@@ -310,7 +310,7 @@ public class JNodeEditor4 : EditorWindow
     }
     public static void SaveJNode()
     {
-        string currentSnapshot = JsonConvert.SerializeObject(JNode, new JsonSerializerSettings
+        string currentSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
             Formatting = Formatting.Indented,
@@ -354,7 +354,9 @@ public class JNodeEditor4 : EditorWindow
 
     public static void Save(string path)
     {
-        ArokaJsonUtils.SaveJNode(JNode, path);
+        JNode jNode = new JNode(jNodeInstance.Nodes);
+        jNode.editorUIState = jNodeInstance.editorUIState;
+        ArokaJsonUtils.SaveJNode(jNode, path);
         UpdateLastSavedSnapshot();
         Debug.Log($"<color=green>Save Complete</color> " + RecentOpenFileName);
 
@@ -365,7 +367,7 @@ public class JNodeEditor4 : EditorWindow
     {
         MousePosition = (e.mousePosition - CanvasOffset);
 
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Space)
+        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.F1)
         {
             CenterCanvasOnNodes();
             e.Use();
@@ -435,7 +437,7 @@ public class JNodeEditor4 : EditorWindow
                     if (SelectedNode != null) SelectedNode.Deselect();
                     SelectedNode = null;
 
-                    foreach (var node in JNode.Nodes)
+                    foreach (var node in Nodes)
                     {
                         if (node.ChildConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
                         {
@@ -487,7 +489,7 @@ public class JNodeEditor4 : EditorWindow
                 if (ConnectStartNode != null)
                 {
                     bool connnected = false;
-                    foreach (var node in JNode.Nodes)
+                    foreach (var node in Nodes)
                     {
                         if (node == ConnectStartNode) continue;
                         if (node.ParentConnectingPoint.rect.Contains(MousePosition + CanvasOffset))
@@ -516,7 +518,7 @@ public class JNodeEditor4 : EditorWindow
             case EventType.KeyDown:
                 if (e.keyCode == KeyCode.Delete && SelectedNode != null)
                 {
-                    Debug.Log("Destory Node " + SelectedNode + " | " + JNode.Nodes.Count );
+                    Debug.Log("Destory Node " + SelectedNode + " | " + Nodes.Count );
                     
                     if (GetNodeByChild(SelectedNode.ID) != null)
                         GetNodeByChild(SelectedNode.ID).DeConnectNodeChild();
@@ -525,8 +527,8 @@ public class JNodeEditor4 : EditorWindow
 
                     SelectedNode.DeConnectNodeChild();
                     SelectedNode.DeConnectNodeParent();
-                    JNode.Nodes.Remove(SelectedNode);
-                    Debug.Log("Destory Node " + SelectedNode + " | " + JNode.Nodes.Count);
+                    Nodes.Remove(SelectedNode);
+                    Debug.Log("Destory Node " + SelectedNode + " | " + Nodes.Count);
 
                     SelectedNode = null;
                     e.Use();
@@ -556,7 +558,8 @@ public class JNodeEditor4 : EditorWindow
         DialogueNode node = new DialogueNode(position, "Dialogue");
         node.SetGuid();
         node.dialogue = new Dialogue("Mono", new List<Line>() { });
-        JNode.Nodes.Add(node);
+        Nodes.Add(node);
+        AutoSaveJNodeInstance();
     }
 
 
@@ -564,37 +567,35 @@ public class JNodeEditor4 : EditorWindow
     {
         ChoiceSetNode node = new ChoiceSetNode(position, "Choice Set");
         node.SetGuid();
-        JNode.Nodes.Add(node);
+        Nodes.Add(node);
     }
 
     private void AddAssetChangeNode(Vector2 position)
     {
         AssetChangeNode node = new AssetChangeNode(position, "Asset Change");
         node.SetGuid();
-        node.assetChange = new("","",1);
-        JNode.Nodes.Add(node);
+        Nodes.Add(node);
     }
 
     private void AddItemDemandNode(Vector2 position)
     {
         ItemDemandNode node = new ItemDemandNode(position, "Item Demand");
         node.SetGuid();
-        JNode.Nodes.Add(node);
+        Nodes.Add(node);
     }
 
     private void AddPositionInitNode(Vector2 position)
     {
         PositionInitNode node = new PositionInitNode(position, "Position Init");
         node.SetGuid();
-        node.positionInit = new(new());
-        JNode.Nodes.Add(node);
+        Nodes.Add(node);
     }
 
     public Node GetNode(string id)
     {
-        for (int i = 0; i < JNode.Nodes.Count; i++)
+        for (int i = 0; i < Nodes.Count; i++)
         {
-            Node node = JNode.Nodes[i];
+            Node node = Nodes[i];
 
             if (node.ID == id)
             {
@@ -606,9 +607,9 @@ public class JNodeEditor4 : EditorWindow
     
     public Node GetNodeByChild(string id)
     {
-        for (int i = 0; i < JNode.Nodes.Count; i++)
+        for (int i = 0; i < Nodes.Count; i++)
         {
-            Node node = JNode.Nodes[i];
+            Node node = Nodes[i];
             
             if (node.ChildConnectingPoint.connectedNodeId == id)
             {
@@ -619,9 +620,9 @@ public class JNodeEditor4 : EditorWindow
     }
     public Node GetNodeByParent(string id)
     {
-        for (int i = 0; i < JNode.Nodes.Count; i++)
+        for (int i = 0; i < Nodes.Count; i++)
         {
-            Node node = JNode.Nodes[i];
+            Node node = Nodes[i];
 
             if (node.ParentConnectingPoint.connectedNodeId == id)
             {
@@ -647,8 +648,13 @@ public class JNodeEditor4 : EditorWindow
 
             }
         }
+    } 
+    void OnLostFocus()
+    {
+        jNodeInstance.SaveChanges();
+        Debug.Log("JNode Editor lost focus");
     }
-
+     
     public void OnDestroy()
     {
         OnClosing();

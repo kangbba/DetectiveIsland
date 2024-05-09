@@ -12,19 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63126eb933f537946a2da78a6445ce19, type: 3}
   m_Name: JNodeInstance
   m_EditorClassIdentifier: 
-  recentOpenFileName: 
-  selectedNode:
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    title: 
-    isSelected: 0
-  mousePosition: {x: 0, y: 0}
-  lastMouseDragPosition: {x: 0, y: 0}
-  canvasOffset: {x: 0, y: 0}
-  isDraggingNode: 0
-  isPanningCanvas: 0
-  recentPath: 
+  jNode: {}
+  recentOpenFileName: NewJNode 17.jnode
+  recentPath: Assets/Resources/JNodes/NewJNode 17.jnode

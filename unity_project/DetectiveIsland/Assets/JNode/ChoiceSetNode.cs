@@ -6,21 +6,37 @@ using UnityEditor;
 using UnityEngine;
 
 
-public class ChoicePlan
+[System.Serializable]
+public class NodeGroup : Node
 {
-    public string title;
     public List<Node> nodes;
+
+    public NodeGroup(string _title) : base(_title)
+    {
+
+
+    }
+
+    public override Vector2 CalNodeSize()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Element ToElement()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 [System.Serializable]
 public class ChoiceSetNode : Node
 {
     public List<DialogueNode> dialogueNodes = new List<DialogueNode>();
-    public List<ChoicePlan> choicePlans;
+    public List<NodeGroup> nodeGroups;
 
     public void AddChoicePlan()
     {
-       
+         
     }
 
     public override Element ToElement()
@@ -33,12 +49,12 @@ public class ChoiceSetNode : Node
         }
 
         choiceSet.Choices = new List<Choice>();
-        for (int i = 0; i < choicePlans.Count; i++)
+        for (int i = 0; i < nodeGroups.Count; i++)
         {
-            Choice choice = new Choice(choicePlans[i].title,null);
-            for (int j = 0; j < choicePlans[i].nodes.Count; j++)
+            Choice choice = new Choice(nodeGroups[i].title,null);
+            for (int j = 0; j < nodeGroups[i].nodes.Count; j++)
             {
-                choice.Elements.Add(choicePlans[i].nodes[j].ToElement());
+                choice.Elements.Add(nodeGroups[i].nodes[j].ToElement());
             }
             choiceSet.Choices.Add(choice);
         }
@@ -83,16 +99,16 @@ public class ChoiceSetNode : Node
             accumulatedHeight += node.CalNodeSize().y + dialoguesDist;
         }
         DrawAddDialogueButton();
-        DrawAddChoiceButton();
+        DrawAddNodeSet();
         DrawConnectionPoints(representColor, true, true);
 
     }
 
-    private void DrawAddChoiceButton()
+    private void DrawAddNodeSet()
     {
         float y = NodeService.CalNodesSizeY(dialogueNodes.Cast<Node>().ToList());
         Rect buttonRect = new Rect(Rect.center.x - 50, position.y + offset.y + y + 400 + dialoguesDist * dialogueNodes.Count, 100, 20); // Position below the node
-        if (GUI.Button(buttonRect, "Add Choice"))
+        if (GUI.Button(buttonRect, "Add NodeSet"))
         {
 
         }

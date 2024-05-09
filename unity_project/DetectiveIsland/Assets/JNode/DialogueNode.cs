@@ -25,6 +25,12 @@ public class DialogueNode : Node
     }
     public void DrawCharacterType(Rect nodeTotalRect)
     {
+        GUIStyle textFieldStyle = new GUIStyle()
+        {
+            alignment = TextAnchor.MiddleLeft,
+            normal = { textColor = Color.white, background = Texture.GetBoxTexture(Color.gray * 0.25f) },
+            fontSize = 12
+        };
         GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
         {
             alignment = TextAnchor.UpperLeft,
@@ -38,7 +44,7 @@ public class DialogueNode : Node
 
         // GUI.Label(new Rect(nodeTotalRect.x, nodeTotalRect.y + 60, labelSize_CharacterName.x, 20), labelContent, labelStyle);
         // Character Name Input Field
-        dialogue.CharacterID = GUI.TextField(new Rect(nodeTotalRect.x + labelSize_CharacterName.x + 5, nodeTotalRect.y + 60, nodeTotalRect.width - labelSize_CharacterName.x - 10, 20), dialogue.CharacterID);
+        dialogue.CharacterID = EditorGUI.TextField(new Rect(nodeTotalRect.x + labelSize_CharacterName.x + 5, nodeTotalRect.y + 60, nodeTotalRect.width - labelSize_CharacterName.x - 10, 20), dialogue.CharacterID, textFieldStyle);
     }
 
 
@@ -113,7 +119,7 @@ public class DialogueNode : Node
 
         Line line = dialogue.Lines[index];
         EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + initialLineContentsOffsetY, 80, 20), "Emotion ID:", labelStyle);
-        line.EmotionID = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY, 150, 20), line.EmotionID);
+        line.EmotionID = EditorGUI.TextField(new Rect(lineRect.x + 85, lineRect.y + initialLineContentsOffsetY, 150, 20), line.EmotionID, textFieldStyle);
 
         EditorGUI.LabelField(new Rect(lineRect.x + 5, lineRect.y + +initialLineContentsOffsetY + 25, 80, 20), "Sentence:", labelStyle);
         float calLength = NodeService.CalStringVisualSize(textFieldStyle, line.Sentence).x;

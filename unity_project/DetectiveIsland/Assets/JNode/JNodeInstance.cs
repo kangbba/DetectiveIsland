@@ -7,32 +7,35 @@ using UnityEngine;
 public  class JNodeInstance : ScriptableObject
 {
     public JNode jNode;
+    private List<Node> nodes = new List<Node>();
+    public List<Node> Nodes
+    {
+        get => nodes;
+        set
+        {
+            nodes = value;
+            // Assuming you have a reference to the JNodeInstance that contains this JNode
+            EditorUtility.SetDirty(this); // Mark the JNodeInstance as dirty
+        }
+    }
     public string recentOpenFileName;
-    public Node selectedNode;
-    public Node connectStartNode;
-
-    public Vector2 mousePosition;
-    public Vector2 lastMouseDragPosition;
-    public Vector2 canvasOffset;
-    public bool isDraggingNode;
-    public bool isPanningCanvas;
     public string recentPath;
-
-    public float zoomScale = 1.0f;
-    public Vector2 zoomCoordsOrigin = Vector2.zero;
+    public EditorUIState editorUIState;
 
     public void Initialize(string recentPath, string _recentOpenFileName, JNode jNode)
-    {
+    { 
         Debug.Log("Jnode Instance Initialize");
         this.jNode = jNode;
         this.recentPath = recentPath;
-        selectedNode = null;
-        canvasOffset = Vector2.zero;
-        isDraggingNode = false;
-        isPanningCanvas = false;
+        nodes = jNode.Nodes;
+        editorUIState = jNode.editorUIState;
         recentOpenFileName = _recentOpenFileName;
-        connectStartNode = null;
-        selectedNode = null;
+        editorUIState = jNode.editorUIState;
+    }
+
+    public void SaveEditorUiState(ref JNode jNode)
+    {
+        jNode.editorUIState = editorUIState;
     }
 
 
@@ -40,5 +43,6 @@ public  class JNodeInstance : ScriptableObject
     {
         EditorUtility.SetDirty(this); // Mark the ScriptableObject as dirty to ensure it gets saved
         AssetDatabase.SaveAssets(); // 변경 사항을 디스크에 저장
+        
     }
 }
