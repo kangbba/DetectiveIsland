@@ -6,17 +6,17 @@ using UnityEngine;
 public class FriendshipModify : Element
 {
     private bool _isGain;
-    private string _id;
+    private string _characterID;
     private int _amount;
 
     public FriendshipModify(bool isGain, string id, int amount)
     {
         _isGain = isGain;
-        _id = id;
+        _characterID = id;
         _amount = amount;
     }
 
     public bool IsGain { get => _isGain; set => _isGain = value; }
-    public string Id { get => _id; set => _id = value; }
+    public string Id { get => _characterID; set => _characterID = value; }
     public int Amount { get => _amount; set => _amount = value; }
 }

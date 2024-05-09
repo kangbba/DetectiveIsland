@@ -38,6 +38,8 @@ public static class NodeService
 
     public static Element ToProperElement(this Node node)
     {
+        return node.ToElement();
+        /*
         if (node is DialogueNode dialogueNode)
         {
             return dialogueNode.ToElement();
@@ -54,13 +56,26 @@ public static class NodeService
         {
             return positionInitNode.ToElement();
         }
-        else if (node is AssetChangeNode assetChangeNode)
+        else if (node is ItemModifyNode assetChangeNode)
         {
             return assetChangeNode.ToElement();
-        } 
-        else{
-            return null;
         }
+        else if (node is FriendshipModifyNode assetChangeNode)
+        {
+            return assetChangeNode.ToElement();
+        }
+        else if (node is PlaceModifyNode assetChangeNode)
+        {
+            return assetChangeNode.ToElement();
+        }
+        else if (node is  assetChangeNode)
+        {
+            return assetChangeNode.ToElement();
+        }
+        else
+        {
+            return null;
+        }*/
     }
 }
 
@@ -113,12 +128,13 @@ public static class NodeColor
     public static Color startNodeColor = new Color(0.4f, 0.8f, 0.4f); // Soft Green
     public static Color dialogueColor = new Color(0.4f, 0.6f, 1.0f); // Soft Blue
     public static Color choiceSetColor = new Color(0.8f, 0.6f, 0.4f); // Soft Orange
-    public static Color assetChangeColor = new Color(0.8f, 0.4f, 0.8f); // Soft Purple
+    public static Color itemModifyColor = new Color(0.3f, 0.7f, 0.7f); // Teal
     public static Color positionInitColor = new Color(0.9f, 0.9f, 0.4f); // Soft Yellow
     public static Color itemDemandColor = new Color(1.0f, 0.5f, 0.5f); // Soft Red
 
-
-
+    public static Color placeModifyColor = new Color(0.5f, 0.7f, 0.9f); // Soft Light Blue
+    public static Color friendshipModifyColor = new Color(0.7f, 0.4f, 0.7f); // Soft Mauve
+    public static Color overlayPictureColor = new Color(0.5f, 0.1f, 0.8f); // Soft Cyan
 }
 
 public static class NodeGuiService

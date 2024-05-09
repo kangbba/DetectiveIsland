@@ -2,14 +2,26 @@
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
     {
-      "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": "Mono",
-      "Lines": []
+      "$type": "PlaceModify, Assembly-CSharp",
+      "IsGain": true,
+      "Id": "111"
     },
     {
-      "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": "Mono",
-      "Lines": []
+      "$type": "FriendshipModify, Assembly-CSharp",
+      "IsGain": true,
+      "Id": "111",
+      "Amount": 10
+    },
+    {
+      "$type": "OverlayPicture, Assembly-CSharp",
+      "EffectID": "111",
+      "PictureID": "111"
+    },
+    {
+      "$type": "ItemModify, Assembly-CSharp",
+      "IsGain": true,
+      "Id": "1111",
+      "Amount": 11
     }
   ]
 }

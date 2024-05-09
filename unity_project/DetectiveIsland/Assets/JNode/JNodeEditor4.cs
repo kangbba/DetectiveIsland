@@ -544,12 +544,16 @@ public class JNodeEditor4 : EditorWindow
 
     private void ProcessContextMenu(Vector2 mousePos)
     {
-        GenericMenu menu = new GenericMenu();
+        GenericMenu menu = new GenericMenu(); 
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
         menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(mousePos));
-        menu.AddItem(new GUIContent("Add AssetChange Node"), false, () => AddAssetChangeNode(mousePos));
+        menu.AddItem(new GUIContent("Add ItemModify Node"), false, () => AddItemModifyNode(mousePos)); // Changed from AssetChange
         menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AddItemDemandNode(mousePos));
-        menu.AddItem(new GUIContent("Add PositionInit Node "), false, () => AddPositionInitNode(mousePos));
+        menu.AddItem(new GUIContent("Add PositionInit Node"), false, () => AddPositionInitNode(mousePos));
+        menu.AddItem(new GUIContent("Add PlaceModify Node"), false, () => AddPlaceModifyNode(mousePos)); // Newly added
+        menu.AddItem(new GUIContent("Add FriendshipModify Node"), false, () => AddFriendshipModifyNode(mousePos)); // Newly added
+        menu.AddItem(new GUIContent("Add OverlayPicture Node"), false, () => AddOverlayPictureNode(mousePos)); // Newly added
+
 
         menu.ShowAsContext();
     }
@@ -570,9 +574,30 @@ public class JNodeEditor4 : EditorWindow
         Nodes.Add(node);
     }
 
-    private void AddAssetChangeNode(Vector2 position)
+    private void AddPlaceModifyNode(Vector2 position)
     {
-        AssetChangeNode node = new AssetChangeNode(position, "Asset Change");
+        PlaceModifyNode node = new PlaceModifyNode(position, "PlaceModifyNode");
+        node.SetGuid();  // Assuming SetGuid sets a unique identifier for the node.
+        Nodes.Add(node);  // Assuming Nodes is a list or collection that stores all nodes.
+    }
+
+    private void AddFriendshipModifyNode(Vector2 position)
+    {
+        FriendshipModifyNode node = new FriendshipModifyNode(position, "FriendshipModifyNode");
+        node.SetGuid();  // Ensure each node has a unique ID for reference.
+        Nodes.Add(node);  // Add this node to your node management system or editor.
+    }
+
+    private void AddOverlayPictureNode(Vector2 position)
+    {
+        OverlayPictureNode node = new OverlayPictureNode(position, "OverlayPictureNode");
+        node.SetGuid();  // Unique GUID for the node.
+        Nodes.Add(node);  // Append to the list of nodes.
+    }
+
+    private void AddItemModifyNode(Vector2 position)
+    {
+        ItemModifyNode node = new ItemModifyNode(position, "ItemModifyNode");
         node.SetGuid();
         Nodes.Add(node);
     }
