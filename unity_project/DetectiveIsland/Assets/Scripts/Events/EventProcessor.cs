@@ -142,10 +142,19 @@ public static class EventProcessor
             ItemDemand itemDemand = element as ItemDemand;
             await ProcessItemDemand(itemDemand);
         }
-        else if(element is AssetChange)
+        else if(element is ItemModify)
         {
-            AssetChange assetChange = element as AssetChange;
-            await AssetChangeTask(assetChange);
+            ItemModify itemModify = element as ItemModify;
+            await ItemModifyTask(itemModify);
+        }
+        else if(element is FriendshipModify)
+        {
+        }
+        else if(element is PlaceModify)
+        {
+        }
+        else if(element is OverlayPicture)
+        {
         }
     }
     
@@ -249,24 +258,24 @@ public static class EventProcessor
         }
     }
 
-    public static async UniTask AssetChangeTask(AssetChange assetChange)
+    public static async UniTask ItemModifyTask(ItemModify itemModify)
     {
-        ItemData itemData = ItemService.GetItemData(assetChange.ItemID);
+        ItemData itemData = ItemService.GetItemData(itemModify.Id);
         if (itemData == null)
         {
             Debug.LogError("AssetChangeTask called with null ItemData");
             return;
         }
-        if(assetChange.GainType == "Gain"){
-            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, assetChange.ItemID);
+        if(itemModify.IsGain){
+            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, itemModify.Id);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
             UIManager.Instance.ItemOwnPanel.OpenPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             UIManager.Instance.ItemOwnPanel.ClosePanel();
                 
         }
-        else if(assetChange.GainType == "Lose"){
-            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, assetChange.ItemID);
+        else {
+            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, itemModify.Id);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
         }
        
