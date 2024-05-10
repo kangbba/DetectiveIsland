@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using Aroka.JsonUtils;
+using System.Text.RegularExpressions;
 
 public static class EventProcessor
 {
@@ -149,12 +150,18 @@ public static class EventProcessor
         }
         else if(element is FriendshipModify)
         {
+            FriendshipModify friendshipModify = element as FriendshipModify;
+            await FriendshipModifyTask(friendshipModify);
         }
         else if(element is PlaceModify)
         {
+            PlaceModify placeModify = element as PlaceModify;
+            await PlaceModifyTask(placeModify);
         }
         else if(element is OverlayPicture)
         {
+            OverlayPicture overlayPicture = element as OverlayPicture;
+            await OverlayPictureTask(overlayPicture);
         }
     }
     
@@ -199,24 +206,40 @@ public static class EventProcessor
             CameraController.MoveX(instancedCharacter.transform.position.x / 10f, 1f);
         }
 
+        string[] delimiters = { @"\.", @"\,", @"\!", @"\?", @"\.\.\." }; // 구분할 문자열 패턴 정의
         foreach (var line in dialogue.Lines)
         {
-            if (instancedCharacter != null)
-            {
-                instancedCharacter.SetEmotion(line.EmotionID, .3f);
-                instancedCharacter.StartTalking();
-            }
-
+           
+            Debug.Log("Line 시작");
+            dialoguePanel.ClearPanel();
             dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-            await dialoguePanel.TypeLineTask(line.Sentence, Color.white);
+    string[] sentences = Regex.Split(line.Sentence, @"(?<=[.!?])\s+"); 
 
-            if (instancedCharacter != null)
+            for (int i = 0 ; i < sentences.Length ; i++)
             {
-                instancedCharacter.StopTalking();
-            }
+                if (instancedCharacter != null)
+                {
+                    instancedCharacter.SetEmotion(line.EmotionID, .3f);
+                    instancedCharacter.StartTalking();
+                }   
 
-            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
+                await dialoguePanel.TypeLineTask(sentences[i].Trim(), Color.white); // 문장 출력
+                dialoguePanel.ShowDialogueArrow();
+                if (instancedCharacter != null)
+                {
+                    instancedCharacter.StopTalking();
+                }
+
+                if(i != sentences.Length - 1){
+                  await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
+                  dialoguePanel.HideDialogueArrow();
+                }
+            }
+            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
+            dialoguePanel.HideDialogueArrow();
+            Debug.Log("Line 끝");
         }
+
     }
 
     public static async UniTask ProcessItemDemand(ItemDemand itemDemand)
@@ -278,6 +301,17 @@ public static class EventProcessor
             EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, itemModify.Id);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
         }
+       
+    }
+    public static async UniTask FriendshipModifyTask(FriendshipModify friendshipModify)
+    {
+       
+    }
+    public static async UniTask PlaceModifyTask(PlaceModify placeModify)
+    {
+    }
+    public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)
+    {
        
     }
 

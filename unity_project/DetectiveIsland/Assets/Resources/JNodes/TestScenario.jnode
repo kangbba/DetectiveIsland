@@ -17,8 +17,8 @@
         "y": -440.0
       },
       "offset": {
-        "x": 240.0,
-        "y": -760.0
+        "x": -163.0,
+        "y": -2069.0
       },
       "title": "StartNode",
       "isSelected": false,
@@ -68,23 +68,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 688.0,
-          "y": -1122.0,
+          "x": 285.0,
+          "y": -2431.0,
           "position": {
-            "x": 688.0,
-            "y": -1122.0
+            "x": 285.0,
+            "y": -2431.0
           },
           "center": {
-            "x": 698.0,
-            "y": -1112.0
+            "x": 295.0,
+            "y": -2421.0
           },
           "min": {
-            "x": 688.0,
-            "y": -1122.0
+            "x": 285.0,
+            "y": -2431.0
           },
           "max": {
-            "x": 708.0,
-            "y": -1102.0
+            "x": 305.0,
+            "y": -2411.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -92,14 +92,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 688.0,
-          "yMin": -1122.0,
-          "xMax": 708.0,
-          "yMax": -1102.0,
-          "left": 688.0,
-          "right": 708.0,
-          "top": -1122.0,
-          "bottom": -1102.0
+          "xMin": 285.0,
+          "yMin": -2431.0,
+          "xMax": 305.0,
+          "yMax": -2411.0,
+          "left": 285.0,
+          "right": 305.0,
+          "top": -2431.0,
+          "bottom": -2411.0
         },
         "connectedNodeId": "165cbc45-1db2-4ae4-98a4-1045f4ac4613",
         "isConnected": true,
@@ -107,23 +107,23 @@
       },
       "Rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 598.0,
-        "y": -1200.0,
+        "x": 195.0,
+        "y": -2509.0,
         "position": {
-          "x": 598.0,
-          "y": -1200.0
+          "x": 195.0,
+          "y": -2509.0
         },
         "center": {
-          "x": 698.0,
-          "y": -1150.0
+          "x": 295.0,
+          "y": -2459.0
         },
         "min": {
-          "x": 598.0,
-          "y": -1200.0
+          "x": 195.0,
+          "y": -2509.0
         },
         "max": {
-          "x": 798.0,
-          "y": -1100.0
+          "x": 395.0,
+          "y": -2409.0
         },
         "width": 200.0,
         "height": 100.0,
@@ -131,14 +131,14 @@
           "x": 200.0,
           "y": 100.0
         },
-        "xMin": 598.0,
-        "yMin": -1200.0,
-        "xMax": 798.0,
-        "yMax": -1100.0,
-        "left": 598.0,
-        "right": 798.0,
-        "top": -1200.0,
-        "bottom": -1100.0
+        "xMin": 195.0,
+        "yMin": -2509.0,
+        "xMax": 395.0,
+        "yMax": -2409.0,
+        "left": 195.0,
+        "right": 395.0,
+        "top": -2509.0,
+        "bottom": -2409.0
       },
       "ID": "b5ce9309-2723-4814-9416-1cf13aa19b8e"
     },
@@ -151,53 +151,73 @@
           {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": "조셉은 그곳에 가지 말라고 했다. 하지만 레이첼의 말이 맞다면, 이곳에서 답을 찾을 수도 있을 것이다. 섬의 이 오래된 비밀이 내 마음의 장벽을 허물어줄지도 모르지."
+            "Sentence": "어둠 속에서 서서히 빛이 스며든다. "
           },
           {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": "이 집은 섬의 과거를 고스란히 간직하고 있는 듯하다. 오래된 사진들, 먼지 쌓인 서류들... 여기엔 분명 뭔가 있다."
+            "Sentence": "멀리서 들려오는 물소리 같은 것은 이제 점점 사라지고, 대신 어딘가 모르게 포근하고 따뜻한 감각이 몸을 감싼다."
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "여긴 어디일까? 왜 나는 여기에 있는 걸까? 기억들이 서서히 흐릿해지면서, 나는 마치 깊은 잠에서 깨어나려는 듯하다. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "기억들은 미끄러져 사라지고, 모든 게 꿈처럼 느껴진다. 이런 무력감과 혼란 속에서도, 나는 어딘가에서 구원의 손길을 느낀다."
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "나는 여전히 불안정하고 불확실한 상태에 있지만, 이 침대가 제공하는 안락함은 내 마음을 조금은 진정시킨다."
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "어딘가 모르게 안도감이 들고, 지금 이 순간만큼은 고통이나 걱정이 전혀 없다는 것이 얼마나 감사한 일인지..."
           }
         ]
       },
       "LineVeritcalDist": 5.0,
       "nodeSize": {
         "x": 600.0,
-        "y": 525.0
+        "y": 1025.0
       },
       "position": {
-        "x": 185.0,
-        "y": -78.0
+        "x": 178.0,
+        "y": -574.0
       },
       "offset": {
-        "x": 240.0,
-        "y": -760.0
+        "x": -163.0,
+        "y": -2069.0
       },
       "title": "Dialogue",
       "isSelected": false,
       "LineWidth": 600.0,
-      "NodeCenterX": 485.0,
+      "NodeCenterX": 478.0,
       "ParentConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 715.0,
-          "y": -836.0,
+          "x": 305.0,
+          "y": -2641.0,
           "position": {
-            "x": 715.0,
-            "y": -836.0
+            "x": 305.0,
+            "y": -2641.0
           },
           "center": {
-            "x": 725.0,
-            "y": -826.0
+            "x": 315.0,
+            "y": -2631.0
           },
           "min": {
-            "x": 715.0,
-            "y": -836.0
+            "x": 305.0,
+            "y": -2641.0
           },
           "max": {
-            "x": 735.0,
-            "y": -816.0
+            "x": 325.0,
+            "y": -2621.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -205,14 +225,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 715.0,
-          "yMin": -836.0,
-          "xMax": 735.0,
-          "yMax": -816.0,
-          "left": 715.0,
-          "right": 735.0,
-          "top": -836.0,
-          "bottom": -816.0
+          "xMin": 305.0,
+          "yMin": -2641.0,
+          "xMax": 325.0,
+          "yMax": -2621.0,
+          "left": 305.0,
+          "right": 325.0,
+          "top": -2641.0,
+          "bottom": -2621.0
         },
         "connectedNodeId": "b5ce9309-2723-4814-9416-1cf13aa19b8e",
         "isConnected": true,
@@ -222,23 +242,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 715.0,
-          "y": -335.0,
+          "x": 305.0,
+          "y": -1640.0,
           "position": {
-            "x": 715.0,
-            "y": -335.0
+            "x": 305.0,
+            "y": -1640.0
           },
           "center": {
-            "x": 725.0,
-            "y": -325.0
+            "x": 315.0,
+            "y": -1630.0
           },
           "min": {
-            "x": 715.0,
-            "y": -335.0
+            "x": 305.0,
+            "y": -1640.0
           },
           "max": {
-            "x": 735.0,
-            "y": -315.0
+            "x": 325.0,
+            "y": -1620.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -246,14 +266,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 715.0,
-          "yMin": -335.0,
-          "xMax": 735.0,
-          "yMax": -315.0,
-          "left": 715.0,
-          "right": 735.0,
-          "top": -335.0,
-          "bottom": -315.0
+          "xMin": 305.0,
+          "yMin": -1640.0,
+          "xMax": 325.0,
+          "yMax": -1620.0,
+          "left": 305.0,
+          "right": 325.0,
+          "top": -1640.0,
+          "bottom": -1620.0
         },
         "connectedNodeId": "439b5398-00eb-43ea-b524-db9ee5f66ceb",
         "isConnected": true,
@@ -261,38 +281,38 @@
       },
       "Rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 425.0,
-        "y": -838.0,
+        "x": 15.0,
+        "y": -2643.0,
         "position": {
-          "x": 425.0,
-          "y": -838.0
+          "x": 15.0,
+          "y": -2643.0
         },
         "center": {
-          "x": 725.0,
-          "y": -575.5
+          "x": 315.0,
+          "y": -2130.5
         },
         "min": {
-          "x": 425.0,
-          "y": -838.0
+          "x": 15.0,
+          "y": -2643.0
         },
         "max": {
-          "x": 1025.0,
-          "y": -313.0
+          "x": 615.0,
+          "y": -1618.0
         },
         "width": 600.0,
-        "height": 525.0,
+        "height": 1025.0,
         "size": {
           "x": 600.0,
-          "y": 525.0
+          "y": 1025.0
         },
-        "xMin": 425.0,
-        "yMin": -838.0,
-        "xMax": 1025.0,
-        "yMax": -313.0,
-        "left": 425.0,
-        "right": 1025.0,
-        "top": -838.0,
-        "bottom": -313.0
+        "xMin": 15.0,
+        "yMin": -2643.0,
+        "xMax": 615.0,
+        "yMax": -1618.0,
+        "left": 15.0,
+        "right": 615.0,
+        "top": -2643.0,
+        "bottom": -1618.0
       },
       "ID": "165cbc45-1db2-4ae4-98a4-1045f4ac4613"
     },
@@ -300,63 +320,58 @@
       "$type": "DialogueNode, Assembly-CSharp",
       "dialogue": {
         "$type": "Dialogue, Assembly-CSharp",
-        "CharacterID": "Lisa",
+        "CharacterID": "Smith",
         "Lines": [
           {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": "이건 테스트야 라이언. 내가 말을 길게해볼게 루라라라라."
+            "Sentence": "라이언, 드디어 깨어났구나! 좋은 아침이야. 나는 닥터 스미스야. "
           },
           {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": "어때 내가 잘 말하고있지?"
-          },
-          {
-            "$type": "Line, Assembly-CSharp",
-            "EmotionID": "Sad",
-            "Sentence": "아이템을 줄게"
+            "Sentence": "\u0003사고 이후로 처음으로 의식을 회복했어."
           }
         ]
       },
       "LineVeritcalDist": 5.0,
       "nodeSize": {
         "x": 600.0,
-        "y": 650.0
+        "y": 525.0
       },
       "position": {
-        "x": 215.0,
-        "y": 674.0
+        "x": 194.0,
+        "y": 680.0
       },
       "offset": {
-        "x": 240.0,
-        "y": -760.0
+        "x": -163.0,
+        "y": -2069.0
       },
       "title": "Dialogue",
-      "isSelected": false,
+      "isSelected": true,
       "LineWidth": 600.0,
-      "NodeCenterX": 515.0,
+      "NodeCenterX": 494.0,
       "ParentConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 745.0,
-          "y": -84.0,
+          "x": 321.0,
+          "y": -1387.0,
           "position": {
-            "x": 745.0,
-            "y": -84.0
+            "x": 321.0,
+            "y": -1387.0
           },
           "center": {
-            "x": 755.0,
-            "y": -74.0
+            "x": 331.0,
+            "y": -1377.0
           },
           "min": {
-            "x": 745.0,
-            "y": -84.0
+            "x": 321.0,
+            "y": -1387.0
           },
           "max": {
-            "x": 765.0,
-            "y": -64.0
+            "x": 341.0,
+            "y": -1367.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -364,14 +379,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 745.0,
-          "yMin": -84.0,
-          "xMax": 765.0,
-          "yMax": -64.0,
-          "left": 745.0,
-          "right": 765.0,
-          "top": -84.0,
-          "bottom": -64.0
+          "xMin": 321.0,
+          "yMin": -1387.0,
+          "xMax": 341.0,
+          "yMax": -1367.0,
+          "left": 321.0,
+          "right": 341.0,
+          "top": -1387.0,
+          "bottom": -1367.0
         },
         "connectedNodeId": "439b5398-00eb-43ea-b524-db9ee5f66ceb",
         "isConnected": true,
@@ -381,23 +396,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 745.0,
-          "y": 542.0,
+          "x": 321.0,
+          "y": -886.0,
           "position": {
-            "x": 745.0,
-            "y": 542.0
+            "x": 321.0,
+            "y": -886.0
           },
           "center": {
-            "x": 755.0,
-            "y": 552.0
+            "x": 331.0,
+            "y": -876.0
           },
           "min": {
-            "x": 745.0,
-            "y": 542.0
+            "x": 321.0,
+            "y": -886.0
           },
           "max": {
-            "x": 765.0,
-            "y": 562.0
+            "x": 341.0,
+            "y": -866.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -405,53 +420,53 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 745.0,
-          "yMin": 542.0,
-          "xMax": 765.0,
-          "yMax": 562.0,
-          "left": 745.0,
-          "right": 765.0,
-          "top": 542.0,
-          "bottom": 562.0
+          "xMin": 321.0,
+          "yMin": -886.0,
+          "xMax": 341.0,
+          "yMax": -866.0,
+          "left": 321.0,
+          "right": 341.0,
+          "top": -886.0,
+          "bottom": -866.0
         },
-        "connectedNodeId": "d09fffc2-da93-4b53-b4bf-6010680b3ca4",
+        "connectedNodeId": "007721ca-29e7-4eb0-8fcc-c3a877e87795",
         "isConnected": true,
-        "ConnectedNodeId": "d09fffc2-da93-4b53-b4bf-6010680b3ca4"
+        "ConnectedNodeId": "007721ca-29e7-4eb0-8fcc-c3a877e87795"
       },
       "Rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 455.0,
-        "y": -86.0,
+        "x": 31.0,
+        "y": -1389.0,
         "position": {
-          "x": 455.0,
-          "y": -86.0
+          "x": 31.0,
+          "y": -1389.0
         },
         "center": {
-          "x": 755.0,
-          "y": 239.0
+          "x": 331.0,
+          "y": -1126.5
         },
         "min": {
-          "x": 455.0,
-          "y": -86.0
+          "x": 31.0,
+          "y": -1389.0
         },
         "max": {
-          "x": 1055.0,
-          "y": 564.0
+          "x": 631.0,
+          "y": -864.0
         },
         "width": 600.0,
-        "height": 650.0,
+        "height": 525.0,
         "size": {
           "x": 600.0,
-          "y": 650.0
+          "y": 525.0
         },
-        "xMin": 455.0,
-        "yMin": -86.0,
-        "xMax": 1055.0,
-        "yMax": 564.0,
-        "left": 455.0,
-        "right": 1055.0,
-        "top": -86.0,
-        "bottom": 564.0
+        "xMin": 31.0,
+        "yMin": -1389.0,
+        "xMax": 631.0,
+        "yMax": -864.0,
+        "left": 31.0,
+        "right": 631.0,
+        "top": -1389.0,
+        "bottom": -864.0
       },
       "ID": "1a5fcc53-4c87-44e9-be83-35ee7cffd0aa"
     },
@@ -460,7 +475,7 @@
       "characterPositions": [
         {
           "$type": "CharacterPosition, Assembly-CSharp",
-          "CharacterID": "Lisa",
+          "CharacterID": "Smith",
           "PositionID": "Middle"
         }
       ],
@@ -473,8 +488,8 @@
         "y": 491.0
       },
       "offset": {
-        "x": 240.0,
-        "y": -760.0
+        "x": -163.0,
+        "y": -2069.0
       },
       "title": "Position Init",
       "isSelected": false,
@@ -483,23 +498,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 733.0,
-          "y": -267.0,
+          "x": 330.0,
+          "y": -1576.0,
           "position": {
-            "x": 733.0,
-            "y": -267.0
+            "x": 330.0,
+            "y": -1576.0
           },
           "center": {
-            "x": 743.0,
-            "y": -257.0
+            "x": 340.0,
+            "y": -1566.0
           },
           "min": {
-            "x": 733.0,
-            "y": -267.0
+            "x": 330.0,
+            "y": -1576.0
           },
           "max": {
-            "x": 753.0,
-            "y": -247.0
+            "x": 350.0,
+            "y": -1556.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -507,14 +522,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 733.0,
-          "yMin": -267.0,
-          "xMax": 753.0,
-          "yMax": -247.0,
-          "left": 733.0,
-          "right": 753.0,
-          "top": -267.0,
-          "bottom": -247.0
+          "xMin": 330.0,
+          "yMin": -1576.0,
+          "xMax": 350.0,
+          "yMax": -1556.0,
+          "left": 330.0,
+          "right": 350.0,
+          "top": -1576.0,
+          "bottom": -1556.0
         },
         "connectedNodeId": "165cbc45-1db2-4ae4-98a4-1045f4ac4613",
         "isConnected": true,
@@ -524,23 +539,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 733.0,
-          "y": -131.0,
+          "x": 330.0,
+          "y": -1440.0,
           "position": {
-            "x": 733.0,
-            "y": -131.0
+            "x": 330.0,
+            "y": -1440.0
           },
           "center": {
-            "x": 743.0,
-            "y": -121.0
+            "x": 340.0,
+            "y": -1430.0
           },
           "min": {
-            "x": 733.0,
-            "y": -131.0
+            "x": 330.0,
+            "y": -1440.0
           },
           "max": {
-            "x": 753.0,
-            "y": -111.0
+            "x": 350.0,
+            "y": -1420.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -548,14 +563,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 733.0,
-          "yMin": -131.0,
-          "xMax": 753.0,
-          "yMax": -111.0,
-          "left": 733.0,
-          "right": 753.0,
-          "top": -131.0,
-          "bottom": -111.0
+          "xMin": 330.0,
+          "yMin": -1440.0,
+          "xMax": 350.0,
+          "yMax": -1420.0,
+          "left": 330.0,
+          "right": 350.0,
+          "top": -1440.0,
+          "bottom": -1420.0
         },
         "connectedNodeId": "1a5fcc53-4c87-44e9-be83-35ee7cffd0aa",
         "isConnected": true,
@@ -563,23 +578,23 @@
       },
       "Rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 543.0,
-        "y": -269.0,
+        "x": 140.0,
+        "y": -1578.0,
         "position": {
-          "x": 543.0,
-          "y": -269.0
+          "x": 140.0,
+          "y": -1578.0
         },
         "center": {
-          "x": 743.0,
-          "y": -189.0
+          "x": 340.0,
+          "y": -1498.0
         },
         "min": {
-          "x": 543.0,
-          "y": -269.0
+          "x": 140.0,
+          "y": -1578.0
         },
         "max": {
-          "x": 943.0,
-          "y": -109.0
+          "x": 540.0,
+          "y": -1418.0
         },
         "width": 400.0,
         "height": 160.0,
@@ -587,58 +602,73 @@
           "x": 400.0,
           "y": 160.0
         },
-        "xMin": 543.0,
-        "yMin": -269.0,
-        "xMax": 943.0,
-        "yMax": -109.0,
-        "left": 543.0,
-        "right": 943.0,
-        "top": -269.0,
-        "bottom": -109.0
+        "xMin": 140.0,
+        "yMin": -1578.0,
+        "xMax": 540.0,
+        "yMax": -1418.0,
+        "left": 140.0,
+        "right": 540.0,
+        "top": -1578.0,
+        "bottom": -1418.0
       },
       "ID": "439b5398-00eb-43ea-b524-db9ee5f66ceb"
     },
     {
-      "$type": "ItemModifyNode, Assembly-CSharp",
-      "isGain": true,
-      "itemID": "NotePad",
-      "itemAmount": 1,
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Ryan",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "닥터 스미스... 사실은 잘 기억이 나지 않아요. 하지만 정말 감사합니다. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "제가 왜 여기에 있는지, 무슨 일이 있었는지 전혀 기억나지 않아요. 여기서 무슨 일이 있었던 건가요?"
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
       "nodeSize": {
-        "x": 250.0,
-        "y": 150.0
+        "x": 600.0,
+        "y": 525.0
       },
       "position": {
-        "x": 396.0,
-        "y": 1350.0
+        "x": 193.0,
+        "y": 1226.0
       },
       "offset": {
-        "x": 240.0,
-        "y": -760.0
+        "x": -163.0,
+        "y": -2069.0
       },
-      "title": "ItemModifyNode",
+      "title": "Dialogue",
       "isSelected": false,
-      "NodeCenterX": 521.0,
+      "LineWidth": 600.0,
+      "NodeCenterX": 493.0,
       "ParentConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 751.0,
-          "y": 592.0,
+          "x": 320.0,
+          "y": -841.0,
           "position": {
-            "x": 751.0,
-            "y": 592.0
+            "x": 320.0,
+            "y": -841.0
           },
           "center": {
-            "x": 761.0,
-            "y": 602.0
+            "x": 330.0,
+            "y": -831.0
           },
           "min": {
-            "x": 751.0,
-            "y": 592.0
+            "x": 320.0,
+            "y": -841.0
           },
           "max": {
-            "x": 771.0,
-            "y": 612.0
+            "x": 340.0,
+            "y": -821.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -646,14 +676,14 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 751.0,
-          "yMin": 592.0,
-          "xMax": 771.0,
-          "yMax": 612.0,
-          "left": 751.0,
-          "right": 771.0,
-          "top": 592.0,
-          "bottom": 612.0
+          "xMin": 320.0,
+          "yMin": -841.0,
+          "xMax": 340.0,
+          "yMax": -821.0,
+          "left": 320.0,
+          "right": 340.0,
+          "top": -841.0,
+          "bottom": -821.0
         },
         "connectedNodeId": "1a5fcc53-4c87-44e9-be83-35ee7cffd0aa",
         "isConnected": true,
@@ -663,23 +693,23 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 751.0,
-          "y": 718.0,
+          "x": 320.0,
+          "y": -340.0,
           "position": {
-            "x": 751.0,
-            "y": 718.0
+            "x": 320.0,
+            "y": -340.0
           },
           "center": {
-            "x": 761.0,
-            "y": 728.0
+            "x": 330.0,
+            "y": -330.0
           },
           "min": {
-            "x": 751.0,
-            "y": 718.0
+            "x": 320.0,
+            "y": -340.0
           },
           "max": {
-            "x": 771.0,
-            "y": 738.0
+            "x": 340.0,
+            "y": -320.0
           },
           "width": 20.0,
           "height": 20.0,
@@ -687,14 +717,794 @@
             "x": 20.0,
             "y": 20.0
           },
-          "xMin": 751.0,
-          "yMin": 718.0,
-          "xMax": 771.0,
-          "yMax": 738.0,
-          "left": 751.0,
-          "right": 771.0,
-          "top": 718.0,
-          "bottom": 738.0
+          "xMin": 320.0,
+          "yMin": -340.0,
+          "xMax": 340.0,
+          "yMax": -320.0,
+          "left": 320.0,
+          "right": 340.0,
+          "top": -340.0,
+          "bottom": -320.0
+        },
+        "connectedNodeId": "7d830921-4d2f-41c6-ac54-94cb5381538a",
+        "isConnected": true,
+        "ConnectedNodeId": "7d830921-4d2f-41c6-ac54-94cb5381538a"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 30.0,
+        "y": -843.0,
+        "position": {
+          "x": 30.0,
+          "y": -843.0
+        },
+        "center": {
+          "x": 330.0,
+          "y": -580.5
+        },
+        "min": {
+          "x": 30.0,
+          "y": -843.0
+        },
+        "max": {
+          "x": 630.0,
+          "y": -318.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 30.0,
+        "yMin": -843.0,
+        "xMax": 630.0,
+        "yMax": -318.0,
+        "left": 30.0,
+        "right": 630.0,
+        "top": -843.0,
+        "bottom": -318.0
+      },
+      "ID": "007721ca-29e7-4eb0-8fcc-c3a877e87795"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Smith",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "넌 산책 중에 사고를 당했어. 발이 미끄러져서 작은 절벽에서 떨어졌지. 크게 다친 곳은 없지만, 머리에 조금 충격을 받았어."
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "그 충격 때문에 기억 상실이 생길 수 있어. 하지만 걱정 마, 여기서 널 잘 돌볼 거야. 넌 이제 안전한 손에 있으니까."
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 525.0
+      },
+      "position": {
+        "x": 198.0,
+        "y": 1769.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "LineWidth": 600.0,
+      "NodeCenterX": 498.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 325.0,
+          "y": -298.0,
+          "position": {
+            "x": 325.0,
+            "y": -298.0
+          },
+          "center": {
+            "x": 335.0,
+            "y": -288.0
+          },
+          "min": {
+            "x": 325.0,
+            "y": -298.0
+          },
+          "max": {
+            "x": 345.0,
+            "y": -278.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 325.0,
+          "yMin": -298.0,
+          "xMax": 345.0,
+          "yMax": -278.0,
+          "left": 325.0,
+          "right": 345.0,
+          "top": -298.0,
+          "bottom": -278.0
+        },
+        "connectedNodeId": "007721ca-29e7-4eb0-8fcc-c3a877e87795",
+        "isConnected": true,
+        "ConnectedNodeId": "007721ca-29e7-4eb0-8fcc-c3a877e87795"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 325.0,
+          "y": 203.0,
+          "position": {
+            "x": 325.0,
+            "y": 203.0
+          },
+          "center": {
+            "x": 335.0,
+            "y": 213.0
+          },
+          "min": {
+            "x": 325.0,
+            "y": 203.0
+          },
+          "max": {
+            "x": 345.0,
+            "y": 223.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 325.0,
+          "yMin": 203.0,
+          "xMax": 345.0,
+          "yMax": 223.0,
+          "left": 325.0,
+          "right": 345.0,
+          "top": 203.0,
+          "bottom": 223.0
+        },
+        "connectedNodeId": "b20726a1-107c-434c-b60d-596e5e89b140",
+        "isConnected": true,
+        "ConnectedNodeId": "b20726a1-107c-434c-b60d-596e5e89b140"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 35.0,
+        "y": -300.0,
+        "position": {
+          "x": 35.0,
+          "y": -300.0
+        },
+        "center": {
+          "x": 335.0,
+          "y": -37.5
+        },
+        "min": {
+          "x": 35.0,
+          "y": -300.0
+        },
+        "max": {
+          "x": 635.0,
+          "y": 225.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 35.0,
+        "yMin": -300.0,
+        "xMax": 635.0,
+        "yMax": 225.0,
+        "left": 35.0,
+        "right": 635.0,
+        "top": -300.0,
+        "bottom": 225.0
+      },
+      "ID": "7d830921-4d2f-41c6-ac54-94cb5381538a"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Mono",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "사고라는 말이 실감 나지 않는다. 이 모든 상황이 너무나도 비현실적이다. 내 기억은 어디로 갔을까?"
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "닥터 스미스의 말이 마음을 진정시키고 있지만, 나는 여전히 내가 어떻게 여기까지 왔는지, 왜 이렇게 됐는지 알아내야 한다는 절박함을 느낀다. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "그럼에도 불구하고, 나는 그의 말을 신뢰하려고 한다. 그의 목소리에는 진심이 담겨 있고, 그가 나를 돌본다는 사실이 내게 큰 위안이 되고 있다."
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 650.0
+      },
+      "position": {
+        "x": 196.0,
+        "y": 2309.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "LineWidth": 600.0,
+      "NodeCenterX": 496.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 323.0,
+          "y": 242.0,
+          "position": {
+            "x": 323.0,
+            "y": 242.0
+          },
+          "center": {
+            "x": 333.0,
+            "y": 252.0
+          },
+          "min": {
+            "x": 323.0,
+            "y": 242.0
+          },
+          "max": {
+            "x": 343.0,
+            "y": 262.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 323.0,
+          "yMin": 242.0,
+          "xMax": 343.0,
+          "yMax": 262.0,
+          "left": 323.0,
+          "right": 343.0,
+          "top": 242.0,
+          "bottom": 262.0
+        },
+        "connectedNodeId": "06e7d873-c88a-4288-8e9b-2c26e311286f",
+        "isConnected": true,
+        "ConnectedNodeId": "06e7d873-c88a-4288-8e9b-2c26e311286f"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 323.0,
+          "y": 868.0,
+          "position": {
+            "x": 323.0,
+            "y": 868.0
+          },
+          "center": {
+            "x": 333.0,
+            "y": 878.0
+          },
+          "min": {
+            "x": 323.0,
+            "y": 868.0
+          },
+          "max": {
+            "x": 343.0,
+            "y": 888.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 323.0,
+          "yMin": 868.0,
+          "xMax": 343.0,
+          "yMax": 888.0,
+          "left": 323.0,
+          "right": 343.0,
+          "top": 868.0,
+          "bottom": 888.0
+        },
+        "connectedNodeId": "5840aaca-1ca7-4cfd-82f9-aaa053844583",
+        "isConnected": true,
+        "ConnectedNodeId": "5840aaca-1ca7-4cfd-82f9-aaa053844583"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 33.0,
+        "y": 240.0,
+        "position": {
+          "x": 33.0,
+          "y": 240.0
+        },
+        "center": {
+          "x": 333.0,
+          "y": 565.0
+        },
+        "min": {
+          "x": 33.0,
+          "y": 240.0
+        },
+        "max": {
+          "x": 633.0,
+          "y": 890.0
+        },
+        "width": 600.0,
+        "height": 650.0,
+        "size": {
+          "x": 600.0,
+          "y": 650.0
+        },
+        "xMin": 33.0,
+        "yMin": 240.0,
+        "xMax": 633.0,
+        "yMax": 890.0,
+        "left": 33.0,
+        "right": 633.0,
+        "top": 240.0,
+        "bottom": 890.0
+      },
+      "ID": "9a0cba75-465b-4004-856c-325374ef0c64"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Ryan",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "이 기억 상실... 어떻게 해야 회복할 수 있나요? "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "지금 제가 할 수 있는 것은 무엇인가요?"
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 525.0
+      },
+      "position": {
+        "x": 199.0,
+        "y": 3025.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "LineWidth": 600.0,
+      "NodeCenterX": 499.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 326.0,
+          "y": 958.0,
+          "position": {
+            "x": 326.0,
+            "y": 958.0
+          },
+          "center": {
+            "x": 336.0,
+            "y": 968.0
+          },
+          "min": {
+            "x": 326.0,
+            "y": 958.0
+          },
+          "max": {
+            "x": 346.0,
+            "y": 978.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 326.0,
+          "yMin": 958.0,
+          "xMax": 346.0,
+          "yMax": 978.0,
+          "left": 326.0,
+          "right": 346.0,
+          "top": 958.0,
+          "bottom": 978.0
+        },
+        "connectedNodeId": "9a0cba75-465b-4004-856c-325374ef0c64",
+        "isConnected": true,
+        "ConnectedNodeId": "9a0cba75-465b-4004-856c-325374ef0c64"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 326.0,
+          "y": 1459.0,
+          "position": {
+            "x": 326.0,
+            "y": 1459.0
+          },
+          "center": {
+            "x": 336.0,
+            "y": 1469.0
+          },
+          "min": {
+            "x": 326.0,
+            "y": 1459.0
+          },
+          "max": {
+            "x": 346.0,
+            "y": 1479.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 326.0,
+          "yMin": 1459.0,
+          "xMax": 346.0,
+          "yMax": 1479.0,
+          "left": 326.0,
+          "right": 346.0,
+          "top": 1459.0,
+          "bottom": 1479.0
+        },
+        "connectedNodeId": "93abd255-7beb-49aa-985c-da710411096c",
+        "isConnected": true,
+        "ConnectedNodeId": "93abd255-7beb-49aa-985c-da710411096c"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 36.0,
+        "y": 956.0,
+        "position": {
+          "x": 36.0,
+          "y": 956.0
+        },
+        "center": {
+          "x": 336.0,
+          "y": 1218.5
+        },
+        "min": {
+          "x": 36.0,
+          "y": 956.0
+        },
+        "max": {
+          "x": 636.0,
+          "y": 1481.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 36.0,
+        "yMin": 956.0,
+        "xMax": 636.0,
+        "yMax": 1481.0,
+        "left": 36.0,
+        "right": 636.0,
+        "top": 956.0,
+        "bottom": 1481.0
+      },
+      "ID": "5840aaca-1ca7-4cfd-82f9-aaa053844583"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Smith",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "일단은 안정을 취하는 것이 가장 중요해. 충분히 휴식을 취하고, 스트레스를 최소화해야 해. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "병원에서는 모든 지원을 제공할 테니까, 편안하게 쉬면서 회복에만 집중하도록 하자. 시간이 지나면 점차 기억도 돌아올 거야."
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 525.0
+      },
+      "position": {
+        "x": 865.0,
+        "y": 3036.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "LineWidth": 600.0,
+      "NodeCenterX": 1165.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 992.0,
+          "y": 969.0,
+          "position": {
+            "x": 992.0,
+            "y": 969.0
+          },
+          "center": {
+            "x": 1002.0,
+            "y": 979.0
+          },
+          "min": {
+            "x": 992.0,
+            "y": 969.0
+          },
+          "max": {
+            "x": 1012.0,
+            "y": 989.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 992.0,
+          "yMin": 969.0,
+          "xMax": 1012.0,
+          "yMax": 989.0,
+          "left": 992.0,
+          "right": 1012.0,
+          "top": 969.0,
+          "bottom": 989.0
+        },
+        "connectedNodeId": "5840aaca-1ca7-4cfd-82f9-aaa053844583",
+        "isConnected": true,
+        "ConnectedNodeId": "5840aaca-1ca7-4cfd-82f9-aaa053844583"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 992.0,
+          "y": 1470.0,
+          "position": {
+            "x": 992.0,
+            "y": 1470.0
+          },
+          "center": {
+            "x": 1002.0,
+            "y": 1480.0
+          },
+          "min": {
+            "x": 992.0,
+            "y": 1470.0
+          },
+          "max": {
+            "x": 1012.0,
+            "y": 1490.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 992.0,
+          "yMin": 1470.0,
+          "xMax": 1012.0,
+          "yMax": 1490.0,
+          "left": 992.0,
+          "right": 1012.0,
+          "top": 1470.0,
+          "bottom": 1490.0
+        },
+        "connectedNodeId": "49b94715-c9fa-45d5-98d2-2e214015e8af",
+        "isConnected": true,
+        "ConnectedNodeId": "49b94715-c9fa-45d5-98d2-2e214015e8af"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 702.0,
+        "y": 967.0,
+        "position": {
+          "x": 702.0,
+          "y": 967.0
+        },
+        "center": {
+          "x": 1002.0,
+          "y": 1229.5
+        },
+        "min": {
+          "x": 702.0,
+          "y": 967.0
+        },
+        "max": {
+          "x": 1302.0,
+          "y": 1492.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 702.0,
+        "yMin": 967.0,
+        "xMax": 1302.0,
+        "yMax": 1492.0,
+        "left": 702.0,
+        "right": 1302.0,
+        "top": 967.0,
+        "bottom": 1492.0
+      },
+      "ID": "93abd255-7beb-49aa-985c-da710411096c"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Mono",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "시간이 지나면 기억이 돌아온다는 말에 마음이 조금 놓인다. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "지금은 닥터 스미스의 말대로 휴식을 취하고, 이곳에서의 치료에 집중하는 것이 내가 할 수 있는 최선이다. "
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "그의 말에 의지하며, 나는 이 상황을 긍정적으로 받아들이려고 노력한다."
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 650.0
+      },
+      "position": {
+        "x": 1522.0,
+        "y": 3035.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": true,
+      "LineWidth": 600.0,
+      "NodeCenterX": 1822.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 1649.0,
+          "y": 968.0,
+          "position": {
+            "x": 1649.0,
+            "y": 968.0
+          },
+          "center": {
+            "x": 1659.0,
+            "y": 978.0
+          },
+          "min": {
+            "x": 1649.0,
+            "y": 968.0
+          },
+          "max": {
+            "x": 1669.0,
+            "y": 988.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 1649.0,
+          "yMin": 968.0,
+          "xMax": 1669.0,
+          "yMax": 988.0,
+          "left": 1649.0,
+          "right": 1669.0,
+          "top": 968.0,
+          "bottom": 988.0
+        },
+        "connectedNodeId": "93abd255-7beb-49aa-985c-da710411096c",
+        "isConnected": true,
+        "ConnectedNodeId": "93abd255-7beb-49aa-985c-da710411096c"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 1649.0,
+          "y": 1594.0,
+          "position": {
+            "x": 1649.0,
+            "y": 1594.0
+          },
+          "center": {
+            "x": 1659.0,
+            "y": 1604.0
+          },
+          "min": {
+            "x": 1649.0,
+            "y": 1594.0
+          },
+          "max": {
+            "x": 1669.0,
+            "y": 1614.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 1649.0,
+          "yMin": 1594.0,
+          "xMax": 1669.0,
+          "yMax": 1614.0,
+          "left": 1649.0,
+          "right": 1669.0,
+          "top": 1594.0,
+          "bottom": 1614.0
         },
         "connectedNodeId": "",
         "isConnected": false,
@@ -702,40 +1512,348 @@
       },
       "Rect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 636.0,
-        "y": 590.0,
+        "x": 1359.0,
+        "y": 966.0,
         "position": {
-          "x": 636.0,
-          "y": 590.0
+          "x": 1359.0,
+          "y": 966.0
         },
         "center": {
-          "x": 761.0,
-          "y": 665.0
+          "x": 1659.0,
+          "y": 1291.0
         },
         "min": {
-          "x": 636.0,
-          "y": 590.0
+          "x": 1359.0,
+          "y": 966.0
         },
         "max": {
-          "x": 886.0,
-          "y": 740.0
+          "x": 1959.0,
+          "y": 1616.0
         },
-        "width": 250.0,
-        "height": 150.0,
+        "width": 600.0,
+        "height": 650.0,
         "size": {
-          "x": 250.0,
-          "y": 150.0
+          "x": 600.0,
+          "y": 650.0
         },
-        "xMin": 636.0,
-        "yMin": 590.0,
-        "xMax": 886.0,
-        "yMax": 740.0,
-        "left": 636.0,
-        "right": 886.0,
-        "top": 590.0,
-        "bottom": 740.0
+        "xMin": 1359.0,
+        "yMin": 966.0,
+        "xMax": 1959.0,
+        "yMax": 1616.0,
+        "left": 1359.0,
+        "right": 1959.0,
+        "top": 966.0,
+        "bottom": 1616.0
       },
-      "ID": "d09fffc2-da93-4b53-b4bf-6010680b3ca4"
+      "ID": "49b94715-c9fa-45d5-98d2-2e214015e8af"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Ryan",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "기억... 기억 상실이라구요?"
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "드라마 속의 기억상실같은게, 실제로 존재한다고요?"
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 525.0
+      },
+      "position": {
+        "x": 872.0,
+        "y": 1641.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": false,
+      "LineWidth": 600.0,
+      "NodeCenterX": 1172.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 999.0,
+          "y": -426.0,
+          "position": {
+            "x": 999.0,
+            "y": -426.0
+          },
+          "center": {
+            "x": 1009.0,
+            "y": -416.0
+          },
+          "min": {
+            "x": 999.0,
+            "y": -426.0
+          },
+          "max": {
+            "x": 1019.0,
+            "y": -406.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 999.0,
+          "yMin": -426.0,
+          "xMax": 1019.0,
+          "yMax": -406.0,
+          "left": 999.0,
+          "right": 1019.0,
+          "top": -426.0,
+          "bottom": -406.0
+        },
+        "connectedNodeId": "7d830921-4d2f-41c6-ac54-94cb5381538a",
+        "isConnected": true,
+        "ConnectedNodeId": "7d830921-4d2f-41c6-ac54-94cb5381538a"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 999.0,
+          "y": 75.0,
+          "position": {
+            "x": 999.0,
+            "y": 75.0
+          },
+          "center": {
+            "x": 1009.0,
+            "y": 85.0
+          },
+          "min": {
+            "x": 999.0,
+            "y": 75.0
+          },
+          "max": {
+            "x": 1019.0,
+            "y": 95.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 999.0,
+          "yMin": 75.0,
+          "xMax": 1019.0,
+          "yMax": 95.0,
+          "left": 999.0,
+          "right": 1019.0,
+          "top": 75.0,
+          "bottom": 95.0
+        },
+        "connectedNodeId": "06e7d873-c88a-4288-8e9b-2c26e311286f",
+        "isConnected": true,
+        "ConnectedNodeId": "06e7d873-c88a-4288-8e9b-2c26e311286f"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 709.0,
+        "y": -428.0,
+        "position": {
+          "x": 709.0,
+          "y": -428.0
+        },
+        "center": {
+          "x": 1009.0,
+          "y": -165.5
+        },
+        "min": {
+          "x": 709.0,
+          "y": -428.0
+        },
+        "max": {
+          "x": 1309.0,
+          "y": 97.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 709.0,
+        "yMin": -428.0,
+        "xMax": 1309.0,
+        "yMax": 97.0,
+        "left": 709.0,
+        "right": 1309.0,
+        "top": -428.0,
+        "bottom": 97.0
+      },
+      "ID": "b20726a1-107c-434c-b60d-596e5e89b140"
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "dialogue": {
+        "$type": "Dialogue, Assembly-CSharp",
+        "CharacterID": "Smith",
+        "Lines": [
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "응, 드라마나 영화에서 다루는 기억상실은 실제로도 있단다."
+          },
+          {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "그치만, 드라마 속에서처럼 갑자기 모든 기억이 사라지는 '완전한 기억상실'은 그렇게 흔하지 않아. 보통은 특정 기간의 기억 손상이나 특정 사건에 대한 기억 손실로 나타나거든."
+          }
+        ]
+      },
+      "LineVeritcalDist": 5.0,
+      "nodeSize": {
+        "x": 600.0,
+        "y": 525.0
+      },
+      "position": {
+        "x": 872.0,
+        "y": 2192.0
+      },
+      "offset": {
+        "x": -163.0,
+        "y": -2069.0
+      },
+      "title": "Dialogue",
+      "isSelected": true,
+      "LineWidth": 600.0,
+      "NodeCenterX": 1172.0,
+      "ParentConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 999.0,
+          "y": 125.0,
+          "position": {
+            "x": 999.0,
+            "y": 125.0
+          },
+          "center": {
+            "x": 1009.0,
+            "y": 135.0
+          },
+          "min": {
+            "x": 999.0,
+            "y": 125.0
+          },
+          "max": {
+            "x": 1019.0,
+            "y": 145.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 999.0,
+          "yMin": 125.0,
+          "xMax": 1019.0,
+          "yMax": 145.0,
+          "left": 999.0,
+          "right": 1019.0,
+          "top": 125.0,
+          "bottom": 145.0
+        },
+        "connectedNodeId": "b20726a1-107c-434c-b60d-596e5e89b140",
+        "isConnected": true,
+        "ConnectedNodeId": "b20726a1-107c-434c-b60d-596e5e89b140"
+      },
+      "ChildConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "rect": {
+          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+          "x": 999.0,
+          "y": 626.0,
+          "position": {
+            "x": 999.0,
+            "y": 626.0
+          },
+          "center": {
+            "x": 1009.0,
+            "y": 636.0
+          },
+          "min": {
+            "x": 999.0,
+            "y": 626.0
+          },
+          "max": {
+            "x": 1019.0,
+            "y": 646.0
+          },
+          "width": 20.0,
+          "height": 20.0,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "xMin": 999.0,
+          "yMin": 626.0,
+          "xMax": 1019.0,
+          "yMax": 646.0,
+          "left": 999.0,
+          "right": 1019.0,
+          "top": 626.0,
+          "bottom": 646.0
+        },
+        "connectedNodeId": "9a0cba75-465b-4004-856c-325374ef0c64",
+        "isConnected": true,
+        "ConnectedNodeId": "9a0cba75-465b-4004-856c-325374ef0c64"
+      },
+      "Rect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 709.0,
+        "y": 123.0,
+        "position": {
+          "x": 709.0,
+          "y": 123.0
+        },
+        "center": {
+          "x": 1009.0,
+          "y": 385.5
+        },
+        "min": {
+          "x": 709.0,
+          "y": 123.0
+        },
+        "max": {
+          "x": 1309.0,
+          "y": 648.0
+        },
+        "width": 600.0,
+        "height": 525.0,
+        "size": {
+          "x": 600.0,
+          "y": 525.0
+        },
+        "xMin": 709.0,
+        "yMin": 123.0,
+        "xMax": 1309.0,
+        "yMax": 648.0,
+        "left": 709.0,
+        "right": 1309.0,
+        "top": 123.0,
+        "bottom": 648.0
+      },
+      "ID": "06e7d873-c88a-4288-8e9b-2c26e311286f"
     }
   ]
 }

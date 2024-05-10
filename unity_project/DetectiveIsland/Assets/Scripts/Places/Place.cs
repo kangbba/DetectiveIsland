@@ -5,6 +5,11 @@ using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using UnityEngine;
 
+public enum PlaceName{
+    PortEntrance = 0,
+    TownCenter = 1,
+    
+}
 public class Place : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRend;

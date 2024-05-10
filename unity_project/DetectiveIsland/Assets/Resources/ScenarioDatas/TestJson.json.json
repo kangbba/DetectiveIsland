@@ -8,12 +8,32 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "조셉은 그곳에 가지 말라고 했다. 하지만 레이첼의 말이 맞다면, 이곳에서 답을 찾을 수도 있을 것이다. 섬의 이 오래된 비밀이 내 마음의 장벽을 허물어줄지도 모르지."
+          "Sentence": "어둠 속에서 서서히 빛이 스며든다. "
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "이 집은 섬의 과거를 고스란히 간직하고 있는 듯하다. 오래된 사진들, 먼지 쌓인 서류들... 여기엔 분명 뭔가 있다."
+          "Sentence": "멀리서 들려오는 물소리 같은 것은 이제 점점 사라지고, 대신 어딘가 모르게 포근하고 따뜻한 감각이 몸을 감싼다."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "여긴 어디일까? 왜 나는 여기에 있는 걸까? 기억들이 서서히 흐릿해지면서, 나는 마치 깊은 잠에서 깨어나려는 듯하다. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "기억들은 미끄러져 사라지고, 모든 게 꿈처럼 느껴진다. 이런 무력감과 혼란 속에서도, 나는 어딘가에서 구원의 손길을 느낀다."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "나는 여전히 불안정하고 불확실한 상태에 있지만, 이 침대가 제공하는 안락함은 내 마음을 조금은 진정시킨다."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "어딘가 모르게 안도감이 들고, 지금 이 순간만큼은 고통이나 걱정이 전혀 없다는 것이 얼마나 감사한 일인지..."
         }
       ]
     },
@@ -22,37 +42,169 @@
       "CharacterPositions": [
         {
           "$type": "CharacterPosition, Assembly-CSharp",
-          "CharacterID": "Lisa",
+          "CharacterID": "Smith",
           "PositionID": "Middle"
         }
       ]
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": "Lisa",
+      "CharacterID": "Smith",
       "Lines": [
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "이건 테스트야 라이언. 내가 말을 길게해볼게 루라라라라."
+          "Sentence": "라이언, 드디어 깨어났구나! 좋은 아침이야. 나는 닥터 스미스야. "
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "어때 내가 잘 말하고있지?"
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Sad",
-          "Sentence": "아이템을 줄게"
+          "Sentence": "\u0003사고 이후로 처음으로 의식을 회복했어."
         }
       ]
     },
     {
-      "$type": "ItemModify, Assembly-CSharp",
-      "IsGain": true,
-      "Id": "NotePad",
-      "Amount": 1
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Ryan",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "닥터 스미스... 사실은 잘 기억이 나지 않아요. 하지만 정말 감사합니다. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "제가 왜 여기에 있는지, 무슨 일이 있었는지 전혀 기억나지 않아요. 여기서 무슨 일이 있었던 건가요?"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Smith",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "넌 산책 중에 사고를 당했어. 발이 미끄러져서 작은 절벽에서 떨어졌지. 크게 다친 곳은 없지만, 머리에 조금 충격을 받았어."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "그 충격 때문에 기억 상실이 생길 수 있어. 하지만 걱정 마, 여기서 널 잘 돌볼 거야. 넌 이제 안전한 손에 있으니까."
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Ryan",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "기억... 기억 상실이라구요?"
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "드라마 속의 기억상실같은게, 실제로 존재한다고요?"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Smith",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "응, 드라마나 영화에서 다루는 기억상실은 실제로도 있어. 이건 다양한 이유로 생길 수 있어\u0003."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "물론, \u0003드라마 속에서처럼 갑자기 모든 기억이 사라지는 '완전한 기억상실'은 그렇게 흔하지 않아."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "보통은 특정 기간의 기억 손상이나 특정 사건에 대한 기억 손실로 나타나거든."
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Mono",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "사고라는 말이 실감 나지 않는다. 이 모든 상황이 너무나도 비현실적이다. 내 기억은 어디로 갔을까?"
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "닥터 스미스의 말이 마음을 진정시키고 있지만, 나는 여전히 내가 어떻게 여기까지 왔는지, 왜 이렇게 됐는지 알아내야 한다는 절박함을 느낀다. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "그럼에도 불구하고, 나는 그의 말을 신뢰하려고 한다. 그의 목소리에는 진심이 담겨 있고, 그가 나를 돌본다는 사실이 내게 큰 위안이 되고 있다."
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Ryan",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "이 기억 상실... 어떻게 해야 회복할 수 있나요? "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "지금 제가 할 수 있는 것은 무엇인가요?"
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Smith",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "일단은 안정을 취하는 것이 가장 중요해. 충분히 휴식을 취하고, 스트레스를 최소화해야 해. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "병원에서는 모든 지원을 제공할 테니까, 편안하게 쉬면서 회복에만 집중하도록 하자. 시간이 지나면 점차 기억도 돌아올 거야."
+        }
+      ]
+    },
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": "Mono",
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "시간이 지나면 기억이 돌아온다는 말에 마음이 조금 놓인다. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "지금은 닥터 스미스의 말대로 휴식을 취하고, 이곳에서의 치료에 집중하는 것이 내가 할 수 있는 최선이다. "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "그의 말에 의지하며, 나는 이 상황을 긍정적으로 받아들이려고 노력한다."
+        }
+      ]
     }
   ]
 }

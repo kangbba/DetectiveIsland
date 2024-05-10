@@ -18,8 +18,8 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _scenarioDatas:
-    - _placeID: TestPlace
-      _scenarioFile: {fileID: 4900000, guid: 40a463c1e3d494ef197114f53ecaa4ab, type: 3}
+    - _placeID: HospitalInterior
+      _scenarioFile: {fileID: 4900000, guid: 1d4ee76455fdd45318fb9f038ab46f44, type: 3}
       _isEntered: 1
       _isExited: 0
       _solveConditions: []

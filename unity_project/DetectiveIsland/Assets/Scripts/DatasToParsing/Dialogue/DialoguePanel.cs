@@ -16,9 +16,17 @@ public class DialoguePanel : MonoBehaviour
     
     public void Initialize(){
         ClearPanel();
-        _dialogueArrow.gameObject.SetActive(false);
+        HideDialogueArrow();
     } 
 
+    public void ShowDialogueArrow(){
+        _dialogueArrow.gameObject.SetActive(true);
+    }
+
+    public void HideDialogueArrow(){
+        _dialogueArrow.gameObject.SetActive(false);
+    }
+    
     public void ClearPanel(){
         _characterText.SetText("");
         _lineText.SetText("");
@@ -30,19 +38,20 @@ public class DialoguePanel : MonoBehaviour
     // 문장 출력을 위한 코루틴
     public async UniTask TypeLineTask(string str, Color c)
     {
-        _lineText.text = "";
-        _lineText.color = c;
-        _dialogueArrow.gameObject.SetActive(false);
-        foreach (char letter in str.ToCharArray())
+        _lineText.text += ' ';
+        char[] characters = str.ToCharArray();
+        for (int i = 0; i < characters.Length; i++)
         {
+            char letter = characters[i];
             _lineText.text += letter;
-            if(letter == '!'){
+            if (letter == '!')
+            {
                 CameraController.ShakeCamera(3f, .3f);
             }
-            if (letter != ' ') // 공백이 아닌 경우에만 대기하지 않음
-                await UniTask.WaitForSeconds(0.06f);
+
+            if (letter != ' ') // 공백이 아닌 경우에만 대기
+                await UniTask.WaitForSeconds(0.04f);
         }
-        _dialogueArrow.gameObject.SetActive(true);
         _dialogueArrow.SetAnchordPos(_lineText.GetPreferredValues());
     }
     public void OpenPanel(float totalTime){
