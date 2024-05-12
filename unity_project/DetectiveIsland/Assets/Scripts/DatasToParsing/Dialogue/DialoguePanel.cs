@@ -35,11 +35,15 @@ public class DialoguePanel : MonoBehaviour
         _characterText.color = c;
         _characterText.SetText(s);
     }
+   
     // 문장 출력을 위한 코루틴
     public async UniTask TypeLineTask(string str, Color c)
     {
+        _dialogueArrow.gameObject.SetActive(false);
         _lineText.text += ' ';
+        _lineText.color = c;
         char[] characters = str.ToCharArray();
+        
         for (int i = 0; i < characters.Length; i++)
         {
             char letter = characters[i];
@@ -50,9 +54,10 @@ public class DialoguePanel : MonoBehaviour
             }
 
             if (letter != ' ') // 공백이 아닌 경우에만 대기
-                await UniTask.WaitForSeconds(0.04f);
+                await UniTask.WaitForSeconds(DevelopmentTool.IsDebug ? 0f : 0.04f);
         }
         _dialogueArrow.SetAnchordPos(_lineText.GetPreferredValues());
+        _dialogueArrow.gameObject.SetActive(true);
     }
     public void OpenPanel(float totalTime){
         _arokaAnimParent.SetOnAllChildren(true, totalTime);

@@ -4,39 +4,30 @@ using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using UnityEngine;
 
-public class SpriteEffector : MonoBehaviour
+public static class SpriteEffector
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-
-    protected void SetSprite(Sprite sprite, int order){
-        if(_spriteRenderer == null){
-            return;
-        }
-        _spriteRenderer.sprite = sprite;
-        _spriteRenderer.sortingOrder = order;
-        
-    }
-    protected void FadeIn(float totalTime)
+    public static void FadeIn(this SpriteRenderer spriteRend, float totalTime)
     {
-        _spriteRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
+        spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
     }
-    protected void FadeInFromStart(float totalTime)
+    public static void FadeOut(this SpriteRenderer spriteRend, float totalTime)
     {
-        FadeOut(0f);
-        FadeIn(totalTime);
+        spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(0f), totalTime);
     }
-    protected void FadeOut(float totalTime)
+    public static void FadeInFromStart(this SpriteRenderer spriteRend, float totalTime)
     {
-         _spriteRenderer.EaseSpriteColor(Color.white.ModifiedAlpha(0f), totalTime);
+        FadeOut(spriteRend, 0f);
+        FadeIn(spriteRend, totalTime);
     }
-    protected void Red(float redStrengthPerone, float totalTime)
+    public static void BeRed(this SpriteRenderer spriteRend,float redStrengthPerone, float totalTime)
     {
         Debug.Log("FadeOut 호출됨");
-         _spriteRenderer.EaseSpriteColor(Color.red.ModifiedAlpha(0.3f), totalTime);
+         spriteRend.EaseSpriteColor(Color.red.ModifiedAlpha(redStrengthPerone), totalTime);
     }
-    protected void RedRestore(float totalTime)
+    public static void BeGray(this SpriteRenderer spriteRend,float redStrengthPerone, float totalTime)
     {
-        Red(0, totalTime);
+        Debug.Log("FadeOut 호출됨");
+         spriteRend.EaseSpriteColor(Color.gray.ModifiedAlpha(redStrengthPerone), totalTime);
     }
 
 }

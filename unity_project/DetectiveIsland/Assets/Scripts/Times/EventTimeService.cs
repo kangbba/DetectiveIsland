@@ -104,7 +104,7 @@ public static class EventTimeService
         if(nextEventPlan != null){
             EventTime nextEventTime = nextEventPlan.EventTime;
             SetCurEventTime(nextEventTime);
-            EventTimeUIService.SetEventTime(nextEventTime);
+            UIManager.SetEventTime(standardEventTime);
         }
     }
 }

@@ -42,7 +42,7 @@ public static class CameraController
     }
 
     public static void MoveX(float x, float totalTime){
-        _mainCamera.transform.EasePos(_mainCamera.transform.position.ModifiedX(x), totalTime, ArokaCurves.CurvName.EASE_OUT);
+        _mainCamera.transform.EasePos(_mainCamera.transform.position.ModifiedX(x), totalTime, ArokaCurves.CurvName.EASE_IN_AND_OUT);
     }
 
     // 쉐이크 효과를 적용하는 함수

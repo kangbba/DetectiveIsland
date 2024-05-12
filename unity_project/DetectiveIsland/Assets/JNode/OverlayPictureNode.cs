@@ -4,8 +4,9 @@ using UnityEditor;
 [System.Serializable]
 public class OverlayPictureNode : Node
 {
-    public string effectID;
     public string pictureID;
+    public string effectID;
+    public float effectTime;
 
     public OverlayPictureNode(Vector2 pos, string title) : base(title)
     {
@@ -20,7 +21,7 @@ public class OverlayPictureNode : Node
 
     public override Element ToElement()
     {
-        return new OverlayPicture(effectID, pictureID);
+        return new OverlayPicture(pictureID, effectID, effectTime);
     }
 
     public override void DrawNode(Vector2 offset)
@@ -35,12 +36,16 @@ public class OverlayPictureNode : Node
 
         float yPos = nodeTotalRect.y + 30 + 20;
 
+        EditorGUI.LabelField(new Rect(nodeTotalRect.x, yPos, 80, 20), "Picture ID:", labelStyle);
+        pictureID = EditorGUI.TextField(new Rect(nodeTotalRect.x + 85, yPos, 150, 20), pictureID, textFieldStyle);
+
+        yPos += 25;
         EditorGUI.LabelField(new Rect(nodeTotalRect.x, yPos, 80, 20), "Effect ID:", labelStyle);
         effectID = EditorGUI.TextField(new Rect(nodeTotalRect.x + 85, yPos, 150, 20), effectID, textFieldStyle);
 
         yPos += 25;
-        EditorGUI.LabelField(new Rect(nodeTotalRect.x, yPos, 80, 20), "Picture ID:", labelStyle);
-        pictureID = EditorGUI.TextField(new Rect(nodeTotalRect.x + 85, yPos, 150, 20), pictureID, textFieldStyle);
+        EditorGUI.LabelField(new Rect(nodeTotalRect.x, yPos, 80, 20), "Effect Time:", labelStyle);
+        effectTime = EditorGUI.FloatField(new Rect(nodeTotalRect.x + 85, yPos, 150, 20), effectTime, textFieldStyle);
 
         DrawConnectionPoints(representColor, true, true);
     }

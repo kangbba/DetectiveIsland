@@ -1,52 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2326645450613321181
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5656683122175234582}
-  - component: {fileID: 2821752463687588567}
-  m_Layer: 0
-  m_Name: Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5656683122175234582
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2326645450613321181}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.6, y: 1.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7330697054771719968}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2821752463687588567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2326645450613321181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 446b702e4670c4cc9a7edf45057629fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventAction:
-    _actionType: 3
-    _targetID: PortEntrance
 --- !u!1 &4583544520979190535
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7330697054771719968}
-  - component: {fileID: 7945374272230074921}
+  - component: {fileID: 8835547544582027179}
   m_Layer: 0
-  m_Name: PlacePrefab_HospitalInterior
+  m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,10 +31,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8875569198584478215}
-  - {fileID: 5656683122175234582}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7945374272230074921
+--- !u!114 &8835547544582027179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,19 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4583544520979190535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b78a5aa9fd347f59f8dca7285d2889, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e72d3829e7ce4df68f6afbfaf305afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRend: {fileID: 5535754164890447236}
-  _placeID: HospitalInterior
-  _placeNameForUser: "\uBCD1\uC6D0 \uB0B4\uBD80"
-  _initialPageIndex: 0
-  _pagePlans:
-  - _xPoint: -28
-    _placePoints: []
-  - _xPoint: 10
-    _placePoints:
-    - {fileID: 2821752463687588567}
+  _SpriteRenderer: {fileID: 5535754164890447236}
+  _id: Black
 --- !u!1 &7258867082572516415
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +74,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7330697054771719968}
@@ -176,12 +120,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9ff5d13ba99054c1e9735868f9fe509c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 075fde739e30d4245ad5499697f61108, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 29.12, y: 8.16}
+  m_Size: {x: 58.24, y: 32.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

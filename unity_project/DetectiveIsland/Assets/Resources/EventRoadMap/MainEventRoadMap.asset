@@ -19,9 +19,9 @@ MonoBehaviour:
       _minute: 0
     _scenarioDatas:
     - _placeID: HospitalInterior
-      _scenarioFile: {fileID: 4900000, guid: 1d4ee76455fdd45318fb9f038ab46f44, type: 3}
+      _scenarioFile: {fileID: 4900000, guid: 3eb032cce87e54ca4b623f83eb4f0720, type: 3}
       _isEntered: 1
-      _isExited: 0
+      _isExited: 1
       _solveConditions: []
       _doneEventActions: []
   - _eventTime:

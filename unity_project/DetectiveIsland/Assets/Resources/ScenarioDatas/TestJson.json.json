@@ -2,6 +2,12 @@
   "$type": "Scenario, Assembly-CSharp",
   "Elements": [
     {
+      "$type": "OverlayPicture, Assembly-CSharp",
+      "PictureID": "Black",
+      "EffectID": "FadeIn",
+      "EffectTime": 1.0
+    },
+    {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": "Mono",
       "Lines": [
@@ -36,6 +42,12 @@
           "Sentence": "어딘가 모르게 안도감이 들고, 지금 이 순간만큼은 고통이나 걱정이 전혀 없다는 것이 얼마나 감사한 일인지..."
         }
       ]
+    },
+    {
+      "$type": "OverlayPicture, Assembly-CSharp",
+      "PictureID": "Black",
+      "EffectID": "FadeOut",
+      "EffectTime": 1.0
     },
     {
       "$type": "PositionInit, Assembly-CSharp",
@@ -118,17 +130,12 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "응, 드라마나 영화에서 다루는 기억상실은 실제로도 있어. 이건 다양한 이유로 생길 수 있어\u0003."
+          "Sentence": "응, 드라마나 영화에서 다루는 기억상실은 실제로도 있단다."
         },
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": "Smile",
-          "Sentence": "물론, \u0003드라마 속에서처럼 갑자기 모든 기억이 사라지는 '완전한 기억상실'은 그렇게 흔하지 않아."
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": "Smile",
-          "Sentence": "보통은 특정 기간의 기억 손상이나 특정 사건에 대한 기억 손실로 나타나거든."
+          "Sentence": "그치만, 드라마 속에서처럼 갑자기 모든 기억이 사라지는 '완전한 기억상실'은 그렇게 흔하지 않아. 보통은 특정 기간의 기억 손상이나 특정 사건에 대한 기억 손실로 나타나거든."
         }
       ]
     },

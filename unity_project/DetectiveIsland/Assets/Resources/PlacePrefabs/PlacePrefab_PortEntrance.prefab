@@ -49,6 +49,10 @@ MonoBehaviour:
   _spriteRend: {fileID: 5535754164890447236}
   _placeID: PortEntrance
   _placeNameForUser: "\uD56D\uAD6C \uC785\uAD6C"
+  _initialPageIndex: 0
+  _pagePlans:
+  - _xPoint: 0
+    _placePoints: []
 --- !u!1 &6465965069064297122
 GameObject:
   m_ObjectHideFlags: 0

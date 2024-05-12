@@ -24,16 +24,17 @@ public static class EventProcessor
     }
     private static async UniTask MoveToPlaceUniTask(string placeID)
     {
-        UIManager uiManager = UIManager.Instance;
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
         Debug.Log($"장소 이동 : {placeID})");
         
-        PlaceService.SetPlace(placeID, .5f);
-        CharacterService.AllCharacterFadeOutAndDestroy(.5f);
-        uiManager.PlaceUIPanel.SetUIState(EPlaceUIPanelState.None, .5f);
+        WorldManager.SetPlace(placeID);
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.None, .5f);
+        WorldManager.CurPlaceFadeInFromStart(1f);
+        
+        WorldManager.AllCharacterFadeOutAndDestroy(.5f);
 
-        await UniTask.WaitForSeconds(.5f);
+        await UniTask.WaitForSeconds(1f);
 
         // AwaitChoices의 결과를 직접 받아 처리
         EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
@@ -64,7 +65,7 @@ public static class EventProcessor
                 if(scenarioData.IsSolved)
                 {
                     Debug.Log("시나리오를 통해 시나리오의 통과조건을 완수했다!");
-                    CharacterService.AllCharacterFadeOutAndDestroy(1f);
+                    WorldManager.AllCharacterFadeOutAndDestroy(1f);
                     await UniTask.WaitForSeconds(1f);
                     if(eventPlan.IsAllSolved()){
                         Debug.Log("이 시간대의 모든 이벤트가 해결 되었으므로 시간을 흘려보내겠다.");
@@ -85,8 +86,7 @@ public static class EventProcessor
         }
 
         Debug.Log("장소버튼 ON");
-        uiManager.PlaceUIPanel.SetCurPlaceText(placeID);
-        uiManager.PlaceUIPanel.SetUIState(EPlaceUIPanelState.ShowBtnsMode, .5f);
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.NormalMode, .5f);
         await UniTask.WaitForSeconds(.5f);
 
         _isMoving = false;
@@ -97,8 +97,7 @@ public static class EventProcessor
     //시나리오 Task 구조
     public static async UniTask ScenarioTask(Scenario scenario){
 
-        UIManager.Instance.DialoguePanel.ClearPanel();
-        UIManager.Instance.DialoguePanel.OpenPanel(1f);
+        UIManager.OpenDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
         //대화창 On
         
@@ -106,7 +105,7 @@ public static class EventProcessor
         List<Element> elements = scenario.Elements;
         await ProcessElementsTask(elements);
 
-        UIManager.Instance.DialoguePanel.ClosePanel(1f);
+        UIManager.CloseDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
 
     }
@@ -167,15 +166,8 @@ public static class EventProcessor
     
     public static async UniTask ProcessPositionInit(PositionInit positionInit){
         foreach(CharacterPosition characterPosition in positionInit.CharacterPositions){
-            Character instancedCharacter = CharacterService.GetInstancedCharacter(characterPosition.CharacterID);
-            bool isPositionChangeOnly = instancedCharacter != null;
-            if(isPositionChangeOnly){
-                instancedCharacter.SetPos(characterPosition.PositionID, 1f);
-            }
-            else{
-               CharacterService.FadeOutCharacterThenDestroy(characterPosition.CharacterID, .3f);
-               CharacterService.InstantiateCharacterThenFadeIn(characterPosition.CharacterID, characterPosition.PositionID, "Smile", 1f);
-            }
+            WorldManager.FadeOutCharacterThenDestroy(characterPosition.CharacterID, .3f);
+            WorldManager.InstantiateCharacterThenFadeIn(characterPosition.CharacterID, characterPosition.PositionID, "Smile", 1f);
 
         }
         await UniTask.WaitForSeconds(1f);
@@ -183,60 +175,35 @@ public static class EventProcessor
 
     public static async UniTask ProcessChoiceSet(ChoiceSet choiceSet){
 
-        ChoiceSetPanel choiceSetPanel = UIManager.Instance.ChoiceSetPanel;
-
         foreach(Dialogue dialogue in choiceSet.Dialogues){
             await ProcessDialogue(dialogue);
 
             
         }
-        Choice selectedChoice = await choiceSetPanel.MakeChoiceBtnsAndWait(choiceSet);
+        Choice selectedChoice = await UIManager.MakeChoiceBtnsAndWait(choiceSet);
         await ProcessElementsTask(selectedChoice.Elements);
     }
 
     public static async UniTask ProcessDialogue(Dialogue dialogue)
     {
-        DialoguePanel dialoguePanel = UIManager.Instance.DialoguePanel;
-
         string characterID = dialogue.CharacterID;
+        bool isRyan = characterID == "Ryan";
+        bool isMono = characterID == "Mono";
         CharacterData characterData = CharacterService.GetCharacterData(characterID);
-        Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
-        if (instancedCharacter != null)
-        {
-            CameraController.MoveX(instancedCharacter.transform.position.x / 10f, 1f);
-        }
-
         string[] delimiters = { @"\.", @"\,", @"\!", @"\?", @"\.\.\." }; // 구분할 문자열 패턴 정의
         foreach (var line in dialogue.Lines)
         {
-           
             Debug.Log("Line 시작");
-            dialoguePanel.ClearPanel();
-            dialoguePanel.SetCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-    string[] sentences = Regex.Split(line.Sentence, @"(?<=[.!?])\s+"); 
-
-            for (int i = 0 ; i < sentences.Length ; i++)
-            {
-                if (instancedCharacter != null)
-                {
-                    instancedCharacter.SetEmotion(line.EmotionID, .3f);
-                    instancedCharacter.StartTalking();
-                }   
-
-                await dialoguePanel.TypeLineTask(sentences[i].Trim(), Color.white); // 문장 출력
-                dialoguePanel.ShowDialogueArrow();
-                if (instancedCharacter != null)
-                {
-                    instancedCharacter.StopTalking();
-                }
-
-                if(i != sentences.Length - 1){
-                  await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
-                  dialoguePanel.HideDialogueArrow();
-                }
+            UIManager.ClearDialoguePanel();
+            UIManager.SetDialogueCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
+            if(!(isRyan || isMono)){
+               WorldManager.SetCharacterEmotion(characterID, line.EmotionID, .3f);
+               WorldManager.StartCharacterTalking(characterID);
             }
+            
+            await UIManager.TypeLineTask(line.Sentence.Trim(), Color.white); // 문장 출력
+            WorldManager.StopCharacterTalking(characterID);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
-            dialoguePanel.HideDialogueArrow();
             Debug.Log("Line 끝");
         }
 
@@ -249,11 +216,11 @@ public static class EventProcessor
         }
 
         while(true){
-            UIManager.Instance.ItemDemandPanel.OpenPanel(); 
+            UIManager.OpenItemDemandPanel(); 
 
-            ItemData selectedItemData = await  UIManager.Instance.ItemDemandPanel.OpenItemDemandPanelAndWait();
+            ItemData selectedItemData = await UIManager.OpenItemDemandPanelAndWait();
 
-            UIManager.Instance.ItemDemandPanel.ClosePanel(); 
+            UIManager.CloseItemDemandPanel(); 
 
             if (selectedItemData == null)
             {
@@ -292,9 +259,9 @@ public static class EventProcessor
         if(itemModify.IsGain){
             EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, itemModify.Id);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
-            UIManager.Instance.ItemOwnPanel.OpenPanel(itemData);
+            UIManager.OpenItemOwnPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
-            UIManager.Instance.ItemOwnPanel.ClosePanel();
+            UIManager.CloseItemOwnPanel();
                 
         }
         else {
@@ -312,7 +279,8 @@ public static class EventProcessor
     }
     public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)
     {
-       
+        PictureService.SetPictureEffect(overlayPicture);
+        await UniTask.WaitForSeconds(1f);
     }
 
     public static PositionInit GetFirstPositionInit(Scenario scenario)

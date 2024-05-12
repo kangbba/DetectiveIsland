@@ -12,26 +12,13 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
+    
     private void Start()
     {
         Application.targetFrameRate = 300;
         Initialize();
         EventTime startingEventTime = EventService.GetFirstEventPlan().EventTime;
         EventTimeService.SetCurEventTime(startingEventTime);
-        EventTimeUIService.SetEventTime(startingEventTime);
 
 
 
@@ -44,12 +31,19 @@ public class GameManager : MonoBehaviour
     {
         CameraController.Load();
         EventTimeService.Load();
-        EventTimeUIService.Load();
         EventService.Load();
-        
         ItemService.Load();
         ItemService.LoseAllItems();
         PlaceService.Load();
         CharacterService.Load();
+        WorldManager.Load();
+        PictureService.Load();
+        UIManager.Load();
+    }
+
+    private void Update(){
+        if(Input.GetKeyDown(KeyCode.Space)){
+            DevelopmentTool.IsDebug = !DevelopmentTool.IsDebug;
+        }
     }
 }

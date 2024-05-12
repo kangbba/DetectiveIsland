@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.PlayerLoop;
 
 public enum EPlaceUIPanelState
 {
     None,
-    ShowBtnsMode,
+    NormalMode,
     MovingMode,
     SearchingMode
 }
@@ -18,7 +19,10 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
     [SerializeField] private Button _movingBtn;
     [SerializeField] private Button _searchingBtn;
     [SerializeField] private Button _backBtn;
+    [SerializeField] private Button _nextPageBtn;
+    [SerializeField] private Button _previousPageBtn;
 
+    private Place CurPlace => WorldManager.CurPlace;
     private List<PlaceButton> _instPlaceBtns = new List<PlaceButton>();
     private EPlaceUIPanelState _curPlaceUIPanelState;
     private EPlaceUIPanelState _previousUIPanelState;
@@ -29,20 +33,24 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
         _movingBtn.onClick.AddListener(() => SetUIState(EPlaceUIPanelState.MovingMode, .5f));
         _searchingBtn.onClick.AddListener(() => SetUIState(EPlaceUIPanelState.SearchingMode, .5f));
         _backBtn.onClick.AddListener(() => SetUIState(_previousUIPanelState, .5f));
+
+        _previousPageBtn.onClick.AddListener(() => OnClickedPreviousPageBtn());
+        _nextPageBtn.onClick.AddListener(() => OnClickedNextPageBtn());
     }
 
-    public void InstantiateMovingBtns(List<PlacePoint> movingPlacePoints){
+    private void InstantiateMovingBtns(List<PlacePoint> movingPlacePoints){
         foreach(PlacePoint movingPlacePoint in movingPlacePoints){
-            MakeMovingBtn(movingPlacePoint.EventAction, movingPlacePoint.transform.position);
+            MakeMovingBtn(movingPlacePoint);
         }
     }
-    public void DestroyMovingBtns(){
+    private void DestroyMovingBtns(){
         for(int i = _instPlaceBtns.Count - 1 ; i >= 0 ; i--){
             Destroy(_instPlaceBtns[i].gameObject);
         }
         _instPlaceBtns.Clear();
     }
-    private void MakeMovingBtn(EventAction movingEventAction, Vector3 worldPos){
+    private void MakeMovingBtn(PlacePoint placePoint){
+        EventAction movingEventAction = placePoint.EventAction;
         if(movingEventAction.ActionType != EActionType.MoveToPlace){
             Debug.LogError($"잘못된 인풋 {movingEventAction}");
             return;
@@ -53,9 +61,24 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
             Debug.LogError($"잘못된 {movingEventAction.TargetID}");
             return;
         }
-        instPlaceBtn.Initialize(place.PlaceID, place.PlaceNameForUser);
-        instPlaceBtn.transform.position = CameraController.MainCamera.WorldToScreenPoint(worldPos);
+        instPlaceBtn.Initialize(place, placePoint, CameraController.MainCamera);
         _instPlaceBtns.Add(instPlaceBtn);
+    }
+
+    private void OnClickedPreviousPageBtn(){
+        CurPlace.SetPreviousPage();
+        RefreshPageBtns();
+    }
+    private void OnClickedNextPageBtn(){
+        CurPlace.SetNextPage();
+        RefreshPageBtns();
+    }
+    private void RefreshPageBtns(){
+        Debug.Log($"현재페이지 {CurPlace.CurPageIndex}");
+        _previousPageBtn.interactable = CurPlace.IsPreviousPageExist;
+        _nextPageBtn.interactable = CurPlace.IsNextPageExist;
+        DestroyMovingBtns();
+        InstantiateMovingBtns(CurPlace.CurPagePlan.PlacePoints);
     }
 
     public override void SetUIState(EPlaceUIPanelState placeUIPanelState, float totalTime){
@@ -65,23 +88,24 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
         }
         _previousUIPanelState = _curPlaceUIPanelState;
         _curPlaceUIPanelState = placeUIPanelState;
+        RefreshPageBtns();
 
         switch(placeUIPanelState){
+            case EPlaceUIPanelState.None:
+            WorldManager.AllCharacterFadeOut(.2f);
+            break;
+            case EPlaceUIPanelState.NormalMode:
+            WorldManager.AllCharacterFadeIn(.2f);
+            break;
             case EPlaceUIPanelState.MovingMode:
-            CharacterService.AllCharacterFadeOut(.2f);
+            WorldManager.AllCharacterFadeOut(.2f);
             break;
             case EPlaceUIPanelState.SearchingMode:
-            CharacterService.AllCharacterFadeOut(.2f);
-            break;
-            case EPlaceUIPanelState.ShowBtnsMode:
-            CharacterService.AllCharacterFadeIn(.2f);
+            WorldManager.AllCharacterFadeOut(.2f);
             break;
             default:
             break;
 
         }
-    }
-    public void SetCurPlaceText(string placeNameForUser){
-        _curPlaceText.SetText(placeNameForUser);
     }
 }

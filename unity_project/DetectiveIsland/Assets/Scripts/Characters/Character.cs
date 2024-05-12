@@ -8,14 +8,11 @@ public class Character : MonoBehaviour
     private CharacterEmotion _curCharacterEmotion; // 감정 상태 배열
 
     private string _characterID;
-    private string _positionID;
     public string CharacterID { get => _characterID; }
-    public string PositionID { get => _positionID; }
 
-    public void Initialize(string characterID, string positionID)
+    public void Initialize(string characterID, Vector3 targetLocalPos)
     {
-        _positionID = positionID;
-        SetPos(_positionID, 0f);
+        transform.EaseLocalPos(targetLocalPos, 0f);
         
         _characterID = characterID;
         foreach (var emotion in _characterEmotions)
@@ -24,12 +21,6 @@ public class Character : MonoBehaviour
             emotion.SetOn(false, 0f); // 나머지 감정은 즉시 숨김
         }
     }
-
-    public void SetPos(string positionID, float totalTime){
-        Vector3 targetLocalPos = CalculatePosition(positionID);
-        transform.EaseLocalPos(targetLocalPos, totalTime); ;
-    }
-
     public void FadeInCurrentEmotion(float totalTime){
         if(_curCharacterEmotion == null){
             Debug.LogWarning("_curCharacterEmotion NULL");  
@@ -75,22 +66,5 @@ public class Character : MonoBehaviour
 
     public void StopTalking(){
         _curCharacterEmotion.StopTalking();
-    }
-    private static Vector3 CalculatePosition(string positionID)
-    {
-        Vector3 newPosition = Vector3.zero;
-        switch (positionID)
-        {
-            case "Left":
-                newPosition = new Vector3(-8f, 0f, 0f);
-                break;
-            case "Middle":
-                newPosition = new Vector3(0f, 0f, 0f);
-                break;
-            case "Right":
-                newPosition = new Vector3(8f, 0f, 0f);
-                break;
-        }
-        return newPosition;
     }
 }
