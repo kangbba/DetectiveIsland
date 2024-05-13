@@ -10,8 +10,8 @@ using UnityEngine;
 [System.Serializable]
 public class ChoiceSetNode : Node
 {
-    private ChoiceSet _choiceSet;
-    public List<DialogueNode> dialogueNodes = new List<DialogueNode>() {};
+    private List<DialogueNode> _dialogueNodes = new List<DialogueNode>();
+    private List<ChoiceNode> _choiceNodes = new List<ChoiceNode>();
 
 
     public void AddChoicePlan()
@@ -21,7 +21,7 @@ public class ChoiceSetNode : Node
 
     public override Element ToElement()
     {
-        return _choiceSet;
+        return new ChoiceSet(null, null);
     }
 
     public override Vector2 CalNodeSize()
@@ -41,6 +41,12 @@ public class ChoiceSetNode : Node
     {
         base.DrawNode();
 
+        for(int i = 0 ; i < _dialogueNodes.Count ; i++){
+            _dialogueNodes[i].DrawNode();
+        }
+        for(int i = 0 ; i < _choiceNodes.Count ; i++){
+            _choiceNodes[i].DrawNode();
+        }
         ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.choiceSetColor);
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.choiceSetColor);
     }

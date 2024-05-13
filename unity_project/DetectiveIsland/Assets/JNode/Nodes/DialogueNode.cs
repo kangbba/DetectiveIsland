@@ -8,14 +8,15 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueNode : Node
 {
-    private Dialogue _dialogue = new Dialogue("Mono", new List<Line>());
+    private string _characterID;
     private List<LineNode> _lineNodes = new List<LineNode>();
     
     private bool _isFolded;
 
     public override Element ToElement()
     {
-        return _dialogue;
+        //_lineNodes 를 리스트화한것이 밑의 인풋
+        return new Dialogue(_characterID, null);
     }
     
     public DialogueNode(string title, Node parentNode): base(title, parentNode)  // Node 클래스의 생성자 호출
@@ -26,7 +27,7 @@ public class DialogueNode : Node
 
     public override Vector2 CalNodeSize()
     {
-        if (_dialogue == null || _dialogue.Lines == null || _isFolded)
+        if (_isFolded)
         {
             return  new Vector2(500, 220);
         }
@@ -36,7 +37,9 @@ public class DialogueNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        _dialogue.CharacterID = (string)CustomField("Character ID : ", _dialogue.CharacterID, Vector2.down * 40);
+
+        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.down * 40);
+
         ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.dialogueColor);
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.dialogueColor);
 
@@ -70,7 +73,6 @@ public class DialogueNode : Node
             LineNode lineNode = new LineNode("", this);
             _lineNodes.Add(lineNode);
 
-            _dialogue.Lines.Add(lineNode.Line);
             SetNodeRectSize(CalNodeSize());
         }
     }

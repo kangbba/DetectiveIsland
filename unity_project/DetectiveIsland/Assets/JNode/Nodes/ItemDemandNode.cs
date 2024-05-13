@@ -8,7 +8,11 @@ using Aroka.ArokaUtils;
 [System.Serializable]
 public class ItemDemandNode : Node
 {
-    private ItemDemand _itemDemand;
+    private string _itemID;
+    private List<DialogueNode> _dialogueNodes;
+    private List<Node> _successNodes;
+    private List<Node> _failNodes;
+    private List<Node> _cancelNodes;
 
     public ItemDemandNode(string title, Node parentNode) : base(title, parentNode)
     {
@@ -17,7 +21,7 @@ public class ItemDemandNode : Node
 
     public override Element ToElement()
     {
-        return _itemDemand;
+        return new ItemDemand(null, null, null, null);
     }
 
     public override Vector2 CalNodeSize()
@@ -27,7 +31,22 @@ public class ItemDemandNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        _itemDemand.ItemID = (string)CustomField("Item ID : ", _itemDemand.ItemID, Vector2.up * 0f);
+
+        _itemID = (string)CustomField("Item ID : ", _itemID, Vector2.up * 0f);
+        
+        foreach(DialogueNode node in _dialogueNodes){
+            node.DrawNode();
+        }
+        foreach(Node node in _successNodes){
+            node.DrawNode();
+        }
+        foreach(Node node in _failNodes){
+            node.DrawNode();
+        }
+        foreach(Node node in _cancelNodes){
+            node.DrawNode();
+        }
+
         ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.itemDemandColor);
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.itemDemandColor);
     }
