@@ -5,15 +5,15 @@ using UnityEngine;
 public class ChoiceNode : Node
 {
     public Choice choice;
-    public ChoiceNode(Vector2 pos, string title) : base(title)
+
+    public ChoiceNode(string title, Node parentNode) : base(title, parentNode)
     {
-        UpdateNodeSize(CalNodeSize());
-        UpdateNodePosition(pos);
+        SetNodeRectSize(CalNodeSize());
     }
 
     public override Vector2 CalNodeSize()
     {
-        return default;
+        return new Vector2(200, 100);
     }
 
     public override Element ToElement()

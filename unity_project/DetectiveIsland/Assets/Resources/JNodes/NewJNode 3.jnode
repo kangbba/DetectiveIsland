@@ -1,0 +1,58 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "editorUIState": {
+    "$type": "EditorUIState, Assembly-CSharp",
+    "selectedNode": null,
+    "connectStartNode": null
+  },
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "_nodeRect": {
+        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "center": {
+          "x": 200.0,
+          "y": 150.0
+        },
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 400.0,
+          "y": 300.0
+        },
+        "width": 400.0,
+        "height": 300.0,
+        "size": {
+          "x": 400.0,
+          "y": 300.0
+        },
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 400.0,
+        "yMax": 300.0,
+        "left": 0.0,
+        "right": 400.0,
+        "top": 0.0,
+        "bottom": 300.0
+      },
+      "Center": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "ID": "8025af3b-b439-4db8-b8cd-04f334a09009",
+      "LocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "ParentNode": null
+    }
+  ]
+}

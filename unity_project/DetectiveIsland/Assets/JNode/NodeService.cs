@@ -9,20 +9,6 @@ using UnityEditor;
 
 public static class NodeService
 {
-    public static float CalNodesSizeY(List<Node> nodes)
-    {
-        float totalHeight = 0;
-        foreach (Node node in nodes)
-        {
-            totalHeight += node.CalNodeSize().y;
-        }
-        return totalHeight;
-    }
-
-    public static Vector2 CalStringVisualSize(GUIStyle style, string st)
-    {
-        return style.CalcSize(new GUIContent(st));
-    }
     public static List<Element> ToElements(this List<Node> nodes)
     {
 
