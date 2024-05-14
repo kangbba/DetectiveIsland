@@ -59,7 +59,5 @@ public class ItemDemandNode : Node
                 node.DrawNode();
             }
         }
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.itemDemandColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.itemDemandColor);
     }
 }

@@ -28,7 +28,5 @@ public class OverlayPictureNode : Node
         _overlayPicture.EffectID = (string)CustomField("Effect ID: " , _overlayPicture.EffectID , Vector2.down * 80);
         _overlayPicture.EffectTime = (float)CustomField("Effect Time: " , _overlayPicture.EffectTime , Vector2.down * 120);
 
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.overlayPictureColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.overlayPictureColor);
     }
 }

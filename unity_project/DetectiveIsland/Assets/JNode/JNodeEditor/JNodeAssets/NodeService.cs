@@ -21,6 +21,15 @@ public static class NodeService
         }
         return list;
     }
+    public static Vector2 CalNodesSize(List<Node> nodes)
+    {
+        Vector2 result = Vector2.zero;
+        foreach (Node node in nodes)
+        {
+            result += node.CalNodeSize();
+        }
+        return result;
+    }
 }
 
 
@@ -60,6 +69,7 @@ public static class Texture
         newTexture.Apply();
         return newTexture;
     }
+
 }
 
 public static class NodeGuiService

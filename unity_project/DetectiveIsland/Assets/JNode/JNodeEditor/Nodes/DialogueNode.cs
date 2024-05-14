@@ -34,7 +34,7 @@ public class DialogueNode : Node
     
     public DialogueNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
-        SetNodeRectSize(CalNodeSize());
+        RefreshNodeSize();
     }
 
     public override Vector2 CalNodeSize()
@@ -45,8 +45,6 @@ public class DialogueNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-
-
         float y = 50;
         CharacterID = (string)CustomField("Character ID : ", CharacterID, Vector2.up * y);
         _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
@@ -71,8 +69,6 @@ public class DialogueNode : Node
         DrawFoldingButton(NodeRect);
         y += SPACING_STANDARD;
 
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.dialogueColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.dialogueColor);
     }
     private void AddLineButton(Rect nodeRect)
     {
@@ -89,7 +85,7 @@ public class DialogueNode : Node
             LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
             LineNodes.Add(lineNode);
 
-            SetNodeRectSize(CalNodeSize());
+            RefreshNodeSize();
         }
     }
     private void DrawFoldingButton(Rect nodeRect)
@@ -99,7 +95,7 @@ public class DialogueNode : Node
 
         if (GUI.Button(buttonRect, _isFolded ? "펼치기" : "접기")){
             _isFolded = !_isFolded;
-            SetNodeRectSize(CalNodeSize());
+             RefreshNodeSize();
         }
     }
 

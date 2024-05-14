@@ -237,11 +237,11 @@ public class JNodeEditor4 : EditorWindow
         int cnt = Nodes.Count;
         for(int i = 0 ; i < cnt ; i++){
             Node node = Nodes[i];
-            if(node.ParentConnectingPoint.IsContainRect(mousePos)){
-                return node.ParentConnectingPoint;
+            if(node.PreviousConnectingPoint.IsContainRect(mousePos)){
+                return node.PreviousConnectingPoint;
             }
-            if(node.ChildConnectingPoint.IsContainRect(mousePos)){
-                return node.ChildConnectingPoint;
+            if(node.NextConnectingPoint.IsContainRect(mousePos)){
+                return node.NextConnectingPoint;
             }
         }
         return null;
@@ -278,15 +278,15 @@ public class JNodeEditor4 : EditorWindow
         {
             Node node = Nodes[i];
             Node nextNode = GetNode(node.NextNodeID);
-            if(nextNode != null && !node.ChildConnectingPoint.IsLineModifying)
+            if(nextNode != null && !node.NextConnectingPoint.IsLineModifying)
             {
-                Vector3 startPos = node.ChildConnectingPoint.Rect.center;
-                Vector3 endPos = nextNode.ParentConnectingPoint.Rect.center;
+                Vector3 startPos = node.NextConnectingPoint.Rect.center;
+                Vector3 endPos = nextNode.PreviousConnectingPoint.Rect.center;
                 DrawConnectingPointLine(startPos, endPos);
             }
-            else if(node.ChildConnectingPoint.IsLineModifying)
+            else if(node.NextConnectingPoint.IsLineModifying)
             {
-               Vector3 startPos = node.ChildConnectingPoint.Rect.center;
+               Vector3 startPos = node.NextConnectingPoint.Rect.center;
                Vector3 endPos = mousePosition;
                 DrawConnectingPointLine(startPos, endPos);
 

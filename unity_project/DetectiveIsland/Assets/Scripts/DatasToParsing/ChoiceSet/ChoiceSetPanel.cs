@@ -30,7 +30,7 @@ public class ChoiceSetPanel : ArokaAnimParent
         float selectedBtnDelayTime = .5f;
         foreach(ChoiceButton choiceButton in _curChoiceBtns){
             choiceButton.SetInteractable(false);
-            bool isIdentical = _selectedChoiceBtn.Choice.Title == choiceButton.Choice.Title;
+            bool isIdentical = _selectedChoiceBtn.Choice.Content == choiceButton.Choice.Content;
             Debug.Log(isIdentical);
             if(isIdentical){
                 choiceButton.transform.EaseLocalScale(Vector3.zero, totalTime: fadeOutTime, delayTime: selectedBtnDelayTime);
@@ -87,7 +87,7 @@ public class ChoiceSetPanel : ArokaAnimParent
     }
 
     private ChoiceButton GetChoiceButton(string choiceTitle){
-        return _curChoiceBtns.FirstOrDefault(btn => btn.Choice.Title == choiceTitle);
+        return _curChoiceBtns.FirstOrDefault(btn => btn.Choice.Content == choiceTitle);
     }
 
     public void OpenPanel()

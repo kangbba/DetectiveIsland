@@ -16,7 +16,7 @@ public class StartNode : Node
     {
         base.DrawNode();
 
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.startNodeColor);
+        NextConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.startNodeColor);
     }
 
     public override Vector2 CalNodeSize()

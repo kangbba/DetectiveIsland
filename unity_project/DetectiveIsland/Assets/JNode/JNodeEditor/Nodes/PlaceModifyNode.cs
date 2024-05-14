@@ -27,8 +27,5 @@ public class PlaceModifyNode : Node
 
         _placeModify.IsGain = (bool)CustomField("IsGain : ", _placeModify.IsGain, Vector2.up * 20);
         _placeModify.Id = (string)CustomField("ID : ", _placeModify.Id, Vector2.up * 0);
-        
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.placeModifyColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.placeModifyColor);
     }
 }

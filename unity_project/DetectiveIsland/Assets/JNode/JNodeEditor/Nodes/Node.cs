@@ -20,12 +20,12 @@ public abstract class Node
         Title = title;
         ParentNodeID = parentNodeID;
 
-        ChildConnectingPoint = new ConnectingPoint(nodeID, true);
-        ParentConnectingPoint = new ConnectingPoint(nodeID, false);
+        NextConnectingPoint = new ConnectingPoint(nodeID, true);
+        PreviousConnectingPoint = new ConnectingPoint(nodeID, false);
     }
 
-    public ConnectingPoint ChildConnectingPoint {get; set;}
-    public ConnectingPoint ParentConnectingPoint {get; set;}
+    public ConnectingPoint NextConnectingPoint {get; set;}
+    public ConnectingPoint PreviousConnectingPoint {get; set;}
 
     public abstract Vector2 CalNodeSize();
 
@@ -35,6 +35,9 @@ public abstract class Node
     public string NodeID;
     public string NextNodeID ;
     public string ParentNodeID ;
+
+    public bool IsMostParentNode => ParentNodeID == null || ParentNodeID == "";
+
     public bool IsSelected ;
 
     public Vector2 lastRectPos;
@@ -54,6 +57,14 @@ public abstract class Node
             DrawHighlight();
         }
 
+        if(IsMostParentNode){
+            PreviousConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), Color.white);
+            NextConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), Color.white);
+        }
+    }
+
+    public void RefreshNodeSize(){
+        SetNodeRectSize(CalNodeSize());
     }
     public void SetNodeRectSize(Vector2 size){
         _nodeRect.size = size;
@@ -163,7 +174,6 @@ public abstract class Node
     {
         // 선택된 상태일 때 하이라이트 테두리 그리기
         Color highlightColor = Color.cyan; // 하이라이트 색상을 하늘색으로 설정
-        Color previousColor = GUI.color; // 이전 GUI 색상을 저장
 
         // 테두리 색상 설정
         Handles.color = highlightColor;
@@ -173,7 +183,7 @@ public abstract class Node
         Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, highlightColor);
 
         // 이전 GUI 색상 복원
-        GUI.color = previousColor;
+        GUI.color = Color.white;
     }
 
     public void SetSelected(bool b){

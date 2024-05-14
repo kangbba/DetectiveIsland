@@ -37,9 +37,6 @@ public class PositionInitNode : Node
         for(int i = 0 ; i < positionInitNodes.Count ; i++){
             positionInitNodes[i].DrawNode();
         }
-        
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.positionInitColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.positionInitColor);
     }
 }
 
