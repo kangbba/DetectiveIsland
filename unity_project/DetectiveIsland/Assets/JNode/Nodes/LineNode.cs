@@ -6,22 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class LineNode : Node
 {
-    
-    GUIStyle _labelStyle = new GUIStyle(GUI.skin.label)
-    {
-        alignment = TextAnchor.UpperCenter,
-        fontSize = 10,
-        normal = { textColor = Color.white }
-    };
-    GUIStyle _textAreaFieldStyle = new GUIStyle(EditorStyles.textArea)
-    {
-        alignment = TextAnchor.UpperLeft,
-        normal = { textColor = Color.white, background = Texture.GetBoxTexture(Color.gray * 0.25f) },
-        fontSize = 10,
-        fixedWidth = 300,
-        fixedHeight = 50,
-    };
-
+    public const float LINE_NODE_HEIGHT = 150;
+    public const float LINE_SENTENCE_HEIGHT = 80;
 
     private Line _line = new Line("Smile", "");
 
@@ -39,13 +25,13 @@ public class LineNode : Node
 
     public override Vector2 CalNodeSize()
     {
-        return new Vector2(300, 100);
+        return new Vector2(ParentNode.NodeRect.width, LINE_NODE_HEIGHT);
     }
     public override void DrawNode(){
 
         base.DrawNode();
         _line.EmotionID = (string)CustomField("Emotion ID : ", _line.EmotionID, Vector2.down * 0);
-        _line.Sentence = (string)CustomField("Sentence : ",_line.Sentence, Vector2.down * 20, width : 300, height : 80);
+        _line.Sentence = CustomTextArea(_line.Sentence, Vector2.up * 60 * .5f, width : DialogueNode.LINE_NODE_WIDTH, height : LINE_SENTENCE_HEIGHT);
 
         GUI.Box(NodeRect, new GUIContent());
     }

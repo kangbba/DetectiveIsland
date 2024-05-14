@@ -152,7 +152,6 @@ public class JNodeEditor4 : EditorWindow
                 else{
                     Debug.Log($"ELSE33");
                 }
-
                 e.Use();
                 break;
 
@@ -243,7 +242,6 @@ public class JNodeEditor4 : EditorWindow
                 });
             }
         }
-        
     }
 
     private void DrawGrid()

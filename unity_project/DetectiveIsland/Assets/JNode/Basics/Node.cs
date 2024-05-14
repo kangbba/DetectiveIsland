@@ -6,6 +6,7 @@ using Color = UnityEngine.Color;
 using System;
 using System.Drawing;
 using UnityEditor.Experimental.GraphView;
+using System.IO;
 
 
 [System.Serializable]
@@ -37,13 +38,8 @@ public abstract class Node
     private ConnectingPoint _childConnectingPoint ;
     private ConnectingPoint _parentConnectingPoint ;
 
-    private Rect _nodeRect = new Rect(0, 0, 400, 300);
+    protected Rect _nodeRect = new Rect(0, 0, 400, 300);
     private Rect _titleRect = new Rect(0, 0, 200, 20);
-    private Rect _stringRect = new Rect(0, 0, 200, 20);
-    private Rect _intRect = new Rect(0, 0, 200, 20);
-    private Rect _floatRect = new Rect(0, 0, 200, 20);
-    private Rect _boolRect = new Rect(0, 0, 200, 20);
-    private Rect _longStringRect = new Rect(0, 0, 400, 60);
 
     public abstract Vector2 CalNodeSize();
 
@@ -75,43 +71,90 @@ public abstract class Node
     // 데이터 타입에 따른 CustomField 메서드
     protected object CustomField(string title, object value, Vector2 localPosInNode, float width = 80, float height = 20)
     {
+        if (value == null)
+        {
+            Debug.Log("value is null");
+            return value;
+        }
+
         Type valueType = value.GetType(); // value의 타입을 얻음
         Vector2 position = _nodeRect.position - localPosInNode;
+        float labelWidth = 100; // Label의 너비를 적절히 설정합니다.
+        
+        // Label과 필드를 각각의 위치에 배치합니다.
+        Rect labelRect = new Rect(position.x, position.y, labelWidth, height);
+        Rect fieldRect = new Rect(position.x + labelWidth, position.y, width, height);
+
+        EditorGUI.PrefixLabel(labelRect, new GUIContent(title));
 
         if (valueType == typeof(string))
         {
-            _stringRect.position = position;
-            _stringRect.size = new Vector2(width, height);
-            return EditorGUI.TextArea(_stringRect, (string)value);
+            return EditorGUI.TextField(fieldRect, (string)value);
         }
         else if (valueType == typeof(int))
         {
-            _intRect.position = position;
-            _intRect.size = new Vector2(width, height);
-            return EditorGUI.IntField(_intRect, title, (int)value);
+            return EditorGUI.IntField(fieldRect, (int)value);
         }
         else if (valueType == typeof(float))
         {
-            _floatRect.position = position;
-            _floatRect.size = new Vector2(width, height);
-            return EditorGUI.FloatField(_floatRect, title, (float)value);
+            return EditorGUI.FloatField(fieldRect, (float)value);
         }
         else if (valueType == typeof(bool))
         {
-            _boolRect.position = position;
-            _boolRect.size = new Vector2(width, height);
-            return EditorGUI.Toggle(_boolRect, title, (bool)value);
+            return EditorGUI.Toggle(fieldRect, (bool)value);
         }
         else if (valueType == typeof(long))
         {
-            _longStringRect.position = position;
-            _longStringRect.size = new Vector2(width, height);
-            return EditorGUI.LongField(_longStringRect, title, (long)value); // EditorGUI에는 LongField가 기본적으로 없음, 사용자 정의 필요
+            return EditorGUI.LongField(fieldRect, (long)value);
         }
         else
         {
             // 처리할 수 없는 타입일 경우
             return value; // 그대로 반환하거나 예외를 발생시킬 수 있음
+        }
+    }
+
+
+    protected string CustomTextArea(string value, Vector2 localPosInNode, float width = 100, float height = 300)
+    {
+        Vector2 position = _nodeRect.position + localPosInNode;
+        Rect fieldRect = new Rect(position.x, position.y, width, height);
+
+        return EditorGUI.TextArea(fieldRect, value);
+    }
+    protected void ImagePreview(string filePath, float width, float height)
+    {
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("File not found: " + filePath);
+            return;
+        }
+
+        byte[] fileData = File.ReadAllBytes(filePath);
+        Texture2D texture = new Texture2D(2, 2);
+        if (texture.LoadImage(fileData))
+        {
+            // Calculate the aspect ratio
+            float aspectRatio = (float)texture.width / texture.height;
+            float drawWidth = width;
+            float drawHeight = height;
+
+            // Adjust width and height to maintain aspect ratio
+            if (width / height > aspectRatio)
+            {
+                drawWidth = height * aspectRatio;
+            }
+            else
+            {
+                drawHeight = width / aspectRatio;
+            }
+
+            Rect rect = new Rect(10, 10, drawWidth, drawHeight); // Example position
+            GUI.DrawTexture(rect, texture, ScaleMode.ScaleToFit, true);
+        }
+        else
+        {
+            Debug.LogError("Failed to load image: " + filePath);
         }
     }
 

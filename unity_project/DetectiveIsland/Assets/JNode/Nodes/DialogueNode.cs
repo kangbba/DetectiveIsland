@@ -1,4 +1,5 @@
 using Aroka.ArokaUtils;
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,14 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueNode : Node
 {
-    private string _characterID;
+    private string _characterID = "Mono";
     private List<LineNode> _lineNodes = new List<LineNode>();
-    
+    private ImagePreviewer _imagePreviewer = new ImagePreviewer();
+
+    public const float SPACING_STANDARD = 30;
+    public const float LINE_NODE_WIDTH = 360;
+    public const float SPACING_TAIL = 30;
+
     private bool _isFolded;
 
     public override Element ToElement()
@@ -27,22 +33,20 @@ public class DialogueNode : Node
 
     public override Vector2 CalNodeSize()
     {
-        if (_isFolded)
-        {
-            return  new Vector2(500, 220);
-        }
-        return new Vector2(500, 150) + new Vector2(0, (_lineNodes.Count + 1) * 100);
+        return new Vector2(LINE_NODE_WIDTH, (_lineNodes.Count + 1) * LineNode.LINE_NODE_HEIGHT);
     }
 
     public override void DrawNode()
     {
         base.DrawNode();
 
-        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.down * 40);
 
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.dialogueColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.dialogueColor);
-
+        float y = 50;
+        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.down * y);
+        string filePath = $"Assets/JNode/Characters/{_characterID}.png"; 
+        _imagePreviewer.ImagePreview(filePath, 60, 60, _nodeRect.position);
+        
+        y += 50;
         for(int i = 0 ; i < _lineNodes.Count ; i++)
         {
             if(_isFolded && i > 0){
@@ -50,18 +54,24 @@ public class DialogueNode : Node
             }
             LineNode lineNode = _lineNodes[i];
             lineNode.DrawNode();
-            lineNode.SetRectPos(NodeRect.position + Vector2.up * (i * 100 + 80));
+            lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
+            y += LineNode.LINE_NODE_HEIGHT;
         }
 
+        y += SPACING_STANDARD;
         if(!_isFolded){
-            DrawAddLineButton(NodeRect);
+            AddLineButton(NodeRect);
         }
+        y += SPACING_STANDARD;
         DrawFoldingButton(NodeRect);
+        y += SPACING_STANDARD;
+        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.dialogueColor);
+        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.dialogueColor);
     }
-    private void DrawAddLineButton(Rect nodeRect)
+    private void AddLineButton(Rect nodeRect)
     {
         float buttonSize = 80;
-        float buttonYPosition = _lineNodes.Count == 0 ? nodeRect.position.y + 100 : _lineNodes.Last().NodeRect.position.y + 100;
+        float buttonYPosition = _lineNodes.Count == 0 ? nodeRect.position.y + 50 : _lineNodes.Last().NodeRect.min.y + LineNode.LINE_NODE_HEIGHT ;
         Rect buttonRect = new Rect(
             nodeRect.x + nodeRect.width * 0.5f - buttonSize * 0.5f,
             buttonYPosition,
