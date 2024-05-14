@@ -42,7 +42,7 @@ public class DialogueNode : Node
 
 
         float y = 50;
-        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.down * y);
+        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.up * y);
         _characterPreviewer.CharacterPreview(_characterID, 60, 60, _nodeRect.position);
         
         y += 50;

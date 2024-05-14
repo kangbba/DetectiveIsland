@@ -12,6 +12,7 @@ using System.Linq;
 
 public class JNodeEditor4 : EditorWindow
 {
+    private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
     private static JNodeInstance jNodeInstance;
 
     private Vector2 _lastMousePositionDrag;
@@ -353,57 +354,57 @@ public class JNodeEditor4 : EditorWindow
 
     private void ExportJson()
     {
-        // if (Nodes.Count > 0)
-        // {
-        //     string resourcesPath = StoragePath.ScenarioPath;
+        if (Nodes.Count > 0)
+        {
+            string resourcesPath = StoragePath.ScenarioPath;
 
-        //     string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
+            string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
 
-        //     string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "TestJson", "json");
+            string path = EditorUtility.SaveFilePanel("Save Nodes as JSON", initialDirectory, "Scenario_", "json");
 
-        //     if (!string.IsNullOrEmpty(path2))
-        //     {
-        //         Node startNode = Nodes[0];
-        //         if (GetNode(startNode.ChildConnectingPoint.connectedNodeId) == null)
-        //         {
-        //             EditorUtility.DisplayDialog("Missing Connection",
-        //                                                       "The Start Node must be connected. Please check your nodes.",
-        //                                                       "OK"); return; 
-        //         }
+            if (!string.IsNullOrEmpty(path))
+            {
+                Node startNode = Nodes[0];
+                if (GetNode(startNode.NextNodeID) == null)
+                {
+                    EditorUtility.DisplayDialog("Missing Connection",
+                                                              "The Start Node must be connected. Please check your nodes.",
+                                                              "OK"); return; 
+                }
 
-        //         Node parentNode = startNode;
-        //         List<Node> connectedNode = new List<Node>();
-        //         while (true)
-        //         {
-        //             Node childNode = GetNode(parentNode.ChildConnectingPoint.connectedNodeId);
+                Node parentNode = startNode;
+                List<Node> connectedNode = new List<Node>();
+                while (true)
+                {
+                    Node childNode = GetNode(parentNode.NextNodeID);
 
-        //             if (childNode == null)
-        //             {
-        //                 break;
-        //             }
-        //             else
-        //             {
-        //                 connectedNode.Add(childNode);
-        //                 parentNode = childNode;
-        //             }
-        //         }
+                    if (childNode == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        connectedNode.Add(childNode);
+                        parentNode = childNode;
+                    }
+                }
 
-        //         List<Element> elements = connectedNode.ToElements();
-        //         Debug.Log(elements.Count);
-        //         Scenario scenario = new Scenario(elements);
-        //         for (int i = 0; i < elements.Count; i++)
-        //         {
-        //             Debug.Log(elements[i]);
-        //         }
-        //         // Save the scenario object as a JSON file at the specified path
-        //         ArokaJsonUtils.SaveScenario(scenario, path2);
-        //         Debug.Log("Nodes saved to JSON: " + path2);
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.Log("No nodes to save.");
-        // }
+                List<Element> elements = connectedNode.ToElements();
+                Debug.Log(elements.Count);
+                Scenario scenario = new Scenario(elements);
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    Debug.Log(elements[i]);
+                }
+                // Save the scenario object as a JSON file at the specified path
+                ArokaJsonUtils.SaveScenario(scenario, path);
+                Debug.Log("Nodes saved to JSON: " + path);
+            }
+        }
+        else
+        {
+            Debug.Log("No nodes to save.");
+        }
     }
     private static string lastSavedSnapshot;
     public static void UpdateLastSavedSnapshot()
@@ -428,11 +429,11 @@ public class JNodeEditor4 : EditorWindow
 
         if (currentSnapshot != lastSavedSnapshot)
         {
-            string path2 = Path.Combine(StoragePath.JNodePath, RecentOpenFileName);
-            if (!string.IsNullOrEmpty(path2))
+            string path = Path.Combine(StoragePath.JNodePath, RecentOpenFileName);
+            if (!string.IsNullOrEmpty(path))
             {
-                File.WriteAllText(path2, currentSnapshot);
-                Save(path2);
+                File.WriteAllText(path, currentSnapshot);
+                Save(path);
                 lastSavedSnapshot = currentSnapshot;  // Update the snapshot after saving
             }
         }
@@ -618,7 +619,6 @@ public class JNodeEditor4 : EditorWindow
         OnClosing();
     }
 
-    private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
 
     [MenuItem("Assets/Create/JNode/New JNode", false, 80)]
     public static void CreateNewJNode()

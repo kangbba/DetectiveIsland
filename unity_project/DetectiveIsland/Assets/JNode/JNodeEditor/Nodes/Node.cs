@@ -78,7 +78,7 @@ public abstract class Node
         }
 
         Type valueType = value.GetType(); // value의 타입을 얻음
-        Vector2 position = _nodeRect.position - localPosInNode;
+        Vector2 position = _nodeRect.position + localPosInNode;
         float labelWidth = 100; // Label의 너비를 적절히 설정합니다.
         
         // Label과 필드를 각각의 위치에 배치합니다.
