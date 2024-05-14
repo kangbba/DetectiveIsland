@@ -7,73 +7,73 @@ using System;
 using System.Drawing;
 using UnityEditor.Experimental.GraphView;
 using System.IO;
+using Newtonsoft.Json;
 
 
 [System.Serializable]
 public abstract class Node 
 {
-    public Node(string title, Node parentNode)
+    public Node(string nodeID, string title, string parentNodeID)
     {
-        _id = Guid.NewGuid().ToString();;
-        _title = title;
-        _parentNode = parentNode;
+        NodeID = nodeID;
 
-        _parentConnectingPoint = new ConnectingPoint(_id, false);
-        _childConnectingPoint = new ConnectingPoint(_id, true);
+        Title = title;
+        ParentNodeID = parentNodeID;
+
+        ChildConnectingPoint = new ConnectingPoint(nodeID, true);
+        ParentConnectingPoint = new ConnectingPoint(nodeID, false);
     }
 
-    private Vector2 _canvasOffset;
-    private bool _isDragging = false; // 드래그 중인지 상태를 추적하는 플래그
-    private string _id;
-    private string _title;
-    private Node _parentNode;
-    private Vector2 _localScale;
-
-    private string _nextNodeID = "";
-    public bool IsNextNodeExist => _nextNodeID != "";
-
-    public Vector2 Center => _nodeRect.position;
-
-    private bool _isSelected;
-    private ConnectingPoint _childConnectingPoint ;
-    private ConnectingPoint _parentConnectingPoint ;
-
-    protected Rect _nodeRect = new Rect(0, 0, 400, 300);
-    private Rect _titleRect = new Rect(0, 0, 200, 20);
+    public ConnectingPoint ChildConnectingPoint {get; set;}
+    public ConnectingPoint ParentConnectingPoint {get; set;}
 
     public abstract Vector2 CalNodeSize();
 
     public abstract Element ToElement();
 
-    public string ID { get => _id; }
-    public Node ParentNode { get => _parentNode;  }
-    public Rect NodeRect { get => _nodeRect; }
-    public ConnectingPoint ChildConnectingPoint { get => _childConnectingPoint; }
-    public ConnectingPoint ParentConnectingPoint { get => _parentConnectingPoint; }
-    public string NextNodeID { get => _nextNodeID;  }
+    public string Title;
+    public string NodeID;
+    public string NextNodeID ;
+    public string ParentNodeID ;
+    public bool IsSelected ;
+
+    public Vector2 lastRectPos;
+    public Vector2 lastRectSize;
+
+    [JsonIgnore] public Rect NodeRect { get => _nodeRect; }
+    private Rect _nodeRect;
 
     public void SetNextNodeID(string nextNodeID){
-        _nextNodeID = nextNodeID;
+        NextNodeID = nextNodeID;
     }
     public virtual void DrawNode(){    
-        DrawBackground(_nodeRect);
-        DrawTitle(_title);
-    }
+        DrawBackground(NodeRect);
+        DrawTitle(Title);
+        
+        if(IsSelected){
+            DrawHighlight();
+        }
 
+    }
     public void SetNodeRectSize(Vector2 size){
         _nodeRect.size = size;
+
+        lastRectSize = size;
     }
     
     public void SetRectPos(Vector2 newPos){
         _nodeRect.position = newPos; // 위치 업데이트
-        _titleRect.position = newPos + new Vector2(_nodeRect.width * .5f - (_titleRect.width * .5f), 15);
+
+        lastRectPos = newPos;
+    }
+    private void DrawDebugLabel(){
+        GUI.Label(NodeRect, NodeID.ToString());
     }
     // 데이터 타입에 따른 CustomField 메서드
     protected object CustomField(string title, object value, Vector2 localPosInNode, float width = 80, float height = 20)
     {
         if (value == null)
         {
-            Debug.Log("value is null");
             return value;
         }
 
@@ -158,25 +158,26 @@ public abstract class Node
         }
     }
 
-    private void DrawSelectionBox(Rect nodeRect, Color representColor)
+    
+    private void DrawHighlight()
     {
-        GUIStyle boxGS = new GUIStyle();
-        boxGS.normal.background = EditorGUIUtility.whiteTexture;
-        boxGS.alignment = TextAnchor.UpperCenter;
-        boxGS.padding = new RectOffset(10, 10, 10, 10);
+        // 선택된 상태일 때 하이라이트 테두리 그리기
+        Color highlightColor = Color.cyan; // 하이라이트 색상을 하늘색으로 설정
+        Color previousColor = GUI.color; // 이전 GUI 색상을 저장
 
-        if (_isSelected)
-        {
-            GUI.color = NodeColors.selectedColor;
-            GUI.Box(nodeRect.AdjustSize(10, 10), "", boxGS);
-        }
+        // 테두리 색상 설정
+        Handles.color = highlightColor;
+        Rect highlightRect = new Rect(NodeRect.x - 5, NodeRect.y - 5, NodeRect.width + 10, NodeRect.height + 10);
+        
+        // 하이라이트 테두리 그리기
+        Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, highlightColor);
 
-        GUI.color = representColor;
-        GUI.Box(nodeRect.AdjustSize(2, 2), "", boxGS);
+        // 이전 GUI 색상 복원
+        GUI.color = previousColor;
     }
 
     public void SetSelected(bool b){
-        _isSelected = b;
+        IsSelected = b;
     }
 
     private void DrawBackground(Rect nodeRect)
@@ -196,12 +197,18 @@ public abstract class Node
         GUIStyle titleGS = new GUIStyle();
         titleGS.alignment = TextAnchor.UpperCenter;
         titleGS.normal.textColor = Color.white;
-        GUI.Label(_titleRect, title, titleGS);
+
+        Vector2 pos = NodeRect.center.ModifiedY(NodeRect.min.y) + new Vector2(-100, 20);
+        Rect rect = new Rect(pos.x, pos.y, 200, 100); 
+
+        GUI.Label(rect, title, titleGS);
     }
     public bool IsMouseOver(Vector2 mousePosition)
     {
         return _nodeRect.Contains(mousePosition); // 마우스 위치가 노드 내부인지 판단
     }
+
+    
 }
 
 

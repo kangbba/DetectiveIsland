@@ -14,7 +14,7 @@ public class ItemDemandNode : Node
     private List<Node> _failNodes;
     private List<Node> _cancelNodes;
 
-    public ItemDemandNode(string title, Node parentNode) : base(title, parentNode)
+    public ItemDemandNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }
@@ -34,19 +34,31 @@ public class ItemDemandNode : Node
 
         _itemID = (string)CustomField("Item ID : ", _itemID, Vector2.up * 0f);
         
-        foreach(DialogueNode node in _dialogueNodes){
-            node.DrawNode();
+        if(_dialogueNodes != null)
+        {
+            foreach(DialogueNode node in _dialogueNodes){
+                Debug.Log("여기실행");
+                node.DrawNode();
+            }
         }
-        foreach(Node node in _successNodes){
-            node.DrawNode();
+        if(_successNodes != null)
+        {
+            foreach(Node node in _successNodes){
+                node.DrawNode();
+            }
         }
-        foreach(Node node in _failNodes){
-            node.DrawNode();
+        if(_failNodes != null)
+        {
+            foreach(Node node in _failNodes){
+                node.DrawNode();
+            }
         }
-        foreach(Node node in _cancelNodes){
-            node.DrawNode();
+        if(_cancelNodes != null)
+        {
+            foreach(Node node in _cancelNodes){
+                node.DrawNode();
+            }
         }
-
         ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.itemDemandColor);
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.itemDemandColor);
     }

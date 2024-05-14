@@ -7,7 +7,7 @@ public class OverlayPictureNode : Node
 {
     private OverlayPicture _overlayPicture = new OverlayPicture("Black", "FadeIn", 1);
 
-    public OverlayPictureNode(string title, Node parentNode): base(title, parentNode)  // Node 클래스의 생성자 호출
+    public OverlayPictureNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }

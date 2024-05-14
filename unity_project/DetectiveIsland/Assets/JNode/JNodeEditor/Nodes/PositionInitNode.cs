@@ -13,7 +13,7 @@ public class PositionInitNode : Node
     private PositionInit _positionInit = new PositionInit(new List<CharacterPosition>{new CharacterPosition("", "Middle")});
     private List<PositionInitNode> positionInitNodes = new List<PositionInitNode>();
 
-    public PositionInitNode(string title, Node parentNode) : base(title, parentNode)
+    public PositionInitNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }

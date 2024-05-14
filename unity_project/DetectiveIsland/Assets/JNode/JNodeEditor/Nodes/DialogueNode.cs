@@ -1,5 +1,6 @@
 using Aroka.ArokaUtils;
 using Microsoft.Unity.VisualStudio.Editor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueNode : Node
 {
-    private string _characterID = "Mono";
-    private List<LineNode> _lineNodes = new List<LineNode>();
+    public string CharacterID;
+    public List<LineNode> LineNodes = new List<LineNode>();
+
     private CharacterPreviewer _characterPreviewer = new CharacterPreviewer();
 
     public const float SPACING_STANDARD = 30;
@@ -22,18 +24,22 @@ public class DialogueNode : Node
     public override Element ToElement()
     {
         //_lineNodes 를 리스트화한것이 밑의 인풋
-        return new Dialogue(_characterID, null);
+        List<Line> lines = new List<Line>();
+        for(int i = 0 ; i < LineNodes.Count ; i++)
+        {
+            lines.Add(LineNodes[i].Line);
+        }
+        return new Dialogue(CharacterID, lines);
     }
     
-    public DialogueNode(string title, Node parentNode): base(title, parentNode)  // Node 클래스의 생성자 호출
+    public DialogueNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
-        _lineNodes = new List<LineNode>(){};
         SetNodeRectSize(CalNodeSize());
     }
 
     public override Vector2 CalNodeSize()
     {
-        return new Vector2(LINE_NODE_WIDTH, (_lineNodes.Count + 1) * LineNode.LINE_NODE_HEIGHT);
+        return new Vector2(LINE_NODE_WIDTH, _isFolded ? LineNode.LINE_NODE_HEIGHT : (LineNodes.Count + 1) * LineNode.LINE_NODE_HEIGHT);
     }
 
     public override void DrawNode()
@@ -42,16 +48,16 @@ public class DialogueNode : Node
 
 
         float y = 50;
-        _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.up * y);
-        _characterPreviewer.CharacterPreview(_characterID, 60, 60, _nodeRect.position);
+        CharacterID = (string)CustomField("Character ID : ", CharacterID, Vector2.up * y);
+        _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
         
         y += 50;
-        for(int i = 0 ; i < _lineNodes.Count ; i++)
+        for(int i = 0 ; i < LineNodes.Count ; i++)
         {
             if(_isFolded && i > 0){
                 break;
             }
-            LineNode lineNode = _lineNodes[i];
+            LineNode lineNode = LineNodes[i];
             lineNode.DrawNode();
             lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
             y += LineNode.LINE_NODE_HEIGHT;
@@ -64,13 +70,14 @@ public class DialogueNode : Node
         y += SPACING_STANDARD;
         DrawFoldingButton(NodeRect);
         y += SPACING_STANDARD;
+
         ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.dialogueColor);
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.dialogueColor);
     }
     private void AddLineButton(Rect nodeRect)
     {
         float buttonSize = 80;
-        float buttonYPosition = _lineNodes.Count == 0 ? nodeRect.position.y + 50 : _lineNodes.Last().NodeRect.min.y + LineNode.LINE_NODE_HEIGHT ;
+        float buttonYPosition = LineNodes.Count == 0 ? nodeRect.position.y + 50 : LineNodes.Last().NodeRect.min.y + LineNode.LINE_NODE_HEIGHT ;
         Rect buttonRect = new Rect(
             nodeRect.x + nodeRect.width * 0.5f - buttonSize * 0.5f,
             buttonYPosition,
@@ -79,8 +86,8 @@ public class DialogueNode : Node
         );
         
         if (GUI.Button(buttonRect, "Add Line")){
-            LineNode lineNode = new LineNode("", this);
-            _lineNodes.Add(lineNode);
+            LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
+            LineNodes.Add(lineNode);
 
             SetNodeRectSize(CalNodeSize());
         }

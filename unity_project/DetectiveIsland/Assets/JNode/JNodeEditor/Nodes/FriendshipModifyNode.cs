@@ -7,7 +7,7 @@ public class FriendshipModifyNode : Node
 {
     private FriendshipModify _friendshipModify = new FriendshipModify(true, "", 10);
 
-    public FriendshipModifyNode(string title, Node parentNode): base(title, parentNode)  // Node 클래스의 생성자 호출
+    public FriendshipModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }

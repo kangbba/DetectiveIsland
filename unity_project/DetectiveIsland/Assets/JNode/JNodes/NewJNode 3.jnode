@@ -1,0 +1,69 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "editorUIState": {
+    "$type": "EditorUIState, Assembly-CSharp",
+    "selectedNode": {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "lastRectPos": {
+        "x": 321.0,
+        "y": 263.0
+      },
+      "lastRectSize": {
+        "x": 360.0,
+        "y": 150.0
+      },
+      "IsNextNodeExist": false,
+      "ID": "4ce031e7-6b7e-4ca8-aaf0-acf45f49c355",
+      "NextNodeID": "",
+      "ParentNodeID": null
+    },
+    "connectStartNode": null
+  },
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "lastRectPos": {
+        "x": 332.0,
+        "y": 79.0
+      },
+      "lastRectSize": {
+        "x": 200.0,
+        "y": 100.0
+      },
+      "IsNextNodeExist": false,
+      "ID": "89e82b0d-7e25-4ea4-a9f4-892cab9d969e",
+      "NextNodeID": "",
+      "ParentNodeID": null
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "lastRectPos": {
+        "x": 321.0,
+        "y": 263.0
+      },
+      "lastRectSize": {
+        "x": 360.0,
+        "y": 150.0
+      },
+      "IsNextNodeExist": false,
+      "ID": "4ce031e7-6b7e-4ca8-aaf0-acf45f49c355",
+      "NextNodeID": "",
+      "ParentNodeID": null
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "lastRectPos": {
+        "x": 644.0,
+        "y": 517.0
+      },
+      "lastRectSize": {
+        "x": 360.0,
+        "y": 150.0
+      },
+      "IsNextNodeExist": false,
+      "ID": "a76ec19d-5af7-4dc1-9200-8694d174dad9",
+      "NextNodeID": "",
+      "ParentNodeID": null
+    }
+  ]
+}

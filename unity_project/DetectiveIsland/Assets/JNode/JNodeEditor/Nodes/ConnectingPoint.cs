@@ -4,20 +4,24 @@ using UnityEngine;
 [System.Serializable]
 public class ConnectingPoint
 {
-    private string _nodeID;
     private Rect _rect;
-
+    private bool _isLineModifying;
     private bool _isChildConnectingPoint;
 
     public ConnectingPoint(string nodeID, bool isChildConnectingPoint)
     {   
-        _nodeID = nodeID;
+        NodeID = nodeID;
         _isChildConnectingPoint = isChildConnectingPoint;
     }
-        public Rect Rect { get => _rect;   }
-    public bool IsChildConnectingPoint { get => _isChildConnectingPoint; }
-    public string NodeID { get => _nodeID; }
 
+    public Rect Rect { get => _rect; }
+    public bool IsChildConnectingPoint { get => _isChildConnectingPoint; }
+    public string NodeID { get ; set; }
+    public bool IsLineModifying { get => _isLineModifying; }
+
+    public void ModifyingStart(bool b){
+        _isLineModifying = b;
+    }
     public bool IsContainRect(Vector2 pos)
     {
         return _rect.Contains(pos);

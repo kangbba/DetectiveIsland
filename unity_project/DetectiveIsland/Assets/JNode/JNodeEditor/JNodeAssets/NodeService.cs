@@ -47,7 +47,6 @@ public static class Texture
         }
         return texture2D;
     }
-
     private static Texture2D LoadAndCreateTexture(Color color)
     {
         Texture2D baseTexture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/JNode/Textures/WhiteTexture.png");

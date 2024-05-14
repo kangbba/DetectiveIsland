@@ -12,6 +12,7 @@ using System.Linq;
 
 public class JNodeEditor4 : EditorWindow
 {
+    private static string lastSavedSnapshot;
     private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
     private static JNodeInstance jNodeInstance;
 
@@ -32,11 +33,7 @@ public class JNodeEditor4 : EditorWindow
         get => jNodeInstance?.recentOpenFileName;
         set { if (jNodeInstance != null) jNodeInstance.recentOpenFileName = value; }
     }
-    private static Node SelectedNode
-    {
-        get => jNodeInstance? .editorUIState.selectedNode;
-        set { if (jNodeInstance != null) jNodeInstance.editorUIState.selectedNode = value; }
-    }
+    private Node SelectedNode {get ;set ; }
 
     
     [DidReloadScripts]
@@ -47,6 +44,7 @@ public class JNodeEditor4 : EditorWindow
            
         LoadJNodeEditorWindow(jNodeInstance.recentPath, RecentOpenFileName);
         UpdateLastSavedSnapshot(); 
+        
     }
 
     private void OnGUI()
@@ -57,8 +55,9 @@ public class JNodeEditor4 : EditorWindow
         if (jNodeInstance != null)
         {
             DrawNodes();
-            DrawConnectingPointLines();
+            DrawConnectingPointLines(Event.current.mousePosition);
             ProcessEvents(Event.current); 
+            ProcessShortcuts(Event.current); 
         }
         DrawJNodeMenuBar();
         if (GUI.changed) Repaint();
@@ -67,15 +66,39 @@ public class JNodeEditor4 : EditorWindow
     }
     public void Connect(string fromNodeID, string toNodeID)
     {
-        GetNode(fromNodeID).SetNextNodeID(toNodeID);
+        Node node = GetNode(fromNodeID);
+        if(node == null){
+            Debug.LogError($"node is null {fromNodeID}");
+            return;
+        }
+        node.SetNextNodeID(toNodeID);
     }
 
     public void DeConnect(string fromNodeID)
     {
-        GetNode(fromNodeID).SetNextNodeID("");
+        Node node = GetNode(fromNodeID);
+        if(node == null){
+            Debug.LogError($"node is null {fromNodeID}");
+            return;
+        }
+        node.SetNextNodeID("");
     }
-
-     private void ProcessEvents(Event e)
+    
+    private void ProcessShortcuts(Event e)
+    {
+        if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.Delete) ||
+            (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Delete))
+        {
+            if (SelectedNode != null)
+            {
+                Nodes.Remove(SelectedNode);
+                SelectedNode = null;
+                e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                Repaint(); // 창을 다시 그리도록 요청
+            }
+        }
+    }
+    private void ProcessEvents(Event e)
     {
         switch (e.type)
         {
@@ -85,14 +108,16 @@ public class JNodeEditor4 : EditorWindow
                 {  
                     ConnectingPoint connectingPoint = GetMouseOverConnectingPoint(e.mousePosition);
                     _startingCPoint = connectingPoint;
-                    
+                    if(_startingCPoint != null){
+                        _startingCPoint.ModifyingStart(true);
+                    }
+
                     Node node = GetMouseOverNode(e.mousePosition);
                     if(node != null){
-                        node.SetSelected(true);
-                        SelectedNode = node;
+                        SelectNode(node.NodeID);
                     }
                     else{
-                        SelectedNode = null;
+                        SelectNode(null);
                     }
                     if (SelectedNode != null)
                     {
@@ -112,47 +137,55 @@ public class JNodeEditor4 : EditorWindow
                     _lastMousePositionDrag = e.mousePosition;
                 }
                 e.Use();
-                Debug.Log(SelectedNode);
                 break;
 
             case EventType.MouseUp:
                 // // 드래그 종료
+                ConnectingPoint endingCPoint = GetMouseOverConnectingPoint(e.mousePosition);
+                if(endingCPoint != null)
+                {
+                    if(_startingCPoint != null)
+                    {
+                        if(_startingCPoint != endingCPoint)
+                        {
+                            bool isStartingCPointChild = _startingCPoint.IsChildConnectingPoint; // 시작 코넥팅 포인트가 자식이니?
+                            bool isEndingCPointChild = endingCPoint.IsChildConnectingPoint; // 끝 코넥팅 포인트가 자식이니?
+                            
+                            if(!isStartingCPointChild && isEndingCPointChild)
+                            { // 시작이 부모었고, 끝이 자식이란 뜻
+                                string startingNodeID = _startingCPoint.NodeID;
+                                string endingNodeID = endingCPoint.NodeID;
+                                Debug.Log($"안정상, 역순연결 {startingNodeID} {endingNodeID}");
+                                Connect(endingNodeID, startingNodeID);
+                            }
+                            else if(isStartingCPointChild && !isEndingCPointChild)
+                            { // 시작이 자식이었고, 끝이 부모란 뜻
+                                string startingNodeID = _startingCPoint.NodeID;
+                                string endingNodeID = endingCPoint.NodeID;
+                                Debug.Log($"정상, 순방향연결 startingNodeID : {startingNodeID} endingNodeID : {endingNodeID}");
+                                Connect(startingNodeID, endingNodeID);
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        _startingCPoint.ModifyingStart(false);
+                    }
+                }
+                else {
+                    if(_startingCPoint != null){
+                        string startingNodeID = _startingCPoint.NodeID;
+                        if(_startingCPoint.IsChildConnectingPoint){
+                            DeConnect(startingNodeID);
+                           _startingCPoint.ModifyingStart(false);
+                        }
+                        Debug.Log($"ELSE22");
+                    }
+                }
                 _isCanvasPanning = false;
                 _isNodeDragging = false;
-
-                ConnectingPoint endingCPoint = GetMouseOverConnectingPoint(e.mousePosition);
-                if(_startingCPoint != null && endingCPoint != null && _startingCPoint != endingCPoint){
-                    
-                    bool isStartingCPointChild = _startingCPoint.IsChildConnectingPoint; // 시작 코넥팅 포인트가 자식이니?
-                    bool isEndingCPointChild = endingCPoint.IsChildConnectingPoint; // 끝 코넥팅 포인트가 자식이니?
-                    
-                    if(!isStartingCPointChild && isEndingCPointChild){ // 시작이 부모었고, 끝이 자식이란 뜻
-                        string startingNodeID = _startingCPoint.NodeID;
-                        string endingNodeID = endingCPoint.NodeID;
-                        Debug.Log($"안정상, 역순연결 {startingNodeID} {endingNodeID}");
-                        Connect(endingNodeID, startingNodeID);
-                    }
-                    else if(isStartingCPointChild && !isEndingCPointChild){ // 시작이 자식이었고, 끝이 부모란 뜻
-                        string startingNodeID = _startingCPoint.NodeID;
-                        string endingNodeID = endingCPoint.NodeID;
-                        Debug.Log($"정상, 순방향연결 {startingNodeID} {endingNodeID}");
-                        Connect(startingNodeID, endingNodeID);
-                    }
-                    else{
-                        _startingCPoint = null;
-                    }
-                }
-                else if(_startingCPoint != null && endingCPoint == null){
-                    string startingNodeID = _startingCPoint.NodeID;
-                    if(_startingCPoint.IsChildConnectingPoint){
-                        DeConnect(startingNodeID);
-                    }
-                    Debug.Log($"ELSE22");
-                    _startingCPoint = null;
-                }
-                else{
-                    Debug.Log($"ELSE33");
-                }
+                _startingCPoint = null;
                 e.Use();
                 break;
 
@@ -174,6 +207,18 @@ public class JNodeEditor4 : EditorWindow
                 }
                 e.Use();
                 break;
+        }
+    }
+    private void SelectNode(string nodeID){
+        if(SelectedNode != null && SelectedNode.NodeID == nodeID){
+            return;
+        }
+        foreach(Node node in Nodes){
+            bool isSelected = node.NodeID == nodeID;
+            node.SetSelected(isSelected);
+            if(isSelected){
+                SelectedNode = node;
+            }
         }
     }
     private Node GetMouseOverNode(Vector2 mousePos)
@@ -227,23 +272,58 @@ public class JNodeEditor4 : EditorWindow
         }
     }
 
-    private void DrawConnectingPointLines(){
+    private void DrawConnectingPointLines(Vector2 mousePosition)
+    {
         for (int i = 0; i < Nodes.Count; i++)
         {
             Node node = Nodes[i];
-            if (node.IsNextNodeExist)
+            Node nextNode = GetNode(node.NextNodeID);
+            if(nextNode != null && !node.ChildConnectingPoint.IsLineModifying)
             {
-                float lineThickness = 5.0f;
-                // Assume GetNode returns a Node object based on an ID and it handles null cases appropriately
-                Node nextNode = GetNode(node.NextNodeID);
-                Handles.DrawAAPolyLine(lineThickness, new Vector3[]
-                {
-                    node.ChildConnectingPoint.Rect.center,
-                    nextNode.ParentConnectingPoint.Rect.center
-                });
+                Vector3 startPos = node.ChildConnectingPoint.Rect.center;
+                Vector3 endPos = nextNode.ParentConnectingPoint.Rect.center;
+                DrawConnectingPointLine(startPos, endPos);
+            }
+            else if(node.ChildConnectingPoint.IsLineModifying)
+            {
+               Vector3 startPos = node.ChildConnectingPoint.Rect.center;
+               Vector3 endPos = mousePosition;
+                DrawConnectingPointLine(startPos, endPos);
+
             }
         }
     }
+
+    private void DrawConnectingPointLine(Vector3 startPos, Vector3 endPos){
+
+        float lineThickness = 5.0f;
+        float threshold = 75.0f; // 임계값 설정
+        // 가로나 세로 차이 계산
+        float horizontalDiff = Mathf.Abs(startPos.x - endPos.x);
+        float verticalDiff = Mathf.Abs(startPos.y - endPos.y);
+
+        // 기본 제어점 설정
+        Vector3 startTangent = startPos + Vector3.up * 50;
+        Vector3 endTangent = endPos + Vector3.down * 50;
+
+        // 가로나 세로 차이가 임계값보다 작을 경우 제어점을 조정하여 직선에 가깝게 설정
+        if (horizontalDiff < threshold && verticalDiff < threshold)
+        {
+            startTangent = startPos + (endPos - startPos) * 0.25f;
+            endTangent = endPos + (startPos - endPos) * 0.25f;
+        }
+
+        Handles.DrawBezier(
+            startPos,
+            endPos,
+            startTangent,
+            endTangent,
+            Color.white,
+            null,
+            lineThickness
+        );
+    }
+
 
     private void DrawGrid()
     {
@@ -298,7 +378,14 @@ public class JNodeEditor4 : EditorWindow
         JNode jNode = ArokaJsonUtils.LoadJNode(filePath);
         Debug.Log(jNode.Nodes.Count);
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
+
+        for(int i = 0 ; i< jNode.Nodes.Count; i++){
+            jNode.Nodes[i].SetRectPos(jNode.Nodes[i].lastRectPos);
+            jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].lastRectSize);
+        }
+
         UpdateLastSavedSnapshot();
+        
     }
 
     public string GetCurrentSnapShot()
@@ -406,7 +493,6 @@ public class JNodeEditor4 : EditorWindow
             Debug.Log("No nodes to save.");
         }
     }
-    private static string lastSavedSnapshot;
     public static void UpdateLastSavedSnapshot()
     {
         lastSavedSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
@@ -519,9 +605,16 @@ public class JNodeEditor4 : EditorWindow
 
         menu.ShowAsContext();
     }
+    private void AddStartNode(Vector2 position)
+    {
+        StartNode node = new StartNode(Guid.NewGuid().ToString(), "StartNode", null);
+        node.SetRectPos(position);
+        Nodes.Add(node);
+        AutoSaveJNodeInstance();
+    }
     private void AddDialogueNode(Vector2 position)
     {
-        DialogueNode node = new DialogueNode("DialogueNode", null);
+        DialogueNode node = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);
         AutoSaveJNodeInstance();
@@ -530,60 +623,63 @@ public class JNodeEditor4 : EditorWindow
 
     private void AddChoiceSetNode(Vector2 position)
     {
-        ChoiceSetNode node = new ChoiceSetNode("ChoiceSetNode", null);
+        ChoiceSetNode node = new ChoiceSetNode(Guid.NewGuid().ToString(), "ChoiceSetNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);
     }
 
     private void AddPlaceModifyNode(Vector2 position)
     {
-        PlaceModifyNode node = new PlaceModifyNode("PlaceModifyNode", null);
+        PlaceModifyNode node = new PlaceModifyNode(Guid.NewGuid().ToString(), "PlaceModifyNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);  // Assuming Nodes is a list or collection that stores all nodes.
     }
 
     private void AddFriendshipModifyNode(Vector2 position)
     {
-        FriendshipModifyNode node = new FriendshipModifyNode("FriendshipModifyNode", null);
+        FriendshipModifyNode node = new FriendshipModifyNode(Guid.NewGuid().ToString(), "FriendshipModifyNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);  // Add this node to your node management system or editor.
     }
 
     private void AddOverlayPictureNode(Vector2 position)
     {
-        OverlayPictureNode node = new OverlayPictureNode("OverlayPictureNode", null);
+        OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);  // Append to the list of nodes.
     }
 
     private void AddItemModifyNode(Vector2 position)
     {
-        ItemModifyNode node = new ItemModifyNode("ItemModifyNode", null);
+        ItemModifyNode node = new ItemModifyNode(Guid.NewGuid().ToString(), "ItemModifyNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);
     }
 
     private void AddItemDemandNode(Vector2 position)
     {
-        ItemDemandNode node = new ItemDemandNode("ItemDemandNode", null);
+        ItemDemandNode node = new ItemDemandNode(Guid.NewGuid().ToString(), "ItemDemandNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);
     }
 
     private void AddPositionInitNode(Vector2 position)
     {
-        PositionInitNode node = new PositionInitNode("PositionInitNode", null);
+        PositionInitNode node = new PositionInitNode(Guid.NewGuid().ToString(), "PositionInitNode", null);
         node.SetRectPos(position);
         Nodes.Add(node);
     }
 
     public Node GetNode(string nodeID)
-    {
+    {   
+        if(nodeID == null || nodeID == ""){
+            return null;
+        }
         for (int i = 0; i < Nodes.Count; i++)
         {
             Node node = Nodes[i];
 
-            if (node.ID == nodeID)
+            if (node.NodeID == nodeID)
             {
                 return node; // Node found
             }
@@ -633,7 +729,7 @@ public class JNodeEditor4 : EditorWindow
 
         JNode jNode = new JNode(new List<Node>());
 
-        StartNode startNode = new StartNode("StartNode", null);
+        StartNode startNode = new StartNode(Guid.NewGuid().ToString(), "StartNode", null);
         jNode.Nodes.Add(startNode);
 
         JsonSerializerSettings settings = new JsonSerializerSettings

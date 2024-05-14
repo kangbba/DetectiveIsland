@@ -1,0 +1,41 @@
+{
+  "$type": "Scenario, Assembly-CSharp",
+  "Elements": [
+    {
+      "$type": "Dialogue, Assembly-CSharp",
+      "CharacterID": null,
+      "Lines": [
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "ㅇㅏㄴ녕 "
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "테스틐"
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": "Smile",
+          "Sentence": "ffff"
+        }
+      ]
+    },
+    {
+      "$type": "ChoiceSet, Assembly-CSharp",
+      "Dialogues": null,
+      "Choices": null
+    },
+    {
+      "$type": "PositionInit, Assembly-CSharp",
+      "CharacterPositions": [
+        {
+          "$type": "CharacterPosition, Assembly-CSharp",
+          "CharacterID": "",
+          "PositionID": "Middle"
+        }
+      ]
+    }
+  ]
+}

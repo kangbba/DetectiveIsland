@@ -10,30 +10,30 @@
       "$type": "StartNode, Assembly-CSharp",
       "IsNextNodeExist": false,
       "Center": {
-        "x": 300.0,
-        "y": 115.0
+        "x": 0.0,
+        "y": 0.0
       },
-      "ID": "bcf8255c-2ad8-44ba-b559-477b67eb8581",
+      "ID": "e41caf34-262b-497a-a03c-3c399ee91516",
       "ParentNode": null,
       "NodeRect": {
         "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 300.0,
-        "y": 115.0,
+        "x": 0.0,
+        "y": 0.0,
         "position": {
-          "x": 300.0,
-          "y": 115.0
+          "x": 0.0,
+          "y": 0.0
         },
         "center": {
-          "x": 400.0,
-          "y": 165.0
+          "x": 100.0,
+          "y": 50.0
         },
         "min": {
-          "x": 300.0,
-          "y": 115.0
+          "x": 0.0,
+          "y": 0.0
         },
         "max": {
-          "x": 500.0,
-          "y": 215.0
+          "x": 200.0,
+          "y": 100.0
         },
         "width": 200.0,
         "height": 100.0,
@@ -41,54 +41,54 @@
           "x": 200.0,
           "y": 100.0
         },
-        "xMin": 300.0,
-        "yMin": 115.0,
-        "xMax": 500.0,
-        "yMax": 215.0,
-        "left": 300.0,
-        "right": 500.0,
-        "top": 115.0,
-        "bottom": 215.0
+        "xMin": 0.0,
+        "yMin": 0.0,
+        "xMax": 200.0,
+        "yMax": 100.0,
+        "left": 0.0,
+        "right": 200.0,
+        "top": 0.0,
+        "bottom": 100.0
       },
       "ChildConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "Rect": {
           "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 390.0,
-          "y": 205.0,
+          "x": 0.0,
+          "y": 0.0,
           "position": {
-            "x": 390.0,
-            "y": 205.0
+            "x": 0.0,
+            "y": 0.0
           },
           "center": {
-            "x": 400.0,
-            "y": 215.0
+            "x": 0.0,
+            "y": 0.0
           },
           "min": {
-            "x": 390.0,
-            "y": 205.0
+            "x": 0.0,
+            "y": 0.0
           },
           "max": {
-            "x": 410.0,
-            "y": 225.0
+            "x": 0.0,
+            "y": 0.0
           },
-          "width": 20.0,
-          "height": 20.0,
+          "width": 0.0,
+          "height": 0.0,
           "size": {
-            "x": 20.0,
-            "y": 20.0
+            "x": 0.0,
+            "y": 0.0
           },
-          "xMin": 390.0,
-          "yMin": 205.0,
-          "xMax": 410.0,
-          "yMax": 225.0,
-          "left": 390.0,
-          "right": 410.0,
-          "top": 205.0,
-          "bottom": 225.0
+          "xMin": 0.0,
+          "yMin": 0.0,
+          "xMax": 0.0,
+          "yMax": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "top": 0.0,
+          "bottom": 0.0
         },
         "IsChildConnectingPoint": true,
-        "NodeID": "bcf8255c-2ad8-44ba-b559-477b67eb8581"
+        "NodeID": "e41caf34-262b-497a-a03c-3c399ee91516"
       },
       "ParentConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
@@ -128,511 +128,7 @@
           "bottom": 0.0
         },
         "IsChildConnectingPoint": false,
-        "NodeID": "bcf8255c-2ad8-44ba-b559-477b67eb8581"
-      },
-      "NextNodeID": ""
-    },
-    {
-      "$type": "ItemModifyNode, Assembly-CSharp",
-      "IsNextNodeExist": true,
-      "Center": {
-        "x": 59.0,
-        "y": 94.0
-      },
-      "ID": "0d165a3c-e359-41a0-95d8-64489eeb561a",
-      "ParentNode": null,
-      "NodeRect": {
-        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 59.0,
-        "y": 94.0,
-        "position": {
-          "x": 59.0,
-          "y": 94.0
-        },
-        "center": {
-          "x": 159.0,
-          "y": 144.0
-        },
-        "min": {
-          "x": 59.0,
-          "y": 94.0
-        },
-        "max": {
-          "x": 259.0,
-          "y": 194.0
-        },
-        "width": 200.0,
-        "height": 100.0,
-        "size": {
-          "x": 200.0,
-          "y": 100.0
-        },
-        "xMin": 59.0,
-        "yMin": 94.0,
-        "xMax": 259.0,
-        "yMax": 194.0,
-        "left": 59.0,
-        "right": 259.0,
-        "top": 94.0,
-        "bottom": 194.0
-      },
-      "ChildConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 149.0,
-          "y": 184.0,
-          "position": {
-            "x": 149.0,
-            "y": 184.0
-          },
-          "center": {
-            "x": 159.0,
-            "y": 194.0
-          },
-          "min": {
-            "x": 149.0,
-            "y": 184.0
-          },
-          "max": {
-            "x": 169.0,
-            "y": 204.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 149.0,
-          "yMin": 184.0,
-          "xMax": 169.0,
-          "yMax": 204.0,
-          "left": 149.0,
-          "right": 169.0,
-          "top": 184.0,
-          "bottom": 204.0
-        },
-        "IsChildConnectingPoint": true,
-        "NodeID": "0d165a3c-e359-41a0-95d8-64489eeb561a"
-      },
-      "ParentConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 149.0,
-          "y": 84.0,
-          "position": {
-            "x": 149.0,
-            "y": 84.0
-          },
-          "center": {
-            "x": 159.0,
-            "y": 94.0
-          },
-          "min": {
-            "x": 149.0,
-            "y": 84.0
-          },
-          "max": {
-            "x": 169.0,
-            "y": 104.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 149.0,
-          "yMin": 84.0,
-          "xMax": 169.0,
-          "yMax": 104.0,
-          "left": 149.0,
-          "right": 169.0,
-          "top": 84.0,
-          "bottom": 104.0
-        },
-        "IsChildConnectingPoint": false,
-        "NodeID": "0d165a3c-e359-41a0-95d8-64489eeb561a"
-      },
-      "NextNodeID": "0fbcb0e6-af36-4473-a131-5b81704afa15"
-    },
-    {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "IsNextNodeExist": false,
-      "Center": {
-        "x": 105.0,
-        "y": 481.0
-      },
-      "ID": "33140e18-c01f-47b7-adb8-4f92eaaaee72",
-      "ParentNode": null,
-      "NodeRect": {
-        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 105.0,
-        "y": 481.0,
-        "position": {
-          "x": 105.0,
-          "y": 481.0
-        },
-        "center": {
-          "x": 285.0,
-          "y": 556.0
-        },
-        "min": {
-          "x": 105.0,
-          "y": 481.0
-        },
-        "max": {
-          "x": 465.0,
-          "y": 631.0
-        },
-        "width": 360.0,
-        "height": 150.0,
-        "size": {
-          "x": 360.0,
-          "y": 150.0
-        },
-        "xMin": 105.0,
-        "yMin": 481.0,
-        "xMax": 465.0,
-        "yMax": 631.0,
-        "left": 105.0,
-        "right": 465.0,
-        "top": 481.0,
-        "bottom": 631.0
-      },
-      "ChildConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 275.0,
-          "y": 621.0,
-          "position": {
-            "x": 275.0,
-            "y": 621.0
-          },
-          "center": {
-            "x": 285.0,
-            "y": 631.0
-          },
-          "min": {
-            "x": 275.0,
-            "y": 621.0
-          },
-          "max": {
-            "x": 295.0,
-            "y": 641.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 275.0,
-          "yMin": 621.0,
-          "xMax": 295.0,
-          "yMax": 641.0,
-          "left": 275.0,
-          "right": 295.0,
-          "top": 621.0,
-          "bottom": 641.0
-        },
-        "IsChildConnectingPoint": true,
-        "NodeID": "33140e18-c01f-47b7-adb8-4f92eaaaee72"
-      },
-      "ParentConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 275.0,
-          "y": 471.0,
-          "position": {
-            "x": 275.0,
-            "y": 471.0
-          },
-          "center": {
-            "x": 285.0,
-            "y": 481.0
-          },
-          "min": {
-            "x": 275.0,
-            "y": 471.0
-          },
-          "max": {
-            "x": 295.0,
-            "y": 491.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 275.0,
-          "yMin": 471.0,
-          "xMax": 295.0,
-          "yMax": 491.0,
-          "left": 275.0,
-          "right": 295.0,
-          "top": 471.0,
-          "bottom": 491.0
-        },
-        "IsChildConnectingPoint": false,
-        "NodeID": "33140e18-c01f-47b7-adb8-4f92eaaaee72"
-      },
-      "NextNodeID": ""
-    },
-    {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "IsNextNodeExist": true,
-      "Center": {
-        "x": 68.0,
-        "y": 289.0
-      },
-      "ID": "0fbcb0e6-af36-4473-a131-5b81704afa15",
-      "ParentNode": null,
-      "NodeRect": {
-        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 68.0,
-        "y": 289.0,
-        "position": {
-          "x": 68.0,
-          "y": 289.0
-        },
-        "center": {
-          "x": 248.0,
-          "y": 364.0
-        },
-        "min": {
-          "x": 68.0,
-          "y": 289.0
-        },
-        "max": {
-          "x": 428.0,
-          "y": 439.0
-        },
-        "width": 360.0,
-        "height": 150.0,
-        "size": {
-          "x": 360.0,
-          "y": 150.0
-        },
-        "xMin": 68.0,
-        "yMin": 289.0,
-        "xMax": 428.0,
-        "yMax": 439.0,
-        "left": 68.0,
-        "right": 428.0,
-        "top": 289.0,
-        "bottom": 439.0
-      },
-      "ChildConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 238.0,
-          "y": 429.0,
-          "position": {
-            "x": 238.0,
-            "y": 429.0
-          },
-          "center": {
-            "x": 248.0,
-            "y": 439.0
-          },
-          "min": {
-            "x": 238.0,
-            "y": 429.0
-          },
-          "max": {
-            "x": 258.0,
-            "y": 449.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 238.0,
-          "yMin": 429.0,
-          "xMax": 258.0,
-          "yMax": 449.0,
-          "left": 238.0,
-          "right": 258.0,
-          "top": 429.0,
-          "bottom": 449.0
-        },
-        "IsChildConnectingPoint": true,
-        "NodeID": "0fbcb0e6-af36-4473-a131-5b81704afa15"
-      },
-      "ParentConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 238.0,
-          "y": 279.0,
-          "position": {
-            "x": 238.0,
-            "y": 279.0
-          },
-          "center": {
-            "x": 248.0,
-            "y": 289.0
-          },
-          "min": {
-            "x": 238.0,
-            "y": 279.0
-          },
-          "max": {
-            "x": 258.0,
-            "y": 299.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 238.0,
-          "yMin": 279.0,
-          "xMax": 258.0,
-          "yMax": 299.0,
-          "left": 238.0,
-          "right": 258.0,
-          "top": 279.0,
-          "bottom": 299.0
-        },
-        "IsChildConnectingPoint": false,
-        "NodeID": "0fbcb0e6-af36-4473-a131-5b81704afa15"
-      },
-      "NextNodeID": "33140e18-c01f-47b7-adb8-4f92eaaaee72"
-    },
-    {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "IsNextNodeExist": false,
-      "Center": {
-        "x": 467.0,
-        "y": 395.0
-      },
-      "ID": "a346299f-d90f-4661-a548-61f0ab18d10f",
-      "ParentNode": null,
-      "NodeRect": {
-        "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-        "x": 467.0,
-        "y": 395.0,
-        "position": {
-          "x": 467.0,
-          "y": 395.0
-        },
-        "center": {
-          "x": 647.0,
-          "y": 470.0
-        },
-        "min": {
-          "x": 467.0,
-          "y": 395.0
-        },
-        "max": {
-          "x": 827.0,
-          "y": 545.0
-        },
-        "width": 360.0,
-        "height": 150.0,
-        "size": {
-          "x": 360.0,
-          "y": 150.0
-        },
-        "xMin": 467.0,
-        "yMin": 395.0,
-        "xMax": 827.0,
-        "yMax": 545.0,
-        "left": 467.0,
-        "right": 827.0,
-        "top": 395.0,
-        "bottom": 545.0
-      },
-      "ChildConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 637.0,
-          "y": 535.0,
-          "position": {
-            "x": 637.0,
-            "y": 535.0
-          },
-          "center": {
-            "x": 647.0,
-            "y": 545.0
-          },
-          "min": {
-            "x": 637.0,
-            "y": 535.0
-          },
-          "max": {
-            "x": 657.0,
-            "y": 555.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 637.0,
-          "yMin": 535.0,
-          "xMax": 657.0,
-          "yMax": 555.0,
-          "left": 637.0,
-          "right": 657.0,
-          "top": 535.0,
-          "bottom": 555.0
-        },
-        "IsChildConnectingPoint": true,
-        "NodeID": "a346299f-d90f-4661-a548-61f0ab18d10f"
-      },
-      "ParentConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "Rect": {
-          "$type": "UnityEngine.Rect, UnityEngine.CoreModule",
-          "x": 637.0,
-          "y": 385.0,
-          "position": {
-            "x": 637.0,
-            "y": 385.0
-          },
-          "center": {
-            "x": 647.0,
-            "y": 395.0
-          },
-          "min": {
-            "x": 637.0,
-            "y": 385.0
-          },
-          "max": {
-            "x": 657.0,
-            "y": 405.0
-          },
-          "width": 20.0,
-          "height": 20.0,
-          "size": {
-            "x": 20.0,
-            "y": 20.0
-          },
-          "xMin": 637.0,
-          "yMin": 385.0,
-          "xMax": 657.0,
-          "yMax": 405.0,
-          "left": 637.0,
-          "right": 657.0,
-          "top": 385.0,
-          "bottom": 405.0
-        },
-        "IsChildConnectingPoint": false,
-        "NodeID": "a346299f-d90f-4661-a548-61f0ab18d10f"
+        "NodeID": "e41caf34-262b-497a-a03c-3c399ee91516"
       },
       "NextNodeID": ""
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class StartNode : Node
 {
-    public StartNode(string title, Node parentNode) : base(title, parentNode)
+    public StartNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }
@@ -15,6 +15,7 @@ public class StartNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
+
         ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.startNodeColor);
     }
 

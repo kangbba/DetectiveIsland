@@ -8,7 +8,7 @@ public class ChoiceNode : Node
 
     private List<Node> _nodes = new List<Node>();
 
-    public ChoiceNode(string title, Node parentNode) : base(title, parentNode)
+    public ChoiceNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         SetNodeRectSize(CalNodeSize());
     }
