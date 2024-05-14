@@ -47,8 +47,8 @@ public class ChoiceSetNode : Node
         for(int i = 0 ; i < _choiceNodes.Count ; i++){
             _choiceNodes[i].DrawNode();
         }
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.choiceSetColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.choiceSetColor);
+        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.choiceSetColor);
+        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.choiceSetColor);
     }
 
 

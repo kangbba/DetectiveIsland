@@ -28,7 +28,7 @@ public class ItemModifyNode : Node
         _itemModify.IsGain = (bool)CustomField("IsGain : ", _itemModify.IsGain, Vector2.down * 0);
         _itemModify.Id = (string)CustomField("Id : ", _itemModify.Id, Vector2.down * 20);
         _itemModify.Amount = (int)CustomField("Amount : ", _itemModify.Amount, Vector2.down * 40);
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.itemModifyColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.itemModifyColor);
+        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.itemModifyColor);
+        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.itemModifyColor);
     }
 }

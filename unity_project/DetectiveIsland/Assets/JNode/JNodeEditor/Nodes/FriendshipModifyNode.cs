@@ -28,7 +28,7 @@ public class FriendshipModifyNode : Node
         _friendshipModify.Amount = (int)CustomField("Amount : ", _friendshipModify.Amount, Vector2.up * -200);
 
 
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.friendshipModifyColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.friendshipModifyColor);
+        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.friendshipModifyColor);
+        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.friendshipModifyColor);
     }
 }

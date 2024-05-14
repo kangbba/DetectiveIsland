@@ -1,13 +1,18 @@
 using UnityEngine;
 using System.IO;
 
-public class ImagePreviewer
+public class CharacterPreviewer
 {
     private string currentFilePath = string.Empty;
     private Texture2D cachedTexture = null;
 
-    public void ImagePreview(string filePath, float width, float height, Vector2 worldPos)
+    public void CharacterPreview(string characterID, float width, float height, Vector2 worldPos)
     {
+        string filePath = $"Assets/JNode/Textures/Characters/{characterID}.png";
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
         if (currentFilePath == filePath)
         {
             // 이미 로드된 텍스처가 있다면 그것을 사용
@@ -15,12 +20,6 @@ public class ImagePreviewer
             {
                 DrawTexture(cachedTexture, width, height, worldPos);
             }
-            return;
-        }
-
-        if (!File.Exists(filePath))
-        {
-            Debug.LogWarning("File not found: " + filePath);
             return;
         }
 

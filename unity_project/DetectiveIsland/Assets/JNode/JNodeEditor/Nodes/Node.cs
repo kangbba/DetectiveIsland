@@ -167,7 +167,7 @@ public abstract class Node
 
         if (_isSelected)
         {
-            GUI.color = NodeColor.selectedColor;
+            GUI.color = NodeColors.selectedColor;
             GUI.Box(nodeRect.AdjustSize(10, 10), "", boxGS);
         }
 
@@ -186,7 +186,7 @@ public abstract class Node
         boxGS.alignment = TextAnchor.UpperCenter;
         boxGS.padding = new RectOffset(10, 10, 10, 10);
 
-        GUI.color = NodeColor.nodeBackgroundColor;
+        GUI.color = NodeColors.nodeBackgroundColor;
         GUI.Box(nodeRect, "", boxGS);
         GUI.color = Color.white;
     }

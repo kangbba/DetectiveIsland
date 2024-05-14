@@ -11,7 +11,7 @@ public class DialogueNode : Node
 {
     private string _characterID = "Mono";
     private List<LineNode> _lineNodes = new List<LineNode>();
-    private ImagePreviewer _imagePreviewer = new ImagePreviewer();
+    private CharacterPreviewer _characterPreviewer = new CharacterPreviewer();
 
     public const float SPACING_STANDARD = 30;
     public const float LINE_NODE_WIDTH = 360;
@@ -43,8 +43,7 @@ public class DialogueNode : Node
 
         float y = 50;
         _characterID = (string)CustomField("Character ID : ", _characterID, Vector2.down * y);
-        string filePath = $"Assets/JNode/Characters/{_characterID}.png"; 
-        _imagePreviewer.ImagePreview(filePath, 60, 60, _nodeRect.position);
+        _characterPreviewer.CharacterPreview(_characterID, 60, 60, _nodeRect.position);
         
         y += 50;
         for(int i = 0 ; i < _lineNodes.Count ; i++)
@@ -65,8 +64,8 @@ public class DialogueNode : Node
         y += SPACING_STANDARD;
         DrawFoldingButton(NodeRect);
         y += SPACING_STANDARD;
-        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColor.dialogueColor);
-        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColor.dialogueColor);
+        ParentConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), NodeColors.dialogueColor);
+        ChildConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.dialogueColor);
     }
     private void AddLineButton(Rect nodeRect)
     {

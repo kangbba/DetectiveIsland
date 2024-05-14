@@ -35,7 +35,7 @@ public class ConnectingPoint
         GUI.color = color;
         GUI.DrawTexture(edgeRect, circleTexture);
 
-        GUI.color = NodeColor.nodeBackgroundColor;
+        GUI.color = NodeColors.nodeBackgroundColor;
         GUI.DrawTexture(innerCircleRect, circleTexture);
 
         GUI.color = Color.white;
