@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class JButton : JImage
+public class JButton : JTextRect
 {
     private Action _action;
 
@@ -15,7 +15,7 @@ public class JButton : JImage
     public Action ButtonAction => _action;
 
     // Method to draw the button with anchor handling
-    public override void DrawButton()
+    public override void Draw()
     {
         Rect buttonRect = GetRect();
 

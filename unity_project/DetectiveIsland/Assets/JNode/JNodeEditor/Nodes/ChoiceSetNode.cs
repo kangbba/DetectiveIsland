@@ -69,13 +69,15 @@ public class ChoiceSetNode : Node
         }
 
 
-        JButton addDialogueButton = new JButton(
+        JButton addDialogueButton = new JButton
+        (
             pos : new Vector2(NodeRect.max.x, NodeRect.position.y + y),
             size : new Vector2(80, 30),
             title : "Add Dialogue",
             action : AddDialogue, 
-            anchor : JAnchor.CenterRight);
-            addDialogueButton.DrawButton();
+            anchor : JAnchor.CenterRight
+        );
+        addDialogueButton.Draw();
 
 
         for (int i = 0; i < ChoiceNodes.Count; i++)
@@ -94,7 +96,7 @@ public class ChoiceSetNode : Node
             title : "Add Choice",
             action : AddChoice,  
             anchor : JAnchor.CenterRight);
-            addChoiceButton.DrawButton();
+            addChoiceButton.Draw();
 
         float choicesWidth = (ChoiceNodes.Count + 1) * ChoiceNode.DEFAULT_WIDTH;
         SetNodeRectSize(new Vector2(Width < choicesWidth ? choicesWidth : Width, y));

@@ -36,13 +36,34 @@ public class LineNode : Node
 
         base.DrawNode();
 
-        Line.EmotionID = (string)CustomField("Emotion ID : ", Line.EmotionID, Vector2.up * UPPER_MARGIN,labelWidth : 70 , fieldHeight: EMOTION_HEIGHT);
+        float y = UPPER_MARGIN;
+         // EmotionID 필드
+        Line.EmotionID = (string)JInterface.SimpleField
+        (
+            value: Line.EmotionID,
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + y),
+            title: "Emotion ID : ",
+            labelWidth: 70,
+            fieldWidth: 80,
+            height: EMOTION_HEIGHT
+        );
 
-        Line.Sentence = CustomTextArea(Line.Sentence, Vector2.up * (EMOTION_HEIGHT + UPPER_MARGIN), width : Width, height : SENTENCE_HEIGHT);
+        y += EMOTION_HEIGHT;
 
-        SetNodeRectSize(new Vector2(Width, Height));
+        // Sentence 필드
+        Line.Sentence = JInterface.SimpleTextArea
+        (
+            value: Line.Sentence,
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + y),
+            fieldWidth: DEFAULT_WIDTH,
+            height: SENTENCE_HEIGHT // Adjust height as necessary
+        );
 
-        GUI.Box(NodeRect, new GUIContent());
+        y += SENTENCE_HEIGHT;
+
+        y += BOTTOM_MARGIN;
+
+        SetNodeRectSize(new Vector2(Width, y));
     }
 
 

@@ -56,7 +56,9 @@ public abstract class Node
     }
     public virtual void DrawNode(){    
         DrawBackground(NodeRect);
-        DrawTitle(Title);
+        if(IsMostParentNode){
+            DrawTitle(Title);
+        }
         
         if(IsSelected){
             DrawHighlight();
@@ -118,60 +120,6 @@ public abstract class Node
     private void DrawDebugLabel(){
         GUI.Label(NodeRect, NodeID.ToString());
     }
-    // 데이터 타입에 따른 CustomField 메서드
-    protected object CustomField(string title,object value, Vector2 localPosInNode, float labelWidth = 100, float fieldWidth = 80, float fieldHeight = 20)
-    {
-        if (value == null)
-        {
-            return value;
-        }
-
-        Type valueType = value.GetType(); // value의 타입을 얻음
-        Vector2 position = _nodeRect.position + localPosInNode;
-
-        
-        // Label과 필드를 각각의 위치에 배치합니다.
-        Rect labelRect = new Rect(position.x, position.y, labelWidth, fieldHeight);
-        Rect fieldRect = new Rect(position.x + labelWidth, position.y, fieldWidth, fieldHeight);
-
-        EditorGUI.PrefixLabel(labelRect, new GUIContent(title));
-
-        if (valueType == typeof(string))
-        {
-            return EditorGUI.TextField(fieldRect, (string)value);
-        }
-        else if (valueType == typeof(int))
-        {
-            return EditorGUI.IntField(fieldRect, (int)value);
-        }
-        else if (valueType == typeof(float))
-        {
-            return EditorGUI.FloatField(fieldRect, (float)value);
-        }
-        else if (valueType == typeof(bool))
-        {
-            return EditorGUI.Toggle(fieldRect, (bool)value);
-        }
-        else if (valueType == typeof(long))
-        {
-            return EditorGUI.LongField(fieldRect, (long)value);
-        }
-        else
-        {
-            // 처리할 수 없는 타입일 경우
-            return value; // 그대로 반환하거나 예외를 발생시킬 수 있음
-        }
-    }
-
-
-    protected string CustomTextArea(string value, Vector2 localPosInNode, float width = 100, float height = 300)
-    {
-        Vector2 position = _nodeRect.position + localPosInNode;
-        Rect fieldRect = new Rect(position.x, position.y, width, height);
-
-        return EditorGUI.TextArea(fieldRect, value);
-    }
-
     
     private void DrawHighlight()
     {
@@ -189,6 +137,7 @@ public abstract class Node
         Handles.color = Color.white;
         GUI.color = Color.white;
     }
+
 
     public void SetSelected(bool b){
         IsSelected = b;

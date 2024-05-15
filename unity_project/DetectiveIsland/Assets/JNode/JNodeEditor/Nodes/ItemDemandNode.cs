@@ -35,7 +35,18 @@ public class ItemDemandNode : Node
     {
         base.DrawNode();
 
-        _itemID = (string)CustomField("Item ID : ", _itemID, Vector2.up * 0f);
+        float y = UPPER_MARGIN;
+
+        _itemID = (string)JInterface.SimpleField
+        (
+            value : _itemID,
+            pos : new Vector2(NodeRect.position.x, y),
+            title: "Item ID : ",
+            labelWidth : 100,
+            fieldWidth : 20,
+            height : 20
+        );
+
         
         if(_dialogueNodes != null)
         {

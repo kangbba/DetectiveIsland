@@ -26,10 +26,45 @@ public class FriendshipModifyNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        _friendshipModify.IsGain = (bool)CustomField("IsGain : ", _friendshipModify.IsGain, Vector2.up * 200);
-        _friendshipModify.Id = (string)CustomField("Id : ", _friendshipModify.Id, Vector2.up * 0);
-        _friendshipModify.Amount = (int)CustomField("Amount : ", _friendshipModify.Amount, Vector2.up * -200);
 
+        float y = UPPER_MARGIN;
 
+        _friendshipModify.IsGain = (bool)JInterface.SimpleField
+        (
+            value : _friendshipModify.IsGain,
+            pos : new Vector2(NodeRect.position.x, y),
+            title: "IsGain : ",
+            labelWidth : 100,
+            fieldWidth : 20,
+            height : 20
+        );
+
+        y += 100;
+
+        _friendshipModify.Id = (string)JInterface.SimpleField
+        (
+            value : _friendshipModify.Id,
+            pos : new Vector2(NodeRect.position.x, y),
+            title: "ID : ",
+            labelWidth : 100,
+            fieldWidth : 100,
+            height : 20
+        );
+
+        y += 100;
+
+        _friendshipModify.Amount = (int)JInterface.SimpleField
+        (
+            value : _friendshipModify.Amount,
+            pos : new Vector2(NodeRect.position.x, y),
+            title: "ID : ",
+            labelWidth : 100,
+            fieldWidth : 100,
+            height : 20
+        );
+
+        y += 100;
+
+        y += BOTTOM_MARGIN;
     }
 }

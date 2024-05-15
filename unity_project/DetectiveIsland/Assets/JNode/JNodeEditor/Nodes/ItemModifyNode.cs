@@ -27,9 +27,33 @@ public class ItemModifyNode : Node
     {
         base.DrawNode();
 
-        _itemModify.IsGain = (bool)CustomField("IsGain : ", _itemModify.IsGain, Vector2.down * 0);
-        _itemModify.Id = (string)CustomField("Id : ", _itemModify.Id, Vector2.down * 20);
-        _itemModify.Amount = (int)CustomField("Amount : ", _itemModify.Amount, Vector2.down * 40);
+            
+       _itemModify.IsGain = (bool)JInterface.SimpleField(
+            value: _itemModify.IsGain,
+            pos: new Vector2(NodeRect.position.x, 0),
+            title: "IsGain : ",
+            labelWidth: 100,
+            fieldWidth: 100,
+            height: 20
+        );
+
+        _itemModify.Id = (string)JInterface.SimpleField(
+            value: _itemModify.Id,
+            pos: new Vector2(NodeRect.position.x, 20),
+            title: "Id : ",
+            labelWidth: 100,
+            fieldWidth: 100,
+            height: 20
+        );
+
+        _itemModify.Amount = (int)JInterface.SimpleField(
+            value: _itemModify.Amount,
+            pos: new Vector2(NodeRect.position.x, 40),
+            title: "Amount : ",
+            labelWidth: 100,
+            fieldWidth: 100,
+            height: 20
+        );
         
     }
 }

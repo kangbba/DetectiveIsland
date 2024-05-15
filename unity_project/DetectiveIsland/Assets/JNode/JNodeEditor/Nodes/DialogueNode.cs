@@ -11,13 +11,12 @@ using UnityEngine;
 public class DialogueNode : Node
 {
 
-    public const float UPPER_MARGIN = 50;
+    public const float UPPER_MARGIN = 100;
     public const float BOTTOM_MARGIN = 80; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-    public string CharacterID;
+    public string CharacterID = "Mono";
     public List<LineNode> LineNodes = new List<LineNode>();
-
     private CharacterPreviewer _characterPreviewer = new CharacterPreviewer();
 
 
@@ -90,9 +89,9 @@ public class DialogueNode : Node
     {
         base.DrawNode();
         float y = UPPER_MARGIN;
-        CharacterID = (string)CustomField("Character ID : ", CharacterID, Vector2.up * y);
-        _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
+       // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
 
+       
         if (!_isFolded)
         {
             for (int i = 0; i < LineNodes.Count; i++)
@@ -111,7 +110,8 @@ public class DialogueNode : Node
                     anchor: JAnchor.TopRight,
                     action: () => DeleteLineNode(lineNode.NodeID)
                     );
-                deleteBtn.DrawButton();
+                    
+                deleteBtn.Draw();
 
                 JButton orderUpBtn = new JButton(
                   pos: new Vector2(lineNode.NodeRect.max.x - miniBtnSize.x * 1, lineNode.NodeRect.position.y),
@@ -120,7 +120,7 @@ public class DialogueNode : Node
                   anchor: JAnchor.TopRight,
                   action: () => MoveListOrder(lineNode.NodeID,-1)
                   ); 
-                orderUpBtn.DrawButton();
+                orderUpBtn.Draw();
 
 
                 JButton orderDownBtn = new JButton(
@@ -130,25 +130,38 @@ public class DialogueNode : Node
                   anchor: JAnchor.TopRight,
                   action: () => MoveListOrder(lineNode.NodeID,1)
                   );
-                orderDownBtn.DrawButton();
+                orderDownBtn.Draw();
 
                 y += lineNode.Height + 10;
             }
         }
         else
         {
-            JImage previewText = new JImage(
+            JTextRect previewText = new JTextRect(
                 pos: new Vector2(NodeRect.center.x, NodeRect.min.y + UPPER_MARGIN * .5f),
                 size: new Vector2(100, 30),
                 title: LineNodes.Count > 0 ? LineNodes.First().Line.Sentence : "",
                 anchor: JAnchor.CenterTop);
                 
-            previewText.DrawButton();
+            previewText.Draw();
         }
         y += BOTTOM_MARGIN;
 
         SetNodeRectSize(new Vector2(Width, y));
 
+
+        CharacterID = (string)JInterface.SimpleField
+        (
+            value : CharacterID,
+            pos: new Vector2(NodeRect.min.x, NodeRect.position.y + UPPER_MARGIN * .5f),
+            title : "Character ID : ",
+            labelWidth : 80,
+            fieldWidth : 80,
+            height : 20
+        );
+        Vector2 characterPos = new Vector2(NodeRect.center.x,  NodeRect.position.y + UPPER_MARGIN * .5f);
+        Vector2 characterSize = new Vector2(40, 40);
+        _characterPreviewer.CharacterPreview(CharacterID, characterSize, characterPos.GetAnchoredPos(characterSize, JAnchor.CenterTop));
 
         if (!_isFolded)
         {
@@ -158,16 +171,17 @@ public class DialogueNode : Node
                 title: "+",
                 action: AddLine,
                 anchor: JAnchor.CenterBottom);
-            addLineButton.DrawButton();
+            addLineButton.Draw();
         }
         else{
-            JImage dotText = new JImage(
+            JTextRect dotText = new JTextRect(
                 pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
                 size: new Vector2(40, 30),
                 title: "...",
                 anchor: JAnchor.CenterBottom);
-            dotText.DrawButton();
+            dotText.Draw();
         }
+
 
         JButton foldButton = new JButton(
             pos: new Vector2(NodeRect.min.x, NodeRect.min.y),
@@ -175,10 +189,12 @@ public class DialogueNode : Node
             title: _isFolded ? "←→" : "→←",
             action: ToggleFold,
             anchor: JAnchor.TopLeft);
-        foldButton.DrawButton();
+        foldButton.Draw();
 
 
     }
+
+
 
     private void AddLine()
     {

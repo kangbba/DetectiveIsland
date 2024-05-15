@@ -46,8 +46,18 @@ public class ChoiceNode : Node
     {
         base.DrawNode();
         
-        Content = (string)CustomField("Title : ", Content, Vector2.down * 0f);
         float y = UPPER_MARGIN;
+
+
+        Content = (string)JInterface.SimpleField
+        (
+            value : Content,
+            pos : new Vector2(NodeRect.center.x, y),
+            title : "Content : ",
+            labelWidth : 100,
+            fieldWidth : 100,
+            height : 100
+        );
 
         for(int i = 0 ; i < Nodes.Count ; i++){
             Node node = Nodes[i];
@@ -59,6 +69,10 @@ public class ChoiceNode : Node
 
             y += node.Height; 
         }
+
+            
+
+
 
         DrawAddDialogueButton(new Vector2(0, y));
         y += BOTTOM_MARGIN;

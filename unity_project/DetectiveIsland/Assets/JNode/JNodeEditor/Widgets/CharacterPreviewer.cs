@@ -6,7 +6,7 @@ public class CharacterPreviewer
     private string currentFilePath = string.Empty;
     private Texture2D cachedTexture = null;
 
-    public void CharacterPreview(string characterID, float width, float height, Vector2 worldPos)
+    public void CharacterPreview(string characterID, Vector2 size, Vector2 worldPos)
     {
         string filePath = $"Assets/JNode/Textures/Characters/{characterID}.png";
         if (!File.Exists(filePath))
@@ -18,7 +18,7 @@ public class CharacterPreviewer
             // 이미 로드된 텍스처가 있다면 그것을 사용
             if (cachedTexture != null)
             {
-                DrawTexture(cachedTexture, width, height, worldPos);
+                DrawTexture(cachedTexture, size.x, size.y, worldPos);
             }
             return;
         }
@@ -29,7 +29,7 @@ public class CharacterPreviewer
         {
             currentFilePath = filePath;
             cachedTexture = texture;
-            DrawTexture(texture, width, height, worldPos);
+            DrawTexture(texture, size.x, size.y, worldPos);
         }
         else
         {
