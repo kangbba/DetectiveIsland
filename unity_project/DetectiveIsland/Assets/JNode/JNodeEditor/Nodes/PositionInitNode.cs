@@ -11,7 +11,7 @@ public class PositionInitNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    private List<CharacterPositionNode> _characterPositionNodes = new List<CharacterPositionNode>();
+    public List<CharacterPositionNode> CharacterPositionNodes = new List<CharacterPositionNode>();
 
     public PositionInitNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -19,12 +19,12 @@ public class PositionInitNode : Node
 
     public override float Width => 300;
 
-    public override float Height => UPPER_MARGIN + _characterPositionNodes.Count * CharacterPositionNode.DEFAULT_HEIGHT + BOTTOM_MARGIN;
+    public override float Height => UPPER_MARGIN + CharacterPositionNodes.Count * CharacterPositionNode.DEFAULT_HEIGHT + BOTTOM_MARGIN;
 
     public override Element ToElement()
     {   
         List<CharacterPosition> characterPositions = new List<CharacterPosition>();
-        foreach (CharacterPositionNode characterPositionNode in _characterPositionNodes)
+        foreach (CharacterPositionNode characterPositionNode in CharacterPositionNodes)
         {
             characterPositions.Add(characterPositionNode.CharacterPosition);
         }
@@ -36,7 +36,7 @@ public class PositionInitNode : Node
     public void AddCharacterPosition()
     {
         CharacterPositionNode characterPositionNode = new CharacterPositionNode(Guid.NewGuid().ToString(), "Character Position", NodeID);
-        _characterPositionNodes.Add(characterPositionNode);
+        CharacterPositionNodes.Add(characterPositionNode);
     }
 
     public void DeleteCharacterPositionNode(string nodeId)
@@ -46,16 +46,16 @@ public class PositionInitNode : Node
             Debug.LogWarning("Node Id Error");
             return;
         }
-        _characterPositionNodes.RemoveAll(node => node.NodeID == nodeId);
+        CharacterPositionNodes.RemoveAll(node => node.NodeID == nodeId);
     }
 
     public override void DrawNode()
     {
         base.DrawNode();
         float y = UPPER_MARGIN;
-        for (int i = 0; i < _characterPositionNodes.Count; i++)
+        for (int i = 0; i < CharacterPositionNodes.Count; i++)
         {
-            CharacterPositionNode characterPositionNode = _characterPositionNodes[i];
+            CharacterPositionNode characterPositionNode = CharacterPositionNodes[i];
             characterPositionNode.SetRectPos(new Vector2(NodeRect.center.x, NodeRect.position.y + y), JAnchor.CenterTop);
             characterPositionNode.DrawNode();
             JButton deleteBtn = new JButton(

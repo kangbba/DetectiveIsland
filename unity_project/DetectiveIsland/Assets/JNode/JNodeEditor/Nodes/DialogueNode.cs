@@ -91,7 +91,6 @@ public class DialogueNode : Node
         float y = UPPER_MARGIN;
        // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
 
-       
         if (!_isFolded)
         {
             for (int i = 0; i < LineNodes.Count; i++)
@@ -190,8 +189,6 @@ public class DialogueNode : Node
             action: ToggleFold,
             anchor: JAnchor.TopLeft);
         foldButton.Draw();
-
-
     }
 
 

@@ -152,7 +152,7 @@ public class JNodeEditor4 : EditorWindow
                         {
                             bool isStartingCPointChild = _startingCPoint.IsChildConnectingPoint; // 시작 코넥팅 포인트가 자식이니?
                             bool isEndingCPointChild = endingCPoint.IsChildConnectingPoint; // 끝 코넥팅 포인트가 자식이니?
-                            
+                                
                             if(!isStartingCPointChild && isEndingCPointChild)
                             { // 시작이 부모었고, 끝이 자식이란 뜻
                                 string startingNodeID = _startingCPoint.NodeID;
@@ -169,7 +169,7 @@ public class JNodeEditor4 : EditorWindow
                             }
                             else
                             {
-
+                             Debug.Log($"ELSE33");
                             }
                         }
                         _startingCPoint.ModifyingStart(false);
@@ -291,7 +291,7 @@ public class JNodeEditor4 : EditorWindow
             {
                Vector3 startPos = node.NextConnectingPoint.Rect.center;
                Vector3 endPos = mousePosition;
-                DrawConnectingPointLine(startPos, endPos);
+               DrawConnectingPointLine(startPos, endPos);
 
             }
         }
@@ -383,8 +383,8 @@ public class JNodeEditor4 : EditorWindow
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
 
         for(int i = 0 ; i< jNode.Nodes.Count; i++){
-            jNode.Nodes[i].SetRectPos(jNode.Nodes[i].lastRectPos);
-            jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].RectSize);
+            jNode.Nodes[i].SetRectPos(jNode.Nodes[i].RecentRectPos);
+            jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].RecentRectSize);
         }
 
         UpdateLastSavedSnapshot();

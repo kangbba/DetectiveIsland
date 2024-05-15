@@ -20,8 +20,11 @@ public abstract class Node
         Title = title;
         ParentNodeID = parentNodeID;
 
+        
+        if(!IsStartNode){
+            PreviousConnectingPoint = new ConnectingPoint(nodeID, false);
+        }
         NextConnectingPoint = new ConnectingPoint(nodeID, true);
-        PreviousConnectingPoint = new ConnectingPoint(nodeID, false);
     }
 
     public ConnectingPoint NextConnectingPoint {get; set;}
@@ -33,20 +36,19 @@ public abstract class Node
     public abstract float Height { get;  }
 
 
+    public bool IsStartNode;
     public string Title;
     public string NodeID;
     public string NextNodeID ;
     public string ParentNodeID ;
-
-
-    public bool IsMostParentNode => ParentNodeID == null || ParentNodeID == "";
-
+    public Vector2 RecentRectPos;
+    public Vector2 RecentRectSize;
     public bool IsSelected ;
 
-    public Vector2 lastRectPos;
-    public Vector2 RectSize;
 
     [JsonIgnore] public Rect NodeRect { get => _nodeRect; }
+    [JsonIgnore] public bool IsMostParentNode => ParentNodeID == null || ParentNodeID == "";
+
     private Rect _nodeRect;
 
 
@@ -65,57 +67,31 @@ public abstract class Node
         }
 
         if(IsMostParentNode){
-            PreviousConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), Color.white);
+            if(!IsStartNode){
+                PreviousConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.min.y), Color.white);
+            }
             NextConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), Color.white);
         }
     }
 
     public void SetNodeRectSize(Vector2 size){
         _nodeRect.size = size;
-        RectSize = _nodeRect.size;
+        RecentRectSize = _nodeRect.size;
     }
     public void AddNodeRectSize(Vector2 size){
         _nodeRect.size += size;
-        RectSize = _nodeRect.size;
+        RecentRectSize = _nodeRect.size;
     }
     
     public void SetRectPos(Vector2 newPos, JAnchor anchor)
     {
-        switch (anchor)
-        {
-            case JAnchor.TopLeft:
-                _nodeRect.position = newPos;
-                break;
-            case JAnchor.TopRight:
-                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y);
-                break;
-            case JAnchor.BottomLeft:
-                _nodeRect.position = new Vector2(newPos.x, newPos.y + RectSize.y);
-                break;
-            case JAnchor.BottomRight:
-                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y + RectSize.y);
-                break;
-            case JAnchor.CenterTop:
-                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y);
-                break;
-            case JAnchor.CenterBottom:
-                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y + RectSize.y);
-                break;
-            case JAnchor.CenterLeft:
-                _nodeRect.position = new Vector2(newPos.x, newPos.y - RectSize.y * 0.5f);
-                break;
-            case JAnchor.CenterRight:
-                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y - RectSize.y * 0.5f);
-                break;
-            case JAnchor.Center:
-            default:
-                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y - RectSize.y * 0.5f);
-                break;
-        }
-        lastRectPos = newPos;
+        Vector2 anchoredPOS = newPos.GetAnchoredPos(NodeRect.size, anchor);
+        _nodeRect.position = anchoredPOS; // 위치 업데이트
+        RecentRectPos = anchoredPOS;
     }
     public void SetRectPos(Vector2 newPos){
         _nodeRect.position = newPos; // 위치 업데이트
+        RecentRectPos = _nodeRect.position;
     }
     private void DrawDebugLabel(){
         GUI.Label(NodeRect, NodeID.ToString());

@@ -18,6 +18,7 @@ public class StartNode : Node
 
     public StartNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+        base.IsStartNode = true;
     }
 
     public override void DrawNode()

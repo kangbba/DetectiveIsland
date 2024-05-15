@@ -1,4 +1,5 @@
 
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
@@ -6,19 +7,19 @@ public class ConnectingPoint
 {
     private Rect _rect;
     private bool _isLineModifying;
-    private bool _isChildConnectingPoint;
 
     public ConnectingPoint(string nodeID, bool isChildConnectingPoint)
     {   
         NodeID = nodeID;
-        _isChildConnectingPoint = isChildConnectingPoint;
+        IsChildConnectingPoint = isChildConnectingPoint;
     }
 
-    public Rect Rect { get => _rect; }
-    public bool IsChildConnectingPoint { get => _isChildConnectingPoint; }
+    public bool IsChildConnectingPoint ;
     public string NodeID { get ; set; }
-    public bool IsLineModifying { get => _isLineModifying; }
 
+    [JsonIgnore] public bool IsLineModifying { get => _isLineModifying; }
+    [JsonIgnore] public Rect Rect { get => _rect; }
+    
     public void ModifyingStart(bool b){
         _isLineModifying = b;
     }
