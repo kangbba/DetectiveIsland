@@ -189,17 +189,24 @@ public abstract class Node
     public void SetSelected(bool b){
         IsSelected = b;
     }
-
     private void DrawBackground(Rect nodeRect)
     {
+        // GUI 스타일 설정
         GUIStyle boxGS = new GUIStyle();
         boxGS.normal.background = EditorGUIUtility.whiteTexture;
         boxGS.alignment = TextAnchor.UpperCenter;
         boxGS.padding = new RectOffset(10, 10, 10, 10);
 
+        // 배경 박스를 그립니다.
         GUI.color = NodeColors.nodeBackgroundColor;
         GUI.Box(nodeRect, "", boxGS);
+
+        // GUI 색상을 원래대로 돌립니다.
         GUI.color = Color.white;
+
+        // highlightRect와 highlightColor를 사용하여 테두리를 그립니다.
+        Rect highlightRect = NodeRect.AdjustSize(10, 10);
+        Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, Color.white);
     }
 
     private void DrawTitle(string title)

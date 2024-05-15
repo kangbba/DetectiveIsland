@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using UnityEditor.AssetImporters;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 
 public static class NodeService
 {
@@ -21,12 +22,13 @@ public static class NodeService
         }
         return list;
     }
-    public static Vector2 CalNodesSize(List<Node> nodes)
+    public static Vector2 CalNodesSize(List<Node> nodes, Vector2 spacing = default)
     {
         Vector2 result = Vector2.zero;
+
         foreach (Node node in nodes)
         {
-            result += node.CalNodeSize();
+            result += node.CalNodeSize() + spacing;
         }
         return result;
     }
