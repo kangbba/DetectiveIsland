@@ -11,8 +11,8 @@ using UnityEngine;
 public class DialogueNode : Node
 {
 
-    public const float UPPER_MARGIN = 100;
-    public const float BOTTOM_MARGIN = 100; 
+    public const float UPPER_MARGIN = 50;
+    public const float BOTTOM_MARGIN = 80; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
     public string CharacterID;
@@ -23,7 +23,7 @@ public class DialogueNode : Node
 
     private bool _isFolded;
 
-    public override float Width => LineNode.DEFAULT_WIDTH;
+    public override float Width => LineNode.DEFAULT_WIDTH + 50;
 
     public override float Height => UPPER_MARGIN + LineNodes.Cast<Node>().GetNodesHeight() + BOTTOM_MARGIN;
 
@@ -51,8 +51,41 @@ public class DialogueNode : Node
         }
         LineNodes.Remove(LineNodes.FirstOrDefault(node => node.NodeID == nodeId));
     }
+    public void MoveListOrder(string nodeId, int direction)
+    {
+        if (string.IsNullOrEmpty(nodeId))
+        {
+            Debug.LogWarning("Node Id Error");
+            return;
+        }
 
-    
+        int index = LineNodes.FindIndex(node => node.NodeID == nodeId);
+        if (index == -1)
+        {
+            Debug.LogWarning("Node not found");
+            return;
+        }
+
+        int newIndex = index + direction;
+
+        // Ensure newIndex is within valid range
+        if (newIndex < 0 || newIndex >= LineNodes.Count)
+        {
+            Debug.LogWarning("Invalid move direction");
+            return;
+        }
+
+        // Release focus from the current text area
+        GUI.FocusControl(null);
+
+        // Swap the elements to change the order
+        LineNode nodeToMove = LineNodes[index];
+        LineNodes.RemoveAt(index);
+        LineNodes.Insert(newIndex, nodeToMove);
+    }
+
+
+
     public override void DrawNode()
     {
         base.DrawNode();
@@ -66,17 +99,40 @@ public class DialogueNode : Node
             {
                 LineNode lineNode = LineNodes[i];
                 lineNode.DrawNode();
-                lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
+
+                Vector2 lineNodePos = new Vector2(NodeRect.center.x, NodeRect.position.y + y);
+                lineNode.SetRectPos(lineNodePos, JAnchor.CenterTop);
+
+                Vector2 miniBtnSize = Vector2.one * 20;
                 JButton deleteBtn = new JButton(
                     pos: new Vector2(lineNode.NodeRect.max.x, lineNode.NodeRect.position.y),
-                    size: Vector2.one * 20,
+                    size: miniBtnSize,
                     title: "X",
                     anchor: JAnchor.TopRight,
                     action: () => DeleteLineNode(lineNode.NodeID)
                     );
                 deleteBtn.DrawButton();
 
-                y += lineNode.Height;
+                JButton orderUpBtn = new JButton(
+                  pos: new Vector2(lineNode.NodeRect.max.x - miniBtnSize.x * 1, lineNode.NodeRect.position.y),
+                  size: miniBtnSize,
+                  title: "▲",
+                  anchor: JAnchor.TopRight,
+                  action: () => MoveListOrder(lineNode.NodeID,-1)
+                  ); 
+                orderUpBtn.DrawButton();
+
+
+                JButton orderDownBtn = new JButton(
+                  pos: new Vector2(lineNode.NodeRect.max.x - miniBtnSize.x * 2, lineNode.NodeRect.position.y),
+                  size: miniBtnSize,
+                  title: "▼",
+                  anchor: JAnchor.TopRight,
+                  action: () => MoveListOrder(lineNode.NodeID,1)
+                  );
+                orderDownBtn.DrawButton();
+
+                y += lineNode.Height + 10;
             }
         }
         else
@@ -116,7 +172,7 @@ public class DialogueNode : Node
         JButton foldButton = new JButton(
             pos: new Vector2(NodeRect.min.x, NodeRect.min.y),
             size: new Vector2(40, 30),
-            title: _isFolded ? "Expand" : "Fold",
+            title: _isFolded ? "←→" : "→←",
             action: ToggleFold,
             anchor: JAnchor.TopLeft);
         foldButton.DrawButton();

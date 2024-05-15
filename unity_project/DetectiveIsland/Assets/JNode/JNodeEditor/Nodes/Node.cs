@@ -119,7 +119,7 @@ public abstract class Node
         GUI.Label(NodeRect, NodeID.ToString());
     }
     // 데이터 타입에 따른 CustomField 메서드
-    protected object CustomField(string title, object value, Vector2 localPosInNode, float width = 80, float height = 20)
+    protected object CustomField(string title,object value, Vector2 localPosInNode, float labelWidth = 100, float fieldWidth = 80, float fieldHeight = 20)
     {
         if (value == null)
         {
@@ -128,11 +128,11 @@ public abstract class Node
 
         Type valueType = value.GetType(); // value의 타입을 얻음
         Vector2 position = _nodeRect.position + localPosInNode;
-        float labelWidth = 100; // Label의 너비를 적절히 설정합니다.
+
         
         // Label과 필드를 각각의 위치에 배치합니다.
-        Rect labelRect = new Rect(position.x, position.y, labelWidth, height);
-        Rect fieldRect = new Rect(position.x + labelWidth, position.y, width, height);
+        Rect labelRect = new Rect(position.x, position.y, labelWidth, fieldHeight);
+        Rect fieldRect = new Rect(position.x + labelWidth, position.y, fieldWidth, fieldHeight);
 
         EditorGUI.PrefixLabel(labelRect, new GUIContent(title));
 
@@ -186,6 +186,7 @@ public abstract class Node
         Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, highlightColor);
 
         // 이전 GUI 색상 복원
+        Handles.color = Color.white;
         GUI.color = Color.white;
     }
 
@@ -198,18 +199,20 @@ public abstract class Node
         GUIStyle boxGS = new GUIStyle();
         boxGS.normal.background = EditorGUIUtility.whiteTexture;
         boxGS.alignment = TextAnchor.UpperCenter;
-        boxGS.padding = new RectOffset(0, 0, 0, 0);
+        boxGS.padding = new RectOffset(2, 2, 2, 2);
 
         // 배경 박스를 그립니다.
         GUI.color = NodeColors.nodeBackgroundColor;
         GUI.Box(nodeRect, "", boxGS);
 
-        // GUI 색상을 원래대로 돌립니다.
-        GUI.color = Color.white;
 
         // highlightRect와 highlightColor를 사용하여 테두리를 그립니다.
-        Rect highlightRect = NodeRect.AdjustSize(0, 0);
+        Rect highlightRect = NodeRect.AdjustSize(2, 2);
         Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, Color.white);
+
+        Handles.color = Color.white;
+        GUI.color = Color.white;
+
     }
 
     private void DrawTitle(string title)
@@ -222,6 +225,8 @@ public abstract class Node
         Rect rect = new Rect(pos.x, pos.y, 200, 100); 
 
         GUI.Label(rect, title, titleGS);
+        GUI.color = Color.white;
+
     }
     public bool IsMouseOver(Vector2 mousePosition)
     {

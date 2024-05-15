@@ -24,7 +24,6 @@ public class StartNode : Node
     {
         base.DrawNode();
 
-        NextConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.startNodeColor);
         SetNodeRectSize(new Vector2(Width, Height));
     }
 

@@ -116,7 +116,9 @@ public class JNodeEditor4 : EditorWindow
                     if(node != null){
                         SelectNode(node.NodeID);
                     }
-                    else{
+                    else
+                    {
+                        GUI.FocusControl(null);
                         SelectNode(null);
                     }
                     if (SelectedNode != null)
@@ -219,6 +221,7 @@ public class JNodeEditor4 : EditorWindow
             if(isSelected){
                 SelectedNode = node;
             }
+            Debug.Log(node.IsSelected);
         }
     }
     private Node GetMouseOverNode(Vector2 mousePos)
