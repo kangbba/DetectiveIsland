@@ -6,7 +6,7 @@ using UnityEngine;
 using System;
 using UnityEditor.AssetImporters;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
+using System.Linq;
 
 public static class NodeService
 {
@@ -22,15 +22,22 @@ public static class NodeService
         }
         return list;
     }
-    public static Vector2 CalNodesSize(List<Node> nodes, Vector2 spacing = default)
-    {
-        Vector2 result = Vector2.zero;
 
-        foreach (Node node in nodes)
-        {
-            result += node.CalNodeSize() + spacing;
+    public static float GetNodesWidth(this IEnumerable<Node> nodes){
+        float sum = 0f;
+        var nodeList = nodes.ToList(); 
+        for(int i = 0 ; i < nodeList.Count ; i++){
+            sum += nodeList[i].Height;
         }
-        return result;
+        return sum;
+    }
+    public static float GetNodesHeight(this IEnumerable<Node> nodes){
+        float sum = 0f;
+        var nodeList = nodes.ToList(); 
+        for(int i = 0 ; i < nodeList.Count ; i++){
+            sum += nodeList[i].Width;
+        }
+        return sum;
     }
 }
 

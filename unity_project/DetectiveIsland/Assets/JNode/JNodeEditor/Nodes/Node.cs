@@ -27,24 +27,29 @@ public abstract class Node
     public ConnectingPoint NextConnectingPoint {get; set;}
     public ConnectingPoint PreviousConnectingPoint {get; set;}
 
-    public abstract Vector2 CalNodeSize();
 
     public abstract Element ToElement();
+    public abstract float Width { get;  }
+    public abstract float Height { get;  }
+
 
     public string Title;
     public string NodeID;
     public string NextNodeID ;
     public string ParentNodeID ;
 
+
     public bool IsMostParentNode => ParentNodeID == null || ParentNodeID == "";
 
     public bool IsSelected ;
 
     public Vector2 lastRectPos;
-    public Vector2 lastRectSize;
+    public Vector2 RectSize;
 
     [JsonIgnore] public Rect NodeRect { get => _nodeRect; }
     private Rect _nodeRect;
+
+
 
     public void SetNextNodeID(string nextNodeID){
         NextNodeID = nextNodeID;
@@ -63,18 +68,17 @@ public abstract class Node
         }
     }
 
-    public void RefreshNodeSize(){
-        SetNodeRectSize(CalNodeSize());
-    }
     public void SetNodeRectSize(Vector2 size){
         _nodeRect.size = size;
-
-        lastRectSize = size;
+        RectSize = _nodeRect.size;
+    }
+    public void AddNodeRectSize(Vector2 size){
+        _nodeRect.size += size;
+        RectSize = _nodeRect.size;
     }
     
     public void SetRectPos(Vector2 newPos){
         _nodeRect.position = newPos; // 위치 업데이트
-
         lastRectPos = newPos;
     }
     private void DrawDebugLabel(){
@@ -133,41 +137,6 @@ public abstract class Node
 
         return EditorGUI.TextArea(fieldRect, value);
     }
-    protected void ImagePreview(string filePath, float width, float height)
-    {
-        if (!File.Exists(filePath))
-        {
-            Debug.LogError("File not found: " + filePath);
-            return;
-        }
-
-        byte[] fileData = File.ReadAllBytes(filePath);
-        Texture2D texture = new Texture2D(2, 2);
-        if (texture.LoadImage(fileData))
-        {
-            // Calculate the aspect ratio
-            float aspectRatio = (float)texture.width / texture.height;
-            float drawWidth = width;
-            float drawHeight = height;
-
-            // Adjust width and height to maintain aspect ratio
-            if (width / height > aspectRatio)
-            {
-                drawWidth = height * aspectRatio;
-            }
-            else
-            {
-                drawHeight = width / aspectRatio;
-            }
-
-            Rect rect = new Rect(10, 10, drawWidth, drawHeight); // Example position
-            GUI.DrawTexture(rect, texture, ScaleMode.ScaleToFit, true);
-        }
-        else
-        {
-            Debug.LogError("Failed to load image: " + filePath);
-        }
-    }
 
     
     private void DrawHighlight()
@@ -195,7 +164,7 @@ public abstract class Node
         GUIStyle boxGS = new GUIStyle();
         boxGS.normal.background = EditorGUIUtility.whiteTexture;
         boxGS.alignment = TextAnchor.UpperCenter;
-        boxGS.padding = new RectOffset(10, 10, 10, 10);
+        boxGS.padding = new RectOffset(0, 0, 0, 0);
 
         // 배경 박스를 그립니다.
         GUI.color = NodeColors.nodeBackgroundColor;
@@ -205,7 +174,7 @@ public abstract class Node
         GUI.color = Color.white;
 
         // highlightRect와 highlightColor를 사용하여 테두리를 그립니다.
-        Rect highlightRect = NodeRect.AdjustSize(10, 10);
+        Rect highlightRect = NodeRect.AdjustSize(0, 0);
         Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, Color.white);
     }
 

@@ -10,16 +10,22 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueNode : Node
 {
+
+    public const float UPPER_MARGIN = 100;
+    public const float BOTTOM_MARGIN = 100; 
+    public const float LEFT_MARGIN = 30;
+    public const float RIGHT_MARGIN = 30;
     public string CharacterID;
     public List<LineNode> LineNodes = new List<LineNode>();
 
     private CharacterPreviewer _characterPreviewer = new CharacterPreviewer();
 
-    public const float SPACING_STANDARD = 30;
-    public const float LINE_NODE_WIDTH = 360;
-    public const float SPACING_TAIL = 30;
 
     private bool _isFolded;
+
+    public override float Width => LineNode.DEFAULT_WIDTH;
+
+    public override float Height => UPPER_MARGIN + LineNodes.Cast<Node>().GetNodesHeight() + BOTTOM_MARGIN;
 
     public override Element ToElement()
     {
@@ -34,69 +40,78 @@ public class DialogueNode : Node
     
     public DialogueNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
-        RefreshNodeSize();
     }
 
-    public override Vector2 CalNodeSize()
-    {
-        return new Vector2(LINE_NODE_WIDTH, _isFolded ? LineNode.LINE_NODE_HEIGHT : (LineNodes.Count + 1) * LineNode.LINE_NODE_HEIGHT);
-    }
-
+    
     public override void DrawNode()
     {
         base.DrawNode();
-        float y = 50;
+        float y = UPPER_MARGIN;
         CharacterID = (string)CustomField("Character ID : ", CharacterID, Vector2.up * y);
         _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
-        
-        y += 50;
-        for(int i = 0 ; i < LineNodes.Count ; i++)
+
+        if (!_isFolded)
         {
-            if(_isFolded && i > 0){
-                break;
+            for (int i = 0; i < LineNodes.Count; i++)
+            {
+                LineNode lineNode = LineNodes[i];
+                lineNode.DrawNode();
+                lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
+                y += lineNode.Height;
             }
-            LineNode lineNode = LineNodes[i];
-            lineNode.DrawNode();
-            lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
-            y += LineNode.LINE_NODE_HEIGHT;
+        }
+        else{
+            JImage previewText = new JImage(
+                pos: new Vector2(NodeRect.center.x, NodeRect.min.y + UPPER_MARGIN * .5f),
+                size: new Vector2(100, 30),
+                title: LineNodes.Count > 0 ? LineNodes.First().Line.Sentence : "",
+                anchor: JAnchor.CenterTop);
+                
+            previewText.DrawButton();
+        }
+        y += BOTTOM_MARGIN;
+
+        SetNodeRectSize(new Vector2(Width, y));
+
+
+        if (!_isFolded)
+        {
+            JButton addLineButton = new JButton(
+                pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
+                size: new Vector2(40, 30),
+                title: "+",
+                action: AddLine,
+                anchor: JAnchor.CenterBottom);
+            addLineButton.DrawButton();
+        }
+        else{
+            JImage dotText = new JImage(
+                pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
+                size: new Vector2(40, 30),
+                title: "...",
+                anchor: JAnchor.CenterBottom);
+            dotText.DrawButton();
         }
 
-        y += SPACING_STANDARD;
-        if(!_isFolded){
-            AddLineButton(NodeRect);
-        }
-        y += SPACING_STANDARD;
-        DrawFoldingButton(NodeRect);
-        y += SPACING_STANDARD;
-
+        JButton foldButton = new JButton(
+            pos: new Vector2(NodeRect.min.x, NodeRect.min.y),
+            size: new Vector2(40, 30),
+            title: _isFolded ? "Expand" : "Fold",
+            action: ToggleFold,
+            anchor: JAnchor.TopLeft);
+        foldButton.DrawButton();
     }
-    private void AddLineButton(Rect nodeRect)
-    {
-        float buttonSize = 80;
-        float buttonYPosition = LineNodes.Count == 0 ? nodeRect.position.y + 50 : LineNodes.Last().NodeRect.min.y + LineNode.LINE_NODE_HEIGHT ;
-        Rect buttonRect = new Rect(
-            nodeRect.x + nodeRect.width * 0.5f - buttonSize * 0.5f,
-            buttonYPosition,
-            buttonSize,
-            buttonSize * 0.5f
-        );
-        
-        if (GUI.Button(buttonRect, "Add Line")){
-            LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
-            LineNodes.Add(lineNode);
 
-            RefreshNodeSize();
-        }
+    private void AddLine()
+    {
+        LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
+        LineNodes.Add(lineNode);
+        AddNodeRectSize(Vector2.up * LineNode.DEFAULT_HEIGHT);
     }
-    private void DrawFoldingButton(Rect nodeRect)
-    {
-        float buttonWidth = 80;
-        Rect buttonRect = new Rect(NodeRect.max.x - buttonWidth, NodeRect.min.y, buttonWidth, buttonWidth * 0.5f);
 
-        if (GUI.Button(buttonRect, _isFolded ? "펼치기" : "접기")){
-            _isFolded = !_isFolded;
-             RefreshNodeSize();
-        }
+    private void ToggleFold()
+    {
+        _isFolded = !_isFolded;
     }
 
 }

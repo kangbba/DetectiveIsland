@@ -381,7 +381,7 @@ public class JNodeEditor4 : EditorWindow
 
         for(int i = 0 ; i< jNode.Nodes.Count; i++){
             jNode.Nodes[i].SetRectPos(jNode.Nodes[i].lastRectPos);
-            jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].lastRectSize);
+            jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].RectSize);
         }
 
         UpdateLastSavedSnapshot();

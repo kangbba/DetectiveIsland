@@ -7,9 +7,17 @@ using UnityEngine;
 [System.Serializable]
 public class StartNode : Node
 {
+    public const float UPPER_MARGIN = 30;
+    public const float BOTTOM_MARGIN = 30; 
+    public const float LEFT_MARGIN = 30;
+    public const float RIGHT_MARGIN = 30;
+
+    public override float Width => 300;
+
+    public override float Height => 100;
+
     public StartNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
-        SetNodeRectSize(CalNodeSize());
     }
 
     public override void DrawNode()
@@ -17,11 +25,7 @@ public class StartNode : Node
         base.DrawNode();
 
         NextConnectingPoint.DrawSingleConnectionPoint(NodeRect.center.ModifiedY(NodeRect.max.y), NodeColors.startNodeColor);
-    }
-
-    public override Vector2 CalNodeSize()
-    {
-        return new Vector2(200, 100);
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 
     public override Element ToElement()
