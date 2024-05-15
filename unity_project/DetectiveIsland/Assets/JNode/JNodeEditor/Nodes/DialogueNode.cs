@@ -42,6 +42,16 @@ public class DialogueNode : Node
     {
     }
 
+    public void DeleteLineNode(string nodeId)
+    {
+        if (nodeId == null || nodeId == "")
+        {
+            Debug.LogWarning("Node Id Error");
+            return;
+        }
+        LineNodes.Remove(LineNodes.FirstOrDefault(node => node.NodeID == nodeId));
+    }
+
     
     public override void DrawNode()
     {
@@ -57,10 +67,20 @@ public class DialogueNode : Node
                 LineNode lineNode = LineNodes[i];
                 lineNode.DrawNode();
                 lineNode.SetRectPos(NodeRect.position + Vector2.up * y);
+                JButton deleteBtn = new JButton(
+                    pos: new Vector2(lineNode.NodeRect.max.x, lineNode.NodeRect.position.y),
+                    size: Vector2.one * 20,
+                    title: "X",
+                    anchor: JAnchor.TopRight,
+                    action: () => DeleteLineNode(lineNode.NodeID)
+                    );
+                deleteBtn.DrawButton();
+
                 y += lineNode.Height;
             }
         }
-        else{
+        else
+        {
             JImage previewText = new JImage(
                 pos: new Vector2(NodeRect.center.x, NodeRect.min.y + UPPER_MARGIN * .5f),
                 size: new Vector2(100, 30),
@@ -100,6 +120,8 @@ public class DialogueNode : Node
             action: ToggleFold,
             anchor: JAnchor.TopLeft);
         foldButton.DrawButton();
+
+
     }
 
     private void AddLine()

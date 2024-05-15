@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 
 [System.Serializable]
-public abstract class Node 
+public abstract class Node
 {
     public Node(string nodeID, string title, string parentNodeID)
     {
