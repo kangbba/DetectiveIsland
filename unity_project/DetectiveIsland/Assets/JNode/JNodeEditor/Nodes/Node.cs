@@ -77,9 +77,43 @@ public abstract class Node
         RectSize = _nodeRect.size;
     }
     
+    public void SetRectPos(Vector2 newPos, JAnchor anchor)
+    {
+        switch (anchor)
+        {
+            case JAnchor.TopLeft:
+                _nodeRect.position = newPos;
+                break;
+            case JAnchor.TopRight:
+                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y);
+                break;
+            case JAnchor.BottomLeft:
+                _nodeRect.position = new Vector2(newPos.x, newPos.y + RectSize.y);
+                break;
+            case JAnchor.BottomRight:
+                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y + RectSize.y);
+                break;
+            case JAnchor.CenterTop:
+                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y);
+                break;
+            case JAnchor.CenterBottom:
+                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y + RectSize.y);
+                break;
+            case JAnchor.CenterLeft:
+                _nodeRect.position = new Vector2(newPos.x, newPos.y - RectSize.y * 0.5f);
+                break;
+            case JAnchor.CenterRight:
+                _nodeRect.position = new Vector2(newPos.x + RectSize.x, newPos.y - RectSize.y * 0.5f);
+                break;
+            case JAnchor.Center:
+            default:
+                _nodeRect.position = new Vector2(newPos.x - RectSize.x * 0.5f, newPos.y - RectSize.y * 0.5f);
+                break;
+        }
+        lastRectPos = newPos;
+    }
     public void SetRectPos(Vector2 newPos){
         _nodeRect.position = newPos; // 위치 업데이트
-        lastRectPos = newPos;
     }
     private void DrawDebugLabel(){
         GUI.Label(NodeRect, NodeID.ToString());
