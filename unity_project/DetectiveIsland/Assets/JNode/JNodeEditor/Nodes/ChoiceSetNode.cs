@@ -12,9 +12,8 @@ using UnityEngine;
 [System.Serializable]
 public class ChoiceSetNode : Node
 { 
-    float ChoicesTotalSizeX =>  NodeService.CalNodesSize(ChoiceNodes.Cast<Node>().ToList()).x;
-    float ChoicesTotalSizeY => ChoiceNodes.Any() ? ChoiceNodes.Max(node => node.ChoicesTotalSizeY) : 0;
-    float DialogueTotalSizeY => NodeService.CalNodesSize(DialogueNodes.Cast<Node>().ToList()).y;   
+    Vector2 AddDialogueBtnPos => new Vector2(NodeRect.max.x, (DialogueNodes != null && DialogueNodes.Count > 0) ? DialogueNodes.Last().NodeRect.position.y : 100);
+    Vector2 AddChoiceSetBtnPos => new Vector2(NodeRect.max.x, (ChoiceNodes != null && ChoiceNodes.Count > 0) ? ChoiceNodes.Last().NodeRect.position.y : 100);
     
     const float WIDTH = 800;
     
@@ -45,7 +44,11 @@ public class ChoiceSetNode : Node
 
     public override Vector2 CalNodeSize()
     {
-        return new Vector2(ChoicesTotalSizeX > 800 ? ChoicesTotalSizeX : 800, 400 + ChoicesTotalSizeY + DialogueTotalSizeY);
+        float width = NodeService.CalNodesSize(ChoiceNodes.Cast<Node>().ToList()).x + 500;
+        float dialogueTotalSizeY = NodeService.CalNodesSize(DialogueNodes.Cast<Node>().ToList()).y;
+        float longestChoiceHeight =  ChoiceNodes.Any() ? ChoiceNodes.Max(node => node.ChoicesTotalSizeY) : 0;
+        float height = dialogueTotalSizeY + longestChoiceHeight;
+        return new Vector2(width, height);
     }
     public ChoiceSetNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -69,9 +72,10 @@ public class ChoiceSetNode : Node
             accumulatedHeight += node.CalNodeSize().y + dialoguesDist;
         }
         for(int i = 0 ; i < ChoiceNodes.Count ; i++){
-            ChoiceNodes[i].DrawNode();
-            Vector2 pos = new Vector2( WIDTH * i / (ChoiceNodes.Count - 1) , DialogueTotalSizeY);
-            ChoiceNodes[i].SetRectPos(NodeRect.position + pos);
+            Node node = ChoiceNodes[i];
+            node.DrawNode();
+            Vector2 pos = new Vector2(NodeRect.min.x + 200 * i, AddChoiceSetBtnPos.y);
+            node.SetRectPos(NodeRect.position + pos);
         }
         DrawAddDialogueButton();
         DrawChoiceButton();
@@ -79,7 +83,7 @@ public class ChoiceSetNode : Node
     private void DrawAddDialogueButton()
     {
         float y = NodeService.CalNodesSize(DialogueNodes.Cast<Node>().ToList()).y;
-        Rect buttonRect = new Rect(NodeRect.center.x - 50, DialogueTotalSizeY + NodeRect.position.y + 150, 100, 20); // Position below the node
+        Rect buttonRect = new Rect(AddDialogueBtnPos.x, AddDialogueBtnPos.y, 60, 60); // Position below the node
         if (GUI.Button(buttonRect, "Add Dialogue"))
         {
             DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
@@ -91,13 +95,12 @@ public class ChoiceSetNode : Node
     private void DrawChoiceButton()
     {
         float y = NodeService.CalNodesSize(ChoiceNodes.Cast<Node>().ToList()).y;
-        Rect buttonRect = new Rect(NodeRect.center.x - 50, DialogueTotalSizeY + NodeRect.position.y +  ChoicesTotalSizeY + 200 , 100, 20); // Position below the node
+        Rect buttonRect = new Rect(AddChoiceSetBtnPos.x, AddChoiceSetBtnPos.y, 60, 60); // Position below the node
         if (GUI.Button(buttonRect, "Add Choice"))
         {
             ChoiceNode choiceNode = new ChoiceNode(Guid.NewGuid().ToString(), "ChoiceNode", NodeID);
             ChoiceNodes.Add(choiceNode);
         }
-        Debug.Log(ChoicesTotalSizeY);
         RefreshNodeSize();
     }
 
