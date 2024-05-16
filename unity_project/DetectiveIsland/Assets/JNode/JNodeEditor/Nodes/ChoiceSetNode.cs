@@ -21,10 +21,14 @@ public class ChoiceSetNode : Node
     public List<ChoiceNode> ChoiceNodes = new List<ChoiceNode>();
 
 
-    public override float Width { get => stackedWidth; }
-    public override float Height { get => stackedHeight; }
+    public override float Width { get => StackedWidth; }
+    public override float Height { get => StackedHeight; }
 
     private float Size_EndOfAddDialoguesBtn => UPPER_MARGIN + DialogueNodes.Cast<Node>().GetNodesHeight() + AddDialogueBtn_UpperMargin;
+
+    protected override float StackedWidth { get ; set ; }
+    protected override float StackedHeight { get ; set ; }
+
     private float AddDialogueBtn_UpperMargin = 50;
     private float AddDialogueBtn_BottomMargin = 70;
 
@@ -57,9 +61,6 @@ public class ChoiceSetNode : Node
     }
 
     public const float dialoguesDist = 10;
-
-    private float stackedWidth = 0;
-    private float stackedHeight = 0;
 
 
     public override void DrawNode()
