@@ -66,7 +66,7 @@
       ]
     },
     {
-      "$type": "PositionInit, Assembly-CSharp",
+      "$type": "ModifyPosition, Assembly-CSharp",
       "CharacterPositions": [
         {
           "$type": "CharacterPosition, Assembly-CSharp",
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "$type": "ItemModify, Assembly-CSharp",
+      "$type": "GainItem, Assembly-CSharp",
       "IsGain": true,
       "ID": "Letter",
       "Amount": 1

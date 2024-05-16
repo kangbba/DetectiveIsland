@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Cysharp.Threading.Tasks;
 using Aroka.Anim;
+using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
 
 
         EventService.AllEventReset();
-
+        
         EventProcessor.Move(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
     }
 

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class PositionInitNode : Node
+public class ModifyPositionNode : Node
 {
     public const float UPPER_MARGIN = 50;
     public const float BOTTOM_MARGIN = 70; 
@@ -13,7 +13,7 @@ public class PositionInitNode : Node
 
     public List<CharacterPositionNode> CharacterPositionNodes = new List<CharacterPositionNode>();
 
-    public PositionInitNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
+    public ModifyPositionNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
 
     }
@@ -26,7 +26,7 @@ public class PositionInitNode : Node
         {
             characterPositions.Add(characterPositionNode.CharacterPosition);
         }
-        return new PositionInit(characterPositions);
+        return new ModifyPosition(characterPositions);
     }
 
     public void AddCharacterPosition()
@@ -71,8 +71,8 @@ public class PositionInitNode : Node
         SetNodeRectSize(new Vector2(Width, Height));
 
 
-        JInterface.AttachDeleteButtons(CharacterPositionNodes);
-        JInterface.AttachArrowButtons(CharacterPositionNodes);
+        AttachInterface.AttachDeleteButtons(CharacterPositionNodes);
+        AttachInterface.AttachArrowButtons(CharacterPositionNodes);
 
 
     }

@@ -18,10 +18,11 @@ public class JNodeEditor4 : EditorWindow
 
     private Vector2 _lastMousePositionDrag;
     private Vector2 _dragOffset;
-    private Vector2 _canvasOffset;
     private bool _isCanvasPanning;
     private bool _isNodeDragging;
     private ConnectingPoint _startingCPoint;
+    private Vector2 _canvasOffset;
+    private Vector2 _scrollPosition;
     
     public static List<Node> Nodes
     {
@@ -33,7 +34,7 @@ public class JNodeEditor4 : EditorWindow
         get => jNodeInstance?.recentOpenFileName;
         set { if (jNodeInstance != null) jNodeInstance.recentOpenFileName = value; }
     }
-    private Node SelectedNode {get ;set ; }
+    private Node _selectedNode;
 
     
     [DidReloadScripts]
@@ -54,14 +55,14 @@ public class JNodeEditor4 : EditorWindow
         EditorControl(Event.current);
         if (jNodeInstance != null)
         {
-            DrawNodes();
-            DrawConnectingPointLines(Event.current.mousePosition);
-            JInterface.AttachDeleteButtons(Nodes, Vector2.one * 20f);
+            DrawNodes(Event.current.mousePosition);
+            AttachInterface.AttachDeleteButtons(Nodes, Vector2.one * 20f);
+            DrawNodeHierarchy(Event.current);
             ProcessEvents(Event.current); 
             ProcessShortcuts(Event.current); 
         }
         DrawJNodeMenuBar();
-        if (GUI.changed) Repaint();
+        Repaint();
         AutoSaveJNodeInstance();
 
     }
@@ -90,10 +91,10 @@ public class JNodeEditor4 : EditorWindow
         if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
             (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Delete))
         {
-            if (SelectedNode != null)
+            if (_selectedNode != null)
             {
-                Nodes.Remove(SelectedNode);
-                SelectedNode = null;
+                Nodes.Remove(_selectedNode);
+                _selectedNode = null;
                 e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
                 Repaint(); // 창을 다시 그리도록 요청
             }
@@ -107,13 +108,13 @@ public class JNodeEditor4 : EditorWindow
                 // 노드 선택 로직
                 if (e.button == 0) // 왼쪽 마우스 버튼
                 {  
-                    ConnectingPoint connectingPoint = GetMouseOverConnectingPoint(e.mousePosition);
+                    ConnectingPoint connectingPoint = NodeService.GetMouseOverConnectingPoint(Nodes, e.mousePosition);
                     _startingCPoint = connectingPoint;
                     if(_startingCPoint != null){
                         _startingCPoint.ModifyingStart(true);
                     }
 
-                    Node node = GetMouseOverNode(e.mousePosition);
+                    Node node = NodeService.GetMouseOverNode(Nodes, e.mousePosition);
                     if(node != null){
                         SelectNode(node.NodeID);
                     }
@@ -122,9 +123,9 @@ public class JNodeEditor4 : EditorWindow
                         GUI.FocusControl(null);
                         SelectNode(null);
                     }
-                    if (SelectedNode != null)
+                    if (_selectedNode != null)
                     {
-                        if(SelectedNode.IsMouseOver(e.mousePosition)){
+                        if(_selectedNode.IsMouseOver(e.mousePosition)){
                             _isNodeDragging = true;
                             _lastMousePositionDrag = e.mousePosition;
                         }
@@ -144,7 +145,7 @@ public class JNodeEditor4 : EditorWindow
 
             case EventType.MouseUp:
                 // // 드래그 종료
-                ConnectingPoint endingCPoint = GetMouseOverConnectingPoint(e.mousePosition);
+                ConnectingPoint endingCPoint = NodeService.GetMouseOverConnectingPoint(Nodes, e.mousePosition);
                 if(endingCPoint != null)
                 {
                     if(_startingCPoint != null)
@@ -199,7 +200,7 @@ public class JNodeEditor4 : EditorWindow
                     Vector2 delta = e.mousePosition - _lastMousePositionDrag;
                     _lastMousePositionDrag = e.mousePosition;
                     _dragOffset = delta;
-                    SelectedNode.SetRectPos(SelectedNode.NodeRect.position + _dragOffset);
+                    _selectedNode.SetRectPos(_selectedNode.NodeRect.position + _dragOffset, JAnchor.TopLeft);
                 }
                 else if (_isCanvasPanning)
                 {
@@ -213,47 +214,22 @@ public class JNodeEditor4 : EditorWindow
         }
     }
     private void SelectNode(string nodeID){
-        if(SelectedNode != null && SelectedNode.NodeID == nodeID){
+        if(_selectedNode != null && _selectedNode.NodeID == nodeID){
             return;
         }
         foreach(Node node in Nodes){
             bool isSelected = node.NodeID == nodeID;
             node.SetSelected(isSelected);
             if(isSelected){
-                SelectedNode = node;
+                _selectedNode = node;
             }
         }
-    }
-    private Node GetMouseOverNode(Vector2 mousePos)
-    {
-        int cnt = Nodes.Count;
-        for(int i = cnt - 1 ; i >= 0 ; i--){
-            Node node = Nodes[i];
-            if(node.IsMouseOver(mousePos)){
-                return node;
-            }
-        }
-        return null;
-    }
-    private ConnectingPoint GetMouseOverConnectingPoint(Vector2 mousePos)
-    {
-        int cnt = Nodes.Count;
-        for(int i = 0 ; i < cnt ; i++){
-            Node node = Nodes[i];
-            if(node.PreviousConnectingPoint.IsContainRect(mousePos)){
-                return node.PreviousConnectingPoint;
-            }
-            if(node.NextConnectingPoint.IsContainRect(mousePos)){
-                return node.NextConnectingPoint;
-            }
-        }
-        return null;
     }
     public void SetNodeRectPoses(Vector2 offset){
         int count = Nodes.Count;
         for(int i = 0 ; i  < count ; i++){
             Node node = Nodes[i];
-            node.SetRectPos(node.NodeRect.position + offset);
+            node.SetRectPos(node.NodeRect.position + offset, JAnchor.TopLeft);
         }
     }
     public void AutoSaveJNodeInstance()
@@ -266,20 +242,13 @@ public class JNodeEditor4 : EditorWindow
         }
     }
     
-    private void DrawNodes()
+    private void DrawNodes(Vector2 mousePosition)
     {  
         for (int i = Nodes.Count - 1; i >= 0; i--)
         {
             Node node = Nodes[i];
-            node.DrawNode();  // 각 노드를 그림
-        }
-    }
 
-    private void DrawConnectingPointLines(Vector2 mousePosition)
-    {
-        for (int i = 0; i < Nodes.Count; i++)
-        {
-            Node node = Nodes[i];
+            //이 노드에 딸린 화살표 먼저 그리기 
             Node nextNode = GetNode(node.NextNodeID);
             if(nextNode != null && !node.NextConnectingPoint.IsLineModifying)
             {
@@ -294,6 +263,9 @@ public class JNodeEditor4 : EditorWindow
                DrawConnectingPointLine(startPos, endPos);
 
             }
+
+            //노드 그리기
+            node.DrawNode();  // 각 노드를 그림
         }
     }
 
@@ -383,7 +355,7 @@ public class JNodeEditor4 : EditorWindow
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
 
         for(int i = 0 ; i< jNode.Nodes.Count; i++){
-            jNode.Nodes[i].SetRectPos(jNode.Nodes[i].RecentRectPos);
+            jNode.Nodes[i].SetRectPos(jNode.Nodes[i].RecentRectPos, JAnchor.TopLeft);
             jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].RecentRectSize);
         }
 
@@ -592,84 +564,71 @@ public class JNodeEditor4 : EditorWindow
             }
         }
     }
+
+    private void DrawNodeHierarchy(Event currentEvent)
+    {
+        Rect areaRect = new Rect(10, 50, 300, 400);  // 좌상단에 300x400 크기의 영역을 만듭니다.
+        GUILayout.BeginArea(areaRect);  // 지정된 영역 내에 UI 요소들을 배치합니다.
+        _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, GUILayout.Width(areaRect.width), GUILayout.Height(areaRect.height));
+
+        GUILayout.BeginVertical();
+
+        GUIStyle cardStyle = new GUIStyle(GUI.skin.box)
+        {
+            padding = new RectOffset(10, 10, 10, 10),
+            margin = new RectOffset(0, 0, 10, 10)
+        };
+
+        // Canvas offset 정보를 맨 위에 표시
+        GUILayout.BeginVertical(cardStyle);
+        GUILayout.Label($"Canvas Offset: {_canvasOffset}");
+        GUILayout.EndVertical();
+
+        // 각 노드에 대한 버튼을 생성합니다.
+        foreach (var node in Nodes)
+        {
+            GUILayout.BeginVertical(cardStyle);
+            Rect buttonRect = GUILayoutUtility.GetRect(new GUIContent($"Title: {node.Title}\nPos: {node.NodeRect.position}"), GUI.skin.button);
+
+            if (GUI.Button(buttonRect, $"Title: {node.Title}\nPos: {node.NodeRect.position}"))
+            {
+                Vector2 screenCenter = new Vector2(position.width * 0.5f, position.height * 0.5f);
+                Vector2 nodeCenter = node.NodeRect.center;
+                Vector2 offset = screenCenter - nodeCenter;
+                NodeService.MoveNodes(Nodes, offset);
+                currentEvent.Use();
+            }
+            GUILayout.EndVertical();
+        }
+
+        GUILayout.EndVertical();
+
+        GUILayout.EndScrollView();
+        GUILayout.EndArea();
+    }
+
+
+
+
     private void ProcessContextMenu(Vector2 mousePos)
     {
-        GenericMenu menu = new GenericMenu(); 
-        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => AddDialogueNode(mousePos));
-        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(mousePos));
-        menu.AddItem(new GUIContent("Add ItemModify Node"), false, () => AddItemModifyNode(mousePos)); // Changed from AssetChange
-        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AddItemDemandNode(mousePos));
-        menu.AddItem(new GUIContent("Add PositionInit Node"), false, () => AddPositionInitNode(mousePos));
-        menu.AddItem(new GUIContent("Add PlaceModify Node"), false, () => AddPlaceModifyNode(mousePos)); // Newly added
-        menu.AddItem(new GUIContent("Add FriendshipModify Node"), false, () => AddFriendshipModifyNode(mousePos)); // Newly added
-        menu.AddItem(new GUIContent("Add OverlayPicture Node"), false, () => AddOverlayPictureNode(mousePos)); // Newly added
+       GenericMenu menu = new GenericMenu();
 
+        // Add nodes directly
+        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => { AttachInterface.AddDialogueNode(Nodes, null, mousePos);});
+        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AttachInterface.AddChoiceSetNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AttachInterface.AddItemDemandNode(Nodes, null, mousePos));
+
+        // Add Gain nodes as sub-menu
+        menu.AddItem(new GUIContent("획득하기/Add GainItem Node"), false, () => AttachInterface.AddGainItemNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("획득하기/Add GainPlace Node"), false, () => AttachInterface.AddGainPlaceNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("획득하기/Add GainFriendship Node"), false, () => AttachInterface.AddGainFriendshipNode(Nodes, null, mousePos));
+
+        menu.AddItem(new GUIContent("수정하기/Add ModifyPosition Node"), false, () => AttachInterface.AddModifyPositionNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("수정하기/Add OverlayPicture Node"), false, () => AttachInterface.AddOverlayPictureNode(Nodes, null, mousePos));
 
         menu.ShowAsContext();
-    }
-    private void AddStartNode(Vector2 position)
-    {
-        StartNode node = new StartNode(Guid.NewGuid().ToString(), "StartNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
-        AutoSaveJNodeInstance();
-    }
-    private void AddDialogueNode(Vector2 position)
-    {
-        DialogueNode node = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
-        AutoSaveJNodeInstance();
-    }
 
-
-    private void AddChoiceSetNode(Vector2 position)
-    {
-        ChoiceSetNode node = new ChoiceSetNode(Guid.NewGuid().ToString(), "ChoiceSetNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
-    }
-
-    private void AddPlaceModifyNode(Vector2 position)
-    {
-        PlaceModifyNode node = new PlaceModifyNode(Guid.NewGuid().ToString(), "PlaceModifyNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);  // Assuming Nodes is a list or collection that stores all nodes.
-    }
-
-    private void AddFriendshipModifyNode(Vector2 position)
-    {
-        FriendshipModifyNode node = new FriendshipModifyNode(Guid.NewGuid().ToString(), "FriendshipModifyNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);  // Add this node to your node management system or editor.
-    }
-
-    private void AddOverlayPictureNode(Vector2 position)
-    {
-        OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);  // Append to the list of nodes.
-    }
-
-    private void AddItemModifyNode(Vector2 position)
-    {
-        ItemModifyNode node = new ItemModifyNode(Guid.NewGuid().ToString(), "ItemModifyNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
-    }
-
-    private void AddItemDemandNode(Vector2 position)
-    {
-        ItemDemandNode node = new ItemDemandNode(Guid.NewGuid().ToString(), "ItemDemandNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
-    }
-
-    private void AddPositionInitNode(Vector2 position)
-    {
-        PositionInitNode node = new PositionInitNode(Guid.NewGuid().ToString(), "PositionInitNode", null);
-        node.SetRectPos(position);
-        Nodes.Add(node);
     }
 
     public Node GetNode(string nodeID)

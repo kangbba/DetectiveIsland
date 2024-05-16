@@ -3,24 +3,24 @@ using UnityEditor;
 using Aroka.ArokaUtils;
 
 [System.Serializable]
-public class FriendshipModifyNode : Node
+public class GainFriendshipNode : Node
 {
     public const float UPPER_MARGIN = 50;
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-    public FriendshipModify FriendshipModify = new FriendshipModify(true, "", 10);
+    public GainFriendship GainFriendship = new GainFriendship(true, "", 10);
     public override float Width { get; set; }
     public override float Height { get; set; }
 
 
-    public FriendshipModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
+    public GainFriendshipNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
 
     }
     public override Element ToElement()
     {
-        return FriendshipModify;
+        return GainFriendship;
     }
     public override void DrawNode()
     {
@@ -29,9 +29,9 @@ public class FriendshipModifyNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         
-        FriendshipModify.IsGain = (bool)JInterface.SimpleField
+        GainFriendship.IsGain = (bool)JInterface.SimpleField
         (
-            value : FriendshipModify.IsGain,
+            value : GainFriendship.IsGain,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth : 100,
@@ -41,9 +41,9 @@ public class FriendshipModifyNode : Node
 
         Height += 20;
 
-        FriendshipModify.CharacterID = (string)JInterface.SimpleField
+        GainFriendship.CharacterID = (string)JInterface.SimpleField
         (
-            value : FriendshipModify.CharacterID,
+            value : GainFriendship.CharacterID,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "CharacterID : ",
             labelWidth : 100,
@@ -53,9 +53,9 @@ public class FriendshipModifyNode : Node
 
         Height += 20;
 
-        FriendshipModify.Amount = (int)JInterface.SimpleField
+        GainFriendship.Amount = (int)JInterface.SimpleField
         (
-            value : FriendshipModify.Amount,
+            value : GainFriendship.Amount,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth : 100,

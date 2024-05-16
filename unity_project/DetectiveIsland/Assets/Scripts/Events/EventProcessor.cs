@@ -52,7 +52,7 @@ public static class EventProcessor
                 if(scenarioData.IsEntered || scenarioData.IsExited)
                 { // 이미 본 이벤트 일때는 상호작용을 통해 이벤트 진입
                     Debug.Log("말걸기 상호작용 필요");
-                    await ProcessPositionInit(_curScenarioData.RecentPositionInit);
+                    await ProcessModifyPosition(_curScenarioData.RecentModifyPosition);
                     await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
                 }
                 Debug.Log("이 이벤트를 IsEntered 성공");
@@ -120,11 +120,11 @@ public static class EventProcessor
     public static async UniTask ProcessElementTask(Element element){
 
         Debug.Log(element.GetType());
-        if(element is PositionInit)
+        if(element is ModifyPosition)
         {
-            PositionInit positionInit = element as PositionInit;
-            _curScenarioData.RecentPositionInit = positionInit;
-            await ProcessPositionInit(positionInit);
+            ModifyPosition modifyPosition = element as ModifyPosition;
+            _curScenarioData.RecentModifyPosition = modifyPosition;
+            await ProcessModifyPosition(modifyPosition);
         }
         else if(element is Dialogue)
         {
@@ -142,20 +142,20 @@ public static class EventProcessor
             ItemDemand itemDemand = element as ItemDemand;
             await ProcessItemDemand(itemDemand);
         }
-        else if(element is ItemModify)
+        else if(element is GainItem)
         {
-            ItemModify itemModify = element as ItemModify;
-            await ItemModifyTask(itemModify);
+            GainItem gainItem = element as GainItem;
+            await GainItemTask(gainItem);
         }
-        else if(element is FriendshipModify)
+        else if(element is GainFriendship)
         {
-            FriendshipModify friendshipModify = element as FriendshipModify;
-            await FriendshipModifyTask(friendshipModify);
+            GainFriendship gainFriendship = element as GainFriendship;
+            await GainFriendshipTask(gainFriendship);
         }
-        else if(element is PlaceModify)
+        else if(element is GainPlace)
         {
-            PlaceModify placeModify = element as PlaceModify;
-            await PlaceModifyTask(placeModify);
+            GainPlace gainPlace = element as GainPlace;
+            await GainPlaceTask(gainPlace);
         }
         else if(element is OverlayPicture)
         {
@@ -164,8 +164,8 @@ public static class EventProcessor
         }
     }
     
-    public static async UniTask ProcessPositionInit(PositionInit positionInit){
-        foreach(CharacterPosition characterPosition in positionInit.CharacterPositions){
+    public static async UniTask ProcessModifyPosition(ModifyPosition modifyPosition){
+        foreach(CharacterPosition characterPosition in modifyPosition.CharacterPositions){
             WorldManager.FadeOutCharacterThenDestroy(characterPosition.CharacterID, .3f);
             WorldManager.InstantiateCharacterThenFadeIn(characterPosition.CharacterID, characterPosition.PositionID, "Smile", 1f);
 
@@ -248,16 +248,16 @@ public static class EventProcessor
         }
     }
 
-    public static async UniTask ItemModifyTask(ItemModify itemModify)
+    public static async UniTask GainItemTask(GainItem gainItem)
     {
-        ItemData itemData = ItemService.GetItemData(itemModify.ID);
+        ItemData itemData = ItemService.GetItemData(gainItem.ID);
         if (itemData == null)
         {
             Debug.LogError("AssetChangeTask called with null ItemData");
             return;
         }
-        if(itemModify.IsGain){
-            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, itemModify.ID);
+        if(gainItem.IsGain){
+            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, gainItem.ID);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
             UIManager.OpenItemOwnPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -265,16 +265,16 @@ public static class EventProcessor
                 
         }
         else {
-            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, itemModify.ID);
+            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, gainItem.ID);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
         }
        
     }
-    public static async UniTask FriendshipModifyTask(FriendshipModify friendshipModify)
+    public static async UniTask GainFriendshipTask(GainFriendship gainFriendship)
     {
         await UniTask.WaitForSeconds(1f);
     }
-    public static async UniTask PlaceModifyTask(PlaceModify placeModify)
+    public static async UniTask GainPlaceTask(GainPlace gainPlace)
     {
         await UniTask.WaitForSeconds(1f);
     }
@@ -284,12 +284,12 @@ public static class EventProcessor
         await UniTask.WaitForSeconds(1f);
     }
 
-    public static PositionInit GetFirstPositionInit(Scenario scenario)
+    public static ModifyPosition GetFirstModifyPosition(Scenario scenario)
     {
-        return scenario.Elements.FirstOrDefault( element => element is PositionInit ) as PositionInit;
+        return scenario.Elements.FirstOrDefault( element => element is ModifyPosition ) as ModifyPosition;
     }
-    public static PositionInit GetLastPositionInit(Scenario scenario)
+    public static ModifyPosition GetLastModifyPosition(Scenario scenario)
     {
-        return scenario.Elements.LastOrDefault( element => element is PositionInit ) as PositionInit;
+        return scenario.Elements.LastOrDefault( element => element is ModifyPosition ) as ModifyPosition;
     }
 }

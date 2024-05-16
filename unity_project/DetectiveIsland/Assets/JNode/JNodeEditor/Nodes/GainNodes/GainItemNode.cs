@@ -3,7 +3,7 @@ using UnityEditor;
 using Aroka.ArokaUtils;
 
 [System.Serializable]
-public class ItemModifyNode : Node
+public class GainItemNode : Node
 {
     public const float UPPER_MARGIN = 50;
     public const float BOTTOM_MARGIN = 30; 
@@ -11,19 +11,19 @@ public class ItemModifyNode : Node
     public const float RIGHT_MARGIN = 30;
 
 
-    public ItemModify ItemModify = new ItemModify(true, "", 1);
+    public GainItem GainItem = new GainItem(true, "", 1);
 
     public override float Width { get; set; }
     public override float Height { get; set; }
 
 
-    public ItemModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
+    public GainItemNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
     }
 
     public override Element ToElement()
     {
-        return ItemModify;
+        return GainItem;
     }
     public override void DrawNode()
     {
@@ -31,8 +31,8 @@ public class ItemModifyNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         float standardFieldHeight = 20;
-        ItemModify.IsGain = (bool)JInterface.SimpleField(
-            value: ItemModify.IsGain,
+        GainItem.IsGain = (bool)JInterface.SimpleField(
+            value: GainItem.IsGain,
             pos: new Vector2(NodeRect.position.x + 10 , NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth: 100,
@@ -41,8 +41,8 @@ public class ItemModifyNode : Node
         );
         Height += standardFieldHeight;
 
-        ItemModify.ID = (string)JInterface.SimpleField(
-            value: ItemModify.ID,
+        GainItem.ID = (string)JInterface.SimpleField(
+            value: GainItem.ID,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Id : ",
             labelWidth: 100,
@@ -51,8 +51,8 @@ public class ItemModifyNode : Node
         );
         Height += standardFieldHeight;
 
-        ItemModify.Amount = (int)JInterface.SimpleField(
-            value: ItemModify.Amount,
+        GainItem.Amount = (int)JInterface.SimpleField(
+            value: GainItem.Amount,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth: 100,

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlaceModify : Element
+public class GainItem : Element
 {
 
-    public PlaceModify(bool isGain, string id)
+    public GainItem(bool isGain, string id, int amount)
     {
         IsGain = isGain;
         ID = id;
+        Amount = amount;
     }
-
-
+    
     public bool IsGain;
     public string ID;
+    public int Amount;
 }

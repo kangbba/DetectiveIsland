@@ -17,7 +17,7 @@ public class ScenarioData{
     public   string           PlaceID             {     get => _placeID;         }
     public   TextAsset        ScenarioFile        {     get => _scenarioFile;    }
     
-    public PositionInit RecentPositionInit { get; set; }
+    public ModifyPosition RecentModifyPosition { get; set; }
 
     public bool IsEntered { get => _isEntered; set => _isEntered = value; }
     public bool IsExited { get => _isExited; set => _isExited = value; }

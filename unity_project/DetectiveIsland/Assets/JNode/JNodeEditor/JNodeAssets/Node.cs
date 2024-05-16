@@ -92,14 +92,9 @@ public abstract class Node
         _nodeRect.position = anchoredPOS; // 위치 업데이트
         RecentRectPos = anchoredPOS;
     }
-    public void SetRectPos(Vector2 newPos){
-        _nodeRect.position = newPos; // 위치 업데이트
-        RecentRectPos = _nodeRect.position;
-    }
     private void DrawDebugLabel(){
         GUI.Label(NodeRect, NodeID.ToString());
     }
-    
     private void DrawHighlight()
     {
         // 선택된 상태일 때 하이라이트 테두리 그리기

@@ -3,7 +3,7 @@ using UnityEditor;
 using Aroka.ArokaUtils;
 
 [System.Serializable]
-public class PlaceModifyNode : Node
+public class GainPlaceNode : Node
 {
     public const float UPPER_MARGIN = 40;
     public const float BOTTOM_MARGIN = 30; 
@@ -13,17 +13,17 @@ public class PlaceModifyNode : Node
     public override float Height { get; set; }
 
 
-    public PlaceModify PlaceModify = new PlaceModify(true, "");
+    public GainPlace GainPlace = new GainPlace(true, "");
 
     public const float STANDARD_SPACING = 20;
 
-    public PlaceModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
+    public GainPlaceNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
     }
 
     public override Element ToElement()
     {
-        return PlaceModify;
+        return GainPlace;
     }
     public override void DrawNode()
     {
@@ -31,10 +31,10 @@ public class PlaceModifyNode : Node
         Width = 300;//Default
         Height = UPPER_MARGIN;
 
-        PlaceModify.IsGain= (bool)JInterface.SimpleField
+        GainPlace.IsGain= (bool)JInterface.SimpleField
         (
             title: "IsGain : ",
-            value: PlaceModify.IsGain,
+            value: GainPlace.IsGain,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
@@ -42,10 +42,10 @@ public class PlaceModifyNode : Node
         );
 
         Height += STANDARD_SPACING;
-        PlaceModify.ID = (string)JInterface.SimpleField
+        GainPlace.ID = (string)JInterface.SimpleField
         (
             title: "ID : ",
-            value: PlaceModify.ID,
+            value: GainPlace.ID,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,

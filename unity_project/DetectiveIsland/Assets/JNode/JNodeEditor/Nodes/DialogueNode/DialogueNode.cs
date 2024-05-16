@@ -103,8 +103,8 @@ public class DialogueNode : Node
 
                 Height += lineNode.Height + 10;
             }
-            JInterface.AttachDeleteButtons(LineNodes);
-            JInterface.AttachArrowButtons(LineNodes);
+            AttachInterface.AttachDeleteButtons(LineNodes);
+            AttachInterface.AttachArrowButtons(LineNodes);
         }
         Height += BOTTOM_MARGIN;
 
@@ -126,31 +126,30 @@ public class DialogueNode : Node
 
         if (!IsFolded)
         {
-            JButton addLineButton = new JButton(
+            new JButton(
                 pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
                 size: new Vector2(40, 30),
                 title: "+",
                 action: AddLine,
-                anchor: JAnchor.CenterBottom);
-            addLineButton.Draw();
+                anchor: JAnchor.CenterBottom).Draw();
         }
         else{
-            JTextRect previewText = new JTextRect(
+            new JTextRect(
                 pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
                 size: new Vector2(Width, 30),
                 title: LineNodes.Count > 0 ? LineNodes.First().Line.Sentence + "\n..." : "",
-                anchor: JAnchor.CenterBottom);
-            previewText.Draw();
+                anchor: JAnchor.CenterBottom).Draw();
         }
 
 
-        JButton foldButton = new JButton(
+        new JButton(
             pos: new Vector2(NodeRect.min.x, NodeRect.min.y),
             size: new Vector2(40, 30),
             title: IsFolded ? "←→" : "→←",
-            action: ToggleFold,
-            anchor: JAnchor.TopLeft);
-        foldButton.Draw();
+            action: () => {
+                IsFolded = !IsFolded;
+            },
+            anchor: JAnchor.TopLeft).Draw();
     }
 
 
@@ -160,11 +159,6 @@ public class DialogueNode : Node
         LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
         LineNodes.Add(lineNode);
         AddNodeRectSize(Vector2.up * LineNode.DEFAULT_HEIGHT);
-    }
-
-    private void ToggleFold()
-    {
-        IsFolded = !IsFolded;
     }
 
 }

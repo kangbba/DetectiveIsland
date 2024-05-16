@@ -68,10 +68,10 @@ public class ChoiceSetNode : Node
         for (int i = 0; i < DialogueNodes.Count; i++)
         {
             Node node = DialogueNodes[i];
-            float xPos = NodeRect.position.x + GetCenterLocalPosX(node, this);
+            float xPos = NodeRect.center.x;
             float yPos = NodeRect.position.y + Height;
             Vector2 dialogue_I_Pos = new Vector2(xPos, yPos);
-            node.SetRectPos(dialogue_I_Pos);
+            node.SetRectPos(dialogue_I_Pos, JAnchor.CenterTop);
             node.DrawNode();
             Height += node.Height;
         }
@@ -93,9 +93,9 @@ public class ChoiceSetNode : Node
         {
             Node node = ChoiceNodes[i];
             node.DrawNode();
-            float node_i_Width =  node.Width + 20;
+            float node_i_Width = node.Width + 20;
             Vector2 pos = NodeRect.position + new Vector2(LEFT_MARGIN + (i * node_i_Width), Height);
-            node.SetRectPos(pos);
+            node.SetRectPos(pos, JAnchor.TopLeft);
             Width += node_i_Width;
         }
         Height += ChoiceNodes.GetMaxHeight();
@@ -112,11 +112,11 @@ public class ChoiceSetNode : Node
         Width += RIGHT_MARGIN;
         SetNodeRectSize(ChoiceNodes.Count == 0 ? DEFAULT_WIDTH : Width, Height);
 
-        JInterface.AttachDeleteButtons(ChoiceNodes);
-        JInterface.AttachArrowButtons(ChoiceNodes);
+        AttachInterface.AttachDeleteButtons(ChoiceNodes);
+        AttachInterface.AttachArrowButtons(ChoiceNodes);
 
-        JInterface.AttachDeleteButtons(DialogueNodes);
-        JInterface.AttachArrowButtons(DialogueNodes);
+        AttachInterface.AttachDeleteButtons(DialogueNodes);
+        AttachInterface.AttachArrowButtons(DialogueNodes);
     }
 
     private void AddDialogue()
@@ -132,15 +132,4 @@ public class ChoiceSetNode : Node
         ChoiceNodes.Add(choiceNode);
         Debug.Log("Choice node added.");
     }
-
-
-    private float GetCenterLocalPosX(Node node, Node parentNode)
-    {
-        return parentNode.NodeRect.width * 0.5f - node.NodeRect.width * 0.5f;
-    }
-
-
-
-
-
 }

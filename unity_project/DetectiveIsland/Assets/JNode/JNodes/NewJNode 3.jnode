@@ -9,8 +9,8 @@
       "NextNodeID": "ee5ddaec-086c-4ae9-bc62-f144819be013",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 701.0,
-        "y": -520.0
+        "x": 784.5,
+        "y": -611.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -29,65 +29,6 @@
       }
     },
     {
-      "$type": "DialogueNode, Assembly-CSharp",
-      "CharacterID": "Mono",
-      "LineNodes": [],
-      "IsFolded": false,
-      "IsStartNode": false,
-      "Title": "DialogueNode",
-      "NodeID": "ffbcb920-2e26-4473-b54e-313d9ecb2ba3",
-      "NextNodeID": null,
-      "ParentNodeID": null,
-      "RecentRectPos": {
-        "x": 1349.0,
-        "y": 1930.0
-      },
-      "RecentRectSize": {
-        "x": 450.0,
-        "y": 180.0
-      },
-      "IsSelected": false,
-      "NextConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "IsChildConnectingPoint": true,
-        "NodeID": "ffbcb920-2e26-4473-b54e-313d9ecb2ba3"
-      },
-      "PreviousConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "IsChildConnectingPoint": false,
-        "NodeID": "ffbcb920-2e26-4473-b54e-313d9ecb2ba3"
-      }
-    },
-    {
-      "$type": "ChoiceSetNode, Assembly-CSharp",
-      "DialogueNodes": [],
-      "ChoiceNodes": [],
-      "IsStartNode": false,
-      "Title": "ChoiceSetNode",
-      "NodeID": "40226b5c-660f-4840-b679-21813d993ba8",
-      "NextNodeID": null,
-      "ParentNodeID": null,
-      "RecentRectPos": {
-        "x": 1871.0,
-        "y": 1975.0
-      },
-      "RecentRectSize": {
-        "x": 600.0,
-        "y": 270.0
-      },
-      "IsSelected": false,
-      "NextConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "IsChildConnectingPoint": true,
-        "NodeID": "40226b5c-660f-4840-b679-21813d993ba8"
-      },
-      "PreviousConnectingPoint": {
-        "$type": "ConnectingPoint, Assembly-CSharp",
-        "IsChildConnectingPoint": false,
-        "NodeID": "40226b5c-660f-4840-b679-21813d993ba8"
-      }
-    },
-    {
       "$type": "OverlayPictureNode, Assembly-CSharp",
       "_pictureID": "Black",
       "_effectID": "FadeIn",
@@ -98,8 +39,8 @@
       "NextNodeID": "75835b57-04fa-4639-8309-ed3807afd492",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 256.0,
-        "y": -349.0
+        "x": 563.5,
+        "y": -401.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -161,8 +102,8 @@
       "NextNodeID": "db339366-352f-477e-85a8-1ac461414e75",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 595.0,
-        "y": -310.0
+        "x": 523.5,
+        "y": -206.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -191,8 +132,8 @@
       "NextNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 969.0,
-        "y": -83.0
+        "x": 658.5,
+        "y": 13.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -227,8 +168,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 472.0
+            "x": 562.0,
+            "y": 260.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -259,8 +200,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 582.0
+            "x": 562.0,
+            "y": 370.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -291,8 +232,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 692.0
+            "x": 562.0,
+            "y": 480.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -323,8 +264,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 802.0
+            "x": 562.0,
+            "y": 590.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -355,8 +296,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 912.0
+            "x": 562.0,
+            "y": 700.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -387,8 +328,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 1022.0
+            "x": 562.0,
+            "y": 810.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -419,8 +360,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 262.0,
-            "y": 1132.0
+            "x": 562.0,
+            "y": 920.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -446,8 +387,8 @@
       "NextNodeID": "e9837000-198c-4974-8220-6206063435a5",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 452.0,
-        "y": -53.0
+        "x": 519.5,
+        "y": 195.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -466,7 +407,7 @@
       }
     },
     {
-      "$type": "PositionInitNode, Assembly-CSharp",
+      "$type": "ModifyPositionNode, Assembly-CSharp",
       "CharacterPositionNodes": [
         {
           "$type": "CharacterPositionNode, Assembly-CSharp",
@@ -481,8 +422,8 @@
           "NextNodeID": null,
           "ParentNodeID": "e9837000-198c-4974-8220-6206063435a5",
           "RecentRectPos": {
-            "x": 132.0,
-            "y": 231.0
+            "x": 592.5,
+            "y": 449.0
           },
           "RecentRectSize": {
             "x": 300.0,
@@ -502,13 +443,13 @@
         }
       ],
       "IsStartNode": false,
-      "Title": "PositionInitNode",
+      "Title": "ModifyPositionNode",
       "NodeID": "e9837000-198c-4974-8220-6206063435a5",
       "NextNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 107.0,
-        "y": 181.0
+        "x": 567.5,
+        "y": 399.0
       },
       "RecentRectSize": {
         "x": 350.0,
@@ -543,8 +484,8 @@
           "NextNodeID": null,
           "ParentNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
           "RecentRectPos": {
-            "x": 827.0,
-            "y": 184.0
+            "x": 230.5,
+            "y": 624.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -575,8 +516,8 @@
           "NextNodeID": null,
           "ParentNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
           "RecentRectPos": {
-            "x": 827.0,
-            "y": 294.0
+            "x": 230.5,
+            "y": 734.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -602,8 +543,8 @@
       "NextNodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 631.0,
-        "y": 223.0
+        "x": 520.5,
+        "y": 635.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -665,8 +606,8 @@
       "NextNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 837.0,
-        "y": 451.0
+        "x": 526.5,
+        "y": 841.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -701,8 +642,8 @@
           "NextNodeID": null,
           "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
           "RecentRectPos": {
-            "x": 829.0,
-            "y": 378.0
+            "x": 555.5,
+            "y": 1165.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -733,8 +674,8 @@
           "NextNodeID": null,
           "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
           "RecentRectPos": {
-            "x": 829.0,
-            "y": 488.0
+            "x": 555.5,
+            "y": 1275.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -765,8 +706,8 @@
           "NextNodeID": null,
           "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
           "RecentRectPos": {
-            "x": 829.0,
-            "y": 598.0
+            "x": 555.5,
+            "y": 1385.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -785,19 +726,19 @@
           }
         }
       ],
-      "IsFolded": true,
+      "IsFolded": false,
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
       "NextNodeID": "bf4d0b59-d800-413d-b198-dc840b56626c",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 398.0,
-        "y": 657.0
+        "x": 530.5,
+        "y": 1065.0
       },
       "RecentRectSize": {
         "x": 450.0,
-        "y": 180.0
+        "y": 510.0
       },
       "IsSelected": false,
       "NextConnectingPoint": {
@@ -812,21 +753,21 @@
       }
     },
     {
-      "$type": "ItemModifyNode, Assembly-CSharp",
-      "ItemModify": {
-        "$type": "ItemModify, Assembly-CSharp",
+      "$type": "GainItemNode, Assembly-CSharp",
+      "GainItem": {
+        "$type": "GainItem, Assembly-CSharp",
         "IsGain": true,
         "ID": "Letter",
         "Amount": 1
       },
       "IsStartNode": false,
-      "Title": "ItemModifyNode",
+      "Title": "GainItemNode",
       "NodeID": "bf4d0b59-d800-413d-b198-dc840b56626c",
-      "NextNodeID": null,
+      "NextNodeID": "4a4285d0-d8be-4a96-b960-6295584e8e11",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 791.0,
-        "y": 862.0
+        "x": 629.5,
+        "y": 1624.0
       },
       "RecentRectSize": {
         "x": 300.0,

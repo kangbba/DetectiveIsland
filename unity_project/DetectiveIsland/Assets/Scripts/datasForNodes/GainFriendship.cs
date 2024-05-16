@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class FriendshipModify : Element
+public class GainFriendship : Element
 {
 
-    public FriendshipModify(bool isGain, string id, int amount)
+    public GainFriendship(bool isGain, string id, int amount)
     {
         IsGain = isGain;
         CharacterID = id;

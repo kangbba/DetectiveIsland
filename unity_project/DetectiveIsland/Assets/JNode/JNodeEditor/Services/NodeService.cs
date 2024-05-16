@@ -22,6 +22,90 @@ public static class NodeService
         }
         return list;
     }
+    public static Node GetMouseOverNode(List<Node> nodes, Vector2 mousePos)
+    {
+        int cnt = nodes.Count;
+        for(int i = cnt - 1 ; i >= 0 ; i--){
+            Node node = nodes[i];
+            if(node.IsMouseOver(mousePos)){
+                return node;
+            }
+        }
+        return null;
+    }
+    public static List<Node> GetNodeRectsByPositionX(List<Node> nodes, float x, bool getSmallerNodes)
+    {
+        List<Node> filteredNodes = new List<Node>();
+
+        foreach (Node node in nodes)
+        {
+            if (getSmallerNodes)
+            {
+                if (node.NodeRect.position.y < x)
+                {
+                    filteredNodes.Add(node);
+                }
+            }
+            else
+            {
+                if (node.NodeRect.position.y >= x)
+                {
+                    filteredNodes.Add(node);
+                }
+            }
+        }
+
+        return filteredNodes;
+    }
+    public static List<Node> GetNodeRectsByPositionY(List<Node> nodes, float y, bool getSmallerNodes)
+    {
+        List<Node> filteredNodes = new List<Node>();
+
+        foreach (Node node in nodes)
+        {
+            if (getSmallerNodes)
+            {
+                if (node.NodeRect.position.y < y)
+                {
+                    filteredNodes.Add(node);
+                }
+            }
+            else
+            {
+                if (node.NodeRect.position.y >= y)
+                {
+                    filteredNodes.Add(node);
+                }
+            }
+        }
+
+        return filteredNodes;
+    }
+    public static List<Node> MoveNodes(List<Node> nodes, Vector2 delta)
+    {
+        List<Node> filteredNodes = new List<Node>();
+
+        foreach (Node node in nodes)
+        {
+            node.SetRectPos(node.NodeRect.position + delta, JAnchor.TopLeft);
+        }
+
+        return filteredNodes;
+    }
+    public static ConnectingPoint GetMouseOverConnectingPoint(List<Node> nodes, Vector2 mousePos)
+    {
+        int cnt = nodes.Count;
+        for(int i = 0 ; i < cnt ; i++){
+            Node node = nodes[i];
+            if(node.PreviousConnectingPoint.IsContainRect(mousePos)){
+                return node.PreviousConnectingPoint;
+            }
+            if(node.NextConnectingPoint.IsContainRect(mousePos)){
+                return node.NextConnectingPoint;
+            }
+        }
+        return null;
+    }
 
     public static float GetNodesWidth(this IEnumerable<Node> nodes){
         float sum = 0f;
@@ -103,6 +187,7 @@ public static class Texture
         newTexture.Apply();
         return newTexture;
     }
+
 
 }
 

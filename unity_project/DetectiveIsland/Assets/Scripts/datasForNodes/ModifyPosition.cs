@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PositionInit : Element
+public class ModifyPosition : Element
 {
     private List<CharacterPosition> _characterPositions;
 
-    public PositionInit(List<CharacterPosition> characterPositions)
+    public ModifyPosition(List<CharacterPosition> characterPositions)
     {
         _characterPositions = characterPositions;
     }
