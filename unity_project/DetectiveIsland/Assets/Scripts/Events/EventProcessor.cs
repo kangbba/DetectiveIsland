@@ -272,10 +272,11 @@ public static class EventProcessor
     }
     public static async UniTask FriendshipModifyTask(FriendshipModify friendshipModify)
     {
-       
+        await UniTask.WaitForSeconds(1f);
     }
     public static async UniTask PlaceModifyTask(PlaceModify placeModify)
     {
+        await UniTask.WaitForSeconds(1f);
     }
     public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)
     {

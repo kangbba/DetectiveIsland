@@ -762,4 +762,6 @@ public class JNodeEditor4 : EditorWindow
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = asset; // Select the new asset in the project window
     }
+
+
 }
