@@ -268,7 +268,7 @@ public class JNodeEditor4 : EditorWindow
     
     private void DrawNodes()
     {  
-        for (int i = 0; i < Nodes.Count; i++)
+        for (int i = Nodes.Count - 1; i >= 0; i--)
         {
             Node node = Nodes[i];
             node.DrawNode();  // 각 노드를 그림

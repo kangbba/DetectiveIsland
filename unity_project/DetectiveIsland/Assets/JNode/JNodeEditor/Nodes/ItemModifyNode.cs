@@ -10,9 +10,9 @@ public class ItemModifyNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    private bool _isGain = true;
-    private string _id = "";
-    private int _amount = 1;
+
+    public ItemModify ItemModify = new ItemModify(true, "", 1);
+
     public override float Width { get; set; }
     public override float Height { get; set; }
 
@@ -23,7 +23,7 @@ public class ItemModifyNode : Node
 
     public override Element ToElement()
     {
-        return new ItemModify(_isGain, _id, _amount);
+        return ItemModify;
     }
     public override void DrawNode()
     {
@@ -31,8 +31,8 @@ public class ItemModifyNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         float standardFieldHeight = 20;
-        _isGain = (bool)JInterface.SimpleField(
-            value: _isGain,
+        ItemModify.IsGain = (bool)JInterface.SimpleField(
+            value: ItemModify.IsGain,
             pos: new Vector2(NodeRect.position.x + 10 , NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth: 100,
@@ -41,8 +41,8 @@ public class ItemModifyNode : Node
         );
         Height += standardFieldHeight;
 
-        _id = (string)JInterface.SimpleField(
-            value: _id,
+        ItemModify.ID = (string)JInterface.SimpleField(
+            value: ItemModify.ID,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Id : ",
             labelWidth: 100,
@@ -51,8 +51,8 @@ public class ItemModifyNode : Node
         );
         Height += standardFieldHeight;
 
-        _amount = (int)JInterface.SimpleField(
-            value: _amount,
+        ItemModify.Amount = (int)JInterface.SimpleField(
+            value: ItemModify.Amount,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth: 100,

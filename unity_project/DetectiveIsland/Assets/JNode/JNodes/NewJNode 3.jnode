@@ -6,11 +6,11 @@
       "IsStartNode": true,
       "Title": "StartNode",
       "NodeID": "cb1a57d0-3d1b-4ab6-b452-7ccb37325916",
-      "NextNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+      "NextNodeID": "ee5ddaec-086c-4ae9-bc62-f144819be013",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 800.0,
-        "y": -961.0
+        "x": 602.0,
+        "y": -715.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -30,14 +30,14 @@
     },
     {
       "$type": "DialogueNode, Assembly-CSharp",
-      "CharacterID": "Lisa",
+      "CharacterID": "Mono",
       "LineNodes": [
         {
           "$type": "LineNode, Assembly-CSharp",
           "Line": {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": ""
+            "Sentence": "눈을 떴을 때, 처음 보는 천장이었다. "
           },
           "IsStartNode": false,
           "Title": "",
@@ -45,8 +45,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 351.0,
-            "y": -684.0
+            "x": 262.0,
+            "y": 472.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -69,7 +69,7 @@
           "Line": {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": ""
+            "Sentence": "왜 여기 있는지, 어떻게 여기에 왔는지 기억나지 않는다."
           },
           "IsStartNode": false,
           "Title": "",
@@ -77,8 +77,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 351.0,
-            "y": -574.0
+            "x": 262.0,
+            "y": 582.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -101,7 +101,7 @@
           "Line": {
             "$type": "Line, Assembly-CSharp",
             "EmotionID": "Smile",
-            "Sentence": ""
+            "Sentence": "여기는... 어디지? 내가 왜 여기에 있는 거지? 머리가... 정말 아프다."
           },
           "IsStartNode": false,
           "Title": "",
@@ -109,8 +109,8 @@
           "NextNodeID": null,
           "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
           "RecentRectPos": {
-            "x": 351.0,
-            "y": -464.0
+            "x": 262.0,
+            "y": 692.0
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -127,20 +127,149 @@
             "IsChildConnectingPoint": false,
             "NodeID": "f1c70034-8f91-4e40-94b8-a88c160612dd"
           }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "천천히 고개를 돌려 병실을 살핀다. 오른쪽 탁자 위에는 몇 권의 책과 물병, 그리고 한 묶음의 편지가 놓여 있다."
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "7c922054-7712-46b1-ada3-3f196ba14cc7",
+          "NextNodeID": null,
+          "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+          "RecentRectPos": {
+            "x": 262.0,
+            "y": 802.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "7c922054-7712-46b1-ada3-3f196ba14cc7"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "7c922054-7712-46b1-ada3-3f196ba14cc7"
+          }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "이 모든 것이 낯설어... 하지만 왜인지 이 침대가 익숙한 느낌이 들어. "
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "038cbad5-8909-42d3-870d-d0da67ecedab",
+          "NextNodeID": null,
+          "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+          "RecentRectPos": {
+            "x": 262.0,
+            "y": 912.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "038cbad5-8909-42d3-870d-d0da67ecedab"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "038cbad5-8909-42d3-870d-d0da67ecedab"
+          }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "내 옆에 이 책들은 누구의 것일까? 편지는 또 뭐지?"
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "8311796b-eeee-453c-9dc3-f334377ca0d9",
+          "NextNodeID": null,
+          "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+          "RecentRectPos": {
+            "x": 262.0,
+            "y": 1022.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "8311796b-eeee-453c-9dc3-f334377ca0d9"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "8311796b-eeee-453c-9dc3-f334377ca0d9"
+          }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "병실 문이 살짝 열리며 누군가 들어온다. "
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "c2196f41-ddd9-4c00-a68b-bcfac24f690b",
+          "NextNodeID": null,
+          "ParentNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+          "RecentRectPos": {
+            "x": 262.0,
+            "y": 1132.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "c2196f41-ddd9-4c00-a68b-bcfac24f690b"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "c2196f41-ddd9-4c00-a68b-bcfac24f690b"
+          }
         }
       ],
+      "IsFolded": true,
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
-      "NextNodeID": "398681e1-7056-4deb-8ed2-486b2c82692f",
+      "NextNodeID": "e9837000-198c-4974-8220-6206063435a5",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 326.0,
-        "y": -784.0
+        "x": 182.0,
+        "y": -363.0
       },
       "RecentRectSize": {
         "x": 450.0,
-        "y": 510.0
+        "y": 180.0
       },
       "IsSelected": false,
       "NextConnectingPoint": {
@@ -158,14 +287,15 @@
       "$type": "DialogueNode, Assembly-CSharp",
       "CharacterID": "Mono",
       "LineNodes": [],
+      "IsFolded": false,
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "ffbcb920-2e26-4473-b54e-313d9ecb2ba3",
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1120.0,
-        "y": 1380.0
+        "x": 916.0,
+        "y": 1641.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -193,8 +323,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1642.0,
-        "y": 1425.0
+        "x": 1438.0,
+        "y": 1686.0
       },
       "RecentRectSize": {
         "x": 600.0,
@@ -213,15 +343,18 @@
       }
     },
     {
-      "$type": "ItemModifyNode, Assembly-CSharp",
+      "$type": "OverlayPictureNode, Assembly-CSharp",
+      "_pictureID": "Black",
+      "_effectID": "FadeIn",
+      "_effectTime": 1.0,
       "IsStartNode": false,
-      "Title": "ItemModifyNode",
-      "NodeID": "398681e1-7056-4deb-8ed2-486b2c82692f",
-      "NextNodeID": null,
+      "Title": "OverlayPictureNode",
+      "NodeID": "ee5ddaec-086c-4ae9-bc62-f144819be013",
+      "NextNodeID": "75835b57-04fa-4639-8309-ed3807afd492",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 538.0,
-        "y": -333.0
+        "x": 193.0,
+        "y": -548.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -231,417 +364,484 @@
       "NextConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": true,
-        "NodeID": "398681e1-7056-4deb-8ed2-486b2c82692f"
+        "NodeID": "ee5ddaec-086c-4ae9-bc62-f144819be013"
       },
       "PreviousConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": false,
-        "NodeID": "398681e1-7056-4deb-8ed2-486b2c82692f"
+        "NodeID": "ee5ddaec-086c-4ae9-bc62-f144819be013"
       }
     },
     {
-      "$type": "ChoiceSetNode, Assembly-CSharp",
-      "DialogueNodes": [
+      "$type": "DialogueNode, Assembly-CSharp",
+      "CharacterID": "Lisa",
+      "LineNodes": [
         {
-          "$type": "DialogueNode, Assembly-CSharp",
-          "CharacterID": "Mono",
-          "LineNodes": [
-            {
-              "$type": "LineNode, Assembly-CSharp",
-              "Line": {
-                "$type": "Line, Assembly-CSharp",
-                "EmotionID": "Smile",
-                "Sentence": ""
-              },
-              "IsStartNode": false,
-              "Title": "",
-              "NodeID": "f7edc644-017f-4495-a90d-0dbf3385af60",
-              "NextNodeID": null,
-              "ParentNodeID": "4bd8a70a-65fe-4ea7-9b79-dee096feb88f",
-              "RecentRectPos": {
-                "x": 1089.0,
-                "y": -290.0
-              },
-              "RecentRectSize": {
-                "x": 400.0,
-                "y": 100.0
-              },
-              "IsSelected": false,
-              "NextConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": true,
-                "NodeID": "f7edc644-017f-4495-a90d-0dbf3385af60"
-              },
-              "PreviousConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": false,
-                "NodeID": "f7edc644-017f-4495-a90d-0dbf3385af60"
-              }
-            }
-          ],
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "아, 다행이네. 드디어 깨어났구나,"
+          },
           "IsStartNode": false,
-          "Title": "DialogueNode",
-          "NodeID": "4bd8a70a-65fe-4ea7-9b79-dee096feb88f",
+          "Title": "",
+          "NodeID": "82b042fa-d63c-415d-bfb5-db33bea66267",
           "NextNodeID": null,
-          "ParentNodeID": "2c2cc883-0001-4d3f-8a50-060ae776d263",
+          "ParentNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
           "RecentRectPos": {
-            "x": 1064.0,
-            "y": -390.0
+            "x": 827.0,
+            "y": 184.0
           },
           "RecentRectSize": {
-            "x": 450.0,
-            "y": 290.0
+            "x": 400.0,
+            "y": 100.0
           },
           "IsSelected": false,
           "NextConnectingPoint": {
             "$type": "ConnectingPoint, Assembly-CSharp",
             "IsChildConnectingPoint": true,
-            "NodeID": "4bd8a70a-65fe-4ea7-9b79-dee096feb88f"
+            "NodeID": "82b042fa-d63c-415d-bfb5-db33bea66267"
           },
           "PreviousConnectingPoint": {
             "$type": "ConnectingPoint, Assembly-CSharp",
             "IsChildConnectingPoint": false,
-            "NodeID": "4bd8a70a-65fe-4ea7-9b79-dee096feb88f"
+            "NodeID": "82b042fa-d63c-415d-bfb5-db33bea66267"
           }
-        }
-      ],
-      "ChoiceNodes": [
+        },
         {
-          "$type": "ChoiceNode, Assembly-CSharp",
-          "Content": "선택지 내용",
-          "Nodes": [
-            {
-              "$type": "PositionInitNode, Assembly-CSharp",
-              "CharacterPositionNodes": [
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "CharacterID",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "4413ff92-7ea6-4544-adb9-e9ea454a5bed",
-                  "NextNodeID": null,
-                  "ParentNodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 240.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "4413ff92-7ea6-4544-adb9-e9ea454a5bed"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "4413ff92-7ea6-4544-adb9-e9ea454a5bed"
-                  }
-                },
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "CharacterID",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "e5c765ae-e885-44bc-964b-8298d2e165c4",
-                  "NextNodeID": null,
-                  "ParentNodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 330.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "e5c765ae-e885-44bc-964b-8298d2e165c4"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "e5c765ae-e885-44bc-964b-8298d2e165c4"
-                  }
-                },
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "CharacterID",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "c5d1d3a8-8dee-48fb-883d-d2d93acfda75",
-                  "NextNodeID": null,
-                  "ParentNodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 420.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "c5d1d3a8-8dee-48fb-883d-d2d93acfda75"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "c5d1d3a8-8dee-48fb-883d-d2d93acfda75"
-                  }
-                }
-              ],
-              "IsStartNode": false,
-              "Title": "PositionInitNode",
-              "NodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7",
-              "NextNodeID": null,
-              "ParentNodeID": "57b2d331-0454-448a-bd88-5a5b1c3df916",
-              "RecentRectPos": {
-                "x": 1104.0,
-                "y": 190.0
-              },
-              "RecentRectSize": {
-                "x": 350.0,
-                "y": 390.0
-              },
-              "IsSelected": false,
-              "NextConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": true,
-                "NodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7"
-              },
-              "PreviousConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": false,
-                "NodeID": "afef50ed-e6f6-459c-a6d8-2894ab7949e7"
-              }
-            },
-            {
-              "$type": "PositionInitNode, Assembly-CSharp",
-              "CharacterPositionNodes": [
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "CharacterID",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "58cf43b4-b69a-4ba8-bd60-60a6135586b7",
-                  "NextNodeID": null,
-                  "ParentNodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 640.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "58cf43b4-b69a-4ba8-bd60-60a6135586b7"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "58cf43b4-b69a-4ba8-bd60-60a6135586b7"
-                  }
-                },
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "lisa",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "1db92171-23ee-4fad-92e6-8c8f5f508c35",
-                  "NextNodeID": null,
-                  "ParentNodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 730.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "1db92171-23ee-4fad-92e6-8c8f5f508c35"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "1db92171-23ee-4fad-92e6-8c8f5f508c35"
-                  }
-                },
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "mono",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "7ce0b197-b525-4ee6-b0c7-a2da8aaeb8d9",
-                  "NextNodeID": null,
-                  "ParentNodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 820.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "7ce0b197-b525-4ee6-b0c7-a2da8aaeb8d9"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "7ce0b197-b525-4ee6-b0c7-a2da8aaeb8d9"
-                  }
-                },
-                {
-                  "$type": "CharacterPositionNode, Assembly-CSharp",
-                  "CharacterPosition": {
-                    "$type": "CharacterPosition, Assembly-CSharp",
-                    "CharacterID": "*-",
-                    "PositionID": "Middle"
-                  },
-                  "IsStartNode": false,
-                  "Title": "",
-                  "NodeID": "dcb39539-1644-4a27-b04f-dd7dcfbf066e",
-                  "NextNodeID": null,
-                  "ParentNodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda",
-                  "RecentRectPos": {
-                    "x": 1129.0,
-                    "y": 910.0
-                  },
-                  "RecentRectSize": {
-                    "x": 300.0,
-                    "y": 80.0
-                  },
-                  "IsSelected": false,
-                  "NextConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": true,
-                    "NodeID": "dcb39539-1644-4a27-b04f-dd7dcfbf066e"
-                  },
-                  "PreviousConnectingPoint": {
-                    "$type": "ConnectingPoint, Assembly-CSharp",
-                    "IsChildConnectingPoint": false,
-                    "NodeID": "dcb39539-1644-4a27-b04f-dd7dcfbf066e"
-                  }
-                }
-              ],
-              "IsStartNode": false,
-              "Title": "PositionInitNode",
-              "NodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda",
-              "NextNodeID": null,
-              "ParentNodeID": "57b2d331-0454-448a-bd88-5a5b1c3df916",
-              "RecentRectPos": {
-                "x": 1104.0,
-                "y": 590.0
-              },
-              "RecentRectSize": {
-                "x": 350.0,
-                "y": 480.0
-              },
-              "IsSelected": false,
-              "NextConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": true,
-                "NodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda"
-              },
-              "PreviousConnectingPoint": {
-                "$type": "ConnectingPoint, Assembly-CSharp",
-                "IsChildConnectingPoint": false,
-                "NodeID": "bd2a2a30-a8ce-42cf-ab76-d10ff5634cda"
-              }
-            }
-          ],
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": " 라이언. 모두가 너무 걱정했어. 어때, 좀 괜찮아?"
+          },
           "IsStartNode": false,
-          "Title": "ChoiceNode",
-          "NodeID": "57b2d331-0454-448a-bd88-5a5b1c3df916",
+          "Title": "",
+          "NodeID": "10694ed6-d5a1-4561-8987-3f7aaa4d5668",
           "NextNodeID": null,
-          "ParentNodeID": "2c2cc883-0001-4d3f-8a50-060ae776d263",
+          "ParentNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
           "RecentRectPos": {
-            "x": 1029.0,
-            "y": 20.0
+            "x": 827.0,
+            "y": 294.0
           },
           "RecentRectSize": {
-            "x": 500.0,
-            "y": 1090.0
+            "x": 400.0,
+            "y": 100.0
           },
           "IsSelected": false,
           "NextConnectingPoint": {
             "$type": "ConnectingPoint, Assembly-CSharp",
             "IsChildConnectingPoint": true,
-            "NodeID": "57b2d331-0454-448a-bd88-5a5b1c3df916"
+            "NodeID": "10694ed6-d5a1-4561-8987-3f7aaa4d5668"
           },
           "PreviousConnectingPoint": {
             "$type": "ConnectingPoint, Assembly-CSharp",
             "IsChildConnectingPoint": false,
-            "NodeID": "57b2d331-0454-448a-bd88-5a5b1c3df916"
+            "NodeID": "10694ed6-d5a1-4561-8987-3f7aaa4d5668"
           }
         }
       ],
+      "IsFolded": true,
       "IsStartNode": false,
-      "Title": "ChoiceSetNode",
-      "NodeID": "2c2cc883-0001-4d3f-8a50-060ae776d263",
-      "NextNodeID": null,
+      "Title": "DialogueNode",
+      "NodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
+      "NextNodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 999.0,
-        "y": -440.0
+        "x": 188.0,
+        "y": -125.0
       },
       "RecentRectSize": {
-        "x": 580.0,
-        "y": 1650.0
+        "x": 450.0,
+        "y": 180.0
+      },
+      "IsSelected": true,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "CharacterID": "Mono",
+      "LineNodes": [
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "놀란 듯한 눈으로 나를 바라보는 누군가에 나는 어찌 할 바를 모르고 있었다."
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "dd252b4f-ac8f-481c-8a3b-60c99457dfa5",
+          "NextNodeID": null,
+          "ParentNodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d",
+          "RecentRectPos": {
+            "x": 828.0,
+            "y": 392.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "dd252b4f-ac8f-481c-8a3b-60c99457dfa5"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "dd252b4f-ac8f-481c-8a3b-60c99457dfa5"
+          }
+        }
+      ],
+      "IsFolded": true,
+      "IsStartNode": false,
+      "Title": "DialogueNode",
+      "NodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d",
+      "NextNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 183.0,
+        "y": 102.0
+      },
+      "RecentRectSize": {
+        "x": 450.0,
+        "y": 180.0
       },
       "IsSelected": false,
       "NextConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": true,
-        "NodeID": "2c2cc883-0001-4d3f-8a50-060ae776d263"
+        "NodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d"
       },
       "PreviousConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": false,
-        "NodeID": "2c2cc883-0001-4d3f-8a50-060ae776d263"
+        "NodeID": "c2afcd56-b101-45fa-ad0f-93804204f49d"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "CharacterID": "Lisa",
+      "LineNodes": [
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "설마, 기억을 잃었어? 여긴 세인트 루카 병원이야. "
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "73fc171b-480a-48a9-873d-f1e74c4db6b8",
+          "NextNodeID": null,
+          "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
+          "RecentRectPos": {
+            "x": 829.0,
+            "y": 378.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "73fc171b-480a-48a9-873d-f1e74c4db6b8"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "73fc171b-480a-48a9-873d-f1e74c4db6b8"
+          }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "교통사고 후로 몇 주 동안 의식이 없었어. 걱정하지 마. 의사가 곧 올 거야. 지금은 푹 쉬어"
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "281cca15-829a-498d-9506-bfaf8df76fe5",
+          "NextNodeID": null,
+          "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
+          "RecentRectPos": {
+            "x": 829.0,
+            "y": 488.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "281cca15-829a-498d-9506-bfaf8df76fe5"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "281cca15-829a-498d-9506-bfaf8df76fe5"
+          }
+        },
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "그리고 이 편지들, 아마 내게 단서가 될 수 있을 거야."
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "cd3e1fce-84ca-4f79-8d39-b7e494287124",
+          "NextNodeID": null,
+          "ParentNodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
+          "RecentRectPos": {
+            "x": 829.0,
+            "y": 598.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "cd3e1fce-84ca-4f79-8d39-b7e494287124"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "cd3e1fce-84ca-4f79-8d39-b7e494287124"
+          }
+        }
+      ],
+      "IsFolded": true,
+      "IsStartNode": false,
+      "Title": "DialogueNode",
+      "NodeID": "36b2d9e8-1452-4391-9012-c479f7714900",
+      "NextNodeID": "bf4d0b59-d800-413d-b198-dc840b56626c",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 185.0,
+        "y": 315.0
+      },
+      "RecentRectSize": {
+        "x": 450.0,
+        "y": 180.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "36b2d9e8-1452-4391-9012-c479f7714900"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "36b2d9e8-1452-4391-9012-c479f7714900"
+      }
+    },
+    {
+      "$type": "ItemModifyNode, Assembly-CSharp",
+      "ItemModify": {
+        "$type": "ItemModify, Assembly-CSharp",
+        "IsGain": true,
+        "ID": "Letter",
+        "Amount": 1
+      },
+      "IsStartNode": false,
+      "Title": "ItemModifyNode",
+      "NodeID": "bf4d0b59-d800-413d-b198-dc840b56626c",
+      "NextNodeID": null,
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 258.0,
+        "y": 531.0
+      },
+      "RecentRectSize": {
+        "x": 300.0,
+        "y": 140.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "bf4d0b59-d800-413d-b198-dc840b56626c"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "bf4d0b59-d800-413d-b198-dc840b56626c"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "CharacterID": "Mono",
+      "LineNodes": [
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "Line": {
+            "$type": "Line, Assembly-CSharp",
+            "EmotionID": "Smile",
+            "Sentence": "여긴 어디지 ?"
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "757c66e0-e039-40f5-b3ca-5a2fa18c7f3f",
+          "NextNodeID": null,
+          "ParentNodeID": "75835b57-04fa-4639-8309-ed3807afd492",
+          "RecentRectPos": {
+            "x": 598.0,
+            "y": 354.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "757c66e0-e039-40f5-b3ca-5a2fa18c7f3f"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "757c66e0-e039-40f5-b3ca-5a2fa18c7f3f"
+          }
+        }
+      ],
+      "IsFolded": true,
+      "IsStartNode": false,
+      "Title": "DialogueNode",
+      "NodeID": "75835b57-04fa-4639-8309-ed3807afd492",
+      "NextNodeID": "db339366-352f-477e-85a8-1ac461414e75",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 523.0,
+        "y": -564.0
+      },
+      "RecentRectSize": {
+        "x": 450.0,
+        "y": 180.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "75835b57-04fa-4639-8309-ed3807afd492"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "75835b57-04fa-4639-8309-ed3807afd492"
+      }
+    },
+    {
+      "$type": "OverlayPictureNode, Assembly-CSharp",
+      "_pictureID": "Black",
+      "_effectID": "FadeOut",
+      "_effectTime": 2.0,
+      "IsStartNode": false,
+      "Title": "OverlayPictureNode",
+      "NodeID": "db339366-352f-477e-85a8-1ac461414e75",
+      "NextNodeID": "d03988fa-4eb2-4dc7-95ec-b859440025e8",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 1002.0,
+        "y": -549.0
+      },
+      "RecentRectSize": {
+        "x": 300.0,
+        "y": 140.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "db339366-352f-477e-85a8-1ac461414e75"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "db339366-352f-477e-85a8-1ac461414e75"
+      }
+    },
+    {
+      "$type": "PositionInitNode, Assembly-CSharp",
+      "CharacterPositionNodes": [
+        {
+          "$type": "CharacterPositionNode, Assembly-CSharp",
+          "CharacterPosition": {
+            "$type": "CharacterPosition, Assembly-CSharp",
+            "CharacterID": "Lisa",
+            "PositionID": "Middle"
+          },
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "cfdbab42-a4a8-416c-b3f9-1b623e5d4c7e",
+          "NextNodeID": null,
+          "ParentNodeID": "e9837000-198c-4974-8220-6206063435a5",
+          "RecentRectPos": {
+            "x": 722.0,
+            "y": -162.0
+          },
+          "RecentRectSize": {
+            "x": 300.0,
+            "y": 80.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "cfdbab42-a4a8-416c-b3f9-1b623e5d4c7e"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "cfdbab42-a4a8-416c-b3f9-1b623e5d4c7e"
+          }
+        }
+      ],
+      "IsStartNode": false,
+      "Title": "PositionInitNode",
+      "NodeID": "e9837000-198c-4974-8220-6206063435a5",
+      "NextNodeID": "869a3f88-34bf-4bca-a5bf-7e1643e2dbdc",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 697.0,
+        "y": -212.0
+      },
+      "RecentRectSize": {
+        "x": 350.0,
+        "y": 210.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "e9837000-198c-4974-8220-6206063435a5"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "e9837000-198c-4974-8220-6206063435a5"
       }
     }
   ]

@@ -20,7 +20,7 @@ public class DialogueNode : Node
     private CharacterPreviewer _characterPreviewer = new CharacterPreviewer();
 
 
-    private bool _isFolded;
+    public bool IsFolded;
 
     public override float Width  { get; set; }
     public override float Height { get; set; }
@@ -89,7 +89,7 @@ public class DialogueNode : Node
         Height = UPPER_MARGIN;
         // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
 
-        if (!_isFolded)
+        if (!IsFolded)
         {
             for (int i = 0; i < LineNodes.Count; i++)
             {
@@ -105,16 +105,6 @@ public class DialogueNode : Node
             }
             JInterface.AttachDeleteButtons(LineNodes);
             JInterface.AttachArrowButtons(LineNodes);
-        }
-        else
-        {
-            JTextRect previewText = new JTextRect(
-                pos: new Vector2(NodeRect.center.x, NodeRect.min.y + UPPER_MARGIN * .5f),
-                size: new Vector2(100, 30),
-                title: LineNodes.Count > 0 ? LineNodes.First().Line.Sentence : "",
-                anchor: JAnchor.CenterTop);
-                
-            previewText.Draw();
         }
         Height += BOTTOM_MARGIN;
 
@@ -134,7 +124,7 @@ public class DialogueNode : Node
         Vector2 characterSize = new Vector2(40, 40);
         _characterPreviewer.CharacterPreview(CharacterID, characterSize, characterPos.GetAnchoredPos(characterSize, JAnchor.CenterTop));
 
-        if (!_isFolded)
+        if (!IsFolded)
         {
             JButton addLineButton = new JButton(
                 pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
@@ -145,19 +135,19 @@ public class DialogueNode : Node
             addLineButton.Draw();
         }
         else{
-            JTextRect dotText = new JTextRect(
+            JTextRect previewText = new JTextRect(
                 pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * .5f),
-                size: new Vector2(40, 30),
-                title: "...",
+                size: new Vector2(Width, 30),
+                title: LineNodes.Count > 0 ? LineNodes.First().Line.Sentence + "\n..." : "",
                 anchor: JAnchor.CenterBottom);
-            dotText.Draw();
+            previewText.Draw();
         }
 
 
         JButton foldButton = new JButton(
             pos: new Vector2(NodeRect.min.x, NodeRect.min.y),
             size: new Vector2(40, 30),
-            title: _isFolded ? "←→" : "→←",
+            title: IsFolded ? "←→" : "→←",
             action: ToggleFold,
             anchor: JAnchor.TopLeft);
         foldButton.Draw();
@@ -174,7 +164,7 @@ public class DialogueNode : Node
 
     private void ToggleFold()
     {
-        _isFolded = !_isFolded;
+        IsFolded = !IsFolded;
     }
 
 }

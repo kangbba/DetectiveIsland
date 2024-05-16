@@ -250,14 +250,14 @@ public static class EventProcessor
 
     public static async UniTask ItemModifyTask(ItemModify itemModify)
     {
-        ItemData itemData = ItemService.GetItemData(itemModify.Id);
+        ItemData itemData = ItemService.GetItemData(itemModify.ID);
         if (itemData == null)
         {
             Debug.LogError("AssetChangeTask called with null ItemData");
             return;
         }
         if(itemModify.IsGain){
-            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, itemModify.Id);
+            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, itemModify.ID);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
             UIManager.OpenItemOwnPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -265,7 +265,7 @@ public static class EventProcessor
                 
         }
         else {
-            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, itemModify.Id);
+            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, itemModify.ID);
             _curScenarioData.ExecuteActionThenAdd(eventAction);
         }
        

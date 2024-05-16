@@ -26,9 +26,7 @@ public class PositionInitNode : Node
         {
             characterPositions.Add(characterPositionNode.CharacterPosition);
         }
-        // PositionInit element creation
-        // return new PositionInit(characterPositions); // Assuming PositionInit is a class that takes a list of CharacterPositions
-        throw new System.NotImplementedException();
+        return new PositionInit(characterPositions);
     }
 
     public void AddCharacterPosition()

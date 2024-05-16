@@ -14,6 +14,7 @@ public class CharacterPositionNode : Node
 
     public override float Width { get; set; }
     public override float Height { get; set; }
+    
 
 
     public const float CHARACTER_ID_HEIGHT = 20;

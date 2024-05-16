@@ -9,9 +9,7 @@ public class FriendshipModifyNode : Node
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-    private bool _isGain = true;
-    private string _characterID = "";
-    private int _amount =10;
+    public FriendshipModify FriendshipModify = new FriendshipModify(true, "", 10);
     public override float Width { get; set; }
     public override float Height { get; set; }
 
@@ -22,7 +20,7 @@ public class FriendshipModifyNode : Node
     }
     public override Element ToElement()
     {
-        return new FriendshipModify(_isGain, _characterID, _amount);
+        return FriendshipModify;
     }
     public override void DrawNode()
     {
@@ -31,9 +29,9 @@ public class FriendshipModifyNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         
-        _isGain = (bool)JInterface.SimpleField
+        FriendshipModify.IsGain = (bool)JInterface.SimpleField
         (
-            value : _isGain,
+            value : FriendshipModify.IsGain,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth : 100,
@@ -43,9 +41,9 @@ public class FriendshipModifyNode : Node
 
         Height += 20;
 
-        _characterID = (string)JInterface.SimpleField
+        FriendshipModify.CharacterID = (string)JInterface.SimpleField
         (
-            value : _characterID,
+            value : FriendshipModify.CharacterID,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "CharacterID : ",
             labelWidth : 100,
@@ -55,9 +53,9 @@ public class FriendshipModifyNode : Node
 
         Height += 20;
 
-        _amount = (int)JInterface.SimpleField
+        FriendshipModify.Amount = (int)JInterface.SimpleField
         (
-            value : _amount,
+            value : FriendshipModify.Amount,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth : 100,
