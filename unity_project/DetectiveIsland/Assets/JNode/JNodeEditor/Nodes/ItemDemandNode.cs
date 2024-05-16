@@ -44,7 +44,7 @@ public class ItemDemandNode : Node
             title: "Item ID : ",
             labelWidth : 100,
             fieldWidth : 20,
-            height : 20
+            fieldHeight : 20
         );
 
         

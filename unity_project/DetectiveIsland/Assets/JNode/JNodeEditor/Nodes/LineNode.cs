@@ -45,7 +45,7 @@ public class LineNode : Node
             title: "Emotion ID : ",
             labelWidth: 70,
             fieldWidth: 80,
-            height: EMOTION_HEIGHT
+            fieldHeight: EMOTION_HEIGHT
         );
 
         y += EMOTION_HEIGHT;

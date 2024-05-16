@@ -22,9 +22,8 @@ public class DialogueNode : Node
 
     private bool _isFolded;
 
-    public override float Width => LineNode.DEFAULT_WIDTH + 50;
-
-    public override float Height => UPPER_MARGIN + LineNodes.Cast<Node>().GetNodesHeight() + BOTTOM_MARGIN;
+    public override float Width => stackedWidth;
+    public override float Height => stackedHeight;
 
     public override Element ToElement()
     {
@@ -84,12 +83,15 @@ public class DialogueNode : Node
     }
 
 
+    private float stackedHeight = 0;
+    private float stackedWidth = 0;
 
     public override void DrawNode()
     {
         base.DrawNode();
-        float y = UPPER_MARGIN;
-       // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
+        stackedWidth = LineNode.DEFAULT_WIDTH + 50;
+        stackedHeight = UPPER_MARGIN;
+        // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
 
         if (!_isFolded)
         {
@@ -98,7 +100,7 @@ public class DialogueNode : Node
                 LineNode lineNode = LineNodes[i];
                 lineNode.DrawNode();
 
-                Vector2 lineNodePos = new Vector2(NodeRect.center.x, NodeRect.position.y + y);
+                Vector2 lineNodePos = new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight);
                 lineNode.SetRectPos(lineNodePos, JAnchor.CenterTop);
 
                 Vector2 miniBtnSize = Vector2.one * 20;
@@ -131,7 +133,7 @@ public class DialogueNode : Node
                   );
                 orderDownBtn.Draw();
 
-                y += lineNode.Height + 10;
+                stackedHeight += lineNode.Height + 10;
             }
         }
         else
@@ -144,9 +146,9 @@ public class DialogueNode : Node
                 
             previewText.Draw();
         }
-        y += BOTTOM_MARGIN;
+        stackedHeight += BOTTOM_MARGIN;
 
-        SetNodeRectSize(new Vector2(Width, y));
+        SetNodeRectSize(new Vector2(Width, Height));
 
 
         CharacterID = (string)JInterface.SimpleField
@@ -156,7 +158,7 @@ public class DialogueNode : Node
             title : "Character ID : ",
             labelWidth : 80,
             fieldWidth : 80,
-            height : 20
+            fieldHeight : 20
         );
         Vector2 characterPos = new Vector2(NodeRect.center.x,  NodeRect.position.y + UPPER_MARGIN * .5f);
         Vector2 characterSize = new Vector2(40, 40);

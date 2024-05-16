@@ -12,16 +12,24 @@ using UnityEngine;
 [System.Serializable]
 public class ChoiceSetNode : Node
 {
-    public const float UPPER_MARGIN = 30;
-    public const float BOTTOM_MARGIN = 30; 
+    public const float UPPER_MARGIN = 50;
+    public const float BOTTOM_MARGIN = 0; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
+    public const float DEFAULT_WIDTH = 600;
     public List<DialogueNode> DialogueNodes = new List<DialogueNode>();
     public List<ChoiceNode> ChoiceNodes = new List<ChoiceNode>();
 
 
-    public override float Width { get => 500; }
-    public override float Height { get => UPPER_MARGIN + DialogueNodes.Cast<Node>().GetNodesHeight()+ ChoiceNodes.Cast<Node>().GetNodesHeight() + BOTTOM_MARGIN;  }
+    public override float Width { get => stackedWidth; }
+    public override float Height { get => stackedHeight; }
+
+    private float Size_EndOfAddDialoguesBtn => UPPER_MARGIN + DialogueNodes.Cast<Node>().GetNodesHeight() + AddDialogueBtn_UpperMargin;
+    private float AddDialogueBtn_UpperMargin = 50;
+    private float AddDialogueBtn_BottomMargin = 70;
+
+    private float AddChoiceBtn_UpperMargin = 50;
+    private float AddChoiceBtn_BottomMargin = 50;
 
 
     public override Element ToElement()
@@ -50,56 +58,60 @@ public class ChoiceSetNode : Node
 
     public const float dialoguesDist = 10;
 
-    
+    private float stackedWidth = 0;
+    private float stackedHeight = 0;
+
+
     public override void DrawNode()
     {
         base.DrawNode();
-
-        float y = UPPER_MARGIN;
-        
+        stackedWidth = 0;
+        stackedHeight = UPPER_MARGIN;
         for (int i = 0; i < DialogueNodes.Count; i++)
         {
             Node node = DialogueNodes[i];
             float xPos = NodeRect.position.x + GetCenterLocalPosX(node, this);
-            float yPos = NodeRect.position.y + y;
+            float yPos = NodeRect.position.y + stackedHeight;
             Vector2 dialogue_I_Pos = new Vector2(xPos, yPos);
             node.SetRectPos(dialogue_I_Pos);
             node.DrawNode();
-            y += node.Height;
+            stackedHeight += node.Height;
         }
 
+        stackedHeight += AddDialogueBtn_UpperMargin;
 
         JButton addDialogueButton = new JButton
         (
-            pos : new Vector2(NodeRect.max.x, NodeRect.position.y + y),
+            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight),
             size : new Vector2(80, 30),
             title : "Add Dialogue",
             action : AddDialogue, 
-            anchor : JAnchor.CenterRight
+            anchor : JAnchor.Center
         );
         addDialogueButton.Draw();
-
-
+        stackedHeight += AddDialogueBtn_BottomMargin;
         for (int i = 0; i < ChoiceNodes.Count; i++)
         {
             Node node = ChoiceNodes[i];
             node.DrawNode();
-            Vector2 pos = NodeRect.position + new Vector2(i * node.Width, node.Height);
+            Vector2 pos = NodeRect.position + new Vector2(i * node.Width,  stackedHeight);
             node.SetRectPos(pos);
-
-            y += node.Height;
+            stackedWidth += node.Width;
         }
-
+        stackedHeight += ChoiceNodes.GetMaxHeight();
+        stackedHeight += AddChoiceBtn_UpperMargin;
         JButton addChoiceButton = new JButton(
-            pos : new Vector2(NodeRect.max.x, NodeRect.position.y + y),
+            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight),
             size :  new Vector2(80, 30),
             title : "Add Choice",
             action : AddChoice,  
-            anchor : JAnchor.CenterRight);
+            anchor : JAnchor.Center);
             addChoiceButton.Draw();
-
+        stackedHeight += AddChoiceBtn_BottomMargin;
+        
         float choicesWidth = (ChoiceNodes.Count + 1) * ChoiceNode.DEFAULT_WIDTH;
-        SetNodeRectSize(new Vector2(Width < choicesWidth ? choicesWidth : Width, y));
+        stackedHeight += BOTTOM_MARGIN;
+        SetNodeRectSize(ChoiceNodes.Count == 0 ? DEFAULT_WIDTH : Width, Height);
     }
 
     private void AddDialogue()

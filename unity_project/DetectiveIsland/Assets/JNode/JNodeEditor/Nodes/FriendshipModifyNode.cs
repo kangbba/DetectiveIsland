@@ -5,66 +5,68 @@ using Aroka.ArokaUtils;
 [System.Serializable]
 public class FriendshipModifyNode : Node
 {
-    public const float UPPER_MARGIN = 30;
+    public const float UPPER_MARGIN = 50;
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-    private FriendshipModify _friendshipModify = new FriendshipModify(true, "", 10);
-
-    public override float Width => 300;
-
-    public override float Height => 100;
+    private bool _isGain = true;
+    private string _characterID = "";
+    private int _amount =10;
+    public override float Width => stackedWidth;
+    public override float Height => stackedHeight;
 
     public FriendshipModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+
     }
     public override Element ToElement()
     {
-        return _friendshipModify;
+        return new FriendshipModify(_isGain, _characterID, _amount);
     }
-
+    private float stackedWidth = 0;
+    private float stackedHeight = 0;
     public override void DrawNode()
     {
         base.DrawNode();
 
-        float y = UPPER_MARGIN;
-
-        _friendshipModify.IsGain = (bool)JInterface.SimpleField
+        stackedHeight = UPPER_MARGIN;
+        stackedWidth = 300;
+        _isGain = (bool)JInterface.SimpleField
         (
-            value : _friendshipModify.IsGain,
-            pos : new Vector2(NodeRect.position.x, y),
+            value : _isGain,
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
             title: "IsGain : ",
             labelWidth : 100,
             fieldWidth : 20,
-            height : 20
+            fieldHeight : 20
         );
 
-        y += 100;
+        stackedHeight += 20;
 
-        _friendshipModify.Id = (string)JInterface.SimpleField
+        _characterID = (string)JInterface.SimpleField
         (
-            value : _friendshipModify.Id,
-            pos : new Vector2(NodeRect.position.x, y),
-            title: "ID : ",
+            value : _characterID,
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
+            title: "CharacterID : ",
             labelWidth : 100,
             fieldWidth : 100,
-            height : 20
+            fieldHeight : 20
         );
 
-        y += 100;
+        stackedHeight += 20;
 
-        _friendshipModify.Amount = (int)JInterface.SimpleField
+        _amount = (int)JInterface.SimpleField
         (
-            value : _friendshipModify.Amount,
-            pos : new Vector2(NodeRect.position.x, y),
-            title: "ID : ",
+            value : _amount,
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
+            title: "Amount : ",
             labelWidth : 100,
             fieldWidth : 100,
-            height : 20
+            fieldHeight : 20
         );
 
-        y += 100;
-
-        y += BOTTOM_MARGIN;
+        stackedHeight += 20;
+        stackedHeight += BOTTOM_MARGIN;
+        SetNodeRectSize(Width, Height);
     }
 }

@@ -5,7 +5,7 @@ using Aroka.ArokaUtils;
 [System.Serializable]
 public class PlaceModifyNode : Node
 {
-    public const float UPPER_MARGIN = 30;
+    public const float UPPER_MARGIN = 40;
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
@@ -27,35 +27,38 @@ public class PlaceModifyNode : Node
     {
         return _placeModify;
     }
+    private float stackedHeight = 0;
+    private float stackedWidth = 0;
     public override void DrawNode()
     {
         base.DrawNode();
-        float y = UPPER_MARGIN;
+        stackedWidth = 300;//Default
+        stackedHeight = UPPER_MARGIN;
 
         _placeModify.IsGain = (bool)JInterface.SimpleField
         (
             title: "IsGain : ",
             value: _placeModify.IsGain,
-            pos: new Vector2(NodeRect.position.x, y),
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
             labelWidth: 100,
             fieldWidth: 80,
-            height: STANDARD_SPACING
+            fieldHeight: STANDARD_SPACING
         );
 
-        y += STANDARD_SPACING;
+        stackedHeight += STANDARD_SPACING;
         _placeModify.Id = (string)JInterface.SimpleField
         (
             title: "ID : ",
             value: _placeModify.Id,
-            pos: new Vector2(NodeRect.position.x, y),
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
             labelWidth: 100,
             fieldWidth: 80,
-            height: STANDARD_SPACING
+            fieldHeight: STANDARD_SPACING
         );
-        y += STANDARD_SPACING;
-        
-        y += BOTTOM_MARGIN;
+        stackedHeight += STANDARD_SPACING;
 
-        SetNodeRectSize(new Vector2(Width, y));
+        stackedHeight += BOTTOM_MARGIN;
+
+        SetNodeRectSize(new Vector2(Width, stackedHeight));
     }
 }

@@ -39,6 +39,31 @@ public static class NodeService
         }
         return sum;
     }
+    public static float GetMaxHeight(this IEnumerable<Node> nodes)
+    {
+        float maxHeight = 0f;
+        foreach (var node in nodes)
+        {
+            if (node.Height > maxHeight)
+            {
+                maxHeight = node.Height;
+            }
+        }
+        return maxHeight;
+    }
+
+    public static float GetMaxWidth(this IEnumerable<Node> nodes)
+    {
+        float maxWidth = 0f;
+        foreach (var node in nodes)
+        {
+            if (node.Width > maxWidth)
+            {
+                maxWidth = node.Width;
+            }
+        }
+        return maxWidth;
+    }
 }
 
 

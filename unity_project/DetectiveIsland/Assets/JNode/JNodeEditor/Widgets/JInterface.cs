@@ -60,7 +60,7 @@ public static class JInterface
         Rect rect = GetAnchoredRect(pos, size, anchor);
         return rect.position;
     }
-    public static object SimpleField(string title, object value, Vector2 pos, float labelWidth = 100, float fieldWidth = 80, float height = 20)
+    public static object SimpleField(string title, object value, Vector2 pos, float labelWidth = 100, float fieldWidth = 80, float fieldHeight = 20)
     {
         if (value == null)
         {
@@ -70,8 +70,8 @@ public static class JInterface
         Type valueType = value.GetType(); // value의 타입을 얻음
 
         // Label과 필드를 각각의 위치에 배치합니다.
-        Rect labelRect = new Rect(pos.x, pos.y, labelWidth, height);
-        Rect fieldRect = new Rect(pos.x + labelWidth, pos.y, fieldWidth, height);
+        Rect labelRect = new Rect(pos.x, pos.y, labelWidth, fieldHeight);
+        Rect fieldRect = new Rect(pos.x + labelWidth, pos.y, fieldWidth, fieldHeight);
 
         GUIStyle labelStyle = new GUIStyle(EditorStyles.label);
         GUIStyle fieldStyle;

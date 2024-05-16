@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: JNodeInstance
   m_EditorClassIdentifier: 
   jNode: {}
-  recentOpenFileName: NewJNode.jnode
-  recentPath: Assets/JNode/JNodes/NewJNode.jnode
+  recentOpenFileName: NewJNode 1.jnode
+  recentPath: Assets/JNode/JNodes/NewJNode 1.jnode

@@ -221,7 +221,6 @@ public class JNodeEditor4 : EditorWindow
             if(isSelected){
                 SelectedNode = node;
             }
-            Debug.Log(node.IsSelected);
         }
     }
     private Node GetMouseOverNode(Vector2 mousePos)

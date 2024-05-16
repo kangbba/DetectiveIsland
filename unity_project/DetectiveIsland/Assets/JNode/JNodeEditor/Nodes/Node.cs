@@ -78,6 +78,11 @@ public abstract class Node
         _nodeRect.size = size;
         RecentRectSize = _nodeRect.size;
     }
+    public void SetNodeRectSize(float width, float height)
+    {
+        _nodeRect.size = new(width, height);
+        RecentRectSize = _nodeRect.size;
+    }
     public void AddNodeRectSize(Vector2 size){
         _nodeRect.size += size;
         RecentRectSize = _nodeRect.size;

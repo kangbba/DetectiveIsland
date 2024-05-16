@@ -45,7 +45,7 @@ public class CharacterPositionNode : Node
             title : "Character ID : ",
             labelWidth : 100,
             fieldWidth : 100,
-            height : CHARACTER_ID_HEIGHT
+            fieldHeight : CHARACTER_ID_HEIGHT
         );
         y += CHARACTER_ID_HEIGHT;
 
@@ -56,7 +56,7 @@ public class CharacterPositionNode : Node
             title : "Position ID : ",
             labelWidth : 100,
             fieldWidth : 100,
-            height : POSITION_ID_HEIGHT
+            fieldHeight : POSITION_ID_HEIGHT
         );
         y += POSITION_ID_HEIGHT;
 
