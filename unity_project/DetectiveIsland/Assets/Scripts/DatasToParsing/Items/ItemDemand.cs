@@ -11,12 +11,13 @@ public class ItemDemand : Element
     private List<Element> _failElements;
     private List<Element> _cancelElements;
 
-    public ItemDemand(string itemID, List<Dialogue> dialogues, List<Element> successElements, List<Element> failElements)
+    public ItemDemand(string itemID, List<Dialogue> dialogues, List<Element> successElements, List<Element> failElements, List<Element> cancelElements)
     {
         this._itemID = itemID;
         this._dialogues = dialogues;
         this._successElements = successElements;
         this._failElements = failElements;
+        this._cancelElements = cancelElements;
     }
 
     public string ItemID { get => _itemID; set => _itemID = value; }

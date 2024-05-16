@@ -58,11 +58,9 @@ public abstract class Node
     }
     public virtual void DrawNode(){    
         DrawBackground(NodeRect);
-        if(IsMostParentNode){
-            DrawTitle(Title);
-        }
-        
-        if(IsSelected){
+        DrawTitle(Title);
+
+        if (IsSelected){
             DrawHighlight();
         }
 

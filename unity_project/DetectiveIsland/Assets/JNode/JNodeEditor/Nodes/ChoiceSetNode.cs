@@ -90,13 +90,15 @@ public class ChoiceSetNode : Node
         );
         addDialogueButton.Draw();
         Height += AddDialogueBtn_BottomMargin;
+        Width += LEFT_MARGIN;
         for (int i = 0; i < ChoiceNodes.Count; i++)
         {
             Node node = ChoiceNodes[i];
             node.DrawNode();
-            Vector2 pos = NodeRect.position + new Vector2(i * node.Width, Height);
+            float node_i_Width =  node.Width + 20;
+            Vector2 pos = NodeRect.position + new Vector2(LEFT_MARGIN + (i * node_i_Width), Height);
             node.SetRectPos(pos);
-            Width += node.Width;
+            Width += node_i_Width;
         }
         Height += ChoiceNodes.GetMaxHeight();
         Height += AddChoiceBtn_UpperMargin;
@@ -108,9 +110,9 @@ public class ChoiceSetNode : Node
             anchor : JAnchor.Center);
             addChoiceButton.Draw();
         Height += AddChoiceBtn_BottomMargin;
-
         Height += BOTTOM_MARGIN;
-        SetNodeRectSize(ChoiceNodes.Count == 0 ? 500 : Width, Height);
+        Width += RIGHT_MARGIN;
+        SetNodeRectSize(ChoiceNodes.Count == 0 ? DEFAULT_WIDTH : Width, Height);
     }
 
     private void AddDialogue()

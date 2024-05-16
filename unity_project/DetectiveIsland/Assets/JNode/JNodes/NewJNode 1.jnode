@@ -14,8 +14,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1056.0,
-        "y": -1581.0
+        "x": -486.0,
+        "y": -2087.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -46,8 +46,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4d6a391e-f2c2-46b5-b364-e12c74fd0fdb",
           "RecentRectPos": {
-            "x": 1802.0,
-            "y": -1251.0
+            "x": 320.0,
+            "y": -1757.0
           },
           "RecentRectSize": {
             "x": 450.0,
@@ -77,8 +77,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4d6a391e-f2c2-46b5-b364-e12c74fd0fdb",
           "RecentRectPos": {
-            "x": 1277.0,
-            "y": -951.0
+            "x": -235.0,
+            "y": -1457.0
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -106,8 +106,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4d6a391e-f2c2-46b5-b364-e12c74fd0fdb",
           "RecentRectPos": {
-            "x": 1777.0,
-            "y": -951.0
+            "x": 285.0,
+            "y": -1457.0
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -135,8 +135,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4d6a391e-f2c2-46b5-b364-e12c74fd0fdb",
           "RecentRectPos": {
-            "x": 2277.0,
-            "y": -951.0
+            "x": 805.0,
+            "y": -1457.0
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -161,11 +161,11 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1277.0,
-        "y": -1301.0
+        "x": -265.0,
+        "y": -1807.0
       },
       "RecentRectSize": {
-        "x": 1500.0,
+        "x": 1620.0,
         "y": 620.0
       },
       "IsSelected": false,
@@ -188,8 +188,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2578.0,
-        "y": -536.0
+        "x": 1036.0,
+        "y": -1042.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -218,8 +218,8 @@
           "NextNodeID": null,
           "ParentNodeID": "c54a7721-33d8-421e-ad77-1780a02948ef",
           "RecentRectPos": {
-            "x": 2057.0,
-            "y": -333.0
+            "x": 515.0,
+            "y": -839.0
           },
           "RecentRectSize": {
             "x": 300.0,
@@ -250,8 +250,8 @@
           "NextNodeID": null,
           "ParentNodeID": "c54a7721-33d8-421e-ad77-1780a02948ef",
           "RecentRectPos": {
-            "x": 2057.0,
-            "y": -243.0
+            "x": 515.0,
+            "y": -749.0
           },
           "RecentRectSize": {
             "x": 300.0,
@@ -281,8 +281,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2057.0,
-        "y": -383.0
+        "x": 515.0,
+        "y": -889.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -310,8 +310,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2371.0,
-        "y": -304.0
+        "x": 829.0,
+        "y": -810.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -340,8 +340,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2140.0,
-        "y": -27.0
+        "x": 598.0,
+        "y": -533.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -367,8 +367,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2044.0,
-        "y": -581.0
+        "x": 502.0,
+        "y": -1087.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -396,8 +396,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1547.0,
-        "y": -591.0
+        "x": 5.0,
+        "y": -1097.0
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -428,8 +428,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4c8a0b90-ec7b-476f-a8d3-47249be2d494",
           "RecentRectPos": {
-            "x": 483.0,
-            "y": 51.0
+            "x": -1009.0,
+            "y": -455.0
           },
           "RecentRectSize": {
             "x": 450.0,
@@ -463,8 +463,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 233.0,
-                "y": 491.0
+                "x": -1279.0,
+                "y": -15.0
               },
               "RecentRectSize": {
                 "x": 450.0,
@@ -490,8 +490,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 308.0,
-                "y": 681.0
+                "x": -1204.0,
+                "y": 175.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -520,8 +520,8 @@
                   "NextNodeID": null,
                   "ParentNodeID": "3f9b40bd-be39-4d29-aefe-ee94de892475",
                   "RecentRectPos": {
-                    "x": 308.0,
-                    "y": 881.0
+                    "x": -1204.0,
+                    "y": 375.0
                   },
                   "RecentRectSize": {
                     "x": 300.0,
@@ -552,8 +552,8 @@
                   "NextNodeID": null,
                   "ParentNodeID": "3f9b40bd-be39-4d29-aefe-ee94de892475",
                   "RecentRectPos": {
-                    "x": 308.0,
-                    "y": 971.0
+                    "x": -1204.0,
+                    "y": 465.0
                   },
                   "RecentRectSize": {
                     "x": 300.0,
@@ -584,8 +584,8 @@
                   "NextNodeID": null,
                   "ParentNodeID": "3f9b40bd-be39-4d29-aefe-ee94de892475",
                   "RecentRectPos": {
-                    "x": 308.0,
-                    "y": 1061.0
+                    "x": -1204.0,
+                    "y": 555.0
                   },
                   "RecentRectSize": {
                     "x": 300.0,
@@ -616,8 +616,8 @@
                   "NextNodeID": null,
                   "ParentNodeID": "3f9b40bd-be39-4d29-aefe-ee94de892475",
                   "RecentRectPos": {
-                    "x": 308.0,
-                    "y": 1151.0
+                    "x": -1204.0,
+                    "y": 645.0
                   },
                   "RecentRectSize": {
                     "x": 300.0,
@@ -648,8 +648,8 @@
                   "NextNodeID": null,
                   "ParentNodeID": "3f9b40bd-be39-4d29-aefe-ee94de892475",
                   "RecentRectPos": {
-                    "x": 308.0,
-                    "y": 1241.0
+                    "x": -1204.0,
+                    "y": 735.0
                   },
                   "RecentRectSize": {
                     "x": 300.0,
@@ -679,8 +679,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 308.0,
-                "y": 831.0
+                "x": -1204.0,
+                "y": 325.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -706,8 +706,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 308.0,
-                "y": 1411.0
+                "x": -1204.0,
+                "y": 905.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -735,8 +735,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 308.0,
-                "y": 1561.0
+                "x": -1204.0,
+                "y": 1055.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -765,8 +765,8 @@
               "NextNodeID": null,
               "ParentNodeID": "b226a9d7-e952-47b5-9a59-ab45f5547524",
               "RecentRectPos": {
-                "x": 308.0,
-                "y": 1681.0
+                "x": -1204.0,
+                "y": 1175.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -791,8 +791,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4c8a0b90-ec7b-476f-a8d3-47249be2d494",
           "RecentRectPos": {
-            "x": 208.0,
-            "y": 351.0
+            "x": -1304.0,
+            "y": -155.0
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -824,8 +824,8 @@
               "NextNodeID": null,
               "ParentNodeID": "498331c6-fbc7-426b-8350-aae37d130aba",
               "RecentRectPos": {
-                "x": 733.0,
-                "y": 491.0
+                "x": -759.0,
+                "y": -15.0
               },
               "RecentRectSize": {
                 "x": 450.0,
@@ -851,8 +851,8 @@
               "NextNodeID": null,
               "ParentNodeID": "498331c6-fbc7-426b-8350-aae37d130aba",
               "RecentRectPos": {
-                "x": 808.0,
-                "y": 681.0
+                "x": -684.0,
+                "y": 175.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -879,8 +879,8 @@
               "NextNodeID": null,
               "ParentNodeID": "498331c6-fbc7-426b-8350-aae37d130aba",
               "RecentRectPos": {
-                "x": 808.0,
-                "y": 831.0
+                "x": -684.0,
+                "y": 325.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -906,8 +906,8 @@
               "NextNodeID": null,
               "ParentNodeID": "498331c6-fbc7-426b-8350-aae37d130aba",
               "RecentRectPos": {
-                "x": 808.0,
-                "y": 961.0
+                "x": -684.0,
+                "y": 455.0
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -932,8 +932,8 @@
           "NextNodeID": null,
           "ParentNodeID": "4c8a0b90-ec7b-476f-a8d3-47249be2d494",
           "RecentRectPos": {
-            "x": 708.0,
-            "y": 351.0
+            "x": -784.0,
+            "y": -155.0
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -958,11 +958,11 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 208.0,
-        "y": 1.0
+        "x": -1334.0,
+        "y": -505.0
       },
       "RecentRectSize": {
-        "x": 1000.0,
+        "x": 1100.0,
         "y": 1960.0
       },
       "IsSelected": false,
@@ -988,8 +988,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 2568.0,
-        "y": -78.0
+        "x": 1026.0,
+        "y": -584.0
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -1005,6 +1005,612 @@
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": false,
         "NodeID": "8c1bf98c-c9da-4adf-bb75-84e7109498f8"
+      }
+    },
+    {
+      "$type": "ItemDemandNode, Assembly-CSharp",
+      "_itemID": null,
+      "_dialogueNodes": [
+        {
+          "$type": "DialogueNode, Assembly-CSharp",
+          "CharacterID": "Mono",
+          "LineNodes": [],
+          "IsStartNode": false,
+          "Title": "DialogueNode",
+          "NodeID": "da924318-e7de-488e-b3f0-e4392e54a656",
+          "NextNodeID": null,
+          "ParentNodeID": "45e7d89c-bcc2-4368-8a61-348f36428168",
+          "RecentRectPos": {
+            "x": 553.0,
+            "y": -76.0
+          },
+          "RecentRectSize": {
+            "x": 450.0,
+            "y": 180.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "da924318-e7de-488e-b3f0-e4392e54a656"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "da924318-e7de-488e-b3f0-e4392e54a656"
+          }
+        }
+      ],
+      "choiceNodes": [
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [
+            {
+              "$type": "DialogueNode, Assembly-CSharp",
+              "CharacterID": "Mono",
+              "LineNodes": [],
+              "IsStartNode": false,
+              "Title": "DialogueNode",
+              "NodeID": "8098a609-64a5-4568-9a1e-20ca018e845e",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 23.0,
+                "y": 364.0
+              },
+              "RecentRectSize": {
+                "x": 450.0,
+                "y": 180.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "8098a609-64a5-4568-9a1e-20ca018e845e"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "8098a609-64a5-4568-9a1e-20ca018e845e"
+              }
+            },
+            {
+              "$type": "ItemModifyNode, Assembly-CSharp",
+              "IsStartNode": false,
+              "Title": "ItemModifyNode",
+              "NodeID": "d7836f17-24f3-4c4a-b693-96afaadfe04e",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 98.0,
+                "y": 554.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "d7836f17-24f3-4c4a-b693-96afaadfe04e"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "d7836f17-24f3-4c4a-b693-96afaadfe04e"
+              }
+            },
+            {
+              "$type": "PositionInitNode, Assembly-CSharp",
+              "CharacterPositionNodes": [],
+              "IsStartNode": false,
+              "Title": "PositionInitNode",
+              "NodeID": "0fbfc66e-b1d0-4101-aec9-51846807a84b",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 98.0,
+                "y": 704.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 120.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "0fbfc66e-b1d0-4101-aec9-51846807a84b"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "0fbfc66e-b1d0-4101-aec9-51846807a84b"
+              }
+            },
+            {
+              "$type": "FriendshipModifyNode, Assembly-CSharp",
+              "IsStartNode": false,
+              "Title": "FriendshipModifyNode",
+              "NodeID": "f4edf396-d02a-4107-bb95-34724625fad1",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 98.0,
+                "y": 834.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "f4edf396-d02a-4107-bb95-34724625fad1"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "f4edf396-d02a-4107-bb95-34724625fad1"
+              }
+            },
+            {
+              "$type": "PlaceModifyNode, Assembly-CSharp",
+              "_isGain": true,
+              "_id": "",
+              "IsStartNode": false,
+              "Title": "PlaceModifyNode",
+              "NodeID": "d7e3cd5c-da2f-4493-a340-acbbca55d7f9",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 98.0,
+                "y": 984.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 110.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "d7e3cd5c-da2f-4493-a340-acbbca55d7f9"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "d7e3cd5c-da2f-4493-a340-acbbca55d7f9"
+              }
+            },
+            {
+              "$type": "OverlayPictureNode, Assembly-CSharp",
+              "_pictureID": "",
+              "_effectID": "",
+              "_effectTime": 0.0,
+              "IsStartNode": false,
+              "Title": "OverlayPictureNode",
+              "NodeID": "37b0aa67-abd4-4af6-81fc-19914b19f6cb",
+              "NextNodeID": null,
+              "ParentNodeID": "Success",
+              "RecentRectPos": {
+                "x": 98.0,
+                "y": 1104.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "37b0aa67-abd4-4af6-81fc-19914b19f6cb"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "37b0aa67-abd4-4af6-81fc-19914b19f6cb"
+              }
+            }
+          ],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Success",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": -2.0,
+            "y": 224.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 1060.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Success"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Success"
+          }
+        },
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [
+            {
+              "$type": "DialogueNode, Assembly-CSharp",
+              "CharacterID": "Mono",
+              "LineNodes": [],
+              "IsStartNode": false,
+              "Title": "DialogueNode",
+              "NodeID": "5a0fd20c-d088-492c-8057-66b8e6a997be",
+              "NextNodeID": null,
+              "ParentNodeID": "Fail",
+              "RecentRectPos": {
+                "x": 543.0,
+                "y": 364.0
+              },
+              "RecentRectSize": {
+                "x": 450.0,
+                "y": 180.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "5a0fd20c-d088-492c-8057-66b8e6a997be"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "5a0fd20c-d088-492c-8057-66b8e6a997be"
+              }
+            },
+            {
+              "$type": "ItemModifyNode, Assembly-CSharp",
+              "IsStartNode": false,
+              "Title": "ItemModifyNode",
+              "NodeID": "ec4b34c8-2ceb-456b-80b9-4bfa7902af00",
+              "NextNodeID": null,
+              "ParentNodeID": "Fail",
+              "RecentRectPos": {
+                "x": 618.0,
+                "y": 554.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "ec4b34c8-2ceb-456b-80b9-4bfa7902af00"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "ec4b34c8-2ceb-456b-80b9-4bfa7902af00"
+              }
+            },
+            {
+              "$type": "FriendshipModifyNode, Assembly-CSharp",
+              "IsStartNode": false,
+              "Title": "FriendshipModifyNode",
+              "NodeID": "c89f6507-3e12-424b-80ff-236982ff29fb",
+              "NextNodeID": null,
+              "ParentNodeID": "Fail",
+              "RecentRectPos": {
+                "x": 618.0,
+                "y": 704.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "c89f6507-3e12-424b-80ff-236982ff29fb"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "c89f6507-3e12-424b-80ff-236982ff29fb"
+              }
+            }
+          ],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Fail",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": 518.0,
+            "y": 224.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 660.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Fail"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Fail"
+          }
+        },
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [
+            {
+              "$type": "PositionInitNode, Assembly-CSharp",
+              "CharacterPositionNodes": [],
+              "IsStartNode": false,
+              "Title": "PositionInitNode",
+              "NodeID": "488d0db2-1b71-48f2-a124-333f09b1e999",
+              "NextNodeID": null,
+              "ParentNodeID": "Cancel",
+              "RecentRectPos": {
+                "x": 1138.0,
+                "y": 364.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 120.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "488d0db2-1b71-48f2-a124-333f09b1e999"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "488d0db2-1b71-48f2-a124-333f09b1e999"
+              }
+            },
+            {
+              "$type": "FriendshipModifyNode, Assembly-CSharp",
+              "IsStartNode": false,
+              "Title": "FriendshipModifyNode",
+              "NodeID": "fb2b5dd8-d100-40c2-b62d-3a94b19780f2",
+              "NextNodeID": null,
+              "ParentNodeID": "Cancel",
+              "RecentRectPos": {
+                "x": 1138.0,
+                "y": 494.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 140.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "fb2b5dd8-d100-40c2-b62d-3a94b19780f2"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "fb2b5dd8-d100-40c2-b62d-3a94b19780f2"
+              }
+            },
+            {
+              "$type": "PlaceModifyNode, Assembly-CSharp",
+              "_isGain": true,
+              "_id": "",
+              "IsStartNode": false,
+              "Title": "PlaceModifyNode",
+              "NodeID": "4bcf5943-56b5-431c-aff4-c5f44ccfd202",
+              "NextNodeID": null,
+              "ParentNodeID": "Cancel",
+              "RecentRectPos": {
+                "x": 1138.0,
+                "y": 644.0
+              },
+              "RecentRectSize": {
+                "x": 300.0,
+                "y": 110.0
+              },
+              "IsSelected": false,
+              "NextConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": true,
+                "NodeID": "4bcf5943-56b5-431c-aff4-c5f44ccfd202"
+              },
+              "PreviousConnectingPoint": {
+                "$type": "ConnectingPoint, Assembly-CSharp",
+                "IsChildConnectingPoint": false,
+                "NodeID": "4bcf5943-56b5-431c-aff4-c5f44ccfd202"
+              }
+            }
+          ],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Cancel",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": 1038.0,
+            "y": 224.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 570.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Cancel"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Cancel"
+          }
+        }
+      ],
+      "IsStartNode": false,
+      "Title": "ItemDemandNode",
+      "NodeID": "45e7d89c-bcc2-4368-8a61-348f36428168",
+      "NextNodeID": null,
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": -32.0,
+        "y": -126.0
+      },
+      "RecentRectSize": {
+        "x": 1620.0,
+        "y": 1440.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "45e7d89c-bcc2-4368-8a61-348f36428168"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "45e7d89c-bcc2-4368-8a61-348f36428168"
+      }
+    },
+    {
+      "$type": "ItemDemandNode, Assembly-CSharp",
+      "_itemID": null,
+      "_dialogueNodes": [],
+      "choiceNodes": [
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Success",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": 544.0,
+            "y": 1178.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 170.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Success"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Success"
+          }
+        },
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Fail",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": 1064.0,
+            "y": 1178.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 170.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Fail"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Fail"
+          }
+        },
+        {
+          "$type": "ChoiceNode, Assembly-CSharp",
+          "Content": "선택지 내용",
+          "Nodes": [],
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "Cancel",
+          "NextNodeID": null,
+          "ParentNodeID": "",
+          "RecentRectPos": {
+            "x": 1584.0,
+            "y": 1178.0
+          },
+          "RecentRectSize": {
+            "x": 500.0,
+            "y": 170.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "Cancel"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "Cancel"
+          }
+        }
+      ],
+      "IsStartNode": false,
+      "Title": "ItemDemandNode",
+      "NodeID": "40f5ce22-8c0b-4e1a-9b9a-45fb0c6b4382",
+      "NextNodeID": null,
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 514.0,
+        "y": 1008.0
+      },
+      "RecentRectSize": {
+        "x": 1620.0,
+        "y": 370.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "40f5ce22-8c0b-4e1a-9b9a-45fb0c6b4382"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "40f5ce22-8c0b-4e1a-9b9a-45fb0c6b4382"
       }
     }
   ]

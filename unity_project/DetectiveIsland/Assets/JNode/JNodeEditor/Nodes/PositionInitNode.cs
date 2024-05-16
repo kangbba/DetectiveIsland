@@ -15,6 +15,7 @@ public class PositionInitNode : Node
 
     public PositionInitNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+
     }
     public override float Width { get; set; }
     public override float Height { get; set; }
@@ -32,7 +33,7 @@ public class PositionInitNode : Node
 
     public void AddCharacterPosition()
     {
-        CharacterPositionNode characterPositionNode = new CharacterPositionNode(Guid.NewGuid().ToString(), "Character Position", NodeID);
+        CharacterPositionNode characterPositionNode = new CharacterPositionNode(Guid.NewGuid().ToString(), "", NodeID);
         CharacterPositionNodes.Add(characterPositionNode);
     }
 
