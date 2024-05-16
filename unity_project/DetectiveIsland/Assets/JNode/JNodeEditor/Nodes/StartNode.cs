@@ -11,12 +11,8 @@ public class StartNode : Node
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-
-    public override float Width => StackedWidth;
-    public override float Height => StackedHeight;
-
-    protected override float StackedWidth { get ; set; }
-    protected override float StackedHeight { get ; set; }
+    public override float Width { get; set; }
+    public override float Height { get; set; }
     public StartNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
         base.IsStartNode = true;
@@ -26,8 +22,8 @@ public class StartNode : Node
     {
         base.DrawNode();
 
-        StackedWidth = 300;
-        StackedHeight = 100;
+        Width = 300;
+        Height = 100;
 
         SetNodeRectSize(new Vector2(Width, Height));
     }

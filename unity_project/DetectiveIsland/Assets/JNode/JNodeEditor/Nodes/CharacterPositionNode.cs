@@ -12,9 +12,8 @@ public class CharacterPositionNode : Node
 
     private CharacterPosition _characterPosition = new CharacterPosition("CharacterID", "Middle");
 
-    public override float Width => StackedWidth;
-
-    public override float Height => StackedHeight;
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
     public CharacterPosition CharacterPosition { get => _characterPosition; }
 
@@ -24,8 +23,6 @@ public class CharacterPositionNode : Node
     public const float DEFAULT_WIDTH = 300;
     public const float DEFAULT_HEIGHT = UPPER_MARGIN + CHARACTER_ID_HEIGHT + POSITION_ID_HEIGHT + BOTTOM_MARGIN;
     
-    protected override float StackedWidth { get ; set; }
-    protected override float StackedHeight { get ; set; }
 
     public CharacterPositionNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -39,33 +36,33 @@ public class CharacterPositionNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        StackedWidth = DEFAULT_WIDTH;
-        StackedHeight = UPPER_MARGIN;
+        Width = DEFAULT_WIDTH;
+        Height = UPPER_MARGIN;
 
         _characterPosition.CharacterID = (string)JInterface.SimpleField
         (
             value : _characterPosition.CharacterID,
-            pos : new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.position.y + StackedHeight),
+            pos : new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.position.y + Height),
             title : "Character ID : ",
             labelWidth : 100,
             fieldWidth : 100,
             fieldHeight : CHARACTER_ID_HEIGHT
         );
-        StackedHeight += CHARACTER_ID_HEIGHT;
+        Height += CHARACTER_ID_HEIGHT;
 
         _characterPosition.PositionID = (string)JInterface.SimpleField
         (
             value : _characterPosition.PositionID,
-            pos : new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.position.y + StackedHeight),
+            pos : new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.position.y + Height),
             title : "Position ID : ",
             labelWidth : 100,
             fieldWidth : 100,
             fieldHeight : POSITION_ID_HEIGHT
         );
-        StackedHeight += POSITION_ID_HEIGHT;
+        Height += POSITION_ID_HEIGHT;
 
-        StackedHeight += BOTTOM_MARGIN;
+        Height += BOTTOM_MARGIN;
 
-        SetNodeRectSize(new Vector2(StackedWidth, StackedHeight));
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 }

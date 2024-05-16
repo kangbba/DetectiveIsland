@@ -6,73 +6,71 @@ using Aroka.ArokaUtils;
 public class OverlayPictureNode : Node
 {
     public const float UPPER_MARGIN = 50;
-    public const float BOTTOM_MARGIN = 30; 
+    public const float BOTTOM_MARGIN = 30;
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    public override float Width => stackedWidth;
+    public override float Width { get; set; }
+    public override float Height { get; set; }
+  
 
-    public override float Height => stackedHeight;
+    public string _pictureID = "";
+    public string _effectID = "";
+    public float _effectTime = 0;
 
-    private OverlayPicture _overlayPicture = new OverlayPicture("Black", "FadeIn", 1);
+    public const float FIELD_COMMON_HEIGHT = 20;
 
-    public const float STANDARD_SPACING = 20;
     public OverlayPictureNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
-    {
+    { 
     }
 
     public override Element ToElement()
     {
-        return _overlayPicture;
+        return new OverlayPicture(_pictureID, _effectID, _effectTime);
     }
-
-    private float stackedHeight = 0;
-
-    private float stackedWidth = 0;
 
     public override void DrawNode()
     {
         base.DrawNode();
+        Width = 300;
+        Height = UPPER_MARGIN;
 
-        stackedWidth = 300;
-        stackedHeight = UPPER_MARGIN;
-
-        _overlayPicture.PictureID = (string)JInterface.SimpleField
+        _pictureID = (string)JInterface.SimpleField
         (
             title: "Picture ID: ",
-            value: _overlayPicture.PictureID,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
+            value: _pictureID,
+            pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
-            fieldHeight: STANDARD_SPACING
+            fieldHeight: FIELD_COMMON_HEIGHT
         );
 
-        stackedHeight += STANDARD_SPACING;
-        _overlayPicture.EffectID = (string)JInterface.SimpleField
-        (
-            title: "Effect ID: ",
-            value: _overlayPicture.EffectID,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
-            labelWidth: 100,
-            fieldWidth: 80,
-            fieldHeight: STANDARD_SPACING
-        );
+        Height += FIELD_COMMON_HEIGHT;
+        _effectTime = (float)JInterface.SimpleField
+      (
+          title: "Effect Time: ",
+          value: _effectTime,
+          pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
+          labelWidth: 100,
+          fieldWidth: 80,
+          fieldHeight: FIELD_COMMON_HEIGHT
+      );
 
-        stackedHeight += STANDARD_SPACING;
-        _overlayPicture.EffectTime = (float)JInterface.SimpleField
-        (
-            title: "Effect Time: ",
-            value: _overlayPicture.EffectTime,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
-            labelWidth: 100,
-            fieldWidth: 80,
-            fieldHeight: STANDARD_SPACING
-        );
-        stackedHeight += STANDARD_SPACING;
+        Height += FIELD_COMMON_HEIGHT;
+        _effectID = (string)JInterface.SimpleField
+       (
+           title: "Effect ID: ",
+           value: _effectID,
+           pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
+           labelWidth: 100,
+           fieldWidth: 80,
+           fieldHeight: FIELD_COMMON_HEIGHT
+       );
 
-        stackedHeight += BOTTOM_MARGIN;
+        Height += FIELD_COMMON_HEIGHT;
 
-        SetNodeRectSize(new Vector2(Width, stackedHeight));
+        Height += BOTTOM_MARGIN;
 
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 }

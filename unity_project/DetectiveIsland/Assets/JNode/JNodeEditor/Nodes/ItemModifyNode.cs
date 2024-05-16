@@ -13,12 +13,9 @@ public class ItemModifyNode : Node
     private bool _isGain = true;
     private string _id = "";
     private int _amount = 1;
-    public override float Width => StackedWidth;
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
-    public override float Height => StackedHeight;
-
-    protected override float StackedWidth { get; set; }
-    protected override float StackedHeight { get; set; }
 
     public ItemModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -31,39 +28,39 @@ public class ItemModifyNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        StackedWidth = 300;
-        StackedHeight = UPPER_MARGIN;
+        Width = 300;
+        Height = UPPER_MARGIN;
         float standardFieldHeight = 20;
         _isGain = (bool)JInterface.SimpleField(
             value: _isGain,
-            pos: new Vector2(NodeRect.position.x + 10 , NodeRect.position.y + StackedHeight),
+            pos: new Vector2(NodeRect.position.x + 10 , NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth: 100,
             fieldWidth: 100,
             fieldHeight: standardFieldHeight
         );
-        StackedHeight += standardFieldHeight;
+        Height += standardFieldHeight;
 
         _id = (string)JInterface.SimpleField(
             value: _id,
-            pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + StackedHeight),
+            pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Id : ",
             labelWidth: 100,
             fieldWidth: 100,
             fieldHeight: standardFieldHeight
         );
-        StackedHeight += standardFieldHeight;
+        Height += standardFieldHeight;
 
         _amount = (int)JInterface.SimpleField(
             value: _amount,
-            pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + StackedHeight),
+            pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth: 100,
             fieldWidth: 100,
             fieldHeight: standardFieldHeight
         );
-        StackedHeight += standardFieldHeight;
-        StackedHeight += BOTTOM_MARGIN;
+        Height += standardFieldHeight;
+        Height += BOTTOM_MARGIN;
         SetNodeRectSize(Width, Height);
 
     }

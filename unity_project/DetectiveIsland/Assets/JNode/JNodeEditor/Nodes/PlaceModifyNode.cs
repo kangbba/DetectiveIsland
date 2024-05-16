@@ -9,12 +9,13 @@ public class PlaceModifyNode : Node
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
-    public override float Width => 300;
 
-    public override float Height => UPPER_MARGIN + STANDARD_SPACING * 3 + BOTTOM_MARGIN;
 
-    private PlaceModify _placeModify = new PlaceModify(true, "");
+    public bool _isGain = true;
+    public string _id = "";
 
 
     public const float STANDARD_SPACING = 20;
@@ -25,40 +26,38 @@ public class PlaceModifyNode : Node
 
     public override Element ToElement()
     {
-        return _placeModify;
+        return new PlaceModify(_isGain, _id);
     }
-    private float stackedHeight = 0;
-    private float stackedWidth = 0;
     public override void DrawNode()
     {
         base.DrawNode();
-        stackedWidth = 300;//Default
-        stackedHeight = UPPER_MARGIN;
+        Width = 300;//Default
+        Height = UPPER_MARGIN;
 
-        _placeModify.IsGain = (bool)JInterface.SimpleField
+        _isGain= (bool)JInterface.SimpleField
         (
             title: "IsGain : ",
-            value: _placeModify.IsGain,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
+            value: _isGain,
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
             fieldHeight: STANDARD_SPACING
         );
 
-        stackedHeight += STANDARD_SPACING;
-        _placeModify.Id = (string)JInterface.SimpleField
+        Height += STANDARD_SPACING;
+        _id = (string)JInterface.SimpleField
         (
             title: "ID : ",
-            value: _placeModify.Id,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + stackedHeight),
+            value: _id,
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
             fieldHeight: STANDARD_SPACING
         );
-        stackedHeight += STANDARD_SPACING;
+        Height += STANDARD_SPACING;
 
-        stackedHeight += BOTTOM_MARGIN;
+        Height += BOTTOM_MARGIN;
 
-        SetNodeRectSize(new Vector2(Width, stackedHeight));
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 }

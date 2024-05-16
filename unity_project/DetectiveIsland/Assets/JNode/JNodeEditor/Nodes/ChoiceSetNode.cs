@@ -21,13 +21,12 @@ public class ChoiceSetNode : Node
     public List<ChoiceNode> ChoiceNodes = new List<ChoiceNode>();
 
 
-    public override float Width { get => StackedWidth; }
-    public override float Height { get => StackedHeight; }
+
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
     private float Size_EndOfAddDialoguesBtn => UPPER_MARGIN + DialogueNodes.Cast<Node>().GetNodesHeight() + AddDialogueBtn_UpperMargin;
 
-    protected override float StackedWidth { get ; set ; }
-    protected override float StackedHeight { get ; set ; }
 
     private float AddDialogueBtn_UpperMargin = 50;
     private float AddDialogueBtn_BottomMargin = 70;
@@ -66,53 +65,52 @@ public class ChoiceSetNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        stackedWidth = 0;
-        stackedHeight = UPPER_MARGIN;
+        Width = 0;
+        Height = UPPER_MARGIN;
         for (int i = 0; i < DialogueNodes.Count; i++)
         {
             Node node = DialogueNodes[i];
             float xPos = NodeRect.position.x + GetCenterLocalPosX(node, this);
-            float yPos = NodeRect.position.y + stackedHeight;
+            float yPos = NodeRect.position.y + Height;
             Vector2 dialogue_I_Pos = new Vector2(xPos, yPos);
             node.SetRectPos(dialogue_I_Pos);
             node.DrawNode();
-            stackedHeight += node.Height;
+            Height += node.Height;
         }
 
-        stackedHeight += AddDialogueBtn_UpperMargin;
+        Height += AddDialogueBtn_UpperMargin;
 
         JButton addDialogueButton = new JButton
         (
-            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + Height),
             size : new Vector2(80, 30),
             title : "Add Dialogue",
             action : AddDialogue, 
             anchor : JAnchor.Center
         );
         addDialogueButton.Draw();
-        stackedHeight += AddDialogueBtn_BottomMargin;
+        Height += AddDialogueBtn_BottomMargin;
         for (int i = 0; i < ChoiceNodes.Count; i++)
         {
             Node node = ChoiceNodes[i];
             node.DrawNode();
-            Vector2 pos = NodeRect.position + new Vector2(i * node.Width,  stackedHeight);
+            Vector2 pos = NodeRect.position + new Vector2(i * node.Width, Height);
             node.SetRectPos(pos);
-            stackedWidth += node.Width;
+            Width += node.Width;
         }
-        stackedHeight += ChoiceNodes.GetMaxHeight();
-        stackedHeight += AddChoiceBtn_UpperMargin;
+        Height += ChoiceNodes.GetMaxHeight();
+        Height += AddChoiceBtn_UpperMargin;
         JButton addChoiceButton = new JButton(
-            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.center.x, NodeRect.position.y + Height),
             size :  new Vector2(80, 30),
             title : "Add Choice",
             action : AddChoice,  
             anchor : JAnchor.Center);
             addChoiceButton.Draw();
-        stackedHeight += AddChoiceBtn_BottomMargin;
-        
-        float choicesWidth = (ChoiceNodes.Count + 1) * ChoiceNode.DEFAULT_WIDTH;
-        stackedHeight += BOTTOM_MARGIN;
-        SetNodeRectSize(ChoiceNodes.Count == 0 ? DEFAULT_WIDTH : Width, Height);
+        Height += AddChoiceBtn_BottomMargin;
+
+        Height += BOTTOM_MARGIN;
+        SetNodeRectSize(ChoiceNodes.Count == 0 ? 500 : Width, Height);
     }
 
     private void AddDialogue()

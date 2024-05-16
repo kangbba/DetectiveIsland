@@ -30,11 +30,11 @@ public abstract class Node
 
 
     public abstract Element ToElement();
-    public abstract float Width { get;  }
-    public abstract float Height { get;  }
 
-    [JsonIgnore] protected abstract float StackedWidth {get; set;}
-    [JsonIgnore] protected abstract float StackedHeight {get; set;}
+
+
+    [JsonIgnore] public abstract float Width { get; set;}
+    [JsonIgnore] public abstract float Height { get; set;}
 
     public bool IsStartNode;
     public string Title;

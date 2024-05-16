@@ -12,10 +12,8 @@ public class LineNode : Node
     public const float RIGHT_MARGIN = 30;
 
     public Line Line = new Line("Smile", "");
-
-    public override float Width => DEFAULT_WIDTH;
-
-    public override float Height => DEFAULT_HEIGHT;
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
     private const float EMOTION_HEIGHT = 20;
     private const float SENTENCE_HEIGHT = 80;
@@ -23,8 +21,6 @@ public class LineNode : Node
     public const float DEFAULT_WIDTH = 400;
     public const float DEFAULT_HEIGHT = UPPER_MARGIN + EMOTION_HEIGHT + SENTENCE_HEIGHT + BOTTOM_MARGIN;
 
-    protected override float StackedWidth { get; set; }
-    protected override float StackedHeight { get; set; }
 
     public LineNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -39,35 +35,35 @@ public class LineNode : Node
 
         base.DrawNode();
 
-        StackedWidth = DEFAULT_WIDTH;
-        StackedHeight = UPPER_MARGIN;
+        Width = DEFAULT_WIDTH;
+        Height = UPPER_MARGIN;
          // EmotionID 필드
         Line.EmotionID = (string)JInterface.SimpleField
         (
             value: Line.EmotionID,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + StackedHeight),
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             title: "Emotion ID : ",
             labelWidth: 70,
             fieldWidth: 80,
             fieldHeight: EMOTION_HEIGHT
         );
 
-        StackedHeight += EMOTION_HEIGHT;
+        Height += EMOTION_HEIGHT;
 
         // Sentence 필드
         Line.Sentence = JInterface.SimpleTextArea
         (
             value: Line.Sentence,
-            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + StackedHeight),
+            pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             fieldWidth: DEFAULT_WIDTH,
             height: SENTENCE_HEIGHT // Adjust height as necessary
         );
 
-        StackedHeight += SENTENCE_HEIGHT;
+        Height += SENTENCE_HEIGHT;
 
-        StackedHeight += BOTTOM_MARGIN;
+        Height += BOTTOM_MARGIN;
 
-        SetNodeRectSize(new Vector2(Width, StackedHeight));
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 
 

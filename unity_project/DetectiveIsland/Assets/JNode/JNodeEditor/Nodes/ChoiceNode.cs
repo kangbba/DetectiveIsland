@@ -13,24 +13,8 @@ public class ChoiceNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    public override float Width { get => stackedWidth; }
-    public override float Height
-    {
-        get
-        {
-            return
-                stackedHeight;
-                /*
-                UPPER_MARGIN + 
-                Nodes.GetNodesHeight() + 
-                BOTTOM_MARGIN + 
-                CONTENT_FIELD_HEIGHT +
-                CONTENT_UPPER_MARGIN +
-                CONTENT_BOTTOM_MARGIN; */
-        }  
-    
-    
-    }
+    public override float Width { get; set; }
+    public override float Height { get; set; }
 
     public const float DEFAULT_WIDTH = 500;
     public const float CONTENT_LABLE_WIDTH = 60;
@@ -56,33 +40,31 @@ public class ChoiceNode : Node
         throw new System.NotImplementedException();
     }
 
-    private float stackedHeight = 0;
-    private float stackedWidth = 0;
     public override void DrawNode()
     {
         base.DrawNode();
-        stackedWidth = DEFAULT_WIDTH;
-        stackedHeight = UPPER_MARGIN;
-        stackedHeight += CONTENT_UPPER_MARGIN;
+        Width = DEFAULT_WIDTH;
+        Height = UPPER_MARGIN;
+        Height += CONTENT_UPPER_MARGIN;
         Content = (string)JInterface.SimpleField
         (
             value : Content,
-            pos : new Vector2(NodeRect.position.x + 100, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.position.x + 100, NodeRect.position.y + Height),
             title : "Content : ",
             labelWidth : CONTENT_LABLE_WIDTH,
             fieldWidth : CONTENT_FIELD_WIDTH,
             fieldHeight : CONTENT_FIELD_HEIGHT
         );
-        stackedHeight += CONTENT_FIELD_HEIGHT;
-        stackedHeight += CONTENT_BOTTOM_MARGIN;
+        Height += CONTENT_FIELD_HEIGHT;
+        Height += CONTENT_BOTTOM_MARGIN;
         for (int i = 0 ; i < Nodes.Count ; i++){
             Node node = Nodes[i];
             float xPos = NodeRect.position.x + NodeRect.width * 0.5f - node.NodeRect.width * 0.5f;
-            float yPos = NodeRect.position.y + stackedHeight;
+            float yPos = NodeRect.position.y + Height;
             Vector2 dialogue_I_Pos = new Vector2(xPos, yPos);
             node.SetRectPos(dialogue_I_Pos);
             node.DrawNode();
-            stackedHeight += node.Height + 10; 
+            Height += node.Height + 10; 
         }
         DrawAddDialogueButton(      new Vector2(NodeRect.position.x + 00 + AddBtnWidth * 0 , NodeRect.position.y  - 30));
         DrawAddItemModifyBtn(       new Vector2(NodeRect.position.x + 10 + AddBtnWidth * 1 , NodeRect.position.y - 30));
@@ -91,9 +73,8 @@ public class ChoiceNode : Node
         DrawAddPlaceModifyBtn(      new Vector2(NodeRect.position.x + 40 + AddBtnWidth * 4 , NodeRect.position.y - 30));
         DrawAddOverlayPictureBtn(   new Vector2(NodeRect.position.x + 50 + AddBtnWidth * 5 , NodeRect.position.y - 30));
 
-        stackedHeight += BOTTOM_MARGIN;
-        SetNodeRectSize(new Vector2(Width, stackedHeight));
-
+        Height += BOTTOM_MARGIN;
+        SetNodeRectSize(new Vector2(Width, Height));
     }
 
 
@@ -125,8 +106,8 @@ public class ChoiceNode : Node
         Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
         if (GUI.Button(buttonRect, "Item Modi", gUIStyle))
         {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
+            ItemModifyNode node = new ItemModifyNode(Guid.NewGuid().ToString(), "ItemModifyNode", NodeID);
+            Nodes.Add(node);
         }
     }
     private void DrawAddPositionInitBtn(Vector2 pos)
@@ -140,8 +121,8 @@ public class ChoiceNode : Node
         Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
         if (GUI.Button(buttonRect, "Pos Init", gUIStyle))
         {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
+            PositionInitNode node = new PositionInitNode(Guid.NewGuid().ToString(), "PositionInitNode", NodeID);
+            Nodes.Add(node);
         }
     }
     private void DrawAddFriendShipModifyBtn(Vector2 pos)
@@ -155,8 +136,8 @@ public class ChoiceNode : Node
         Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
         if (GUI.Button(buttonRect, "FriendShip", gUIStyle))
         {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
+            FriendshipModifyNode node = new FriendshipModifyNode(Guid.NewGuid().ToString(), "FriendshipModifyNode", NodeID);
+            Nodes.Add(node);
         }
     }
 
@@ -169,10 +150,10 @@ public class ChoiceNode : Node
         gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
 
         Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Place Modi", gUIStyle))
+        if (GUI.Button(buttonRect, "PlaceModi", gUIStyle))
         {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
+            PlaceModifyNode node = new PlaceModifyNode(Guid.NewGuid().ToString(), "PlaceModifyNode", NodeID);
+            Nodes.Add(node);
         }
     }
 
@@ -185,10 +166,10 @@ public class ChoiceNode : Node
         gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
 
         Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Ovelay Pic", gUIStyle))
+        if (GUI.Button(buttonRect, "Overlay Pic", gUIStyle))
         {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
+            OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", NodeID);
+            Nodes.Add(node);
         }
     }
 }
