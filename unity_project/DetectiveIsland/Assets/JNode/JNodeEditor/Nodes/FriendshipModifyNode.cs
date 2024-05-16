@@ -12,8 +12,11 @@ public class FriendshipModifyNode : Node
     private bool _isGain = true;
     private string _characterID = "";
     private int _amount =10;
-    public override float Width => stackedWidth;
-    public override float Height => stackedHeight;
+    public override float Width => StackedWidth;
+    public override float Height => StackedHeight;
+
+    protected override float StackedWidth { get ; set ; }
+    protected override float StackedHeight { get ; set ; }
 
     public FriendshipModifyNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -23,50 +26,49 @@ public class FriendshipModifyNode : Node
     {
         return new FriendshipModify(_isGain, _characterID, _amount);
     }
-    private float stackedWidth = 0;
-    private float stackedHeight = 0;
     public override void DrawNode()
     {
         base.DrawNode();
 
-        stackedHeight = UPPER_MARGIN;
-        stackedWidth = 300;
+        StackedWidth = 300;
+        StackedHeight = UPPER_MARGIN;
+        
         _isGain = (bool)JInterface.SimpleField
         (
             value : _isGain,
-            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + StackedHeight),
             title: "IsGain : ",
             labelWidth : 100,
             fieldWidth : 20,
             fieldHeight : 20
         );
 
-        stackedHeight += 20;
+        StackedHeight += 20;
 
         _characterID = (string)JInterface.SimpleField
         (
             value : _characterID,
-            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + StackedHeight),
             title: "CharacterID : ",
             labelWidth : 100,
             fieldWidth : 100,
             fieldHeight : 20
         );
 
-        stackedHeight += 20;
+        StackedHeight += 20;
 
         _amount = (int)JInterface.SimpleField
         (
             value : _amount,
-            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + stackedHeight),
+            pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + StackedHeight),
             title: "Amount : ",
             labelWidth : 100,
             fieldWidth : 100,
             fieldHeight : 20
         );
 
-        stackedHeight += 20;
-        stackedHeight += BOTTOM_MARGIN;
+        StackedHeight += 20;
+        StackedHeight += BOTTOM_MARGIN;
         SetNodeRectSize(Width, Height);
     }
 }

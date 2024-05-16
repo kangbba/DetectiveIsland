@@ -21,9 +21,7 @@ public abstract class Node
         ParentNodeID = parentNodeID;
 
         
-        if(!IsStartNode){
-            PreviousConnectingPoint = new ConnectingPoint(nodeID, false);
-        }
+        PreviousConnectingPoint = new ConnectingPoint(nodeID, false);
         NextConnectingPoint = new ConnectingPoint(nodeID, true);
     }
 
@@ -35,6 +33,8 @@ public abstract class Node
     public abstract float Width { get;  }
     public abstract float Height { get;  }
 
+    [JsonIgnore] protected abstract float StackedWidth {get; set;}
+    [JsonIgnore] protected abstract float StackedHeight {get; set;}
 
     public bool IsStartNode;
     public string Title;

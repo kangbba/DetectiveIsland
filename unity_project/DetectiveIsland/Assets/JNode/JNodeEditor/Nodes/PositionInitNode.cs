@@ -17,10 +17,12 @@ public class PositionInitNode : Node
     {
     }
 
-    public override float Width => stackedWidth;
+    public override float Width => StackedWidth;
 
-    public override float Height => stackedHeight;// UPPER_MARGIN + CharacterPositionNodes.Count * CharacterPositionNode.DEFAULT_HEIGHT + BOTTOM_MARGIN;
+    public override float Height => StackedHeight;// UPPER_MARGIN + CharacterPositionNodes.Count * CharacterPositionNode.DEFAULT_HEIGHT + BOTTOM_MARGIN;
 
+    protected override float StackedWidth { get ; set; }
+    protected override float StackedHeight { get ; set; }
     public override Element ToElement()
     {   
         List<CharacterPosition> characterPositions = new List<CharacterPosition>();
@@ -49,18 +51,15 @@ public class PositionInitNode : Node
         CharacterPositionNodes.RemoveAll(node => node.NodeID == nodeId);
     }
 
-    private float stackedWidth = 0;
-    private float stackedHeight = 0;
-
     public override void DrawNode()
     {
         base.DrawNode();
-        stackedWidth = 300;
-        stackedHeight = UPPER_MARGIN;
+        StackedWidth = 300;
+        StackedHeight = UPPER_MARGIN;
         for (int i = 0; i < CharacterPositionNodes.Count; i++)
         {
             CharacterPositionNode characterPositionNode = CharacterPositionNodes[i];
-            characterPositionNode.SetRectPos(new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight), JAnchor.CenterTop);
+            characterPositionNode.SetRectPos(new Vector2(NodeRect.center.x, NodeRect.position.y + StackedHeight), JAnchor.CenterTop);
             characterPositionNode.DrawNode();
             JButton deleteBtn = new JButton(
                 pos: new Vector2(characterPositionNode.NodeRect.max.x, characterPositionNode.NodeRect.position.y),
@@ -70,10 +69,10 @@ public class PositionInitNode : Node
                 action: () => DeleteCharacterPositionNode(characterPositionNode.NodeID)
             );
             deleteBtn.Draw();
-            stackedHeight += characterPositionNode.Height + 10;
+            StackedHeight += characterPositionNode.Height + 10;
         }
 
-        stackedHeight += BOTTOM_MARGIN;
+        StackedHeight += BOTTOM_MARGIN;
 
         JButton addCharacterPositionButton = new JButton(
             pos: new Vector2(NodeRect.center.x, NodeRect.max.y - BOTTOM_MARGIN * 0.5f),
@@ -83,7 +82,7 @@ public class PositionInitNode : Node
             anchor: JAnchor.CenterBottom);
         addCharacterPositionButton.Draw();
 
-        SetNodeRectSize(new Vector2(stackedWidth, stackedHeight));
+        SetNodeRectSize(new Vector2(StackedWidth, StackedHeight));
 
     }
 }

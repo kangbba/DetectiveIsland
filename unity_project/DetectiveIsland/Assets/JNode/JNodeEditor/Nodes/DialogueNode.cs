@@ -22,8 +22,11 @@ public class DialogueNode : Node
 
     private bool _isFolded;
 
-    public override float Width => stackedWidth;
-    public override float Height => stackedHeight;
+    public override float Width => StackedWidth;
+    public override float Height => StackedHeight;
+
+    protected override float StackedWidth { get ; set ; }
+    protected override float StackedHeight { get ; set ; }
 
     public override Element ToElement()
     {
@@ -82,15 +85,11 @@ public class DialogueNode : Node
         LineNodes.Insert(newIndex, nodeToMove);
     }
 
-
-    private float stackedHeight = 0;
-    private float stackedWidth = 0;
-
     public override void DrawNode()
     {
         base.DrawNode();
-        stackedWidth = LineNode.DEFAULT_WIDTH + 50;
-        stackedHeight = UPPER_MARGIN;
+        StackedWidth = LineNode.DEFAULT_WIDTH + 50;
+        StackedHeight = UPPER_MARGIN;
         // _characterPreviewer.CharacterPreview(CharacterID, 60, 60, NodeRect.position);
 
         if (!_isFolded)
@@ -100,7 +99,7 @@ public class DialogueNode : Node
                 LineNode lineNode = LineNodes[i];
                 lineNode.DrawNode();
 
-                Vector2 lineNodePos = new Vector2(NodeRect.center.x, NodeRect.position.y + stackedHeight);
+                Vector2 lineNodePos = new Vector2(NodeRect.center.x, NodeRect.position.y + StackedHeight);
                 lineNode.SetRectPos(lineNodePos, JAnchor.CenterTop);
 
                 Vector2 miniBtnSize = Vector2.one * 20;
@@ -133,7 +132,7 @@ public class DialogueNode : Node
                   );
                 orderDownBtn.Draw();
 
-                stackedHeight += lineNode.Height + 10;
+                StackedHeight += lineNode.Height + 10;
             }
         }
         else
@@ -146,7 +145,7 @@ public class DialogueNode : Node
                 
             previewText.Draw();
         }
-        stackedHeight += BOTTOM_MARGIN;
+        StackedHeight += BOTTOM_MARGIN;
 
         SetNodeRectSize(new Vector2(Width, Height));
 

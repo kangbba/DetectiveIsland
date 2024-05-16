@@ -18,9 +18,12 @@ public class ItemDemandNode : Node
     private List<Node> _failNodes;
     private List<Node> _cancelNodes;
 
-    public override float Width => throw new System.NotImplementedException();
+    public override float Width => StackedWidth;
 
-    public override float Height => throw new System.NotImplementedException();
+    public override float Height => StackedHeight;
+
+    protected override float StackedWidth { get; set; }
+    protected override float StackedHeight { get; set; }
 
     public ItemDemandNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
@@ -35,12 +38,13 @@ public class ItemDemandNode : Node
     {
         base.DrawNode();
 
-        float y = UPPER_MARGIN;
+        StackedWidth = 300;
+        StackedHeight = UPPER_MARGIN;
 
         _itemID = (string)JInterface.SimpleField
         (
             value : _itemID,
-            pos : new Vector2(NodeRect.position.x, y),
+            pos : new Vector2(NodeRect.position.x, StackedHeight),
             title: "Item ID : ",
             labelWidth : 100,
             fieldWidth : 20,
@@ -73,5 +77,7 @@ public class ItemDemandNode : Node
                 node.DrawNode();
             }
         }
+
+        StackedHeight += BOTTOM_MARGIN;
     }
 }
