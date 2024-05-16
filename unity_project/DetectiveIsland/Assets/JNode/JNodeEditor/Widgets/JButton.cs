@@ -19,7 +19,14 @@ public class JButton : JTextRect
     {
         Rect buttonRect = GetRect();
 
-        if (GUI.Button(buttonRect, Title))
+        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button)
+        {
+            normal = { background = Texture2D.grayTexture, textColor = Color.white  },
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 9,
+        };
+
+        if (GUI.Button(buttonRect, Title, gUIStyle))
         {
             _action.Invoke();
         }

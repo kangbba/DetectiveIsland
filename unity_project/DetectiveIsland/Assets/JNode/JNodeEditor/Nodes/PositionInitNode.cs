@@ -50,21 +50,13 @@ public class PositionInitNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
-        Width = 300;
+        Width = 350;
         Height = UPPER_MARGIN;
         for (int i = 0; i < CharacterPositionNodes.Count; i++)
         {
             CharacterPositionNode characterPositionNode = CharacterPositionNodes[i];
             characterPositionNode.SetRectPos(new Vector2(NodeRect.center.x, NodeRect.position.y + Height), JAnchor.CenterTop);
             characterPositionNode.DrawNode();
-            JButton deleteBtn = new JButton(
-                pos: new Vector2(characterPositionNode.NodeRect.max.x, characterPositionNode.NodeRect.position.y),
-                size: Vector2.one * 20,
-                title: "X",
-                anchor: JAnchor.TopRight,
-                action: () => DeleteCharacterPositionNode(characterPositionNode.NodeID)
-            );
-            deleteBtn.Draw();
             Height += characterPositionNode.Height + 10;
         }
 
@@ -79,6 +71,10 @@ public class PositionInitNode : Node
         addCharacterPositionButton.Draw();
 
         SetNodeRectSize(new Vector2(Width, Height));
+
+
+        JInterface.AttachDeleteButtons(CharacterPositionNodes);
+        JInterface.AttachArrowButtons(CharacterPositionNodes);
 
     }
 }

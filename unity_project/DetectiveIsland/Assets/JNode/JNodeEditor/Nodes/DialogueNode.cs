@@ -100,37 +100,11 @@ public class DialogueNode : Node
                 lineNode.SetRectPos(lineNodePos, JAnchor.CenterTop);
 
                 Vector2 miniBtnSize = Vector2.one * 20;
-                JButton deleteBtn = new JButton(
-                    pos: new Vector2(lineNode.NodeRect.max.x, lineNode.NodeRect.position.y),
-                    size: miniBtnSize,
-                    title: "X",
-                    anchor: JAnchor.TopRight,
-                    action: () => DeleteLineNode(lineNode.NodeID)
-                    );
-                    
-                deleteBtn.Draw();
-
-                JButton orderUpBtn = new JButton(
-                  pos: new Vector2(lineNode.NodeRect.max.x - miniBtnSize.x * 1, lineNode.NodeRect.position.y),
-                  size: miniBtnSize,
-                  title: "▲",
-                  anchor: JAnchor.TopRight,
-                  action: () => MoveListOrder(lineNode.NodeID,-1)
-                  ); 
-                orderUpBtn.Draw();
-
-
-                JButton orderDownBtn = new JButton(
-                  pos: new Vector2(lineNode.NodeRect.max.x - miniBtnSize.x * 2, lineNode.NodeRect.position.y),
-                  size: miniBtnSize,
-                  title: "▼",
-                  anchor: JAnchor.TopRight,
-                  action: () => MoveListOrder(lineNode.NodeID,1)
-                  );
-                orderDownBtn.Draw();
 
                 Height += lineNode.Height + 10;
             }
+            JInterface.AttachDeleteButtons(LineNodes);
+            JInterface.AttachArrowButtons(LineNodes);
         }
         else
         {

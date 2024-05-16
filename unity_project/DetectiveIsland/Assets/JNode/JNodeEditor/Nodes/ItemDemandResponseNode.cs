@@ -21,6 +21,9 @@ public class ItemDemandResponseNode : Node
     public const float AddBtnWidth = 60;
     public const float AddBtnHeight = 20;
 
+    public const float ADD_BTN_WIDTH = 60;
+    public const float ADD_BTN_HEIGHT = 20;
+
 
     public List<Node> Nodes = new List<Node>();
 
@@ -50,110 +53,99 @@ public class ItemDemandResponseNode : Node
             node.DrawNode();
             Height += node.Height + 10;
         }
-        DrawAddDialogueButton(new Vector2(NodeRect.position.x + 00 + AddBtnWidth * 0, NodeRect.position.y - 30));
-        DrawAddItemModifyBtn(new Vector2(NodeRect.position.x + 10 + AddBtnWidth * 1, NodeRect.position.y - 30));
-        DrawAddPositionInitBtn(new Vector2(NodeRect.position.x + 20 + AddBtnWidth * 2, NodeRect.position.y - 30));
-        DrawAddFriendShipModifyBtn(new Vector2(NodeRect.position.x + 30 + AddBtnWidth * 3, NodeRect.position.y - 30));
-        DrawAddPlaceModifyBtn(new Vector2(NodeRect.position.x + 40 + AddBtnWidth * 4, NodeRect.position.y - 30));
-        DrawAddOverlayPictureBtn(new Vector2(NodeRect.position.x + 50 + AddBtnWidth * 5, NodeRect.position.y - 30));
+        BtnGroups();
 
         Height += BOTTOM_MARGIN;
         SetNodeRectSize(new Vector2(Width, Height));
+
+
+        JInterface.AttachDeleteButtons(Nodes);
+        JInterface.AttachArrowButtons(Nodes);
+    }
+    
+    private void BtnGroups(){
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 00 + ADD_BTN_WIDTH * 0, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "Dialogue",
+            action: AddDialogue,
+            anchor: JAnchor.TopLeft
+        ).Draw();
+
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 10 + ADD_BTN_WIDTH * 1, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "Item Modi",
+            action: AddItemModify,
+            anchor: JAnchor.TopLeft
+        ).Draw();
+
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 20 + ADD_BTN_WIDTH * 2, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "Pos Init",
+            action: AddPositionInit,
+            anchor: JAnchor.TopLeft
+        ).Draw();
+
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 30 + ADD_BTN_WIDTH * 3, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "FriendShip",
+            action: AddFriendShipModify,
+            anchor: JAnchor.TopLeft
+        ).Draw();
+
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 40 + ADD_BTN_WIDTH * 4, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "PlaceModi",
+            action: AddPlaceModify,
+            anchor: JAnchor.TopLeft
+        ).Draw();
+
+        new JButton(
+            pos: new Vector2(NodeRect.position.x + 50 + ADD_BTN_WIDTH * 5, NodeRect.position.y - 30),
+            size: new Vector2(ADD_BTN_WIDTH, ADD_BTN_HEIGHT),
+            title: "Overlay Pic",
+            action: AddOverlayPicture,
+            anchor: JAnchor.TopLeft
+        ).Draw();
     }
 
-
-    private void DrawAddDialogueButton(Vector2 pos)
+    private void AddDialogue()
     {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
-
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Dialogue", gUIStyle))
-        {
-            DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-            Nodes.Add(dialogueNode);
-        }
+        DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
+        Nodes.Add(dialogueNode);
     }
 
-
-    private void DrawAddItemModifyBtn(Vector2 pos)
+    private void AddItemModify()
     {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
-
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Item Modi", gUIStyle))
-        {
-            ItemModifyNode node = new ItemModifyNode(Guid.NewGuid().ToString(), "ItemModifyNode", NodeID);
-            Nodes.Add(node);
-        }
-    }
-    private void DrawAddPositionInitBtn(Vector2 pos)
-    {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
-
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Pos Init", gUIStyle))
-        {
-            PositionInitNode node = new PositionInitNode(Guid.NewGuid().ToString(), "PositionInitNode", NodeID);
-            Nodes.Add(node);
-        }
-    }
-    private void DrawAddFriendShipModifyBtn(Vector2 pos)
-    {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
-
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "FriendShip", gUIStyle))
-        {
-            FriendshipModifyNode node = new FriendshipModifyNode(Guid.NewGuid().ToString(), "FriendshipModifyNode", NodeID);
-            Nodes.Add(node);
-        }
+        ItemModifyNode node = new ItemModifyNode(Guid.NewGuid().ToString(), "ItemModifyNode", NodeID);
+        Nodes.Add(node);
     }
 
-    private void DrawAddPlaceModifyBtn(Vector2 pos)
+    private void AddPositionInit()
     {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
-
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "PlaceModi", gUIStyle))
-        {
-            PlaceModifyNode node = new PlaceModifyNode(Guid.NewGuid().ToString(), "PlaceModifyNode", NodeID);
-            Nodes.Add(node);
-        }
+        PositionInitNode node = new PositionInitNode(Guid.NewGuid().ToString(), "PositionInitNode", NodeID);
+        Nodes.Add(node);
     }
 
-    private void DrawAddOverlayPictureBtn(Vector2 pos)
+    private void AddFriendShipModify()
     {
-        GUIStyle gUIStyle = new GUIStyle(GUI.skin.button);
-        gUIStyle.normal.background = Texture2D.grayTexture;
-        gUIStyle.alignment = TextAnchor.MiddleCenter;
-        gUIStyle.fontSize = 9;
-        gUIStyle.normal.textColor = Color.white; // 원하는 폰트 색상을 설정합니다.
+        FriendshipModifyNode node = new FriendshipModifyNode(Guid.NewGuid().ToString(), "FriendshipModifyNode", NodeID);
+        Nodes.Add(node);
+    }
 
-        Rect buttonRect = new Rect(pos.x, pos.y, AddBtnWidth, AddBtnHeight); // Position below the node
-        if (GUI.Button(buttonRect, "Overlay Pic", gUIStyle))
-        {
-            OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", NodeID);
-            Nodes.Add(node);
-        }
+    private void AddPlaceModify()
+    {
+        PlaceModifyNode node = new PlaceModifyNode(Guid.NewGuid().ToString(), "PlaceModifyNode", NodeID);
+        Nodes.Add(node);
+    }
+
+    private void AddOverlayPicture()
+    {
+        OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", NodeID);
+        Nodes.Add(node);
     }
 }

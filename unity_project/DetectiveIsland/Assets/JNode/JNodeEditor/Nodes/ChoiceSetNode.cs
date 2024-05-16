@@ -25,14 +25,12 @@ public class ChoiceSetNode : Node
     public override float Width { get; set; }
     public override float Height { get; set; }
 
-    private float Size_EndOfAddDialoguesBtn => UPPER_MARGIN + DialogueNodes.Cast<Node>().GetNodesHeight() + AddDialogueBtn_UpperMargin;
 
+    private const float AddDialogueBtn_UpperMargin = 50;
+    private const float AddDialogueBtn_BottomMargin = 70;
 
-    private float AddDialogueBtn_UpperMargin = 50;
-    private float AddDialogueBtn_BottomMargin = 70;
-
-    private float AddChoiceBtn_UpperMargin = 50;
-    private float AddChoiceBtn_BottomMargin = 50;
+    private const float AddChoiceBtn_UpperMargin = 50;
+    private const float AddChoiceBtn_BottomMargin = 50;
 
 
     public override Element ToElement()
@@ -113,6 +111,12 @@ public class ChoiceSetNode : Node
         Height += BOTTOM_MARGIN;
         Width += RIGHT_MARGIN;
         SetNodeRectSize(ChoiceNodes.Count == 0 ? DEFAULT_WIDTH : Width, Height);
+
+        JInterface.AttachDeleteButtons(ChoiceNodes);
+        JInterface.AttachArrowButtons(ChoiceNodes);
+
+        JInterface.AttachDeleteButtons(DialogueNodes);
+        JInterface.AttachArrowButtons(DialogueNodes);
     }
 
     private void AddDialogue()

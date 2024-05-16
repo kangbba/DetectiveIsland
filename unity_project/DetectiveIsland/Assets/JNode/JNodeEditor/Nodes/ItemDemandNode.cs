@@ -13,9 +13,9 @@ public class ItemDemandNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    public string _itemID;
-    public List<DialogueNode> _dialogueNodes = new List<DialogueNode>();
-    public List<ItemDemandResponseNode> itemDemandResponseNodes = new List<ItemDemandResponseNode>() 
+    public string ItemID = "";
+    public List<DialogueNode> DialogueNodes = new List<DialogueNode>();
+    public List<ItemDemandResponseNode> ItemDemandResponseNodes = new List<ItemDemandResponseNode>() 
     { 
         new(Guid.NewGuid().ToString(),"Success", ""), 
         new(Guid.NewGuid().ToString(),"Fail"   , ""),
@@ -27,9 +27,9 @@ public class ItemDemandNode : Node
 
     public ItemDemandNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
-        itemDemandResponseNodes[0].ParentNodeID = NodeID;
-        itemDemandResponseNodes[1].ParentNodeID = NodeID;
-        itemDemandResponseNodes[2].ParentNodeID = NodeID;
+        ItemDemandResponseNodes[0].ParentNodeID = NodeID;
+        ItemDemandResponseNodes[1].ParentNodeID = NodeID;
+        ItemDemandResponseNodes[2].ParentNodeID = NodeID;
     }
 
 
@@ -38,17 +38,17 @@ public class ItemDemandNode : Node
 
     public override Element ToElement()
     {
-        return new ItemDemand(_itemID, _dialogueNodes.Cast<Node>().ToList().ToElements().Cast<Dialogue>().ToList(),
-            itemDemandResponseNodes[0].Nodes.ToElements(), itemDemandResponseNodes[1].Nodes.ToElements(), itemDemandResponseNodes[2].Nodes.ToElements());
+        return new ItemDemand(ItemID, DialogueNodes.Cast<Node>().ToList().ToElements().Cast<Dialogue>().ToList(),
+            ItemDemandResponseNodes[0].Nodes.ToElements(), ItemDemandResponseNodes[1].Nodes.ToElements(), ItemDemandResponseNodes[2].Nodes.ToElements());
     }
     public override void DrawNode()
     {
         base.DrawNode();
         Width = 0;
         Height = UPPER_MARGIN;
-        for (int i = 0; i < _dialogueNodes.Count; i++)
+        for (int i = 0; i < DialogueNodes.Count; i++)
         {
-            Node node = _dialogueNodes[i];
+            Node node = DialogueNodes[i];
             float xPos = NodeRect.position.x + GetCenterLocalPosX(node, this);
             float yPos = NodeRect.position.y + Height;
             Vector2 dialogue_I_Pos = new Vector2(xPos, yPos);
@@ -70,24 +70,29 @@ public class ItemDemandNode : Node
         addDialogueButton.Draw();
         Height += AddDialogueBtn_BottomMargin;
         Width += LEFT_MARGIN;
-        for (int i = 0; i < itemDemandResponseNodes.Count; i++)
+        for (int i = 0; i < ItemDemandResponseNodes.Count; i++)
         {
-            Node node = itemDemandResponseNodes[i];
+            Node node = ItemDemandResponseNodes[i];
             node.DrawNode();
             float node_i_Width = node.Width + 20;
             Vector2 pos = NodeRect.position + new Vector2(LEFT_MARGIN + (i * node_i_Width), Height);
             node.SetRectPos(pos);
             Width += node_i_Width;
         }
-        Height += itemDemandResponseNodes.GetMaxHeight();
+        Height += ItemDemandResponseNodes.GetMaxHeight();
         Height += BOTTOM_MARGIN;
         Width += RIGHT_MARGIN;
-        SetNodeRectSize(itemDemandResponseNodes.Count == 0 ? 600 : Width, Height);
+        SetNodeRectSize(ItemDemandResponseNodes.Count == 0 ? 600 : Width, Height);
+
+
+        JInterface.AttachDeleteButtons(DialogueNodes);
+        JInterface.AttachArrowButtons(DialogueNodes);
+        
     }
     private void AddDialogue()
     {
         DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", NodeID);
-        _dialogueNodes.Add(dialogueNode);
+        DialogueNodes.Add(dialogueNode);
         Debug.Log("Dialogue node added.");
     }
 
