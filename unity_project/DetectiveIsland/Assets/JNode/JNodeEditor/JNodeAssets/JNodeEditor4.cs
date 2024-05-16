@@ -25,8 +25,8 @@ public class JNodeEditor4 : EditorWindow
     
     public static List<Node> Nodes
     {
-        get => (jNodeInstance?.Nodes);
-        set { if (jNodeInstance != null) jNodeInstance.Nodes = value; }
+        get => (jNodeInstance?.jNode.Nodes);
+        set { if (jNodeInstance != null) jNodeInstance.jNode.Nodes = value; }
     }
     public static string RecentOpenFileName
     {
@@ -86,7 +86,7 @@ public class JNodeEditor4 : EditorWindow
     
     private void ProcessShortcuts(Event e)
     {
-        if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.Delete) ||
+        if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
             (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Delete))
         {
             if (SelectedNode != null)
@@ -96,7 +96,7 @@ public class JNodeEditor4 : EditorWindow
                 e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
                 Repaint(); // 창을 다시 그리도록 요청
             }
-        }
+        } 
     }
     private void ProcessEvents(Event e)
     {
@@ -256,8 +256,8 @@ public class JNodeEditor4 : EditorWindow
         }
     }
     public void AutoSaveJNodeInstance()
-    {
-          
+    { 
+
         if (jNodeInstance != null && EditorUtility.IsDirty(jNodeInstance))
         {
             jNodeInstance.SaveChanges();
@@ -551,10 +551,9 @@ public class JNodeEditor4 : EditorWindow
 
     public static void Save(string path)
     {
-        JNode jNode = new JNode(jNodeInstance.Nodes);
-        jNode.editorUIState = jNodeInstance.editorUIState;
+        JNode jNode = new JNode(jNodeInstance.jNode.Nodes);
         ArokaJsonUtils.SaveJNode(jNode, path);
-        UpdateLastSavedSnapshot();
+        UpdateLastSavedSnapshot();  
         Debug.Log($"<color=green>Save Complete</color> " + RecentOpenFileName);
 
     }
@@ -705,10 +704,12 @@ public class JNodeEditor4 : EditorWindow
 
             }
         }
-    } 
+    }
+
     void OnLostFocus()
     {
         jNodeInstance.SaveChanges();
+        SaveJNode(); 
         Debug.Log("JNode Editor lost focus");
     }
      

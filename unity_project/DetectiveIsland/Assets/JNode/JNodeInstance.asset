@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63126eb933f537946a2da78a6445ce19, type: 3}
   m_Name: JNodeInstance
   m_EditorClassIdentifier: 
-  jNode: {}
-  recentOpenFileName: NewJNode 1.jnode
-  recentPath: Assets/JNode/JNodes/NewJNode 1.jnode
+  recentOpenFileName: NewJNode 2.jnode
+  recentPath: Assets/JNode/JNodes/NewJNode 2.jnode
