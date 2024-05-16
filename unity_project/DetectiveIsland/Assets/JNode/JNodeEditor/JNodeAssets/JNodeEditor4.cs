@@ -244,11 +244,14 @@ public class JNodeEditor4 : EditorWindow
     
     private void DrawNodes(Vector2 mousePosition)
     {  
-        for (int i = Nodes.Count - 1; i >= 0; i--)
+        for (int i = 0 ; i < Nodes.Count ; i++)
         {
             Node node = Nodes[i];
 
-            //이 노드에 딸린 화살표 먼저 그리기 
+            //노드 그리기
+            node.DrawNode();  
+
+            //이 노드에 딸린 화살표 
             Node nextNode = GetNode(node.NextNodeID);
             if(nextNode != null && !node.NextConnectingPoint.IsLineModifying)
             {
@@ -263,9 +266,6 @@ public class JNodeEditor4 : EditorWindow
                DrawConnectingPointLine(startPos, endPos);
 
             }
-
-            //노드 그리기
-            node.DrawNode();  // 각 노드를 그림
         }
     }
 
