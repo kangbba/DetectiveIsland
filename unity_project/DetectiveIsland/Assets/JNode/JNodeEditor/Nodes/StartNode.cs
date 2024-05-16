@@ -25,6 +25,7 @@ public class StartNode : Node
     public override void DrawNode()
     {
         base.DrawNode();
+
         stackedWidth = 300;
         stackedHeight = 100;
 
