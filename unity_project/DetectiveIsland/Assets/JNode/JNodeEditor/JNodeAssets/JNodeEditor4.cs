@@ -56,6 +56,7 @@ public class JNodeEditor4 : EditorWindow
         {
             DrawNodes();
             DrawConnectingPointLines(Event.current.mousePosition);
+            JInterface.AttachDeleteButtons(Nodes, Vector2.one * 20f);
             ProcessEvents(Event.current); 
             ProcessShortcuts(Event.current); 
         }
@@ -193,7 +194,7 @@ public class JNodeEditor4 : EditorWindow
 
             case EventType.MouseDrag:
                 // 노드 드래그 로직
-                if (_isNodeDragging)
+                if (_isNodeDragging) 
                 {
                     Vector2 delta = e.mousePosition - _lastMousePositionDrag;
                     _lastMousePositionDrag = e.mousePosition;
@@ -226,7 +227,7 @@ public class JNodeEditor4 : EditorWindow
     private Node GetMouseOverNode(Vector2 mousePos)
     {
         int cnt = Nodes.Count;
-        for(int i = 0 ; i < cnt ; i++){
+        for(int i = cnt - 1 ; i >= 0 ; i--){
             Node node = Nodes[i];
             if(node.IsMouseOver(mousePos)){
                 return node;

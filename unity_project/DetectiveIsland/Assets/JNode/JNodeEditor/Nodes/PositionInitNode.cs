@@ -76,5 +76,6 @@ public class PositionInitNode : Node
         JInterface.AttachDeleteButtons(CharacterPositionNodes);
         JInterface.AttachArrowButtons(CharacterPositionNodes);
 
+
     }
 }

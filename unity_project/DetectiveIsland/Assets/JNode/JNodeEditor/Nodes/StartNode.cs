@@ -17,6 +17,7 @@ public class StartNode : Node
     {
         base.IsStartNode = true;
     }
+    
 
     public override void DrawNode()
     {
