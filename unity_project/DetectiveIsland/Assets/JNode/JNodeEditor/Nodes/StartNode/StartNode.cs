@@ -1,4 +1,5 @@
 using Aroka.ArokaUtils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -18,6 +19,12 @@ public class StartNode : Node
         base.IsStartNode = true;
     }
     
+    public override Node Clone()
+    {
+        return new StartNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
 
     public override void DrawNode()
     {

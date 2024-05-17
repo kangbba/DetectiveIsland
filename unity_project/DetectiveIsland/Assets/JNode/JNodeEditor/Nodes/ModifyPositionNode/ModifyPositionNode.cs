@@ -17,6 +17,12 @@ public class ModifyPositionNode : Node
     {
 
     }
+    public override Node Clone()
+    {
+        return new ModifyPositionNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
     public override float Width { get; set; }
     public override float Height { get; set; }
     public override Element ToElement()
@@ -24,7 +30,7 @@ public class ModifyPositionNode : Node
         List<CharacterPosition> characterPositions = new List<CharacterPosition>();
         foreach (CharacterPositionNode characterPositionNode in CharacterPositionNodes)
         {
-            characterPositions.Add(characterPositionNode.CharacterPosition);
+            characterPositions.Add(new CharacterPosition(characterPositionNode.CharacterID, characterPositionNode.PositionID));
         }
         return new ModifyPosition(characterPositions);
     }

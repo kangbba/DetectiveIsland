@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using Aroka.ArokaUtils;
+using System;
 
 [System.Serializable]
 public class GainFriendshipNode : Node
@@ -13,6 +14,12 @@ public class GainFriendshipNode : Node
     public override float Width { get; set; }
     public override float Height { get; set; }
 
+    public override Node Clone()
+    {
+        return new GainFriendshipNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
 
     public GainFriendshipNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {

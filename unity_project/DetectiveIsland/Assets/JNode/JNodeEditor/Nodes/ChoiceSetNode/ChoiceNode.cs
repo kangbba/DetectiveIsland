@@ -30,8 +30,14 @@ public class ChoiceNode : Node
     
     public ChoiceNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+        
     }
-
+    public override Node Clone()
+    {
+        return new ChoiceNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
     public override Element ToElement()
     {
         throw new System.NotImplementedException();

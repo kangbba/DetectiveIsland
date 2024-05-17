@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +11,9 @@ public class CharacterPositionNode : Node
     public const float LEFT_MARGIN = 10;
     public const float RIGHT_MARGIN = 10;
 
-    public CharacterPosition CharacterPosition = new CharacterPosition("Mono", "Middle");
+
+    public ECharacterID CharacterID = ECharacterID.Mono;
+    public ECharacterPositionID PositionID = ECharacterPositionID.Middle;
 
     public override float Width { get; set; }
     public override float Height { get; set; }
@@ -28,6 +31,12 @@ public class CharacterPositionNode : Node
     public CharacterPositionNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
     }
+    public override Node Clone()
+    {
+        return new CharacterPositionNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
 
     public override Element ToElement()
     {
@@ -40,9 +49,9 @@ public class CharacterPositionNode : Node
         Width = DEFAULT_WIDTH;
         Height = UPPER_MARGIN;
 
-        CharacterPosition.CharacterID = (string)JInterface.SimpleField
+        CharacterID = (ECharacterID)JInterface.SimpleField
         (
-            value : CharacterPosition.CharacterID,
+            value : CharacterID,
             pos : new Vector2(LEFT_MARGIN + NodeRect.position.x + 50, NodeRect.position.y + Height),
             title : "Character ID : ",
             labelWidth : 100,
@@ -51,9 +60,9 @@ public class CharacterPositionNode : Node
         );
         Height += CHARACTER_ID_HEIGHT;
 
-        CharacterPosition.PositionID = (string)JInterface.SimpleField
+        PositionID = (ECharacterPositionID)JInterface.SimpleField
         (
-            value : CharacterPosition.PositionID,
+            value : PositionID,
             pos : new Vector2(LEFT_MARGIN + NodeRect.position.x + 50, NodeRect.position.y + Height),
             title : "Position ID : ",
             labelWidth : 100,
@@ -65,7 +74,7 @@ public class CharacterPositionNode : Node
         Height += BOTTOM_MARGIN;
 
 
-        _characterPreviewer.CharacterPreview(CharacterPosition.CharacterID, Vector2.one * 40f , new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.center.y).GetAnchoredPos(Vector2.one * 40f, JAnchor.CenterLeft));
+        _characterPreviewer.CharacterPreview(CharacterID, Vector2.one * 40f , new Vector2(LEFT_MARGIN + NodeRect.position.x, NodeRect.center.y).GetAnchoredPos(Vector2.one * 40f, JAnchor.CenterLeft));
 
         SetNodeRectSize(new Vector2(Width, Height));
     }

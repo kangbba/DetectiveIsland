@@ -25,6 +25,12 @@ public class ItemDemandResponseNode : Node
     public ItemDemandResponseNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
     }
+    public override Node Clone()
+    {
+        return new ItemDemandResponseNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
 
     public override Element ToElement()
     {

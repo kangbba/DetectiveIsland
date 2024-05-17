@@ -34,6 +34,13 @@ public class ItemDemandNode : Node
         ItemDemandResponseNodes[1].ParentNodeID = NodeID;
         ItemDemandResponseNodes[2].ParentNodeID = NodeID;
     }
+    public override Node Clone()
+    {
+        return new ItemDemandNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
+
 
 
     public override Element ToElement()

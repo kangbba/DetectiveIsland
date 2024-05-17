@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using Aroka.ArokaUtils;
+using System;
 
 [System.Serializable]
 public class OverlayPictureNode : Node
@@ -22,6 +23,12 @@ public class OverlayPictureNode : Node
 
     public OverlayPictureNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     { 
+    }
+    public override Node Clone()
+    {
+        return new OverlayPictureNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
     }
 
     public override Element ToElement()

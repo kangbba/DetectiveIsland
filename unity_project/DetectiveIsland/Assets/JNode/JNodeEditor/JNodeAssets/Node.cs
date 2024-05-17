@@ -156,7 +156,7 @@ public abstract class Node
     }
 
 
-    public void SetSelected(bool b){
+    public void OnSelected(bool b){
         IsSelected = b;
     }
     private void DrawBackground(Rect nodeRect, Color color)
@@ -194,6 +194,9 @@ public abstract class Node
         GUI.color = Color.white;
 
     }
+
+    public abstract Node Clone();
+
     public bool IsMouseOver(Vector2 mousePosition)
     {
         return _nodeRect.Contains(mousePosition); // 마우스 위치가 노드 내부인지 판단

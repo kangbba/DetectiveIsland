@@ -25,6 +25,8 @@ public class JNodeEditor4 : EditorWindow
     private bool _isCollapsed = true;
     private Vector2 nodesMoveDirection;
 
+    private Node _nodeToCopy;
+    private Stack<Node> _deletedNodeStack = new Stack<Node>();
     public static List<Node> Nodes
     {
         get => (jNodeInstance?.jNode.Nodes);
@@ -184,12 +186,12 @@ public class JNodeEditor4 : EditorWindow
             if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
                 (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Backspace))
             {
-                if (_selectedNode != null && !_selectedNode.IsStartNode)
+                Node nodeToRemove = _selectedNode;
+                if (nodeToRemove != null && !nodeToRemove.IsStartNode)
                 {
-                    Nodes.Remove(_selectedNode);
-                    _deletedNodeStack.Push(_selectedNode);
-                    _selectedNode.SetSelected(false);
-                    _selectedNode = null;
+                    SelectNode("");
+                    Nodes.Remove(nodeToRemove);
+                    _deletedNodeStack.Push(nodeToRemove);
                     e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
                     Repaint(); // 창을 다시 그리도록 요청
                 }
@@ -197,22 +199,57 @@ public class JNodeEditor4 : EditorWindow
             if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.Z) ||
                 (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Z))
             {
-                Debug.Log("dd");
                 Node lastDeletedNode = _deletedNodeStack.Count > 0 ? _deletedNodeStack.Pop() : null;
                 if(lastDeletedNode != null){
                     Nodes.Add(lastDeletedNode);
                     lastDeletedNode.SetRectPos(lastDeletedNode.NodeRect.position, JAnchor.TopLeft);
                     lastDeletedNode.Notice();
                     Debug.Log(_deletedNodeStack.Count);
+                    e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                    Repaint(); // 창을 다시 그리도록 요청
                 }
-                e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
-                Repaint(); // 창을 다시 그리도록 요청
+            }
+            if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.C) ||
+                (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.C))
+            {
+                if(_selectedNode != null && !_selectedNode.IsStartNode){
+                    Debug.Log("카피할 노드에 정보 넣엇다!");
+                    _nodeToCopy = _selectedNode;
+                    e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                    Repaint(); // 창을 다시 그리도록 요청
+                }
+            }
+            if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.V) ||
+                (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.V))
+            {
+                 if(_nodeToCopy != null && !_nodeToCopy.IsStartNode){
+                    Node instancedNode = _nodeToCopy.Clone();
+                    Nodes.Add(instancedNode);
+                    instancedNode.SetRectPos(e.mousePosition, JAnchor.TopLeft);
+                    instancedNode.Notice();
+                    SelectNode(instancedNode.NodeID);
+                    Debug.Log(_deletedNodeStack.Count);
+                    e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                    Repaint(); // 창을 다시 그리도록 요청
+                }
+            }
+            if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.D) ||
+                (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.D))
+                { 
+                 if(_selectedNode != null && !_selectedNode.IsStartNode){
+                    Node instancedNode = _selectedNode.Clone();
+                    Nodes.Add(instancedNode);
+                    instancedNode.SetRectPos(_selectedNode.NodeRect.position + new Vector2(20, 20), JAnchor.TopLeft);
+                    SelectNode(instancedNode.NodeID);
+                    instancedNode.Notice();
+                    Debug.Log(instancedNode.NodeRect.position);
+                    e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                    Repaint(); // 창을 다시 그리도록 요청
+                }
+                Debug.Log(_selectedNode != null);
             }
         }
     }
-    
-    private Stack<Node> _deletedNodeStack = new Stack<Node>();
-
     private void ProcessEvents(Event e)
     {
         switch (e.type)
@@ -341,12 +378,10 @@ public class JNodeEditor4 : EditorWindow
         if(_selectedNode != null && _selectedNode.NodeID == nodeID){
             return;
         }
+        _selectedNode = GetNode(nodeID);
         foreach(Node node in Nodes){
             bool isSelected = node.NodeID == nodeID;
-            node.SetSelected(isSelected);
-            if(isSelected){
-                _selectedNode = node;
-            }
+            node.OnSelected(isSelected);
         }
     }
     public void SetNodeRectPoses(Vector2 offset){

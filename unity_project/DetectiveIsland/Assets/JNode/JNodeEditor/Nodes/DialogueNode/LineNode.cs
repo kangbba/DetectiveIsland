@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,7 +12,9 @@ public class LineNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    public Line Line = new Line("Smile", "");
+    public EChacterEmotion EmotionID = EChacterEmotion.Smile;
+    public string Sentence = "";
+    
     public override float Width { get; set; }
     public override float Height { get; set; }
 
@@ -24,6 +27,12 @@ public class LineNode : Node
 
     public LineNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+    }
+    public override Node Clone()
+    {
+        return new LineNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
     }
 
     public override Element ToElement()
@@ -38,9 +47,9 @@ public class LineNode : Node
         Width = DEFAULT_WIDTH;
         Height = UPPER_MARGIN;
          // EmotionID 필드
-        Line.EmotionID = (string)JInterface.SimpleField
+        EmotionID = (EChacterEmotion)JInterface.SimpleField
         (
-            value: Line.EmotionID,
+            value: EmotionID,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             title: "Emotion ID : ",
             labelWidth: 70,
@@ -51,9 +60,9 @@ public class LineNode : Node
         Height += EMOTION_HEIGHT;
 
         // Sentence 필드
-        Line.Sentence = JInterface.SimpleTextArea
+        Sentence = JInterface.SimpleTextArea
         (
-            value: Line.Sentence,
+            value: Sentence,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             fieldWidth: DEFAULT_WIDTH,
             height: SENTENCE_HEIGHT // Adjust height as necessary

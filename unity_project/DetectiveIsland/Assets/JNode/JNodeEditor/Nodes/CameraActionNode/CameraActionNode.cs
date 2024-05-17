@@ -1,29 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CameraActionNode : Node
 {
-    public CameraActionID _cameraActionID = CameraActionID.ShakeNormal;
+    public ECameraActionID CameraActionID = ECameraActionID.ShakeNormal;
     public float _cameraActionTime = 0.3f;
 
     public CameraActionNode(string nodeID, string title, string parentNodeID) : base(nodeID, title, parentNodeID)
     {
     }
 
+    public override Node Clone()
+    {
+        return new CameraActionNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
     public override float Width { get; set; }
     public override float Height { get; set; }
 
     public override Element ToElement()
     {
-        return new CameraAction(_cameraActionID.ToString(), _cameraActionTime);
+        return new CameraAction(CameraActionID, _cameraActionTime);
     }
 
     public const float UPPER_MARGIN = 50;
     public const float BOTTOM_MARGIN = 30;
     public const float LEFT_MARGIN = 20;
     public const float RIGHT_MARGIN = 30;
+
 
     public override void DrawNode()
     {
@@ -33,10 +40,10 @@ public class CameraActionNode : Node
         Height = UPPER_MARGIN;
         float textFieldHeight = 20;
 
-        _cameraActionID = (CameraActionID)JInterface.SimpleField
+        CameraActionID = (ECameraActionID)JInterface.SimpleField
         (
            title: "CameraAction ID : ",
-           value: _cameraActionID,
+           value: CameraActionID,
            pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
            labelWidth: 110,
            fieldWidth: 100,

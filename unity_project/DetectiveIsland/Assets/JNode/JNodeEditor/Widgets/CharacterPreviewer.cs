@@ -6,9 +6,9 @@ public class CharacterPreviewer
     private string currentFilePath = string.Empty;
     private Texture2D cachedTexture = null;
 
-    public void CharacterPreview(string characterID, Vector2 size, Vector2 worldPos)
+    public void CharacterPreview(ECharacterID characterID, Vector2 size, Vector2 worldPos)
     {
-        string filePath = $"Assets/JNode/Textures/Characters/{characterID}.png";
+        string filePath = $"Assets/JNode/Textures/Characters/{characterID.ToString()}.png";
         if (!File.Exists(filePath))
         {
             return;

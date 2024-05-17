@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using Aroka.ArokaUtils;
+using System;
 
 [System.Serializable]
 public class GainPlaceNode : Node
@@ -19,6 +20,12 @@ public class GainPlaceNode : Node
 
     public GainPlaceNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
+    }
+    public override Node Clone()
+    {
+        return new GainPlaceNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
     }
 
     public override Element ToElement()

@@ -56,6 +56,13 @@ public class ChoiceSetNode : Node
     public ChoiceSetNode(string id, string title, string parentNodeID) : base(id, title, parentNodeID)
     {
     }
+    public override Node Clone()
+    {
+        return new ChoiceSetNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
+        {
+        };
+    }
+
 
     public const float dialoguesDist = 10;
 
