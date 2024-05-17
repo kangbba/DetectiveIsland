@@ -6,11 +6,11 @@
       "IsStartNode": true,
       "Title": "StartNode",
       "NodeID": "a4e28594-9305-4a72-80e9-86c76dcc8d39",
-      "NextNodeID": null,
+      "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 967.5,
-        "y": 247.5
+        "x": 200.268,
+        "y": 264.5498
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -36,11 +36,11 @@
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "9823059b-ab7c-43c7-a5b8-b3162894b409",
-      "NextNodeID": null,
+      "NextNodeID": "9d099977-acaf-4b39-a051-99df46065592",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1053.0,
-        "y": 466.5
+        "x": 479.272827,
+        "y": 694.556
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -75,8 +75,8 @@
           "NextNodeID": null,
           "ParentNodeID": "6134d3c5-7e39-4d9e-ab3a-ae1b169b50c1",
           "RecentRectPos": {
-            "x": 394.0,
-            "y": 469.5
+            "x": -314.183258,
+            "y": 547.574341
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -107,8 +107,8 @@
           "NextNodeID": null,
           "ParentNodeID": "6134d3c5-7e39-4d9e-ab3a-ae1b169b50c1",
           "RecentRectPos": {
-            "x": 394.0,
-            "y": 579.5
+            "x": -314.183258,
+            "y": 657.574341
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -131,11 +131,11 @@
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "6134d3c5-7e39-4d9e-ab3a-ae1b169b50c1",
-      "NextNodeID": null,
+      "NextNodeID": "ffbba714-f9a3-47fe-918f-9dbbf6aaa852",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 369.0,
-        "y": 369.5
+        "x": -342.6608,
+        "y": 449.550934
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -161,11 +161,11 @@
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "9adfed3e-6625-4744-b094-53e76e850aee",
-      "NextNodeID": null,
+      "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 470.0,
-        "y": 931.5
+        "x": 361.3404,
+        "y": 1083.53674
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -191,11 +191,11 @@
       "IsStartNode": false,
       "Title": "DialogueNode",
       "NodeID": "202d0089-937e-4b7e-a0be-454c394fb8e0",
-      "NextNodeID": null,
+      "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 1048.0,
-        "y": 813.5
+        "x": 419.267822,
+        "y": 1295.52991
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -235,8 +235,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -50.0,
-                "y": 1215.5
+                "x": -202.7876,
+                "y": 1341.57935
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -263,8 +263,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -75.0,
-                "y": 1365.5
+                "x": -227.7876,
+                "y": 1491.57935
               },
               "RecentRectSize": {
                 "x": 350.0,
@@ -296,8 +296,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -50.0,
-                "y": 1495.5
+                "x": -202.7876,
+                "y": 1621.57935
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -326,8 +326,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -125.0,
-                "y": 1645.5
+                "x": -277.7876,
+                "y": 1771.57935
               },
               "RecentRectSize": {
                 "x": 450.0,
@@ -352,8 +352,8 @@
           "NextNodeID": null,
           "ParentNodeID": "9d099977-acaf-4b39-a051-99df46065592",
           "RecentRectPos": {
-            "x": -150.0,
-            "y": 1045.5
+            "x": -306.265137,
+            "y": 1173.55591
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -378,8 +378,8 @@
       "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -180.0,
-        "y": 875.5
+        "x": -339.742676,
+        "y": 1005.53241
       },
       "RecentRectSize": {
         "x": 580.0,
@@ -404,11 +404,11 @@
       "IsStartNode": false,
       "Title": "CameraActionNode",
       "NodeID": "ffbba714-f9a3-47fe-918f-9dbbf6aaa852",
-      "NextNodeID": null,
+      "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 39.0,
-        "y": 413.5
+        "x": -727.722351,
+        "y": 1121.56555
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -435,8 +435,8 @@
       "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 40.0,
-        "y": 591.5
+        "x": -691.7224,
+        "y": 891.529
       },
       "RecentRectSize": {
         "x": 300.0,

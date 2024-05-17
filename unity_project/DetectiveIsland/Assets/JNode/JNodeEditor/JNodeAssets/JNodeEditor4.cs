@@ -9,6 +9,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using System;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class JNodeEditor4 : EditorWindow
 {
@@ -22,6 +23,7 @@ public class JNodeEditor4 : EditorWindow
     private ConnectingPoint _startingCPoint;
     private Vector2 _scrollPosition;
     private bool _isCollapsed = true;
+    private Vector2 nodesMoveDirection;
 
     public static List<Node> Nodes
     {
@@ -48,22 +50,36 @@ public class JNodeEditor4 : EditorWindow
 
     private void OnGUI()
     {
-      //  DrawGrid();
         DrawJNodeMenuBar();
         Event e = Event.current;
-        EditorControl(Event.current);
+        EditorControl(e);
+
         if (jNodeInstance != null)
         {
-            DrawNodes(Event.current.mousePosition);
+            DrawNodes(e.mousePosition);
             List<Node> removedStartNodes = new List<Node>(Nodes);
             removedStartNodes.RemoveAt(0);
             AttachInterface.AttachDeleteButtons(removedStartNodes, Vector2.one * 20f);
             DrawNodeHierarchy(e);
-            ProcessEvents(e); 
+            ProcessEvents(e);
             ProcessShortcuts(e);
-
         }
-        HandleKeyEvent(e);
+
+        RegisterCurrentArrowKey(e);
+        ApplyCurrentArrowKey();
+
+        Vector2 mousePosition = e.mousePosition;
+        
+        if (IsMouseOnEdge(mousePosition))
+        {
+            nodesMoveDirection = GetMouseDirectionFromCenter(mousePosition);
+            MoveNodesOnUpdate(-nodesMoveDirection * 4000);
+        }
+        else
+        {
+            nodesMoveDirection = Vector2.zero;
+        }
+        
         DrawJNodeMenuBar();
         Repaint();
         AutoSaveJNodeInstance();
@@ -75,37 +91,57 @@ public class JNodeEditor4 : EditorWindow
         { KeyCode.LeftArrow, false },
         { KeyCode.RightArrow, false }
     };
-    
-    private void HandleKeyEvent(Event e)
-    {   
-        if (!keyStates.ContainsKey(e.keyCode))
+
+    private void RegisterCurrentArrowKey(Event e)
+    {
+        if (keyStates.ContainsKey(e.keyCode))
+        {
+            if (e.type == EventType.KeyDown)
+            {
+                keyStates[e.keyCode] = true;
+            }
+            else if (e.type == EventType.KeyUp)
+            {
+                keyStates[e.keyCode] = false;
+            }
+        }
+    }
+
+    private void ApplyCurrentArrowKey()
+    {
+        nodesMoveDirection = Vector2.zero;
+        if (keyStates[KeyCode.UpArrow])
+        {
+            nodesMoveDirection.y += 1;
+        }
+        if (keyStates[KeyCode.DownArrow])
+        {
+            nodesMoveDirection.y -= 1;
+        }
+        if (keyStates[KeyCode.LeftArrow])
+        {
+            nodesMoveDirection.x += 1;
+        }
+        if (keyStates[KeyCode.RightArrow])
+        {
+            nodesMoveDirection.x -= 1;
+        }
+        MoveNodesOnUpdate(nodesMoveDirection.normalized * 3000);
+    }
+
+    public void MoveNodesOnUpdate(Vector2 directionPerFrame)
+    {
+
+        if (EditorWindow.focusedWindow != this)
         {
             return;
         }
-        if(e.type == EventType.KeyDown){
-            keyStates[Event.current.keyCode] = true;
-            Debug.Log($"{Event.current.keyCode} 가 눌림");
-        }
-        else if(e.type == EventType.KeyUp){
-            keyStates[Event.current.keyCode] = false;
-            Debug.Log($"{Event.current.keyCode} 가 떼짐");
-        }
 
-        if(keyStates.GetValueOrDefault(KeyCode.RightArrow) == true)
+        if (directionPerFrame != Vector2.zero)
         {
-            NodeService.MoveNodes(Nodes, Vector2.left * 10f);
-        }
-        if(keyStates.GetValueOrDefault(KeyCode.LeftArrow) == true)
-        {
-            NodeService.MoveNodes(Nodes, Vector2.right * 10f);
-        }
-        if(keyStates.GetValueOrDefault(KeyCode.UpArrow) == true)
-        {
-            NodeService.MoveNodes(Nodes, Vector2.up * 10f);
-        }
-        if(keyStates.GetValueOrDefault(KeyCode.DownArrow) == true)
-        {
-            NodeService.MoveNodes(Nodes, Vector2.down * 10f);
+            Vector2 moveAmount = directionPerFrame * 0.001f;
+            NodeService.MoveNodes(Nodes, moveAmount);
+            Repaint();
         }
     }
 
@@ -113,7 +149,26 @@ public class JNodeEditor4 : EditorWindow
 
 
 
-public void Connect(string fromNodeID, string toNodeID)
+
+
+    private bool IsMouseOnEdge(Vector2 mousePosition)
+    {
+        float edgeThreshold = 10f; // 가장자리로 간주할 거리 (픽셀 단위)
+        return (mousePosition.x <= edgeThreshold || mousePosition.x >= position.width - edgeThreshold ||
+                mousePosition.y <= edgeThreshold || mousePosition.y >= position.height - edgeThreshold);
+    }
+    private Vector2 GetMouseDirectionFromCenter(Vector2 mousePosition)
+    {
+        Vector2 windowCenter = new Vector2(position.width / 2, position.height / 2);
+        Vector2 direction = (mousePosition - windowCenter).normalized;
+        return direction;
+    }
+
+
+
+
+
+    public void Connect(string fromNodeID, string toNodeID)
     {
         Node node = GetNode(fromNodeID);
         if(node == null){
