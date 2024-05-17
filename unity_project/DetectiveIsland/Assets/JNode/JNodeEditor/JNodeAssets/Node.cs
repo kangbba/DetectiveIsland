@@ -61,7 +61,6 @@ public abstract class Node
     public void Notice()
     {
         isNoticeEffecting = true;
-        bool isReversing = false;
         noticeEffectStartTime = EditorApplication.timeSinceStartup;
     }
 

@@ -17,11 +17,9 @@ public class JNodeEditor4 : EditorWindow
     private static JNodeInstance jNodeInstance;
 
     private Vector2 _lastMousePositionDrag;
-    private Vector2 _dragOffset;
     private bool _isCanvasPanning;
     private bool _isNodeDragging;
     private ConnectingPoint _startingCPoint;
-    private Vector2 _canvasOffset;
     private Vector2 _scrollPosition;
     private bool _isCollapsed = true;
 
@@ -52,6 +50,7 @@ public class JNodeEditor4 : EditorWindow
     {
       //  DrawGrid();
         DrawJNodeMenuBar();
+        Event e = Event.current;
         EditorControl(Event.current);
         if (jNodeInstance != null)
         {
@@ -59,15 +58,64 @@ public class JNodeEditor4 : EditorWindow
             List<Node> removedStartNodes = new List<Node>(Nodes);
             removedStartNodes.RemoveAt(0);
             AttachInterface.AttachDeleteButtons(removedStartNodes, Vector2.one * 20f);
-            DrawNodeHierarchy(Event.current);
-            ProcessEvents(Event.current); 
-            ProcessShortcuts(Event.current); 
+            DrawNodeHierarchy(e);
+            ProcessEvents(e); 
+            ProcessShortcuts(e);
+            HandleKeyEvent(e);
+
         }
         DrawJNodeMenuBar();
         Repaint();
         AutoSaveJNodeInstance();
     }
-    public void Connect(string fromNodeID, string toNodeID)
+
+    private Dictionary<KeyCode, bool> keyStates = new Dictionary<KeyCode, bool>();
+
+    private void HandleKeyEvent(Event e)
+    {
+        if (e.type == EventType.KeyDown || e.type == EventType.KeyUp)
+        {
+            if (keyStates.ContainsKey(e.keyCode))
+            {
+                keyStates[e.keyCode] = (e.type == EventType.KeyDown);
+                e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+            }
+        }
+    }
+    private void HandleArrowKeyMovement()
+    {
+        Vector2 offset = Vector2.zero;
+        float moveUnit = 10f;
+
+        if (keyStates[KeyCode.LeftArrow])
+        {
+            offset.x -= moveUnit; // 왼쪽으로 이동
+        }
+        if (keyStates[KeyCode.RightArrow])
+        {
+            offset.x += moveUnit; // 오른쪽으로 이동
+        }
+        if (keyStates[KeyCode.UpArrow])
+        {
+            offset.y -= moveUnit; // 위로 이동
+        }
+        if (keyStates[KeyCode.DownArrow])
+        {
+            offset.y += moveUnit; // 아래로 이동
+        }
+
+        if (offset != Vector2.zero)
+        {
+            NodeService.MoveNodes(Nodes, offset);
+            Repaint(); // 창을 다시 그리도록 요청
+        }
+    }
+
+
+
+
+
+public void Connect(string fromNodeID, string toNodeID)
     {
         Node node = GetNode(fromNodeID);
         if(node == null){
@@ -202,15 +250,15 @@ public class JNodeEditor4 : EditorWindow
                 {
                     Vector2 delta = e.mousePosition - _lastMousePositionDrag;
                     _lastMousePositionDrag = e.mousePosition;
-                    _dragOffset = delta;
-                    _selectedNode.SetRectPos(_selectedNode.NodeRect.position + _dragOffset, JAnchor.TopLeft);
+                     Vector2 _nodeDragDelta = delta;
+                    _selectedNode.SetRectPos(_selectedNode.NodeRect.position + _nodeDragDelta, JAnchor.TopLeft);
                 }
                 else if (_isCanvasPanning)
                 {
                     Vector2 delta = e.mousePosition - _lastMousePositionDrag;
                     _lastMousePositionDrag = e.mousePosition;
-                    _canvasOffset = delta;
-                    SetNodeRectPoses(_canvasOffset);
+                    Vector2 _canvasDragDelta = delta;
+                    SetNodeRectPoses(_canvasDragDelta);
                 }
                 e.Use();
                 break;
@@ -302,7 +350,7 @@ public class JNodeEditor4 : EditorWindow
         );
     }
 
-
+    /*
     private void DrawGrid()
     {
         float gridSize = 20f;
@@ -314,7 +362,7 @@ public class JNodeEditor4 : EditorWindow
         Handles.color = new Color(0.5f, 0.5f, 0.5f, gridOpacity);
 
         // Calculate the offset to start drawing the grid lines based on the canvasOffset
-        Vector2 offset = new Vector2(_canvasOffset.x % gridSize, _canvasOffset.y % gridSize);
+        Vector2 offset = new Vector2(_canvasDragDelta.x % gridSize, _canvasDragDelta.y % gridSize);
 
         for (int i = 0; i <= widthDivs; i++)
         {
@@ -332,7 +380,7 @@ public class JNodeEditor4 : EditorWindow
 
         Handles.color = Color.white;
         Handles.EndGUI();
-    }
+    }*/
 
 
 
@@ -594,7 +642,6 @@ public class JNodeEditor4 : EditorWindow
         if (!_isCollapsed)
         {
             // 접혀있지 않은 경우에만 Canvas Offset 정보와 노드 리스트를 표시합니다.
-            GUILayout.Label($"Canvas Offset: {_canvasOffset}");
 
             // 각 노드에 대한 버튼을 생성합니다.
             foreach (var node in Nodes)
