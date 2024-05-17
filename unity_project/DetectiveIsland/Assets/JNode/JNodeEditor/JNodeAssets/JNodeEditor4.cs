@@ -61,25 +61,16 @@ public class JNodeEditor4 : EditorWindow
             removedStartNodes.RemoveAt(0);
             AttachInterface.AttachDeleteButtons(removedStartNodes, Vector2.one * 20f);
             DrawNodeHierarchy(e);
+        } 
+
+        if (EditorWindow.focusedWindow == this)
+        {
             ProcessEvents(e);
             ProcessShortcuts(e);
+            RegisterCurrentArrowKey(e);
+            ApplyCurrentArrowKey();
         }
 
-        RegisterCurrentArrowKey(e);
-        ApplyCurrentArrowKey();
-
-        Vector2 mousePosition = e.mousePosition;
-        
-        if (IsMouseOnEdge(mousePosition))
-        {
-            nodesMoveDirection = GetMouseDirectionFromCenter(mousePosition);
-            MoveNodesOnUpdate(-nodesMoveDirection * 4000);
-        }
-        else
-        {
-            nodesMoveDirection = Vector2.zero;
-        }
-        
         DrawJNodeMenuBar();
         Repaint();
         AutoSaveJNodeInstance();
@@ -149,13 +140,11 @@ public class JNodeEditor4 : EditorWindow
 
 
 
-
-
     private bool IsMouseOnEdge(Vector2 mousePosition)
     {
-        float edgeThreshold = 10f; // 가장자리로 간주할 거리 (픽셀 단위)
-        return (mousePosition.x <= edgeThreshold || mousePosition.x >= position.width - edgeThreshold ||
-                mousePosition.y <= edgeThreshold || mousePosition.y >= position.height - edgeThreshold);
+        float edgeThreshold = 30f; // 가장자리로 간주할 거리 (픽셀 단위)
+        return mousePosition.x <= edgeThreshold || mousePosition.x >= position.width - edgeThreshold ||
+                mousePosition.y <= edgeThreshold || mousePosition.y >= position.height - edgeThreshold;
     }
     private Vector2 GetMouseDirectionFromCenter(Vector2 mousePosition)
     {
@@ -188,21 +177,41 @@ public class JNodeEditor4 : EditorWindow
         node.SetNextNodeID("");
     }
     private void ProcessShortcuts(Event e)
-    {
-        if (e.type == EventType.Layout) return; // Layout 이벤트인 경우 바로 반환
+    {    
+        if (e.type == EventType.Layout || e.type == EventType.Repaint) return; // Layout 또는 Repaint 이벤트인 경우 바로 반환
 
-        if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
-            (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Delete))
-        {
-            if (_selectedNode != null)
+        if(e.type == EventType.KeyDown){
+            if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
+                (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Backspace))
             {
-                Nodes.Remove(_selectedNode);
-                _selectedNode = null;
+                if (_selectedNode != null && !_selectedNode.IsStartNode)
+                {
+                    Nodes.Remove(_selectedNode);
+                    _deletedNodeStack.Push(_selectedNode);
+                    _selectedNode.SetSelected(false);
+                    _selectedNode = null;
+                    e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
+                    Repaint(); // 창을 다시 그리도록 요청
+                }
+            }
+            if ((Application.platform == RuntimePlatform.WindowsEditor && e.control && e.keyCode == KeyCode.Z) ||
+                (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Z))
+            {
+                Debug.Log("dd");
+                Node lastDeletedNode = _deletedNodeStack.Count > 0 ? _deletedNodeStack.Pop() : null;
+                if(lastDeletedNode != null){
+                    Nodes.Add(lastDeletedNode);
+                    lastDeletedNode.SetRectPos(lastDeletedNode.NodeRect.position, JAnchor.TopLeft);
+                    lastDeletedNode.Notice();
+                    Debug.Log(_deletedNodeStack.Count);
+                }
                 e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
                 Repaint(); // 창을 다시 그리도록 요청
             }
         }
     }
+    
+    private Stack<Node> _deletedNodeStack = new Stack<Node>();
 
     private void ProcessEvents(Event e)
     {
@@ -313,6 +322,17 @@ public class JNodeEditor4 : EditorWindow
                     Vector2 _canvasDragDelta = delta;
                     SetNodeRectPoses(_canvasDragDelta);
                 }
+                Vector2 mousePosition = e.mousePosition;
+                if (IsMouseOnEdge(mousePosition))
+                {
+                    nodesMoveDirection = GetMouseDirectionFromCenter(mousePosition);
+                    MoveNodesOnUpdate(-nodesMoveDirection * 4000);
+                }
+                else
+                {
+                    nodesMoveDirection = Vector2.zero;
+                }
+
                 e.Use();
                 break;
         }
