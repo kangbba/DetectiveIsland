@@ -61,53 +61,51 @@ public class JNodeEditor4 : EditorWindow
             DrawNodeHierarchy(e);
             ProcessEvents(e); 
             ProcessShortcuts(e);
-            HandleKeyEvent(e);
 
         }
+        HandleKeyEvent(e);
         DrawJNodeMenuBar();
         Repaint();
         AutoSaveJNodeInstance();
     }
 
-    private Dictionary<KeyCode, bool> keyStates = new Dictionary<KeyCode, bool>();
-
+    private Dictionary<KeyCode, bool> keyStates = new Dictionary<KeyCode, bool>() {
+        { KeyCode.UpArrow, false },
+        { KeyCode.DownArrow, false },
+        { KeyCode.LeftArrow, false },
+        { KeyCode.RightArrow, false }
+    };
+    
     private void HandleKeyEvent(Event e)
-    {
-        if (e.type == EventType.KeyDown || e.type == EventType.KeyUp)
+    {   
+        if (!keyStates.ContainsKey(e.keyCode))
         {
-            if (keyStates.ContainsKey(e.keyCode))
-            {
-                keyStates[e.keyCode] = (e.type == EventType.KeyDown);
-                e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
-            }
+            return;
         }
-    }
-    private void HandleArrowKeyMovement()
-    {
-        Vector2 offset = Vector2.zero;
-        float moveUnit = 10f;
-
-        if (keyStates[KeyCode.LeftArrow])
-        {
-            offset.x -= moveUnit; // 왼쪽으로 이동
+        if(e.type == EventType.KeyDown){
+            keyStates[Event.current.keyCode] = true;
+            Debug.Log($"{Event.current.keyCode} 가 눌림");
         }
-        if (keyStates[KeyCode.RightArrow])
-        {
-            offset.x += moveUnit; // 오른쪽으로 이동
-        }
-        if (keyStates[KeyCode.UpArrow])
-        {
-            offset.y -= moveUnit; // 위로 이동
-        }
-        if (keyStates[KeyCode.DownArrow])
-        {
-            offset.y += moveUnit; // 아래로 이동
+        else if(e.type == EventType.KeyUp){
+            keyStates[Event.current.keyCode] = false;
+            Debug.Log($"{Event.current.keyCode} 가 떼짐");
         }
 
-        if (offset != Vector2.zero)
+        if(keyStates.GetValueOrDefault(KeyCode.RightArrow) == true)
         {
-            NodeService.MoveNodes(Nodes, offset);
-            Repaint(); // 창을 다시 그리도록 요청
+            NodeService.MoveNodes(Nodes, Vector2.left * 10f);
+        }
+        if(keyStates.GetValueOrDefault(KeyCode.LeftArrow) == true)
+        {
+            NodeService.MoveNodes(Nodes, Vector2.right * 10f);
+        }
+        if(keyStates.GetValueOrDefault(KeyCode.UpArrow) == true)
+        {
+            NodeService.MoveNodes(Nodes, Vector2.up * 10f);
+        }
+        if(keyStates.GetValueOrDefault(KeyCode.DownArrow) == true)
+        {
+            NodeService.MoveNodes(Nodes, Vector2.down * 10f);
         }
     }
 

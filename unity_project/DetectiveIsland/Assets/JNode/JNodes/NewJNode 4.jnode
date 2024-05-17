@@ -9,8 +9,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 73.5,
-        "y": 232.5
+        "x": 967.5,
+        "y": 247.5
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -39,8 +39,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 159.0,
-        "y": 451.5
+        "x": 1053.0,
+        "y": 466.5
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -75,8 +75,8 @@
           "NextNodeID": null,
           "ParentNodeID": "6134d3c5-7e39-4d9e-ab3a-ae1b169b50c1",
           "RecentRectPos": {
-            "x": -500.0,
-            "y": 454.5
+            "x": 394.0,
+            "y": 469.5
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -107,8 +107,8 @@
           "NextNodeID": null,
           "ParentNodeID": "6134d3c5-7e39-4d9e-ab3a-ae1b169b50c1",
           "RecentRectPos": {
-            "x": -500.0,
-            "y": 564.5
+            "x": 394.0,
+            "y": 579.5
           },
           "RecentRectSize": {
             "x": 400.0,
@@ -134,8 +134,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -525.0,
-        "y": 354.5
+        "x": 369.0,
+        "y": 369.5
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -164,8 +164,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -424.0,
-        "y": 916.5
+        "x": 470.0,
+        "y": 931.5
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -194,8 +194,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 154.0,
-        "y": 798.5
+        "x": 1048.0,
+        "y": 813.5
       },
       "RecentRectSize": {
         "x": 450.0,
@@ -235,8 +235,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -944.0,
-                "y": 1200.5
+                "x": -50.0,
+                "y": 1215.5
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -263,8 +263,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -969.0,
-                "y": 1350.5
+                "x": -75.0,
+                "y": 1365.5
               },
               "RecentRectSize": {
                 "x": 350.0,
@@ -296,8 +296,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -944.0,
-                "y": 1480.5
+                "x": -50.0,
+                "y": 1495.5
               },
               "RecentRectSize": {
                 "x": 300.0,
@@ -326,8 +326,8 @@
               "NextNodeID": null,
               "ParentNodeID": "f3f18818-6bf7-4079-ac79-5f837d597353",
               "RecentRectPos": {
-                "x": -1019.0,
-                "y": 1630.5
+                "x": -125.0,
+                "y": 1645.5
               },
               "RecentRectSize": {
                 "x": 450.0,
@@ -352,8 +352,8 @@
           "NextNodeID": null,
           "ParentNodeID": "9d099977-acaf-4b39-a051-99df46065592",
           "RecentRectPos": {
-            "x": -1044.0,
-            "y": 1030.5
+            "x": -150.0,
+            "y": 1045.5
           },
           "RecentRectSize": {
             "x": 500.0,
@@ -375,11 +375,11 @@
       "IsStartNode": false,
       "Title": "ChoiceSetNode",
       "NodeID": "9d099977-acaf-4b39-a051-99df46065592",
-      "NextNodeID": null,
+      "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -1074.0,
-        "y": 860.5
+        "x": -180.0,
+        "y": 875.5
       },
       "RecentRectSize": {
         "x": 580.0,
@@ -407,8 +407,8 @@
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -855.0,
-        "y": 398.5
+        "x": 39.0,
+        "y": 413.5
       },
       "RecentRectSize": {
         "x": 300.0,
@@ -435,8 +435,8 @@
       "NextNodeID": "",
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": -854.0,
-        "y": 576.5
+        "x": 40.0,
+        "y": 591.5
       },
       "RecentRectSize": {
         "x": 300.0,
