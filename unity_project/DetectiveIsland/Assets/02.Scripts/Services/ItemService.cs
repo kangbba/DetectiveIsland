@@ -11,7 +11,7 @@ public enum EItemDemandResult{
     NotCorrect,
     Canceled
 }
-public static class ItemService 
+public static class ItemService
 {
     private static List<ItemData> _itemDatas;
     private const string ITEM_OWNED_KEY = "item_owned_";  // 아이템 소유 정보의 키 접두어
@@ -19,13 +19,14 @@ public static class ItemService
     public static void Load()
     {       
         _itemDatas = ArokaUtils.LoadScriptableDatasFromFolder<ItemData>("ItemDatas");
+        LoseAllItems();
     }
     public static ItemData GetItemData(string itemID)
     {
         return _itemDatas.FirstOrDefault(itemData => itemData.ItemID == itemID);
     }
     
-    public static void LoseAllItems()
+    private static void LoseAllItems()
     {
         foreach(ItemData itemData in _itemDatas){
             OwnItem(itemData.ItemID, false);

@@ -4,7 +4,7 @@ using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
 
-public static class PictureService 
+public static class PictureService
 {
     private static List<PictureData> _pictureDatas;
     private static Dictionary<string, PictureData> _instancedPictures;

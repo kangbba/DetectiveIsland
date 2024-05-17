@@ -78,24 +78,24 @@ public class JNodeEditor4 : EditorWindow
         AutoSaveJNodeInstance();
     }
 
-    private Dictionary<KeyCode, bool> keyStates = new Dictionary<KeyCode, bool>() {
-        { KeyCode.UpArrow, false },
-        { KeyCode.DownArrow, false },
-        { KeyCode.LeftArrow, false },
-        { KeyCode.RightArrow, false }
+    private Dictionary<KeyCode, bool> _keyStates = new Dictionary<KeyCode, bool>() {
+        { KeyCode.W, false },
+        { KeyCode.A, false },
+        { KeyCode.S, false },
+        { KeyCode.D, false }
     };
 
     private void RegisterCurrentArrowKey(Event e)
     {
-        if (keyStates.ContainsKey(e.keyCode))
+        if (_keyStates.ContainsKey(e.keyCode))
         {
             if (e.type == EventType.KeyDown)
             {
-                keyStates[e.keyCode] = true;
+                _keyStates[e.keyCode] = true;
             }
             else if (e.type == EventType.KeyUp)
             {
-                keyStates[e.keyCode] = false;
+                _keyStates[e.keyCode] = false;
             }
         }
     }
@@ -103,19 +103,19 @@ public class JNodeEditor4 : EditorWindow
     private void ApplyCurrentArrowKey()
     {
         nodesMoveDirection = Vector2.zero;
-        if (keyStates[KeyCode.UpArrow])
+        if (_keyStates[KeyCode.W])
         {
             nodesMoveDirection.y += 1;
         }
-        if (keyStates[KeyCode.DownArrow])
+        if (_keyStates[KeyCode.S])
         {
             nodesMoveDirection.y -= 1;
         }
-        if (keyStates[KeyCode.LeftArrow])
+        if (_keyStates[KeyCode.A])
         {
             nodesMoveDirection.x += 1;
         }
-        if (keyStates[KeyCode.RightArrow])
+        if (_keyStates[KeyCode.D])
         {
             nodesMoveDirection.x -= 1;
         }

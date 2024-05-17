@@ -9,8 +9,6 @@ public static class WorldManager
     public static Transform GarbagePanel { get => _garbagePanel; }
 
 
-
-
     public static void Load(){
         _garbagePanel = new GameObject("Garbage Panel").transform;
     }

@@ -9,8 +9,12 @@ public enum ECameraActionID
     ShakeStrong = 2,
     GoLeftRight = 3,
 }
-public static class CameraService 
+public static class CameraService
 {
+    public static void Load()
+    {
+    }
+
     public static void PlayCameraAction(CameraAction cameraAction)
     {
         switch (cameraAction.CameraActionID)

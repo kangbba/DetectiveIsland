@@ -30,16 +30,19 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        AudioController.Load();
         CameraController.Load();
+        UIManager.Load();
+        WorldManager.Load();
+        //
         EventTimeService.Load();
         EventService.Load();
         ItemService.Load();
-        ItemService.LoseAllItems();
         PlaceService.Load();
         CharacterService.Load();
-        WorldManager.Load();
         PictureService.Load();
-        UIManager.Load();
+        AudioService.Load();
+        CameraService.Load();
     }
 
     private void Update(){

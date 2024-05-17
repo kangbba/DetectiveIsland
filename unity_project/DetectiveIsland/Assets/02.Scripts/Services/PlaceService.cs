@@ -4,7 +4,7 @@ using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
 
-public static class PlaceService 
+public static class PlaceService
 {
     private static Transform _placePanel;
     private static List<Place> _placePrefabs = new List<Place>();
