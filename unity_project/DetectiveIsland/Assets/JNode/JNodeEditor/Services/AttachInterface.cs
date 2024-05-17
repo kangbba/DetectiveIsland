@@ -17,13 +17,16 @@ public static class AttachInterface
             ("Pos Init", AddModifyPositionNode),
             ("FriendShip", AddGainFriendshipNode),
             ("PlaceModi", AddGainPlaceNode),
-            ("Overlay Pic", AddOverlayPictureNode)
+            ("Overlay Pic", AddOverlayPictureNode),
+            ("Audio Act", AddAudioActionNode),
+            ("Camera Act", AddCameraActionNode)
+            ,
         };
 
         for (int i = 0; i < buttonData.Length; i++)
         {
             new JButton(
-                pos: new Vector2(nodeRectPos.x + 10 * i + btnSize.x * i, nodeRectPos.y - 30),
+                pos: new Vector2(nodeRectPos.x + 5 * i + btnSize.x * i, nodeRectPos.y - 30),
                 size: btnSize,
                 title: buttonData[i].title,
                 action: () => buttonData[i].action(nodes, parentNodeID, new Vector2(nodeRectPos.x + 10 * i + btnSize.x * i, nodeRectPos.y)),
@@ -35,6 +38,7 @@ public static class AttachInterface
     {
         ChoiceSetNode node = new ChoiceSetNode(Guid.NewGuid().ToString(), "ChoiceSetNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
@@ -42,20 +46,23 @@ public static class AttachInterface
     {
         ItemDemandNode node = new ItemDemandNode(Guid.NewGuid().ToString(), "ItemDemandNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
     public static Action<List<Node>, string, Vector2> AddDialogueNode = (nodes, parentNodeID, pos) =>
     {
-        DialogueNode dialogueNode = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", parentNodeID);
-        dialogueNode.SetRectPos(pos, JAnchor.TopLeft);
-        nodes.Add(dialogueNode);
+        DialogueNode node = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", parentNodeID);
+        node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
+        nodes.Add(node);
     };
 
     public static Action<List<Node>, string, Vector2> AddGainItemNode = (nodes, parentNodeID, pos) =>
     {
         GainItemNode node = new GainItemNode(Guid.NewGuid().ToString(), "GainItemNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
@@ -63,6 +70,7 @@ public static class AttachInterface
     {
         ModifyPositionNode node = new ModifyPositionNode(Guid.NewGuid().ToString(), "ModifyPositionNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
@@ -70,6 +78,7 @@ public static class AttachInterface
     {
         GainFriendshipNode node = new GainFriendshipNode(Guid.NewGuid().ToString(), "GainFriendshipNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
@@ -77,6 +86,7 @@ public static class AttachInterface
     {
         GainPlaceNode node = new GainPlaceNode(Guid.NewGuid().ToString(), "GainPlaceNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
@@ -84,11 +94,28 @@ public static class AttachInterface
     {
         OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
+        nodes.Add(node);
+    };
+
+    public static Action<List<Node>, string, Vector2> AddAudioActionNode = (nodes, parentNodeID, pos) =>
+    {
+        AudioActionNode node = new AudioActionNode(Guid.NewGuid().ToString(), "AudioActionNode", parentNodeID);
+        node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
+        nodes.Add(node);
+    };
+
+    public static Action<List<Node>, string, Vector2> AddCameraActionNode = (nodes, parentNodeID, pos) =>
+    {
+        CameraActionNode node = new CameraActionNode(Guid.NewGuid().ToString(), "CameraActionNode", parentNodeID);
+        node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
         nodes.Add(node);
     };
 
     #endregion
-    
+
     #region  지우기 버튼, 순서 바꾸기 버튼
     public static void AttachDeleteButtons<T>(List<T> nodes, Vector2 btnSize = default) where T : Node
     {
@@ -189,6 +216,7 @@ public static class AttachInterface
 
         // Swap the elements to change the order
         T nodeToMove = nodes[index];
+        nodeToMove.Notice();
         nodes.RemoveAt(index);
         nodes.Insert(newIndex, nodeToMove);
     }

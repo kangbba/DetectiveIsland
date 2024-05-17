@@ -5,6 +5,8 @@ using UnityEngine;
 public static class NodeColors
 {
     public static Color nodeBackgroundColor = new Color(0.09803922f, 0.09803922f, 0.09803922f, 1f);
+    public static Color noticeColor = new Color(0.564f, 0.933f, 0.564f, 0.5f); // 반짝일 때 배경 색상 (부드러운 녹색)
+
     public static Color selectedColor = Color.cyan;
 
     public static Color startNodeColor = new Color(0.4f, 0.8f, 0.4f); // Soft Green

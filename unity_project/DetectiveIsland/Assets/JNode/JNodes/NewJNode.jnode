@@ -5,27 +5,27 @@
       "$type": "StartNode, Assembly-CSharp",
       "IsStartNode": true,
       "Title": "StartNode",
-      "NodeID": "f1eeccd1-8f42-4eb5-95fb-9946f83c80b9",
+      "NodeID": "175e0ab5-a51c-4ca6-a552-48bfac465c2a",
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 450.0,
-        "y": 230.0
+        "x": 1004.0,
+        "y": 635.0
       },
       "RecentRectSize": {
-        "x": 300.0,
-        "y": 100.0
+        "x": 0.0,
+        "y": 0.0
       },
       "IsSelected": false,
       "NextConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": true,
-        "NodeID": "f1eeccd1-8f42-4eb5-95fb-9946f83c80b9"
+        "NodeID": "175e0ab5-a51c-4ca6-a552-48bfac465c2a"
       },
       "PreviousConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": false,
-        "NodeID": "f1eeccd1-8f42-4eb5-95fb-9946f83c80b9"
+        "NodeID": "175e0ab5-a51c-4ca6-a552-48bfac465c2a"
       }
     },
     {
@@ -35,27 +35,27 @@
       "IsFolded": false,
       "IsStartNode": false,
       "Title": "DialogueNode",
-      "NodeID": "5faf3417-b1e1-4a4a-a08c-b9163a5d09bb",
+      "NodeID": "a38c8d1b-0248-4096-830b-88178abc3dae",
       "NextNodeID": null,
       "ParentNodeID": null,
       "RecentRectPos": {
-        "x": 62.0,
-        "y": 459.0
+        "x": 487.0,
+        "y": 372.5
       },
       "RecentRectSize": {
-        "x": 450.0,
-        "y": 180.0
+        "x": 0.0,
+        "y": 0.0
       },
       "IsSelected": false,
       "NextConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": true,
-        "NodeID": "5faf3417-b1e1-4a4a-a08c-b9163a5d09bb"
+        "NodeID": "a38c8d1b-0248-4096-830b-88178abc3dae"
       },
       "PreviousConnectingPoint": {
         "$type": "ConnectingPoint, Assembly-CSharp",
         "IsChildConnectingPoint": false,
-        "NodeID": "5faf3417-b1e1-4a4a-a08c-b9163a5d09bb"
+        "NodeID": "a38c8d1b-0248-4096-830b-88178abc3dae"
       }
     }
   ]

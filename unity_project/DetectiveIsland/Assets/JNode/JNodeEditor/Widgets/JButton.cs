@@ -21,9 +21,12 @@ public class JButton : JTextRect
 
         GUIStyle gUIStyle = new GUIStyle(GUI.skin.button)
         {
-            normal = { background = Texture2D.grayTexture, textColor = Color.white  },
+            normal = { background = Texture2D.grayTexture, textColor = Color.white },
             alignment = TextAnchor.MiddleCenter,
             fontSize = 9,
+            wordWrap = false,
+            clipping = TextClipping.Overflow,
+            fontStyle = FontStyle.Bold
         };
 
         if (GUI.Button(buttonRect, Title, gUIStyle))

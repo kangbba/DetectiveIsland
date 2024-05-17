@@ -1,0 +1,32 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "IsStartNode": true,
+      "Title": "StartNode",
+      "NodeID": "a4e28594-9305-4a72-80e9-86c76dcc8d39",
+      "NextNodeID": null,
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 325.5,
+        "y": 195.0
+      },
+      "RecentRectSize": {
+        "x": 300.0,
+        "y": 100.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "a4e28594-9305-4a72-80e9-86c76dcc8d39"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "a4e28594-9305-4a72-80e9-86c76dcc8d39"
+      }
+    }
+  ]
+}

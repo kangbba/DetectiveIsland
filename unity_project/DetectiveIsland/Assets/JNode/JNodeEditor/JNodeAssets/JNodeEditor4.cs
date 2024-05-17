@@ -23,7 +23,8 @@ public class JNodeEditor4 : EditorWindow
     private ConnectingPoint _startingCPoint;
     private Vector2 _canvasOffset;
     private Vector2 _scrollPosition;
-    
+    private bool _isCollapsed = true;
+
     public static List<Node> Nodes
     {
         get => (jNodeInstance?.jNode.Nodes);
@@ -44,8 +45,7 @@ public class JNodeEditor4 : EditorWindow
         LoadJNodeInstance(); 
            
         LoadJNodeEditorWindow(jNodeInstance.recentPath, RecentOpenFileName);
-        UpdateLastSavedSnapshot(); 
-        
+        UpdateLastSavedSnapshot();
     }
 
     private void OnGUI()
@@ -56,7 +56,9 @@ public class JNodeEditor4 : EditorWindow
         if (jNodeInstance != null)
         {
             DrawNodes(Event.current.mousePosition);
-            AttachInterface.AttachDeleteButtons(Nodes, Vector2.one * 20f);
+            List<Node> removedStartNodes = new List<Node>(Nodes);
+            removedStartNodes.RemoveAt(0);
+            AttachInterface.AttachDeleteButtons(removedStartNodes, Vector2.one * 20f);
             DrawNodeHierarchy(Event.current);
             ProcessEvents(Event.current); 
             ProcessShortcuts(Event.current); 
@@ -64,7 +66,6 @@ public class JNodeEditor4 : EditorWindow
         DrawJNodeMenuBar();
         Repaint();
         AutoSaveJNodeInstance();
-
     }
     public void Connect(string fromNodeID, string toNodeID)
     {
@@ -85,9 +86,10 @@ public class JNodeEditor4 : EditorWindow
         }
         node.SetNextNodeID("");
     }
-    
     private void ProcessShortcuts(Event e)
     {
+        if (e.type == EventType.Layout) return; // Layout 이벤트인 경우 바로 반환
+
         if ((Application.platform == RuntimePlatform.WindowsEditor && e.keyCode == KeyCode.Delete) ||
             (Application.platform == RuntimePlatform.OSXEditor && e.command && e.keyCode == KeyCode.Delete))
         {
@@ -98,8 +100,9 @@ public class JNodeEditor4 : EditorWindow
                 e.Use(); // 이벤트 사용됨으로 표시하여 다른 곳에서 처리되지 않도록 함
                 Repaint(); // 창을 다시 그리도록 요청
             }
-        } 
+        }
     }
+
     private void ProcessEvents(Event e)
     {
         switch (e.type)
@@ -338,7 +341,6 @@ public class JNodeEditor4 : EditorWindow
         JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
         window.Show();
         LoadJNodeInstance();
-
         Debug.Log("Open JNode Editor" + window);
     }
 
@@ -581,31 +583,44 @@ public class JNodeEditor4 : EditorWindow
 
         // Canvas offset 정보를 맨 위에 표시
         GUILayout.BeginVertical(cardStyle);
-        GUILayout.Label($"Canvas Offset: {_canvasOffset}");
-        GUILayout.EndVertical();
 
-        // 각 노드에 대한 버튼을 생성합니다.
-        foreach (var node in Nodes)
+        // 접기/펼치기 버튼
+        float buttonWidth = areaRect.width / 4; // 버튼 너비를 전체 영역 너비의 1/4로 설정
+        if (GUILayout.Button(_isCollapsed ? "Hierachy ▼" : "접기 ▲", GUILayout.Width(buttonWidth)))
         {
-            GUILayout.BeginVertical(cardStyle);
-            Rect buttonRect = GUILayoutUtility.GetRect(new GUIContent($"Title: {node.Title}\nPos: {node.NodeRect.position}"), GUI.skin.button);
+            _isCollapsed = !_isCollapsed;
+        }
 
-            if (GUI.Button(buttonRect, $"Title: {node.Title}\nPos: {node.NodeRect.position}"))
+        if (!_isCollapsed)
+        {
+            // 접혀있지 않은 경우에만 Canvas Offset 정보와 노드 리스트를 표시합니다.
+            GUILayout.Label($"Canvas Offset: {_canvasOffset}");
+
+            // 각 노드에 대한 버튼을 생성합니다.
+            foreach (var node in Nodes)
             {
-                Vector2 screenCenter = new Vector2(position.width * 0.5f, position.height * 0.5f);
-                Vector2 nodeCenter = node.NodeRect.center;
-                Vector2 offset = screenCenter - nodeCenter;
-                NodeService.MoveNodes(Nodes, offset);
-                currentEvent.Use();
+                GUILayout.BeginVertical(cardStyle);
+                Rect buttonRect = GUILayoutUtility.GetRect(new GUIContent($"Title: {node.Title}\nPos: {node.NodeRect.position}"), GUI.skin.button);
+
+                if (GUI.Button(buttonRect, $"Title: {node.Title}\nPos: {node.NodeRect.position}"))
+                {
+                    Vector2 screenCenter = new Vector2(position.width * 0.5f, position.height * 0.5f);
+                    Vector2 nodeCenter = node.NodeRect.center;
+                    Vector2 offset = screenCenter - nodeCenter;
+                    NodeService.MoveNodes(Nodes, offset);
+                    currentEvent.Use();
+                }
+                GUILayout.EndVertical();
             }
-            GUILayout.EndVertical();
         }
 
         GUILayout.EndVertical();
-
+        GUILayout.EndVertical();
         GUILayout.EndScrollView();
         GUILayout.EndArea();
     }
+
+
 
 
 
@@ -618,6 +633,8 @@ public class JNodeEditor4 : EditorWindow
         menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => { AttachInterface.AddDialogueNode(Nodes, null, mousePos);});
         menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AttachInterface.AddChoiceSetNode(Nodes, null, mousePos));
         menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AttachInterface.AddItemDemandNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add CameraAction Node"), false, () => AttachInterface.AddCameraActionNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add AudioAction Node"), false, () => AttachInterface.AddAudioActionNode(Nodes, null, mousePos));
 
         // Add Gain nodes as sub-menu
         menu.AddItem(new GUIContent("획득하기/Add GainItem Node"), false, () => AttachInterface.AddGainItemNode(Nodes, null, mousePos));
@@ -694,7 +711,6 @@ public class JNodeEditor4 : EditorWindow
 
         StartNode startNode = new StartNode(Guid.NewGuid().ToString(), "StartNode", null);
         jNode.Nodes.Add(startNode);
-
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Objects,
@@ -719,8 +735,17 @@ public class JNodeEditor4 : EditorWindow
         }
 
         EditorUtility.FocusProjectWindow();
-        Selection.activeObject = asset; // Select the new asset in the project window
+        Selection.activeObject = asset;
     }
+    /*
+    public void FocusStartNode()
+    {
+        Vector2 screenCenter = new Vector2(position.width * 0.5f, position.height * 0.5f);
+        Vector2 nodeCenter = Nodes[0].NodeRect.center;
+        Vector2 offset = screenCenter - nodeCenter;
+        NodeService.MoveNodes(Nodes, offset);
+        Event.current.Use();
+    }*/
 
 
 }

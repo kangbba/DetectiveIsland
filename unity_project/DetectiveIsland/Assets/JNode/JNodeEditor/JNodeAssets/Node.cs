@@ -50,14 +50,58 @@ public abstract class Node
     [JsonIgnore] public bool IsMostParentNode => ParentNodeID == null || ParentNodeID == "";
 
     private Rect _nodeRect;
-
-
+    private bool isNoticeEffecting = false;
+    private float noticeEffectTotalTime = 0.3f; // 반짝임 지속 시간
+    private double noticeEffectStartTime;
 
     public void SetNextNodeID(string nextNodeID){
         NextNodeID = nextNodeID;
     }
-    public virtual void DrawNode(){    
-        DrawBackground(NodeRect);
+
+    public void Notice()
+    {
+        isNoticeEffecting = true;
+        bool isReversing = false;
+        noticeEffectStartTime = EditorApplication.timeSinceStartup;
+    }
+
+    private Color BackgroundColorLerpPingPong(Color originColor,Color otheColor,float t)
+    {
+        Color lerpedColor;
+        if (t <= 0.5f)
+        {
+            // 처음 50% 구간: nodeBackgroundColor -> noticeColor
+            float lerpT = t / 0.5f;
+            lerpedColor = Color.Lerp(originColor, otheColor, lerpT);
+        }
+        else
+        {
+            // 나머지 50% 구간: noticeColor -> nodeBackgroundColor
+            float lerpT = (t - 0.5f) / 0.5f;
+            lerpedColor = Color.Lerp(otheColor, originColor, lerpT);
+        }
+        return lerpedColor;
+    }
+    public virtual void DrawNode()
+    {
+        if (isNoticeEffecting)
+        {
+            double currentTime = EditorApplication.timeSinceStartup;
+            float elapsed = (float)(currentTime - noticeEffectStartTime);
+            float t = elapsed / noticeEffectTotalTime;
+            if (t >= 1f)
+            {
+                isNoticeEffecting = false;
+                t = 1f;
+            }
+            Color noticeColor = BackgroundColorLerpPingPong(NodeColors.nodeBackgroundColor, NodeColors.noticeColor, t);
+            DrawBackground(NodeRect, noticeColor);
+        }
+        else
+        {
+            DrawBackground(NodeRect, NodeColors.nodeBackgroundColor);
+        }
+
         DrawTitle(Title);
 
         if (IsSelected){
@@ -116,7 +160,7 @@ public abstract class Node
     public void SetSelected(bool b){
         IsSelected = b;
     }
-    private void DrawBackground(Rect nodeRect)
+    private void DrawBackground(Rect nodeRect, Color color)
     {
         // GUI 스타일 설정
         GUIStyle boxGS = new GUIStyle();
@@ -125,7 +169,7 @@ public abstract class Node
         boxGS.padding = new RectOffset(2, 2, 2, 2);
 
         // 배경 박스를 그립니다.
-        GUI.color = NodeColors.nodeBackgroundColor;
+        GUI.color = color;
         GUI.Box(nodeRect, "", boxGS);
 
 

@@ -65,6 +65,7 @@ public static class JInterface
     {
         if (value == null)
         {
+            Debug.LogError("Null 값을 넣었다");
             return value;
         }
 
@@ -104,12 +105,18 @@ public static class JInterface
             fieldStyle = new GUIStyle(EditorStyles.numberField);
             return EditorGUI.LongField(fieldRect, (long)value, fieldStyle);
         }
+        else if (valueType.IsEnum)
+        {
+            fieldStyle = new GUIStyle(EditorStyles.popup);
+            return EditorGUI.EnumPopup(fieldRect, (Enum)value, fieldStyle);
+        }
         else
         {
             // 처리할 수 없는 타입일 경우
             return value; // 그대로 반환하거나 예외를 발생시킬 수 있음
         }
     }
+
     public static string SimpleTextArea(string value, Vector2 pos, float fieldWidth = 80, float height = 20)
     {
         if (value == null)
