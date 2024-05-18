@@ -9,15 +9,13 @@ using UnityEngine;
 public class PagePlan
 {
     [SerializeField] private float _xPoint;
-    [SerializeField] private List<PlacePoint> _placePoints;
-
+    [SerializeField] private List<PlaceButton> _placeBtns;
     public float XPoint { get => _xPoint; }
-    public List<PlacePoint> PlacePoints { get => _placePoints; }
 }
 public class Place : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRend;
-    [SerializeField] private string _placeID;
+    [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
     [SerializeField] private int _initialPageIndex;
     [SerializeField] private List<PagePlan> _pagePlans = new List<PagePlan>();
@@ -26,7 +24,7 @@ public class Place : MonoBehaviour
     public bool IsPreviousPageExist => _pagePlans.Count > 1 && (_curPageIndex > 0);
     public bool IsNextPageExist => _pagePlans.Count > 1 && (_curPageIndex  < _pagePlans.Count - 1);
 
-    public string PlaceID => _placeID.Trim();
+    public EPlaceID PlaceID => _placeID;
     public string PlaceNameForUser => _placeNameForUser;
 
     public List<PagePlan> PagePlans => _pagePlans;

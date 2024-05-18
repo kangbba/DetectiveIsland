@@ -6,7 +6,7 @@ using UnityEngine;
 public class GainItem : Element
 {
 
-    public GainItem(bool isGain, string id, int amount)
+    public GainItem(bool isGain, EItemID id, int amount)
     {
         IsGain = isGain;
         ID = id;
@@ -14,6 +14,6 @@ public class GainItem : Element
     }
     
     public bool IsGain;
-    public string ID;
+    public EItemID ID;
     public int Amount;
 }

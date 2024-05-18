@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24963b7aaab3244499c171ec6bb78157, type: 3}
-  m_Name: CharacterData_Smith
+  m_Name: CharacterData_Steve
   m_EditorClassIdentifier: 
-  _characterID: Smith
+  _characterID: 2
   _characterPrefab: {fileID: 3434261968027892723, guid: 75e94249e7fd04d4a9474a06ea3e9ac7, type: 3}
-  _characterNameForUser: "\uC2A4\uBBF8\uC2A4"
-  _characterColor: {r: 0.58431375, g: 0.94509804, b: 0.5647059, a: 1}
+  _characterNameForUser: "\uC2A4\uD2F0\uBE0C"
+  _characterColor: {r: 0.6078231, g: 0.7373615, b: 0.8207547, a: 1}

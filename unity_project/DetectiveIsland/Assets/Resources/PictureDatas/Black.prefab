@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SpriteRenderer: {fileID: 5535754164890447236}
-  _id: Black
+  _id: 1
 --- !u!1 &7258867082572516415
 GameObject:
   m_ObjectHideFlags: 0

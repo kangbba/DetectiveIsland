@@ -23,7 +23,7 @@ public class ItemPanel : MonoBehaviour
     }
 
 
-    protected virtual void OnClickedItem(string itemID)
+    protected virtual void OnClickedItem(EItemID itemID)
     {
         SetSelected(itemID);
     }
@@ -57,7 +57,7 @@ public class ItemPanel : MonoBehaviour
         _curItemBtns.Clear();
     }
 
-    private void SetSelected(string itemID)
+    private void SetSelected(EItemID itemID)
     {
         ItemButton foundItemBtn = _curItemBtns.FirstOrDefault(btn => btn.ItemData.ItemID == itemID);
         if (foundItemBtn == null)

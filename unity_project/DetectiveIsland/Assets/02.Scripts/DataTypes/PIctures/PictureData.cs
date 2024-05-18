@@ -6,7 +6,7 @@ using UnityEngine;
 public class PictureData : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _SpriteRenderer;
-    [SerializeField] private string _id;
-    public string Id { get => _id; }
+    [SerializeField] private EPictureID _id;
+    public EPictureID Id { get => _id; }
     public SpriteRenderer SpriteRenderer { get => _SpriteRenderer; }
 }

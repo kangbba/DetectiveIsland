@@ -12,7 +12,7 @@ public class GainItemNode : Node
     public const float RIGHT_MARGIN = 30;
 
 
-    public GainItem GainItem = new GainItem(true, "", 1);
+    public GainItem GainItem = new GainItem(true, EItemID.None, 1);
 
     public override float Width { get; set; }
     public override float Height { get; set; }
@@ -49,7 +49,7 @@ public class GainItemNode : Node
         );
         Height += standardFieldHeight;
 
-        GainItem.ID = (string)JInterface.SimpleField(
+        GainItem.ID = (EItemID)JInterface.SimpleField(
             value: GainItem.ID,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Id : ",

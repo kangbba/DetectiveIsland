@@ -13,7 +13,7 @@ public class EventPlan
     public EventTime EventTime { get => _eventTime; }
     public List<ScenarioData> ScenarioDatas { get => _scenarioDatas; }
 
-    public ScenarioData GetScenarioData(string placeID)
+    public ScenarioData GetScenarioData(EPlaceID placeID)
     {
         return _scenarioDatas.FirstOrDefault(placeScenario => placeScenario.PlaceID == placeID);
     }

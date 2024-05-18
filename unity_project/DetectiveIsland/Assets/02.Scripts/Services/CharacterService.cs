@@ -10,9 +10,11 @@ public enum ECharacterID{
     Ryan = 1,
     Steve = 2,
     Lisa = 3,
-    Rachel = 4,
+    Kate = 4,
     Tom = 5,
     Brian = 6,
+    Joseph = 7,
+    Rachel = 8,
 
 }
 public enum EChacterEmotion{

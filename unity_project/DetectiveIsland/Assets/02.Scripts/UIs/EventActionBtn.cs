@@ -22,7 +22,7 @@ public class EventActionBtn : MonoBehaviour
             Debug.LogError("No EventAction configured for this button.");
             return;
         }
-        _eventActionOnPressed.ExecuteAction();
+        _eventActionOnPressed.Execute();
     }
 
     private void SetInteractable(bool isInteractable)

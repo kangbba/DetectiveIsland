@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24963b7aaab3244499c171ec6bb78157, type: 3}
   m_Name: CharacterData_Brian
   m_EditorClassIdentifier: 
-  _characterID: Brian
+  _characterID: 6
   _characterPrefab: {fileID: 5203275759104995132, guid: d6832a4ea59d247db89ade15ef3aff06, type: 3}
   _characterNameForUser: "\uBE0C\uB77C\uC774\uC5B8"
   _characterColor: {r: 0.5019608, g: 0.5591174, b: 0.94509804, a: 1}

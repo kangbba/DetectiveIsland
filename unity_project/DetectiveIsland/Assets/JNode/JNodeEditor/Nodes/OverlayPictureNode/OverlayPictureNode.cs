@@ -15,8 +15,8 @@ public class OverlayPictureNode : Node
     public override float Height { get; set; }
   
 
-    public string _pictureID = "";
-    public string _effectID = "";
+    public EPictureID _pictureID = EPictureID.None;
+    public EPictureEffectID _effectID = EPictureEffectID.None;
     public float _effectTime = 0;
 
     public const float FIELD_COMMON_HEIGHT = 20;
@@ -42,7 +42,7 @@ public class OverlayPictureNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
 
-        _pictureID = (string)JInterface.SimpleField
+        _pictureID = (EPictureID)JInterface.SimpleField
         (
             title: "Picture ID: ",
             value: _pictureID,
@@ -64,7 +64,7 @@ public class OverlayPictureNode : Node
       );
 
         Height += FIELD_COMMON_HEIGHT;
-        _effectID = (string)JInterface.SimpleField
+        _effectID = (EPictureEffectID)JInterface.SimpleField
        (
            title: "Effect ID: ",
            value: _effectID,

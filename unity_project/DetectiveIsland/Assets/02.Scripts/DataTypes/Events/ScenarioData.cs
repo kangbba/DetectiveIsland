@@ -5,7 +5,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class ScenarioData{
-    [SerializeField] private    string           _placeID = "";
+    [SerializeField] private    EPlaceID         _placeID;
     [SerializeField] private    TextAsset        _scenarioFile;
 
     [SerializeField]  private bool _isEntered = false;
@@ -14,7 +14,7 @@ public class ScenarioData{
     [SerializeField] private List<EventAction> _solveConditions = new List<EventAction>();
     [SerializeField] private List<EventAction> _doneEventActions = new List<EventAction>(); // 완료된 이벤트 액션을 추적합니다.
 
-    public   string           PlaceID             {     get => _placeID;         }
+    public   EPlaceID           PlaceID             {     get => _placeID;         }
     public   TextAsset        ScenarioFile        {     get => _scenarioFile;    }
     
     public ModifyPosition RecentModifyPosition { get; set; }
@@ -25,8 +25,7 @@ public class ScenarioData{
     // 외부에서 이 메소드를 호출하여 완료된 액션을 등록
     public void ExecuteActionThenAdd(EventAction actionToExecute)
     {
-        Debug.Log($"{actionToExecute.ActionType} {actionToExecute.TargetID} 의 행동을 추가했다.");
-        actionToExecute.ExecuteAction();
+        actionToExecute.Execute();
         _doneEventActions.Add(actionToExecute);
     }
 
@@ -46,7 +45,7 @@ public class ScenarioData{
                 bool isConditionMet = false;
                 foreach (EventAction doneAction in _doneEventActions)
                 {
-                    if (doneAction.ActionType == condition.ActionType && doneAction.TargetID == condition.TargetID)
+                    if (doneAction == condition)
                     {
                         isConditionMet = true;
                         break;

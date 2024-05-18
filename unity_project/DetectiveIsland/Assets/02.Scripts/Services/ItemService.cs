@@ -6,6 +6,10 @@ using Cysharp.Threading.Tasks;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
+public enum EItemID{
+    None = 0,
+    Coffee = 1,
+}
 public enum EItemDemandResult{
     Correct,
     NotCorrect,
@@ -21,7 +25,7 @@ public static class ItemService
         _itemDatas = ArokaUtils.LoadScriptableDatasFromFolder<ItemData>("ItemDatas");
         LoseAllItems();
     }
-    public static ItemData GetItemData(string itemID)
+    public static ItemData GetItemData(EItemID itemID)
     {
         return _itemDatas.FirstOrDefault(itemData => itemData.ItemID == itemID);
     }
@@ -39,7 +43,7 @@ public static class ItemService
         return itemDatasOwn ?? new List<ItemData>();
     }
     
-    public static bool IsOwnItem(string itemID){
+    public static bool IsOwnItem(EItemID itemID){
         
         ItemData item = GetItemData(itemID);
         if (item != null){
@@ -51,7 +55,7 @@ public static class ItemService
         }
     }
 
-    public static void OwnItem(string itemID, bool own)
+    public static void OwnItem(EItemID itemID, bool own)
     {
         // 특정 아이템의 소유 여부를 설정
         ItemData item = GetItemData(itemID);

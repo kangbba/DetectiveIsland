@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
-
+public enum EPlaceID
+{
+    Hospital = 0,
+}
 public static class PlaceService
 {
     private static Transform _placePanel;
@@ -17,7 +20,7 @@ public static class PlaceService
         _placePrefabs = ArokaUtils.LoadResourcesFromFolder<Place>("PlacePrefabs");
     }
 
-    public static Place MakePlace(string placeID, float totalTime){
+    public static Place MakePlace(EPlaceID placeID, float totalTime){
 
         Place placePrefab = PlaceService.GetPlacePrefab(placeID);
         if(placePrefab  == null){
@@ -31,7 +34,7 @@ public static class PlaceService
         return instancedPlace;
     }
     
-    public static Place GetPlacePrefab(string placeID){
+    public static Place GetPlacePrefab(EPlaceID placeID){
         Place place = _placePrefabs.FirstOrDefault(placePrefab => placePrefab.PlaceID == placeID);
         if(place == null){
             Debug.LogWarning($"{placeID} 이름의 Place 찾을수 없음");

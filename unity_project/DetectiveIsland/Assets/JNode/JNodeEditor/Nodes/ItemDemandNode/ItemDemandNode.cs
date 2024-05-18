@@ -17,7 +17,7 @@ public class ItemDemandNode : Node
     private const float AddDialogueBtn_BottomMargin = 70;
     
     public List<DialogueNode> DialogueNodes = new List<DialogueNode>();
-    public string ItemID = "";
+    public EItemID ItemID = EItemID.None;
 
     public override float Width { get; set; }
     public override float Height { get; set; }

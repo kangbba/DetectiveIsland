@@ -4,20 +4,32 @@ using System.Linq;
 using Aroka.ArokaUtils;
 using UnityEngine;
 
+public enum EPictureID
+{
+    None = 0,
+    Black = 1,
+    White = 2,
+}
+public enum EPictureEffectID
+{
+    None = 0,
+    FadeIn = 1,
+    FadeOut = 2,
+}
 public static class PictureService
 {
     private static List<PictureData> _pictureDatas;
-    private static Dictionary<string, PictureData> _instancedPictures;
+    private static Dictionary<EPictureID, PictureData> _instancedPictures;
     private static Transform _overlayedPicturePanel;
 
     public static void Load()
     {
         _pictureDatas = ArokaUtils.LoadResourcesFromFolder<PictureData>("PictureDatas");
-        _instancedPictures = new Dictionary<string, PictureData>();
+        _instancedPictures = new Dictionary<EPictureID, PictureData>();
         _overlayedPicturePanel = new GameObject("Overlayed Picture Panel").transform;
     }
 
-    public static PictureData GetPictureData(string id)
+    public static PictureData GetPictureData(EPictureID id)
     {
         PictureData pictureData = _pictureDatas.FirstOrDefault(data => data.Id == id);
         if (pictureData == null)
@@ -29,8 +41,8 @@ public static class PictureService
 
     public static void SetPictureEffect(OverlayPicture overlayPicture)
     {
-        string pictureID = overlayPicture.PictureID;
-        string effectID = overlayPicture.EffectID;
+        EPictureID pictureID = overlayPicture.PictureID;
+        EPictureEffectID effectID = overlayPicture.EffectID;
         float effectTime = overlayPicture.EffectTime;
         PictureData foundPictureData = GetPictureData(pictureID);
         if(foundPictureData == null){
@@ -39,16 +51,18 @@ public static class PictureService
         }
         switch (effectID)
         {
-            case "FadeIn":
+            case EPictureEffectID.FadeIn:
                 PictureData instPictureData = GameObject.Instantiate(foundPictureData.gameObject, _overlayedPicturePanel).GetComponent<PictureData>();
                 instPictureData.SpriteRenderer.FadeInFromStart(effectTime);
                 _instancedPictures[pictureID] = instPictureData;
                 break;
-            case "FadeOut":
+            case EPictureEffectID.FadeOut:
                 if (_instancedPictures.TryGetValue(pictureID, out PictureData pictureData))
                 {
                     pictureData.SpriteRenderer.FadeOut(effectTime);
                 }
+                break;
+            default:
                 break;
         }
     }

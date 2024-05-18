@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Aroka.JsonUtils;
 using System.Text.RegularExpressions;
+using Aroka.ArokaUtils;
 
 public static class EventProcessor
 {
@@ -13,7 +14,7 @@ public static class EventProcessor
     private static bool _isMoving = false;
 
 
-    public static async void Move(string placeID){
+    public static async void Move(EPlaceID placeID){
         if(_isMoving){
             Debug.LogWarning("이동중 또다른 Move 호출");
             return;
@@ -22,7 +23,7 @@ public static class EventProcessor
         await MoveToPlaceUniTask(placeID);
         // 이동하는 로직 작성
     }
-    private static async UniTask MoveToPlaceUniTask(string placeID)
+    private static async UniTask MoveToPlaceUniTask(EPlaceID placeID)
     {
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
@@ -159,14 +160,42 @@ public static class EventProcessor
     }
 
     
-    public static async UniTask ProcessModifyPosition(ModifyPosition modifyPosition){
-        foreach(CharacterPosition characterPosition in modifyPosition.CharacterPositions){
-            CharacterService.FadeOutCharacterThenDestroy(characterPosition.CharacterID, .3f);
-            Vector3 targetLocalPos = CharacterService.GetLocalPosByPositionID(characterPosition.PositionID) + Vector3.right * PlaceService.CurPlace.CurPagePlan.XPoint;
-            CharacterService.MakeCharacter(characterPosition.CharacterID, EChacterEmotion.Noraml, targetLocalPos, 1f);
+    public static async UniTask ProcessModifyPosition(ModifyPosition modifyPosition)
+    {
+        // 등장하는 캐릭터들을 저장하는 HashSet
+        HashSet<ECharacterID> charactersToAppear = new HashSet<ECharacterID>();
+
+        // modifyPosition.CharacterPositions 리스트를 순회하며 등장 캐릭터를 HashSet에 추가
+        foreach (CharacterPosition characterPosition in modifyPosition.CharacterPositions)
+        {
+            charactersToAppear.Add(characterPosition.CharacterID);
         }
+
+        // 모든 ECharacterID를 순회하면서
+        for (int i = 0; i < typeof(ECharacterID).EnumCount(); i++)
+        {
+            ECharacterID characterID = (ECharacterID)i;
+            Character instancedCharacter = CharacterService.GetInstancedCharacter(characterID);
+
+            // 캐릭터가 등장 리스트에 없으면 제거
+            if (!charactersToAppear.Contains(characterID) && instancedCharacter != null)
+            {
+                CharacterService.FadeOutCharacterThenDestroy(characterID, 1f);
+            }
+        }
+
+        // modifyPosition.CharacterPositions 리스트를 순회하며 등장 캐릭터를 생성
+        foreach (CharacterPosition characterPosition in modifyPosition.CharacterPositions)
+        {
+            Vector3 targetLocalPos = CharacterService.GetLocalPosByPositionID(characterPosition.PositionID) + Vector3.right * PlaceService.CurPlace.CurPagePlan.XPoint;
+            if(CharacterService.GetInstancedCharacter(characterPosition.CharacterID) == null){
+                CharacterService.MakeCharacter(characterPosition.CharacterID, EChacterEmotion.Noraml, targetLocalPos, 1f);
+            }
+        }
+
         await UniTask.WaitForSeconds(1f);
     }
+
 
     public static async UniTask ProcessChoiceSet(ChoiceSet choiceSet){
 
@@ -228,7 +257,7 @@ public static class EventProcessor
                 Debug.Log($"{selectedItemData.ItemNameForUser}을 골랐다!");
                 Debug.Log("정답이므로 elements 처리 후 이 루틴을 빠져나갈 예정");
                
-                EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, selectedItemData.ItemID);
+                EventAction eventAction = new EventAction(new GiveItemAction(itemID : selectedItemData.ItemID));
                 _curScenarioData.ExecuteActionThenAdd(eventAction);
 
                 await ProcessElementsTask(itemDemand.SuccessElements);
@@ -252,7 +281,7 @@ public static class EventProcessor
             return;
         }
         if(gainItem.IsGain){
-            EventAction eventAction = new EventAction(actionType : EActionType.CollectItem, gainItem.ID);
+            EventAction eventAction = new EventAction(new CollectItemAction(itemID : gainItem.ID));
             _curScenarioData.ExecuteActionThenAdd(eventAction);
             UIManager.OpenItemOwnPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -260,7 +289,7 @@ public static class EventProcessor
                 
         }
         else {
-            EventAction eventAction = new EventAction(actionType : EActionType.GiveItem, gainItem.ID);
+            EventAction eventAction = new EventAction(new GiveItemAction(itemID : gainItem.ID));
             _curScenarioData.ExecuteActionThenAdd(eventAction);
         }
        

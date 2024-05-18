@@ -1,50 +1,71 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum EActionType
+public interface IAction
 {
-    None = 0,
-    CollectItem = 1,
-    GiveItem = 2,
-    MoveToPlace = 3,
+    void Execute();
 }
 
-[System.Serializable]
 public class EventAction
-{    
-    
-    [SerializeField] private EActionType _actionType;
-    [SerializeField] private string _targetID;
-    
-    public event Action<EActionType, bool> OnActionCompleted;  // 이벤트 선언
+{
+    private IAction _action;
 
-    public EventAction(EActionType actionType, string targetID)
+    public EventAction(IAction action)
     {
-        _actionType = actionType;
-        _targetID = targetID;
+        _action = action;
     }
 
-    public EActionType ActionType => _actionType;
-    public string TargetID => _targetID;
-
-    public void ExecuteAction()
+    public void Execute()
     {
-        switch (_actionType)
-        {
-            case EActionType.CollectItem:
-                ItemService.OwnItem(_targetID, true);  // Assuming Collect() tries to collect the item
-                Debug.Log("Attempting to collect item: " + _targetID);
-                break;
-            case EActionType.GiveItem:
-                ItemService.OwnItem(_targetID, false);  // Assuming Collect() tries to collect the item
-                Debug.Log("Attempting to collect item: " + _targetID);
-                break;
-            case EActionType.MoveToPlace:
-                EventProcessor.Move(_targetID);
-                break;
-            default:
-                Debug.LogError("Unsupported action type: " + _actionType);
-                break;
-        }
+        _action.Execute();
+    }
+}
+
+public class CollectItemAction : IAction
+{
+    private EItemID _itemID;
+
+    public CollectItemAction(EItemID itemID)
+    {
+        _itemID = itemID;
+    }
+
+    public void Execute()
+    {
+        ItemService.OwnItem(_itemID, true);
+        Debug.Log("Collecting item: " + _itemID);
+    }
+}
+
+public class GiveItemAction : IAction
+{
+    private EItemID _itemID;
+
+    public GiveItemAction(EItemID itemID)
+    {
+        _itemID = itemID;
+    }
+
+    public void Execute()
+    {
+        ItemService.OwnItem(_itemID, false);
+        Debug.Log("Giving item: " + _itemID);
+    }
+}
+
+public class MoveToPlaceAction : IAction
+{
+    private EPlaceID _placeID;
+
+    public MoveToPlaceAction(EPlaceID placeID)
+    {
+        _placeID = placeID;
+    }
+
+    public void Execute()
+    {
+        EventProcessor.Move(_placeID);
+        Debug.Log("Moving to place: " + _placeID);
     }
 }
