@@ -9,7 +9,7 @@
     },
     {
       "$type": "OverlaySentence, Assembly-CSharp",
-      "Sentence": "상태가 많이 나아졌네요... ",
+      "Sentence": "상태가 많이 나아진 것 같아요.",
       "SentenceTime": 1.0,
       "AfterDelayTime": 1.0
     },
@@ -21,7 +21,7 @@
     },
     {
       "$type": "OverlaySentence, Assembly-CSharp",
-      "Sentence": "모든 가능성을 고려했습니다.",
+      "Sentence": "이게 최선입니다.",
       "SentenceTime": 1.0,
       "AfterDelayTime": 1.0
     },
