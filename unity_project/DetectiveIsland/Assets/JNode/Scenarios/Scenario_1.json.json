@@ -91,17 +91,6 @@
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
-      "CharacterID": 0,
-      "Lines": [
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": 0,
-          "Sentence": "30대 중반의 의사로 보이는 한 남자가 들어왔다."
-        }
-      ]
-    },
-    {
-      "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": 2,
       "Lines": [
         {

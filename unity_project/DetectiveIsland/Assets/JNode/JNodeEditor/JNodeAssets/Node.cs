@@ -44,6 +44,7 @@ public abstract class Node
     public Vector2 RecentRectPos;
     public Vector2 RecentRectSize;
     public bool IsSelected ;
+    private bool IsConnected => NextNodeID != null && NextNodeID != "";
 
 
     [JsonIgnore] public Rect NodeRect { get => _nodeRect; }
@@ -141,7 +142,7 @@ public abstract class Node
     private void DrawHighlight()
     {
         // 선택된 상태일 때 하이라이트 테두리 그리기
-        Color highlightColor = Color.cyan; // 하이라이트 색상을 하늘색으로 설정
+        Color highlightColor = Color.yellow; // 하이라이트 색상을 하늘색으로 설정
 
         // 테두리 색상 설정
         Handles.color = highlightColor;
@@ -174,7 +175,7 @@ public abstract class Node
 
         // highlightRect와 highlightColor를 사용하여 테두리를 그립니다.
         Rect highlightRect = NodeRect.AdjustSize(2, 2);
-        Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, Color.white);
+        Handles.DrawSolidRectangleWithOutline(highlightRect, Color.clear, IsConnected ? Color.cyan : Color.black);
 
         Handles.color = Color.white;
         GUI.color = Color.white;

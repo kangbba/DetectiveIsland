@@ -9,7 +9,7 @@ public static class AttachInterface
 { 
     #region  버튼 그룹 
 
-      public static void AttachBtnGroups(Vector2 nodeRectPos, Vector2 btnSize, List<Node> nodes, string parentNodeID)
+    public static void AttachBtnGroups(Vector2 nodeRectPos, Vector2 btnSize, List<Node> nodes, string parentNodeID, float maxWidth)
     {
         var buttonData = new (string title, Action<List<Node>, string, Vector2> action)[]
         {
@@ -22,20 +22,36 @@ public static class AttachInterface
             ("Overlay Sen", AddOverlayPictureNode),
             ("Audio Act", AddAudioActionNode),
             ("Camera Act", AddCameraActionNode)
-            ,
         };
+
+        float currentWidth = 0f;
+        float yOffset = 0f;
 
         for (int i = 0; i < buttonData.Length; i++)
         {
+            // Check if adding this button exceeds the maxWidth
+            if (currentWidth + btnSize.x > maxWidth)
+            {
+                // Move to the next line
+                currentWidth = 0f;
+                yOffset += btnSize.y + 5; // Add a small margin between lines
+            }
+
+            Vector2 buttonPos = new Vector2(nodeRectPos.x + currentWidth, nodeRectPos.y - 30 + yOffset);
+
             new JButton(
-                pos: new Vector2(nodeRectPos.x + 5 * i + btnSize.x * i, nodeRectPos.y - 30),
+                pos: buttonPos,
                 size: btnSize,
                 title: buttonData[i].title,
-                action: () => buttonData[i].action(nodes, parentNodeID, new Vector2(nodeRectPos.x + 10 * i + btnSize.x * i, nodeRectPos.y)),
+                action: () => buttonData[i].action(nodes, parentNodeID, buttonPos),
                 anchor: JAnchor.TopLeft
             ).Draw();
+
+            // Update the current width for the next button
+            currentWidth += btnSize.x + 5; // Add a small margin between buttons
         }
     }
+
     public static void ProcessContextMenu(List<Node> Nodes, Vector2 mousePos)
     {
        GenericMenu menu = new GenericMenu();

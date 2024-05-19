@@ -61,6 +61,6 @@ public class ItemDemandResponseNode : Node
 
         AttachInterface.AttachDeleteButtons(Nodes);
         AttachInterface.AttachArrowButtons(Nodes);
-        AttachInterface.AttachBtnGroups(NodeRect.min, new Vector2(55, 20), Nodes, NodeID);
+        AttachInterface.AttachBtnGroups(NodeRect.min, new Vector2(55, 20), Nodes, NodeID, Width);
     }
 }

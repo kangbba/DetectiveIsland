@@ -32,6 +32,7 @@ public class LineNode : Node
     {
         return new LineNode(Guid.NewGuid().ToString(), this.Title, this.ParentNodeID)
         {
+            EmotionID = this.EmotionID
         };
     }
 

@@ -311,9 +311,35 @@ public static class EventProcessor
         await UniTask.WaitForSeconds(1f);
     }
     public static async UniTask CameraActionTask(CameraAction cameraAction)
-    {
-        CameraService.PlayCameraAction(cameraAction);
-        await UniTask.WaitForSeconds(1f);
+    { 
+        switch (cameraAction.CameraActionID)
+        {
+            case ECameraActionID.ShakeNormal:
+                // ShakeNormal 액션 실행
+                CameraController.ShakeCamera(5f, cameraAction.CameraActionTime);
+                break;
+            case ECameraActionID.ShakeStrong:
+                // ShakeStrong 액션 실행
+                CameraController.ShakeCamera(10f, cameraAction.CameraActionTime);
+                break;
+            case ECameraActionID.GoLeftRight:
+                // GoLeftRight 액션 실행
+                break;
+            case ECameraActionID.ZoomIn:
+                break;
+            case ECameraActionID.ZoomOut:
+                break;
+            default:
+                // None 또는 정의되지 않은 액션 처리
+                Debug.LogWarning("Undefined camera action.");
+                break;
+        }
+        if(cameraAction.WaitForFinish){
+            await UniTask.WaitForSeconds(cameraAction.CameraActionTime);
+        }
+        else{
+            await UniTask.WaitForSeconds(0f);
+        }
     }
     public static async UniTask AudioActionTask(AudioAction audioAction)
     {

@@ -71,7 +71,7 @@ public class ChoiceNode : Node
         }
         AttachInterface.AttachDeleteButtons(Nodes);
         AttachInterface.AttachArrowButtons(Nodes);
-        AttachInterface.AttachBtnGroups(NodeRect.min, new Vector2(55, 20), Nodes, NodeID);
+        AttachInterface.AttachBtnGroups(NodeRect.min, new Vector2(55, 20), Nodes, NodeID, Width);
    // Add buttons using JButton
 
         Height += BOTTOM_MARGIN;

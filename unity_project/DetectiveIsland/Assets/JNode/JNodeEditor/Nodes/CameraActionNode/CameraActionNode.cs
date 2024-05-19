@@ -6,8 +6,8 @@ using UnityEngine;
 public class CameraActionNode : Node
 {
     public ECameraActionID CameraActionID = ECameraActionID.ShakeNormal;
-    public float _cameraActionTime = 0.3f;
-
+    public float CameraActionTime = 0.3f;
+    public bool WaitForFinish = false;
     public CameraActionNode(string nodeID, string title, string parentNodeID) : base(nodeID, title, parentNodeID)
     {
     }
@@ -23,7 +23,7 @@ public class CameraActionNode : Node
 
     public override Element ToElement()
     {
-        return new CameraAction(CameraActionID, _cameraActionTime);
+        return new CameraAction(CameraActionID, CameraActionTime, WaitForFinish);
     }
 
     public const float UPPER_MARGIN = 50;
@@ -49,20 +49,30 @@ public class CameraActionNode : Node
            fieldWidth: 100,
            fieldHeight: textFieldHeight
         );
-
         Height += textFieldHeight + 5;
 
-        _cameraActionTime = (float)JInterface.SimpleField
+        CameraActionTime = (float)JInterface.SimpleField
         (
             title: "CameraAction Time : ",
-            value: _cameraActionTime,
+            value: CameraActionTime,
             pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
             labelWidth: 128,
             fieldWidth: 100,
             fieldHeight: textFieldHeight
         );
-
         Height += textFieldHeight;
+
+        WaitForFinish = (bool)JInterface.SimpleField
+        (
+            title: "WaitForFinish : ",
+            value: WaitForFinish,
+            pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
+            labelWidth: 128,
+            fieldWidth: 100,
+            fieldHeight: textFieldHeight
+        );
+        Height += textFieldHeight;
+        
         Height += BOTTOM_MARGIN;
         SetNodeRectSize(new Vector2(Width, Height));
     }

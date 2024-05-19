@@ -111,8 +111,6 @@ public class DialogueNode : Node
 
                 Height += lineNode.Height + 10;
             }
-            AttachInterface.AttachDeleteButtons(LineNodes);
-            AttachInterface.AttachArrowButtons(LineNodes);
         }
         Height += BOTTOM_MARGIN;
 
@@ -158,13 +156,19 @@ public class DialogueNode : Node
                 IsFolded = !IsFolded;
             },
             anchor: JAnchor.TopLeft).Draw();
+
+        if(!IsFolded)
+        {
+            AttachInterface.AttachDeleteButtons(LineNodes);
+            AttachInterface.AttachArrowButtons(LineNodes);
+        }
     }
 
 
 
     private void AddLine()
     {
-        LineNode lineNode = new LineNode(Guid.NewGuid().ToString(), "", NodeID);
+        LineNode lineNode = LineNodes.Count > 0 ? LineNodes.Last().Clone() as LineNode : new LineNode(Guid.NewGuid().ToString(), "", NodeID);
         LineNodes.Add(lineNode);
         AddNodeRectSize(Vector2.up * LineNode.DEFAULT_HEIGHT);
     }
