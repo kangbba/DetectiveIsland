@@ -11,17 +11,17 @@ public static class AttachInterface
 
     private static readonly Dictionary<string, Action<List<Node>, string, Vector2>> nodeActions = new Dictionary<string, Action<List<Node>, string, Vector2>>
     {
-        { "DialogueNode", (nodes, parentNodeID, pos) => CreateAndAddNode<DialogueNode>(nodes, parentNodeID, pos) },
-        { "ChoiceSetNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ChoiceSetNode>(nodes, parentNodeID, pos) },
-        { "ItemDemandNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ItemDemandNode>(nodes, parentNodeID, pos) },
-        { "CameraActionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<CameraActionNode>(nodes, parentNodeID, pos) },
-        { "AudioActionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<AudioActionNode>(nodes, parentNodeID, pos) },
-        { "GainItemNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainItemNode>(nodes, parentNodeID, pos) },
-        { "GainPlaceNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainPlaceNode>(nodes, parentNodeID, pos) },
-        { "GainFriendshipNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos) },
-        { "ModifyPositionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos) },
-        { "OverlayPictureNode", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos) },
-        { "OverlaySentenceNode", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos) }
+        { "Dialogue", (nodes, parentNodeID, pos) => CreateAndAddNode<DialogueNode>(nodes, parentNodeID, pos) },
+        { "ChoiceSet", (nodes, parentNodeID, pos) => CreateAndAddNode<ChoiceSetNode>(nodes, parentNodeID, pos) },
+        { "ItemDemand", (nodes, parentNodeID, pos) => CreateAndAddNode<ItemDemandNode>(nodes, parentNodeID, pos) },
+        { "CameraAction", (nodes, parentNodeID, pos) => CreateAndAddNode<CameraActionNode>(nodes, parentNodeID, pos) },
+        { "AudioAction", (nodes, parentNodeID, pos) => CreateAndAddNode<AudioActionNode>(nodes, parentNodeID, pos) },
+        { "GainItem", (nodes, parentNodeID, pos) => CreateAndAddNode<GainItemNode>(nodes, parentNodeID, pos) },
+        { "GainPlace", (nodes, parentNodeID, pos) => CreateAndAddNode<GainPlaceNode>(nodes, parentNodeID, pos) },
+        { "GainFriendship", (nodes, parentNodeID, pos) => CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos) },
+        { "ModifyPosition", (nodes, parentNodeID, pos) => CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos) },
+        { "OverlayPicture", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos) },
+        { "OverlaySentence", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos) }
     };
 
     public static void ShowContextMenu(List<Node> nodes, Node parentNode, Vector2 mousePos)
@@ -29,16 +29,25 @@ public static class AttachInterface
         GenericMenu menu = new GenericMenu();
 
         // Check if parentNode is null and set the appropriate text
-        string parentNodeText = parentNode == null ? "최상위에 생성합니다" : $"{parentNode.Title} 안에 생성합니다";
+        bool isMostParentNode = parentNode == null;
+        string parentNodeText = isMostParentNode ? "최상위에 생성합니다" : $"{parentNode.Title} 안에 생성합니다";
 
         // Add the parentNodeText as a disabled item to the top of the menu
         menu.AddDisabledItem(new GUIContent(parentNodeText));
 
+        // Define a list of node types to exclude when not at the most parent level
+        var excludedNodes = new HashSet<string> { "ChoiceSet", "ItemDemand" };
+
         foreach (var kvp in nodeActions)
         {
-            string nodeName = kvp.Key.Replace("Node", ""); // Node 타입 이름에서 "Node" 제거
-            string title = $"Add {nodeName} Node";
-            string nodeID = parentNode == null ? "" : parentNode.NodeID;
+            // Check if the current node type should be excluded
+            if (!isMostParentNode && excludedNodes.Contains(kvp.Key))
+            {
+                continue;
+            }
+
+            string title = $"Add {kvp.Key} Node";
+            string nodeID = isMostParentNode ? "" : parentNode.NodeID;
             Action<List<Node>, string, Vector2> action = kvp.Value;
             menu.AddItem(new GUIContent(title), false, () => action(nodes, nodeID, mousePos));
         }
