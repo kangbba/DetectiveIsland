@@ -17,7 +17,11 @@ public static class UIManager
     private static PlaceUIPanel _placeUIPanel;
 
     private static UIMouseCursor _uiMouseCursor;
+
+    private static OverlaySentenceDisplayer _overlaySentenceDisplayer;
     private static Button _itemCheckPanelEnterBtn;
+
+    public static OverlaySentenceDisplayer OverlaySentenceDisplayer { get => _overlaySentenceDisplayer; }
 
     public static void Load(){
         GameObject uiPrefabToSpawn = Resources.Load<GameObject>("UIPrefabs/UISetPrefab");
@@ -32,6 +36,8 @@ public static class UIManager
         _placeUIPanel = uiPrefab.GetComponentInChildren<PlaceUIPanel>();
         _uiMouseCursor = uiPrefab.GetComponentInChildren<UIMouseCursor>();
         _uiMouseCursor.Initialize(uiPrefab.GetComponent<Canvas>());
+        _overlaySentenceDisplayer = uiPrefab.GetComponentInChildren<OverlaySentenceDisplayer>();
+
 
        // _itemCheckPanelEnterBtn = uiPrefab.GetComponentInChildren<Button>();
 
@@ -93,7 +99,5 @@ public static class UIManager
     {
         _eventTimeDisplayer.SetEventTime(eventTime);
     }
-
-
 
 }

@@ -15,9 +15,9 @@ public class OverlayPictureNode : Node
     public override float Height { get; set; }
   
 
-    public EPictureID _pictureID = EPictureID.None;
-    public EPictureEffectID _effectID = EPictureEffectID.None;
-    public float _effectTime = 0;
+    public EPictureID PictureID = EPictureID.None;
+    public EPictureEffectID EffectID = EPictureEffectID.None;
+    public float EffectTime = 1;
 
     public const float FIELD_COMMON_HEIGHT = 20;
 
@@ -33,7 +33,7 @@ public class OverlayPictureNode : Node
 
     public override Element ToElement()
     {
-        return new OverlayPicture(_pictureID, _effectID, _effectTime);
+        return new OverlayPicture(PictureID, EffectID, EffectTime);
     }
 
     public override void DrawNode()
@@ -42,38 +42,37 @@ public class OverlayPictureNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
 
-        _pictureID = (EPictureID)JInterface.SimpleField
+        PictureID = (EPictureID)JInterface.SimpleField
         (
             title: "Picture ID: ",
-            value: _pictureID,
+            value: PictureID,
             pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
             fieldHeight: FIELD_COMMON_HEIGHT
         );
-
         Height += FIELD_COMMON_HEIGHT;
-        _effectTime = (float)JInterface.SimpleField
+
+        EffectTime = (float)JInterface.SimpleField
       (
           title: "Effect Time: ",
-          value: _effectTime,
+          value: EffectTime,
           pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
           labelWidth: 100,
           fieldWidth: 80,
           fieldHeight: FIELD_COMMON_HEIGHT
       );
-
         Height += FIELD_COMMON_HEIGHT;
-        _effectID = (EPictureEffectID)JInterface.SimpleField
+
+        EffectID = (EPictureEffectID)JInterface.SimpleField
        (
            title: "Effect ID: ",
-           value: _effectID,
+           value: EffectID,
            pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
            labelWidth: 100,
            fieldWidth: 80,
            fieldHeight: FIELD_COMMON_HEIGHT
        );
-
         Height += FIELD_COMMON_HEIGHT;
 
         Height += BOTTOM_MARGIN;

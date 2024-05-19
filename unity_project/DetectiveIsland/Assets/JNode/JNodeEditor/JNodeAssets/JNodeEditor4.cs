@@ -283,7 +283,7 @@ public class JNodeEditor4 : EditorWindow
                 }
                 else if (e.button == 1) // Right click for context menu
                 {
-                    ProcessContextMenu(e.mousePosition);
+                    AttachInterface.ProcessContextMenu(Nodes, e.mousePosition);
                 }
                 else if (e.button == 2) // Middle mouse button for panning
                 {
@@ -778,30 +778,6 @@ public class JNodeEditor4 : EditorWindow
 
 
 
-
-
-    private void ProcessContextMenu(Vector2 mousePos)
-    {
-       GenericMenu menu = new GenericMenu();
-
-        // Add nodes directly
-        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => { AttachInterface.AddDialogueNode(Nodes, null, mousePos);});
-        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AttachInterface.AddChoiceSetNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AttachInterface.AddItemDemandNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add CameraAction Node"), false, () => AttachInterface.AddCameraActionNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add AudioAction Node"), false, () => AttachInterface.AddAudioActionNode(Nodes, null, mousePos));
-
-        // Add Gain nodes as sub-menu
-        menu.AddItem(new GUIContent("획득하기/Add GainItem Node"), false, () => AttachInterface.AddGainItemNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("획득하기/Add GainPlace Node"), false, () => AttachInterface.AddGainPlaceNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("획득하기/Add GainFriendship Node"), false, () => AttachInterface.AddGainFriendshipNode(Nodes, null, mousePos));
-
-        menu.AddItem(new GUIContent("수정하기/Add ModifyPosition Node"), false, () => AttachInterface.AddModifyPositionNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("수정하기/Add OverlayPicture Node"), false, () => AttachInterface.AddOverlayPictureNode(Nodes, null, mousePos));
-
-        menu.ShowAsContext();
-
-    }
 
     public Node GetNode(string nodeID)
     {   

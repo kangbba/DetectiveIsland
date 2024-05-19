@@ -8,13 +8,31 @@
       "EffectTime": 1.0
     },
     {
+      "$type": "OverlaySentence, Assembly-CSharp",
+      "Sentence": "상태가 많이 나아졌네요... ",
+      "SentenceTime": 1.0,
+      "AfterDelayTime": 3.0
+    },
+    {
+      "$type": "OverlaySentence, Assembly-CSharp",
+      "Sentence": "박사님, 하지만 정말 괜찮을까요?",
+      "SentenceTime": 1.0,
+      "AfterDelayTime": 3.0
+    },
+    {
+      "$type": "OverlaySentence, Assembly-CSharp",
+      "Sentence": "모든 가능성을 고려했습니다.",
+      "SentenceTime": 1.0,
+      "AfterDelayTime": 3.0
+    },
+    {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": 0,
       "Lines": [
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 3,
-          "Sentence": "여기가 어디지? 왜 나는 여기에 있는 거지? 머릿속이 어지럽다. "
+          "Sentence": "왜 나는 여기에 있는 거지? 머릿속이 어지럽다. "
         },
         {
           "$type": "Line, Assembly-CSharp",
@@ -46,7 +64,7 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 3,
-          "Sentence": "[철컥]"
+          "Sentence": "\"철컥\""
         }
       ]
     },
@@ -78,12 +96,7 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 0,
-          "Sentence": "의사로 보이는 한 남자가 들어왔다."
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": 0,
-          "Sentence": "나에게 미소를 지었다. 그의 미소는 어딘가 가식적으로 느껴졌다."
+          "Sentence": "30대 중반의 의사로 보이는 한 남자가 들어왔다."
         }
       ]
     },
@@ -244,7 +257,12 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 0,
-          "Sentence": "병원에서 나가지 말라고? 뭔가 이상해..."
+          "Sentence": "병원에서 나가지 말라고? 하지만 너무 답답한걸.."
+        },
+        {
+          "$type": "Line, Assembly-CSharp",
+          "EmotionID": 0,
+          "Sentence": "우선 주변을 둘러보자."
         }
       ]
     }

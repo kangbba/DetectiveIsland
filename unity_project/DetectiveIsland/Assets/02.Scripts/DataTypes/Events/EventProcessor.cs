@@ -25,6 +25,9 @@ public static class EventProcessor
     }
     private static async UniTask MoveToPlaceUniTask(EPlaceID placeID)
     {
+        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
+        ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
+        bool isEventExist = scenarioData != null;
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
         Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
         Debug.Log($"장소 이동 : {placeID})");
@@ -37,9 +40,6 @@ public static class EventProcessor
         await UniTask.WaitForSeconds(1f);
 
         // AwaitChoices의 결과를 직접 받아 처리
-        EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
-        ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
-        bool isEventExist = scenarioData != null;
 
         if(isEventExist)
         {
@@ -152,6 +152,9 @@ public static class EventProcessor
                 break;
             case AudioAction audioAction:
                 await AudioActionTask(audioAction);
+                break;
+            case OverlaySentence overlaySentence:
+                await OverlaySentenceTask(overlaySentence);
                 break;
             default:
                 Debug.LogWarning($"Unsupported element type: {element.GetType()}");
@@ -304,7 +307,7 @@ public static class EventProcessor
     }
     public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)
     {
-        PictureService.SetPictureEffect(overlayPicture);
+        PictureService.SetOverlayPictureEffect(overlayPicture);
         await UniTask.WaitForSeconds(1f);
     }
     public static async UniTask CameraActionTask(CameraAction cameraAction)
@@ -316,4 +319,10 @@ public static class EventProcessor
     {
         await UniTask.WaitForSeconds(1f);
     }
+    public static async UniTask OverlaySentenceTask(OverlaySentence overlaySentence)
+    {
+        OverlaySentenceDisplayer displayer = UIManager.OverlaySentenceDisplayer;
+        await displayer.DisplayOverlaySentence(overlaySentence);
+    }
+
 }

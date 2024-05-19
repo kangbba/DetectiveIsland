@@ -8,13 +8,25 @@
       "EffectTime": 1.0
     },
     {
+      "$type": "OverlaySentence, Assembly-CSharp",
+      "Sentence": "일어나 보세요.",
+      "SentenceTime": 0.5,
+      "AfterDelayTime": 3.0
+    },
+    {
+      "$type": "OverlaySentence, Assembly-CSharp",
+      "Sentence": "정신 차려보세요.",
+      "SentenceTime": 0.5,
+      "AfterDelayTime": 3.0
+    },
+    {
       "$type": "Dialogue, Assembly-CSharp",
       "CharacterID": 0,
       "Lines": [
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 3,
-          "Sentence": "여기가 어디지? 왜 나는 여기에 있는 거지? 머릿속이 어지럽다. "
+          "Sentence": "왜 나는 여기에 있는 거지? 머릿속이 어지럽다. "
         },
         {
           "$type": "Line, Assembly-CSharp",
@@ -46,7 +58,7 @@
         {
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 3,
-          "Sentence": "[철컥]"
+          "Sentence": "\"철컥\""
         }
       ]
     },

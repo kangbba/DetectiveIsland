@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
+using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public enum EPictureID
@@ -38,8 +40,7 @@ public static class PictureService
         }
         return pictureData;
     }
-
-    public static void SetPictureEffect(OverlayPicture overlayPicture)
+    public static async void SetOverlayPictureEffect(OverlayPicture overlayPicture)
     {
         EPictureID pictureID = overlayPicture.PictureID;
         EPictureEffectID effectID = overlayPicture.EffectID;
@@ -65,5 +66,6 @@ public static class PictureService
             default:
                 break;
         }
+        await UniTask.WaitForSeconds(effectTime);
     }
 }

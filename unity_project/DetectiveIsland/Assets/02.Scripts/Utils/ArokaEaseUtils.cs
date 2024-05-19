@@ -22,6 +22,7 @@ namespace Aroka.EaseUtils
     {
         private static Dictionary<(Transform, string), Coroutine> _coroutineMap = new Dictionary<(Transform, string), Coroutine>();
         private static Dictionary<(Component, string), Coroutine> _colorCoroutineMap = new Dictionary<(Component, string), Coroutine>();
+        private static Coroutine _alphaCoroutine;
 
 
         #region Position and Movement Extensions
@@ -206,6 +207,7 @@ namespace Aroka.EaseUtils
 
         #region Color Extensions
 
+
         public static void EaseColor(this Transform tr, Color targetColor, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_OUT, float delayTime = 0)
         {
             Component component = DetermineComponent(tr);
@@ -249,6 +251,52 @@ namespace Aroka.EaseUtils
             IEnumerator routine = EaseColorRoutine(spriteRend, targetColor, totalTime, curvName, delayTime);
             StartOrReplaceColorCoroutine(spriteRend, key, routine);
         }
+
+
+        public static void EaseCanvasGroupAlpha(this CanvasGroup canvasGroup, float targetAlpha, float totalTime, ArokaCurves.CurvName curvName = ArokaCurves.CurvName.EASE_IN_AND_OUT, float delayTime = 0)
+        {
+            if (canvasGroup == null)
+            {
+                Debug.LogWarning("CanvasGroup component is null.");
+                return;
+            }
+
+            if (totalTime == 0f)
+            {
+                canvasGroup.alpha = targetAlpha;
+                return;
+            }
+
+            if (_alphaCoroutine != null)
+            {
+                CoroutineUtils.CoroutineUtils.StopCoroutine(_alphaCoroutine);
+            }
+
+            _alphaCoroutine = CoroutineUtils.CoroutineUtils.StartCoroutine(EaseAlphaRoutine(canvasGroup, targetAlpha, totalTime, curvName, delayTime));
+        }
+
+        private static IEnumerator EaseAlphaRoutine(CanvasGroup canvasGroup, float targetAlpha, float totalTime, ArokaCurves.CurvName curvName, float delayTime)
+        {
+            if (delayTime > 0)
+            {
+                yield return new WaitForSeconds(delayTime);
+            }
+
+            float startAlpha = canvasGroup.alpha;
+            float elapsedTime = 0f;
+            AnimationCurve curv = ArokaCurves.GetCurve(curvName);
+            while (elapsedTime < totalTime)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / totalTime);
+                float curvedT = curv.Evaluate(t);
+                canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, curvedT);
+                yield return null;
+            }
+
+            canvasGroup.alpha = targetAlpha;
+        }
+
         private static string GetComponentKey(Component component)
         {
             if (component is SpriteRenderer)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public static class AttachInterface 
@@ -18,6 +19,7 @@ public static class AttachInterface
             ("FriendShip", AddGainFriendshipNode),
             ("PlaceModi", AddGainPlaceNode),
             ("Overlay Pic", AddOverlayPictureNode),
+            ("Overlay Sen", AddOverlayPictureNode),
             ("Audio Act", AddAudioActionNode),
             ("Camera Act", AddCameraActionNode)
             ,
@@ -33,6 +35,29 @@ public static class AttachInterface
                 anchor: JAnchor.TopLeft
             ).Draw();
         }
+    }
+    public static void ProcessContextMenu(List<Node> Nodes, Vector2 mousePos)
+    {
+       GenericMenu menu = new GenericMenu();
+
+        // Add nodes directly
+        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => { AddDialogueNode(Nodes, null, mousePos);});
+        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AddItemDemandNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add CameraAction Node"), false, () => AddCameraActionNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("Add AudioAction Node"), false, () => AddAudioActionNode(Nodes, null, mousePos));
+
+        // Add Gain nodes as sub-menu
+        menu.AddItem(new GUIContent("획득하기/Add GainItem Node"), false, () => AddGainItemNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("획득하기/Add GainPlace Node"), false, () => AddGainPlaceNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("획득하기/Add GainFriendship Node"), false, () => AddGainFriendshipNode(Nodes, null, mousePos));
+
+        menu.AddItem(new GUIContent("수정하기/Add ModifyPosition Node"), false, () => AddModifyPositionNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("수정하기/Add OverlayPicture Node"), false, () => AddOverlayPictureNode(Nodes, null, mousePos));
+        menu.AddItem(new GUIContent("수정하기/Add OverlaySentence Node"), false, () => AddOverlaySentenceNode(Nodes, null, mousePos));
+
+        menu.ShowAsContext();
+
     }
     public static Action<List<Node>, string, Vector2> AddChoiceSetNode = (nodes, parentNodeID, pos) =>
     {
@@ -93,6 +118,14 @@ public static class AttachInterface
     public static Action<List<Node>, string, Vector2> AddOverlayPictureNode = (nodes, parentNodeID, pos) =>
     {
         OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", parentNodeID);
+        node.SetRectPos(pos, JAnchor.TopLeft);
+        node.Notice();
+        nodes.Add(node);
+    };
+
+    public static Action<List<Node>, string, Vector2> AddOverlaySentenceNode = (nodes, parentNodeID, pos) =>
+    {
+        OverlaySentenceNode node = new OverlaySentenceNode(Guid.NewGuid().ToString(), "OverlaySentenceNode", parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
         node.Notice();
         nodes.Add(node);
