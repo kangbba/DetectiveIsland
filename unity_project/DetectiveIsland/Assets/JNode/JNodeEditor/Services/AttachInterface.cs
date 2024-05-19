@@ -9,159 +9,53 @@ public static class AttachInterface
 { 
     #region  버튼 그룹 
 
-    public static void AttachBtnGroups(Vector2 nodeRectPos, Vector2 btnSize, List<Node> nodes, string parentNodeID, float maxWidth)
+    private static readonly Dictionary<string, Action<List<Node>, string, Vector2>> nodeActions = new Dictionary<string, Action<List<Node>, string, Vector2>>
     {
-        var buttonData = new (string title, Action<List<Node>, string, Vector2> action)[]
+        { "DialogueNode", (nodes, parentNodeID, pos) => CreateAndAddNode<DialogueNode>(nodes, parentNodeID, pos) },
+        { "ChoiceSetNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ChoiceSetNode>(nodes, parentNodeID, pos) },
+        { "ItemDemandNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ItemDemandNode>(nodes, parentNodeID, pos) },
+        { "CameraActionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<CameraActionNode>(nodes, parentNodeID, pos) },
+        { "AudioActionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<AudioActionNode>(nodes, parentNodeID, pos) },
+        { "GainItemNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainItemNode>(nodes, parentNodeID, pos) },
+        { "GainPlaceNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainPlaceNode>(nodes, parentNodeID, pos) },
+        { "GainFriendshipNode", (nodes, parentNodeID, pos) => CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos) },
+        { "ModifyPositionNode", (nodes, parentNodeID, pos) => CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos) },
+        { "OverlayPictureNode", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos) },
+        { "OverlaySentenceNode", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos) }
+    };
+
+    public static void ShowContextMenu(List<Node> nodes, Node parentNode, Vector2 mousePos)
+    {
+        GenericMenu menu = new GenericMenu();
+
+        // Check if parentNode is null and set the appropriate text
+        string parentNodeText = parentNode == null ? "최상위에 생성합니다" : $"{parentNode.Title} 안에 생성합니다";
+
+        // Add the parentNodeText as a disabled item to the top of the menu
+        menu.AddDisabledItem(new GUIContent(parentNodeText));
+
+        foreach (var kvp in nodeActions)
         {
-            ("Dialogue", AddDialogueNode),
-            ("Item Modi", AddGainItemNode),
-            ("Pos Init", AddModifyPositionNode),
-            ("FriendShip", AddGainFriendshipNode),
-            ("PlaceModi", AddGainPlaceNode),
-            ("Overlay Pic", AddOverlayPictureNode),
-            ("Overlay Sen", AddOverlayPictureNode),
-            ("Audio Act", AddAudioActionNode),
-            ("Camera Act", AddCameraActionNode)
-        };
-
-        float currentWidth = 0f;
-        float yOffset = 0f;
-
-        for (int i = 0; i < buttonData.Length; i++)
-        {
-            // Check if adding this button exceeds the maxWidth
-            if (currentWidth + btnSize.x > maxWidth)
-            {
-                // Move to the next line
-                currentWidth = 0f;
-                yOffset += btnSize.y + 5; // Add a small margin between lines
-            }
-
-            Vector2 buttonPos = new Vector2(nodeRectPos.x + currentWidth, nodeRectPos.y - 30 + yOffset);
-
-            new JButton(
-                pos: buttonPos,
-                size: btnSize,
-                title: buttonData[i].title,
-                action: () => buttonData[i].action(nodes, parentNodeID, buttonPos),
-                anchor: JAnchor.TopLeft
-            ).Draw();
-
-            // Update the current width for the next button
-            currentWidth += btnSize.x + 5; // Add a small margin between buttons
+            string nodeName = kvp.Key.Replace("Node", ""); // Node 타입 이름에서 "Node" 제거
+            string title = $"Add {nodeName} Node";
+            string nodeID = parentNode == null ? "" : parentNode.NodeID;
+            Action<List<Node>, string, Vector2> action = kvp.Value;
+            menu.AddItem(new GUIContent(title), false, () => action(nodes, nodeID, mousePos));
         }
-    }
-
-    public static void ProcessContextMenu(List<Node> Nodes, Vector2 mousePos)
-    {
-       GenericMenu menu = new GenericMenu();
-
-        // Add nodes directly
-        menu.AddItem(new GUIContent("Add Dialogue Node"), false, () => { AddDialogueNode(Nodes, null, mousePos);});
-        menu.AddItem(new GUIContent("Add ChoiceSet Node"), false, () => AddChoiceSetNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add ItemDemand Node"), false, () => AddItemDemandNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add CameraAction Node"), false, () => AddCameraActionNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("Add AudioAction Node"), false, () => AddAudioActionNode(Nodes, null, mousePos));
-
-        // Add Gain nodes as sub-menu
-        menu.AddItem(new GUIContent("획득하기/Add GainItem Node"), false, () => AddGainItemNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("획득하기/Add GainPlace Node"), false, () => AddGainPlaceNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("획득하기/Add GainFriendship Node"), false, () => AddGainFriendshipNode(Nodes, null, mousePos));
-
-        menu.AddItem(new GUIContent("수정하기/Add ModifyPosition Node"), false, () => AddModifyPositionNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("수정하기/Add OverlayPicture Node"), false, () => AddOverlayPictureNode(Nodes, null, mousePos));
-        menu.AddItem(new GUIContent("수정하기/Add OverlaySentence Node"), false, () => AddOverlaySentenceNode(Nodes, null, mousePos));
 
         menu.ShowAsContext();
-
     }
-    public static Action<List<Node>, string, Vector2> AddChoiceSetNode = (nodes, parentNodeID, pos) =>
-    {
-        ChoiceSetNode node = new ChoiceSetNode(Guid.NewGuid().ToString(), "ChoiceSetNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
 
-    public static Action<List<Node>, string, Vector2> AddItemDemandNode = (nodes, parentNodeID, pos) =>
-    {
-        ItemDemandNode node = new ItemDemandNode(Guid.NewGuid().ToString(), "ItemDemandNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
 
-    public static Action<List<Node>, string, Vector2> AddDialogueNode = (nodes, parentNodeID, pos) =>
+    private static void CreateAndAddNode<T>(List<Node> nodes, string parentNodeID, Vector2 pos) where T : Node
     {
-        DialogueNode node = new DialogueNode(Guid.NewGuid().ToString(), "DialogueNode", parentNodeID);
+        string nodeName = typeof(T).Name;
+        T node = (T)Activator.CreateInstance(typeof(T), Guid.NewGuid().ToString(), nodeName, parentNodeID);
         node.SetRectPos(pos, JAnchor.TopLeft);
         node.Notice();
         nodes.Add(node);
-    };
+    }
 
-    public static Action<List<Node>, string, Vector2> AddGainItemNode = (nodes, parentNodeID, pos) =>
-    {
-        GainItemNode node = new GainItemNode(Guid.NewGuid().ToString(), "GainItemNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddModifyPositionNode = (nodes, parentNodeID, pos) =>
-    {
-        ModifyPositionNode node = new ModifyPositionNode(Guid.NewGuid().ToString(), "ModifyPositionNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddGainFriendshipNode = (nodes, parentNodeID, pos) =>
-    {
-        GainFriendshipNode node = new GainFriendshipNode(Guid.NewGuid().ToString(), "GainFriendshipNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddGainPlaceNode = (nodes, parentNodeID, pos) =>
-    {
-        GainPlaceNode node = new GainPlaceNode(Guid.NewGuid().ToString(), "GainPlaceNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddOverlayPictureNode = (nodes, parentNodeID, pos) =>
-    {
-        OverlayPictureNode node = new OverlayPictureNode(Guid.NewGuid().ToString(), "OverlayPictureNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddOverlaySentenceNode = (nodes, parentNodeID, pos) =>
-    {
-        OverlaySentenceNode node = new OverlaySentenceNode(Guid.NewGuid().ToString(), "OverlaySentenceNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddAudioActionNode = (nodes, parentNodeID, pos) =>
-    {
-        AudioActionNode node = new AudioActionNode(Guid.NewGuid().ToString(), "AudioActionNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
-
-    public static Action<List<Node>, string, Vector2> AddCameraActionNode = (nodes, parentNodeID, pos) =>
-    {
-        CameraActionNode node = new CameraActionNode(Guid.NewGuid().ToString(), "CameraActionNode", parentNodeID);
-        node.SetRectPos(pos, JAnchor.TopLeft);
-        node.Notice();
-        nodes.Add(node);
-    };
 
     #endregion
 

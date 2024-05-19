@@ -61,6 +61,12 @@ public class ItemDemandResponseNode : Node
 
         AttachInterface.AttachDeleteButtons(Nodes);
         AttachInterface.AttachArrowButtons(Nodes);
-        AttachInterface.AttachBtnGroups(NodeRect.min, new Vector2(55, 20), Nodes, NodeID, Width);
+        new JButton(
+            pos : NodeRect.min, 
+            size : Vector2.one * 30, 
+            title : "+", 
+            anchor : JAnchor.TopLeft, 
+            action : () => { AttachInterface.ShowContextMenu(Nodes, this, NodeRect.min); }
+            ).Draw();
     }
 }

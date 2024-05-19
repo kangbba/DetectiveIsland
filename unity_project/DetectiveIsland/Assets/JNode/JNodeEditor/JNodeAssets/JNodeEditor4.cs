@@ -283,7 +283,7 @@ public class JNodeEditor4 : EditorWindow
                 }
                 else if (e.button == 1) // Right click for context menu
                 {
-                    AttachInterface.ProcessContextMenu(Nodes, e.mousePosition);
+                    AttachInterface.ShowContextMenu(Nodes, null, e.mousePosition);
                 }
                 else if (e.button == 2) // Middle mouse button for panning
                 {
