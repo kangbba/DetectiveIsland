@@ -11,19 +11,19 @@
       "$type": "OverlaySentence, Assembly-CSharp",
       "Sentence": "상태가 많이 나아졌네요... ",
       "SentenceTime": 1.0,
-      "AfterDelayTime": 3.0
+      "AfterDelayTime": 1.0
     },
     {
       "$type": "OverlaySentence, Assembly-CSharp",
       "Sentence": "박사님, 하지만 정말 괜찮을까요?",
       "SentenceTime": 1.0,
-      "AfterDelayTime": 3.0
+      "AfterDelayTime": 1.0
     },
     {
       "$type": "OverlaySentence, Assembly-CSharp",
       "Sentence": "모든 가능성을 고려했습니다.",
       "SentenceTime": 1.0,
-      "AfterDelayTime": 3.0
+      "AfterDelayTime": 1.0
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -50,7 +50,7 @@
       "$type": "OverlayPicture, Assembly-CSharp",
       "PictureID": 1,
       "EffectID": 2,
-      "EffectTime": 1.0
+      "EffectTime": 0.5
     },
     {
       "$type": "Dialogue, Assembly-CSharp",
@@ -258,11 +258,6 @@
           "$type": "Line, Assembly-CSharp",
           "EmotionID": 0,
           "Sentence": "병원에서 나가지 말라고? 하지만 너무 답답한걸.."
-        },
-        {
-          "$type": "Line, Assembly-CSharp",
-          "EmotionID": 0,
-          "Sentence": "우선 주변을 둘러보자."
         }
       ]
     }
