@@ -11,17 +11,17 @@ public static class AttachInterface
 
     private static readonly Dictionary<string, Action<List<Node>, string, Vector2>> nodeActions = new Dictionary<string, Action<List<Node>, string, Vector2>>
     {
-        { "Dialogue", (nodes, parentNodeID, pos) => CreateAndAddNode<DialogueNode>(nodes, parentNodeID, pos) },
-        { "ChoiceSet", (nodes, parentNodeID, pos) => CreateAndAddNode<ChoiceSetNode>(nodes, parentNodeID, pos) },
-        { "ItemDemand", (nodes, parentNodeID, pos) => CreateAndAddNode<ItemDemandNode>(nodes, parentNodeID, pos) },
-        { "CameraAction", (nodes, parentNodeID, pos) => CreateAndAddNode<CameraActionNode>(nodes, parentNodeID, pos) },
-        { "AudioAction", (nodes, parentNodeID, pos) => CreateAndAddNode<AudioActionNode>(nodes, parentNodeID, pos) },
-        { "GainItem", (nodes, parentNodeID, pos) => CreateAndAddNode<GainItemNode>(nodes, parentNodeID, pos) },
-        { "GainPlace", (nodes, parentNodeID, pos) => CreateAndAddNode<GainPlaceNode>(nodes, parentNodeID, pos) },
-        { "GainFriendship", (nodes, parentNodeID, pos) => CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos) },
-        { "ModifyPosition", (nodes, parentNodeID, pos) => CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos) },
-        { "OverlayPicture", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos) },
-        { "OverlaySentence", (nodes, parentNodeID, pos) => CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos) }
+        { "Dialogue",            (nodes, parentNodeID, pos)         =>  CreateAndAddNode<DialogueNode>(nodes, parentNodeID, pos)         },
+        { "ChoiceSet",           (nodes, parentNodeID, pos)         =>  CreateAndAddNode<ChoiceSetNode>(nodes, parentNodeID, pos)        },
+        { "ItemDemand",          (nodes, parentNodeID, pos)         =>  CreateAndAddNode<ItemDemandNode>(nodes, parentNodeID, pos)       },
+        { "CameraAction",        (nodes, parentNodeID, pos)         =>  CreateAndAddNode<CameraActionNode>(nodes, parentNodeID, pos)     },
+        { "AudioAction",         (nodes, parentNodeID, pos)         =>  CreateAndAddNode<AudioActionNode>(nodes, parentNodeID, pos)      },
+        { "GainItem",            (nodes, parentNodeID, pos)         =>  CreateAndAddNode<GainItemNode>(nodes, parentNodeID, pos)         },
+        { "GainPlace",           (nodes, parentNodeID, pos)         =>  CreateAndAddNode<GainPlaceNode>(nodes, parentNodeID, pos)        },
+        { "GainFriendship",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos)   },
+        { "ModifyPosition",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos)   },
+        { "OverlayPicture",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos)   },
+        { "OverlaySentence",     (nodes, parentNodeID, pos)         =>  CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos)  }
     };
 
     public static void ShowContextMenu(List<Node> nodes, Node parentNode, Vector2 mousePos)
