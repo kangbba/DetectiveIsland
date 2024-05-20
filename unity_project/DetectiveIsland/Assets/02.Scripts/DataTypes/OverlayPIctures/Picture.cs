@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PictureData : MonoBehaviour
+public class Picture : SpriteEffector
 {
-    [SerializeField] private SpriteRenderer _SpriteRenderer;
     [SerializeField] private EPictureID _id;
     public EPictureID Id { get => _id; }
-    public SpriteRenderer SpriteRenderer { get => _SpriteRenderer; }
+
+    private void Start(){
+        SpriteRenderer.sortingOrder = 1;
+    }
 }

@@ -18,10 +18,10 @@ MonoBehaviour:
       _hour: 9
       _minute: 0
     _scenarioDatas:
-    - _placeID: 0
+    - _placeID: 1
       _scenarioFile: {fileID: 4900000, guid: b5c04c6ba3e6e48a59b7b58ee3739302, type: 3}
       _isEntered: 1
-      _isExited: 1
+      _isExited: 0
   - _eventTime:
       _date: 2024-04-01
       _hour: 10

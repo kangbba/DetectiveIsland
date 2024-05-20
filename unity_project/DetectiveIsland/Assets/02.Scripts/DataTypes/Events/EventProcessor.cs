@@ -14,43 +14,43 @@ public static class EventProcessor
     private static bool _isMoving = false;
 
 
-    public static async void Move(EPlaceID placeID){
-        if(_isMoving){
+    public static async void MoveToPlace(EPlaceID placeID)
+    {
+        if (_isMoving)
+        {
             Debug.LogWarning("이동중 또다른 Move 호출");
             return;
         }
         _isMoving = true;
         await MoveToPlaceUniTask(placeID);
-        // 이동하는 로직 작성
     }
+
     private static async UniTask MoveToPlaceUniTask(EPlaceID placeID)
     {
         EventPlan eventPlan = EventService.GetEventPlan(EventTimeService.CurEventTime);
         ScenarioData scenarioData = eventPlan.GetScenarioData(placeID);
         bool isEventExist = scenarioData != null;
         Debug.Log($"----------------------------------------LOOP START----------------------------------------");
-        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime.ToString()}");
-        Debug.Log($"장소 이동 : {placeID})");
-        
+        Debug.Log($"현재 시간 : {EventTimeService.CurEventTime}");
+        Debug.Log($"장소 섹션 이동 : {placeID}");
+
         PlaceService.MakePlace(placeID, 1f);
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, .5f);
-        
-        CharacterService.AllCharacterFadeOutAndDestroy(.5f);
 
+        CharacterService.AllCharacterFadeOutAndDestroy(.5f);
         await UniTask.WaitForSeconds(1f);
 
         // AwaitChoices의 결과를 직접 받아 처리
-
-        if(isEventExist)
+        if (isEventExist)
         {
-            Debug.Log("장소로 이동 중 (이벤트가 있는 곳)");
+            Debug.Log("장소 섹션으로 이동 중 (이벤트가 있는 곳)");
             Scenario scenario = ArokaJsonUtils.LoadScenario(scenarioData.ScenarioFile);
             _curScenarioData = scenarioData;
-            if(!scenarioData.IsSolvedAndExited)
+            if (!scenarioData.IsSolvedAndExited)
             {
-                Debug.Log("미 해결 이벤트인경우");
-                if(scenarioData.IsEntered || scenarioData.IsExited)
-                { // 이미 본 이벤트 일때는 상호작용을 통해 이벤트 진입
+                Debug.Log("미 해결 이벤트인 경우");
+                if (scenarioData.IsEntered || scenarioData.IsExited)
+                { // 이미 본 이벤트 일 때는 상호작용을 통해 이벤트 진입
                     Debug.Log("말걸기 상호작용 필요");
                     await ProcessModifyPosition(_curScenarioData.RecentModifyPosition);
                     await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
@@ -61,37 +61,41 @@ public static class EventProcessor
                 Debug.Log("이 이벤트를 IsExited 성공");
                 scenarioData.IsExited = true;
 
-                //이 시나리오 태스크가 끝난 후 해결상태가 되었다면 시간 흘려보내기
-                if(scenarioData.IsSolved)
+                // 이 시나리오 태스크가 끝난 후 해결 상태가 되었다면 시간 흘려보내기
+                if (scenarioData.IsSolved)
                 {
-                    Debug.Log("시나리오를 통해 시나리오의 통과조건을 완수했다!");
+                    Debug.Log("시나리오를 통해 시나리오의 통과 조건을 완수했다!");
                     CharacterService.AllCharacterFadeOutAndDestroy(1f);
                     await UniTask.WaitForSeconds(1f);
-                    if(eventPlan.IsAllSolved()){
-                        Debug.Log("이 시간대의 모든 이벤트가 해결 되었으므로 시간을 흘려보내겠다.");
+                    if (eventPlan.IsAllSolved())
+                    {
+                        Debug.Log("이 시간대의 모든 이벤트가 해결되었으므로 시간을 흘려보내겠다.");
                         EventTimeService.SetEventTimeToNext(EventTimeService.CurEventTime);
                     }
-                    else{
-                        Debug.Log("하지만 모든 이벤트가 해결된것은 아닌것같다");
-
+                    else
+                    {
+                        Debug.Log("하지만 모든 이벤트가 해결된 것은 아닌 것 같다");
                     }
                 }
             }
-            else{
-                Debug.Log("이미 해결되고 시나리오르 다 본 장소임");
+            else
+            {
+                Debug.Log("이미 해결되고 시나리오를 다 본 장소임");
             }
         }
-        else{
-            Debug.Log("장소로 이동 중 (이벤트가 없는 곳)");
+        else
+        {
+            Debug.Log("장소 섹션으로 이동 중 (이벤트가 없는 곳)");
         }
 
-        Debug.Log("장소버튼 ON");
-        UIManager.SetPlaceUIState(EPlaceUIPanelState.NormalMode, .5f);
+        Debug.Log("장소 버튼 ON");
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigatelMode, .5f);
         await UniTask.WaitForSeconds(.5f);
 
         _isMoving = false;
         Debug.Log($"----------------------------------------LOOP END {placeID}----------------------------------------");
     }
+
 
     
     //시나리오 Task 구조
@@ -190,7 +194,7 @@ public static class EventProcessor
         // modifyPosition.CharacterPositions 리스트를 순회하며 등장 캐릭터를 생성
         foreach (CharacterPosition characterPosition in modifyPosition.CharacterPositions)
         {
-            Vector3 targetLocalPos = CharacterService.GetLocalPosByPositionID(characterPosition.PositionID) + Vector3.right * PlaceService.CurPlace.CurPagePlan.XPoint;
+            Vector3 targetLocalPos = CharacterService.GetLocalPosByPositionID(characterPosition.PositionID) + Vector3.right * PlaceService.CurPlace.CurPlaceSection.SectionCenterX;
             if(CharacterService.GetInstancedCharacter(characterPosition.CharacterID) == null){
                 CharacterService.MakeCharacter(characterPosition.CharacterID, EChacterEmotion.Noraml, targetLocalPos, 1f);
             }

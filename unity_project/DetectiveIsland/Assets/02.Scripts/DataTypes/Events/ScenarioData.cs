@@ -14,7 +14,6 @@ public class ScenarioData{
     [SerializeField] private List<EventAction> _solveConditions = new List<EventAction>();
     [SerializeField] private List<EventAction> _doneEventActions = new List<EventAction>(); // 완료된 이벤트 액션을 추적합니다.
 
-    public   EPlaceID           PlaceID             {     get => _placeID;         }
     public   TextAsset        ScenarioFile        {     get => _scenarioFile;    }
     
     public ModifyPosition RecentModifyPosition { get; set; }
@@ -22,6 +21,8 @@ public class ScenarioData{
     public bool IsEntered { get => _isEntered; set => _isEntered = value; }
     public bool IsExited { get => _isExited; set => _isExited = value; }
 
+    public EPlaceID PlaceID { get => _placeID;  }
+    
     // 외부에서 이 메소드를 호출하여 완료된 액션을 등록
     public void ExecuteActionThenAdd(EventAction actionToExecute)
     {

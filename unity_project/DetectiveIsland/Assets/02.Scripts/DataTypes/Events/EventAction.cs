@@ -65,7 +65,7 @@ public class MoveToPlaceAction : IAction
 
     public void Execute()
     {
-        EventProcessor.Move(_placeID);
+        EventProcessor.MoveToPlace(_placeID);
         Debug.Log("Moving to place: " + _placeID);
     }
 }

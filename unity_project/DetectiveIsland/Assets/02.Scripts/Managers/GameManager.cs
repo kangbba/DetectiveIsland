@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
         EventService.AllEventReset();
         
-        EventProcessor.Move(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
+        EventProcessor.MoveToPlace(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
     }
 
     private void Initialize()

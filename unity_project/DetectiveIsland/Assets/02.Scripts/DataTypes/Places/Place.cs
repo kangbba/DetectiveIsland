@@ -1,73 +1,87 @@
-using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
-using UnityEngine;
+
 
 [System.Serializable]
-public class PagePlan
+public class PlaceSection
 {
-    [SerializeField] private float _xPoint;
-    [SerializeField] private List<PlaceButton> _placeBtns;
-    public float XPoint { get => _xPoint; }
+    [SerializeField] private float _sectionCenterX;
+
+    public float SectionCenterX => _sectionCenterX;
 }
-public class Place : MonoBehaviour
+public class Place : SpriteEffector
 {
-    [SerializeField] private SpriteRenderer _spriteRend;
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
-    [SerializeField] private int _initialPageIndex;
-    [SerializeField] private List<PagePlan> _pagePlans = new List<PagePlan>();
-    private int _curPageIndex;
+    [SerializeField] private List<PlaceSection> _placeSections = new List<PlaceSection>();
+    private List<PlacePoint> _placePoints;
+    private PlaceSection _curPlaceSection;
 
-    public bool IsPreviousPageExist => _pagePlans.Count > 1 && (_curPageIndex > 0);
-    public bool IsNextPageExist => _pagePlans.Count > 1 && (_curPageIndex  < _pagePlans.Count - 1);
+    public bool IsPreviousSectionExist => _placeSections.Count > 1 && (_curPlaceSection != _placeSections.First());
+    public bool IsNextSectionExist => _placeSections.Count > 1 && (_curPlaceSection != _placeSections.Last());
 
     public EPlaceID PlaceID => _placeID;
     public string PlaceNameForUser => _placeNameForUser;
 
-    public List<PagePlan> PagePlans => _pagePlans;
-    public PagePlan CurPagePlan => _pagePlans[_curPageIndex];
+    public List<PlaceSection> PlaceSections => _placeSections;
+    public PlaceSection CurPlaceSection => _curPlaceSection;
+    public List<PlacePoint> PlacePoints => _placePoints;
 
-    public int CurPageIndex { get => _curPageIndex; }
-
-    public void Initialize()
+    private void Start()
     {
-        _spriteRend.sortingOrder = -10;
-        _spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(0f), 0f);
-        SetPage(_initialPageIndex);
+        _placePoints = transform.GetComponentsInChildren<PlacePoint>().ToList();
+        _placeSections = _placeSections.OrderBy(section => section.SectionCenterX).ToList();
+        SpriteRenderer.sortingOrder = -1;
     }
 
-    public void SetNextPage(){
-        if(!IsNextPageExist){
+    public void Initialize(int initialPlaceSectionIndex)
+    {
+        SetPlaceSection(initialPlaceSectionIndex);
+    }
+
+    public void SetNextPlaceSection()
+    {
+        if (!IsNextSectionExist)
+        {
             Debug.LogWarning("다음 페이지가 없습니다");
             return;
         }
-        SetPage(_curPageIndex + 1);
+        SetPlaceSection(_placeSections.IndexOf(_curPlaceSection) + 1);
     }
-    public void SetPreviousPage(){
-        if(!IsPreviousPageExist){
+
+    public void SetPreviousPlaceSection()
+    {
+        if (!IsPreviousSectionExist)
+        {
             Debug.LogWarning("이전 페이지가 없습니다");
             return;
         }
-        SetPage(_curPageIndex - 1);
+        SetPlaceSection(_placeSections.IndexOf(_curPlaceSection) - 1);
     }
-    public void SetPage(int targetPageIndex){
-        _curPageIndex = targetPageIndex;
-        CameraController.MoveX(CurPagePlan.XPoint, 1f);
+
+    public void SetPlaceSection(int placeSectionIndex)
+    {
+        if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
+        {
+            Debug.LogWarning($"Index {placeSectionIndex}에 해당하는 섹션을 찾을 수 없습니다");
+            return;
+        }
+
+        PlaceSection targetPlaceSection = _placeSections[placeSectionIndex];
+
+        _curPlaceSection = targetPlaceSection;
+        CameraController.MoveX(_curPlaceSection.SectionCenterX, 1f);
     }
-    public void FadeIn(float totalTime){
-        _spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(1f), totalTime);
+
+    public void StartDetectingPlacePoints(bool isDetecting)
+    {
+        foreach (PlacePoint placePoint in _placePoints)
+        {
+            placePoint.StartDetectingMouseOver(isDetecting);
+        }
     }
-    public void FadeOut(float totalTime){
-        _spriteRend.EaseSpriteColor(Color.white.ModifiedAlpha(0f), totalTime);
-    }
-    public void FadeInFromStart(float totalTime){
-        FadeOut(0f);
-        FadeIn(totalTime);
-    }
-    public void FadeOutAndDestroy(float totalTime){
-        _spriteRend.EaseSpriteColor(_spriteRend.color.ModifiedAlpha(0f), totalTime);
-    }
+
 }
