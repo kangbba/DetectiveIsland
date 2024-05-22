@@ -150,8 +150,6 @@ public static class NodeService
     }
 }
 
-
-
 public static class Texture
 {
     public static Texture2D CircleTexture { get; private set; }

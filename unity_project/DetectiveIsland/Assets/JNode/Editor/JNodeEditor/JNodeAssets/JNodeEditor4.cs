@@ -14,7 +14,7 @@ using UnityEngine.EventSystems;
 public class JNodeEditor4 : EditorWindow
 {
     private static string lastSavedSnapshot;
-    private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon.png";  // 아이콘 파일 위치
+    private static readonly string IconPath = "Assets/Editor/Icons/JNodeIcon2.png";  // 아이콘 파일 위치
     private static JNodeInstance jNodeInstance;
 
     private Vector2 _lastMousePositionDrag;
@@ -508,7 +508,7 @@ public class JNodeEditor4 : EditorWindow
     public static void LoadJNodeEditorWindow(string filePath, string _recentOpenFileName)
     {
         Debug.Log("Load JNode   |   " + _recentOpenFileName + "    |    " + filePath);
-        JNode jNode = ArokaJsonUtils.LoadJNode(filePath);
+        JNode jNode = JNodeUtils.LoadJNode(filePath);
         Debug.Log(jNode.Nodes.Count);
         jNodeInstance.Initialize(filePath, _recentOpenFileName, jNode);
 
@@ -617,7 +617,7 @@ public class JNodeEditor4 : EditorWindow
                     Debug.Log(elements[i]);
                 }
                 // Save the scenario object as a JSON file at the specified path
-                ArokaJsonUtils.SaveScenario(scenario, path);
+                JNodeUtils.SaveScenario(scenario, path);
                 Debug.Log("Nodes saved to JSON: " + path);
             }
         }
@@ -683,7 +683,7 @@ public class JNodeEditor4 : EditorWindow
     public static void Save(string path)
     {
         JNode jNode = new JNode(jNodeInstance.jNode.Nodes);
-        ArokaJsonUtils.SaveJNode(jNode, path);
+        JNodeUtils.SaveJNode(jNode, path);
         UpdateLastSavedSnapshot();  
         Debug.Log($"<color=green>Save Complete</color> " + RecentOpenFileName);
 
@@ -857,7 +857,6 @@ public class JNodeEditor4 : EditorWindow
 
         // Load the newly created .jnode file as an asset
         TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-
         
         var iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(IconPath);
         if (iconTexture != null && asset != null)
