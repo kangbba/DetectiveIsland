@@ -1,0 +1,92 @@
+{
+  "$type": "JNode, Assembly-CSharp",
+  "Nodes": [
+    {
+      "$type": "StartNode, Assembly-CSharp",
+      "IsStartNode": true,
+      "Title": "StartNode",
+      "NodeID": "5878783c-4703-48c1-9bcb-ac3e60b27c74",
+      "NextNodeID": "9ce445ff-0592-4c37-bd1e-130d76ff8317",
+      "ParentNodeID": null,
+      "RecentRectPos": {
+        "x": 1022.0,
+        "y": 248.0
+      },
+      "RecentRectSize": {
+        "x": 300.0,
+        "y": 100.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "5878783c-4703-48c1-9bcb-ac3e60b27c74"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "5878783c-4703-48c1-9bcb-ac3e60b27c74"
+      }
+    },
+    {
+      "$type": "DialogueNode, Assembly-CSharp",
+      "CharacterID": 0,
+      "LineNodes": [
+        {
+          "$type": "LineNode, Assembly-CSharp",
+          "EmotionID": 3,
+          "Sentence": "특별한 정보는 없어보인다.",
+          "IsStartNode": false,
+          "Title": "",
+          "NodeID": "3861a797-31d8-42c7-b401-c483b0d9d91b",
+          "NextNodeID": null,
+          "ParentNodeID": "9ce445ff-0592-4c37-bd1e-130d76ff8317",
+          "RecentRectPos": {
+            "x": 743.0,
+            "y": 528.0
+          },
+          "RecentRectSize": {
+            "x": 400.0,
+            "y": 100.0
+          },
+          "IsSelected": false,
+          "NextConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": true,
+            "NodeID": "3861a797-31d8-42c7-b401-c483b0d9d91b"
+          },
+          "PreviousConnectingPoint": {
+            "$type": "ConnectingPoint, Assembly-CSharp",
+            "IsChildConnectingPoint": false,
+            "NodeID": "3861a797-31d8-42c7-b401-c483b0d9d91b"
+          }
+        }
+      ],
+      "IsFolded": false,
+      "IsStartNode": false,
+      "Title": "DialogueNode",
+      "NodeID": "9ce445ff-0592-4c37-bd1e-130d76ff8317",
+      "NextNodeID": null,
+      "ParentNodeID": "",
+      "RecentRectPos": {
+        "x": 718.0,
+        "y": 428.0
+      },
+      "RecentRectSize": {
+        "x": 450.0,
+        "y": 290.0
+      },
+      "IsSelected": false,
+      "NextConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": true,
+        "NodeID": "9ce445ff-0592-4c37-bd1e-130d76ff8317"
+      },
+      "PreviousConnectingPoint": {
+        "$type": "ConnectingPoint, Assembly-CSharp",
+        "IsChildConnectingPoint": false,
+        "NodeID": "9ce445ff-0592-4c37-bd1e-130d76ff8317"
+      }
+    }
+  ]
+}

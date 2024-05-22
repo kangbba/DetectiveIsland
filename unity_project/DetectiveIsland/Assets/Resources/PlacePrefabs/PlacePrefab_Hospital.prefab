@@ -96,14 +96,8 @@ MonoBehaviour:
   _placeID: 1
   _placeNameForUser: "\uBCD1\uC6D0 \uB0B4\uBD80"
   _placeSections:
-  - _placeSectionID: 1
-    _sectionCenterX: -30.75
-    _placePoints:
-    - {fileID: 3367709180632879848}
-  - _placeSectionID: 2
-    _sectionCenterX: 13
-    _placePoints:
-    - {fileID: 0}
+  - _sectionCenterX: -30.75
+  - _sectionCenterX: 13
 --- !u!1 &7258867082572516415
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +208,7 @@ Transform:
   m_GameObject: {fileID: 8437829678835027864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.8, y: 3.3, z: 0}
+  m_LocalPosition: {x: 4.8, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -99,12 +99,12 @@ public static class EventTimeService
     {
         return eventPlans.Where(plan => CompareTime(plan.EventTime, inputTime) == timeRelation && plan.EventTime.Date == inputTime.Date).ToList();
     }
-    public static void SetEventTimeToNext(EventTime standardEventTime){
-        EventPlan nextEventPlan = EventService.GetNextEventPlan(standardEventTime);
-        if(nextEventPlan != null){
-            EventTime nextEventTime = nextEventPlan.EventTime;
-            SetCurEventTime(nextEventTime);
-            UIManager.SetEventTime(standardEventTime);
-        }
-    }
+    // public static void SetEventTimeToNext(EventTime standardEventTime){
+    //     EventPlan nextEventPlan = EventService.GetNextEventPlan(standardEventTime);
+    //     if(nextEventPlan != null){
+    //         EventTime nextEventTime = nextEventPlan.EventTime;
+    //         SetCurEventTime(nextEventTime);
+    //         UIManager.SetEventTime(standardEventTime);
+    //     }
+    // }
 }

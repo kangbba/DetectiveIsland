@@ -3,7 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
+using Cysharp.Threading.Tasks;
+using Aroka.JsonUtils;
 
+[System.Serializable]
+public class EventPlan{
+    [SerializeField] private int _placeSectionIndex;
+    [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9 , 0); 
+    [SerializeField] private ScenarioData _scenarioData;
+
+    public Scenario LoadScenario(){
+       Scenario scenario = ArokaJsonUtils.LoadScenario(_scenarioData.ScenarioFile);
+       return scenario;
+    }   
+
+    public EventTime EventTime { get => _eventTime; }
+}
 
 [System.Serializable]
 public class PlaceSection
@@ -17,7 +32,11 @@ public class Place : SpriteEffector
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
     [SerializeField] private List<PlaceSection> _placeSections = new List<PlaceSection>();
+    [SerializeField] private List<EventPlan> _eventPlans = new List<EventPlan>();
+
+
     private List<PlacePoint> _placePoints;
+
     private PlaceSection _curPlaceSection;
 
     public bool IsPreviousSectionExist => _placeSections.Count > 1 && (_curPlaceSection != _placeSections.First());
@@ -74,8 +93,16 @@ public class Place : SpriteEffector
 
         _curPlaceSection = targetPlaceSection;
         CameraController.MoveX(_curPlaceSection.SectionCenterX, 1f);
-    }
 
+        PlayEventIfExists();
+    }
+    private void PlayEventIfExists(){
+        EventPlan eventPlan = GetEventPlan(EventTimeService.CurEventTime);
+        if(eventPlan != null){
+            Scenario scenario = eventPlan.LoadScenario();
+            EventProcessor.ProcessScenario(scenario);
+        }
+    }
     public void StartDetectingPlacePoints(bool isDetecting)
     {
         foreach (PlacePoint placePoint in _placePoints)
@@ -83,5 +110,8 @@ public class Place : SpriteEffector
             placePoint.StartDetectingMouseOver(isDetecting);
         }
     }
-
+    public EventPlan GetEventPlan(EventTime eventTime)
+    {
+        return _eventPlans.FirstOrDefault(plan => plan.EventTime.Equals(eventTime));
+    }
 }
