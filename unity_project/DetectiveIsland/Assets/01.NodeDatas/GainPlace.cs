@@ -5,14 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class GainPlace : Element
 {
+    private bool _isGain;
+    private EPlaceID _id;
 
-    public GainPlace(bool isGain, string id)
+    public GainPlace(bool isGain, EPlaceID id)
     {
-        IsGain = isGain;
-        ID = id;
+        _isGain = isGain;
+        _id = id;
     }
 
-
-    public bool IsGain;
-    public string ID;
+    public EPlaceID ID { get => _id; }
+    public bool IsGain { get => _isGain; }
 }

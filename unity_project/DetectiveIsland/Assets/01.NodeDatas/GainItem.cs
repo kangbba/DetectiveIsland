@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class GainItem : Element
 {
-
     public GainItem(bool isGain, EItemID id, int amount)
     {
         IsGain = isGain;

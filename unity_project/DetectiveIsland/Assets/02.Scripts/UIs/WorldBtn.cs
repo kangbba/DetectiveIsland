@@ -17,7 +17,6 @@ public class WorldBtn : MonoBehaviour
     [SerializeField] private Sprite _clickedSprite;
 
     protected bool _isMouseOver = false;
-    protected bool _isRunning = false; // 중복 실행을 막기 위한 플래그
     protected bool _isDetecting = false; // 마우스 오버 감지 플래그
     protected float _hoverRadius = 3f; // 반경 크기 설정
     protected Camera _mainCamera;
@@ -39,7 +38,7 @@ public class WorldBtn : MonoBehaviour
         {
             CheckMouseOver();
 
-            if (Input.GetMouseButtonDown(0) && _isMouseOver && !_isRunning)
+            if (Input.GetMouseButtonDown(0) && _isMouseOver)
             {
                 OnClicked();
             }

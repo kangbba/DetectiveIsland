@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
+  _noneSprite: {fileID: 0}
+  _normalSprite: {fileID: 0}
+  _mouseOverSprite: {fileID: 0}
+  _clickedSprite: {fileID: 0}
   _scenarioJsonFile: {fileID: 4900000, guid: 913a22066b02347da8972585c3955a46, type: 3}
 --- !u!1 &4583544520979190535
 GameObject:
@@ -94,16 +99,15 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 5535754164890447236}
   _placeID: 2
   _placeNameForUser: "\uD14C\uC2A4"
-  _placeSections:
+  _sections:
   - _sectionCenterX: 0
-  _eventPlans:
-  - _placeSectionIndex: 0
-    _eventTime:
-      _date: 2024-04-01
-      _hour: 10
-      _minute: 0
-    _scenarioFile: {fileID: 4900000, guid: 913a22066b02347da8972585c3955a46, type: 3}
-    _placePointsParent: {fileID: 270066623022554668}
+    _eventPlan:
+      _eventTime:
+        _date: 2024-04-01
+        _hour: 10
+        _minute: 0
+      _scenarioFile: {fileID: 0}
+    _placePointsParent: {fileID: 0}
 --- !u!1 &7258867082572516415
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,4 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
+  _noneSprite: {fileID: 0}
+  _normalSprite: {fileID: 0}
+  _mouseOverSprite: {fileID: 0}
+  _clickedSprite: {fileID: 0}
   _scenarioJsonFile: {fileID: 4900000, guid: 913a22066b02347da8972585c3955a46, type: 3}

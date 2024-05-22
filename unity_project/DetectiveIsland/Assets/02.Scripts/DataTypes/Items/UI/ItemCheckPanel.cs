@@ -15,7 +15,7 @@ public class ItemCheckPanel : ItemPanel
     }
     public void OpenPanel()
     {
-        List<ItemData> itemDatas = ItemService.GetOwnItemDatas();
+        List<ItemData> itemDatas = null;
         base.Initialize(itemDatas);
         _arokaAnimParent.SetOnAllChildren(true, .3f);
     }

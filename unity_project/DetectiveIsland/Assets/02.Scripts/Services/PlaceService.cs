@@ -29,7 +29,7 @@ public static class PlaceService
 
     private static Place MakePlace(EPlaceID placeID, float totalTime)
     {
-        Place placePrefab = PlaceService.GetPlacePrefab(placeID);
+        Place placePrefab = GetPlacePrefab(placeID);
         if (placePrefab == null)
         {
             Debug.LogWarning($"{placeID}에 해당하는 Place Prefab 찾을 수 없음");

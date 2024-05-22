@@ -5,15 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class GainFriendship : Element
 {
-
-    public GainFriendship(bool isGain, string id, int amount)
+    
+    private bool _isGain;
+    private ECharacterID _id;
+    private int _amount;
+    public GainFriendship(bool isGain, ECharacterID id, int amount)
     {
-        IsGain = isGain;
-        CharacterID = id;
-        Amount = amount;
+        _isGain = isGain;
+        _id = id;
+        _amount = amount;
     }
 
-    public bool IsGain;
-    public string CharacterID;
-    public int Amount;
+    public bool IsGain { get => _isGain; }
+    public ECharacterID ID { get => _id; }
+    public int Amount { get => _amount; }
 }

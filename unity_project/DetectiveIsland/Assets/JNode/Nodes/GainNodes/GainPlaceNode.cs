@@ -13,8 +13,8 @@ public class GainPlaceNode : Node
     public override float Width { get; set; }
     public override float Height { get; set; }
 
-
-    public GainPlace GainPlace = new GainPlace(true, "");
+    public EPlaceID ID;
+    public bool IsGain;
 
     public const float STANDARD_SPACING = 20;
 
@@ -30,7 +30,7 @@ public class GainPlaceNode : Node
 
     public override Element ToElement()
     {
-        return GainPlace;
+        return new GainPlace(IsGain, ID);
     }
     public override void DrawNode()
     {
@@ -38,10 +38,10 @@ public class GainPlaceNode : Node
         Width = 300;//Default
         Height = UPPER_MARGIN;
 
-        GainPlace.IsGain= (bool)JInterface.SimpleField
+        IsGain = (bool)JInterface.SimpleField
         (
             title: "IsGain : ",
-            value: GainPlace.IsGain,
+            value: IsGain,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,
@@ -49,10 +49,10 @@ public class GainPlaceNode : Node
         );
 
         Height += STANDARD_SPACING;
-        GainPlace.ID = (string)JInterface.SimpleField
+        ID = (EPlaceID)JInterface.SimpleField
         (
             title: "ID : ",
-            value: GainPlace.ID,
+            value: ID,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),
             labelWidth: 100,
             fieldWidth: 80,

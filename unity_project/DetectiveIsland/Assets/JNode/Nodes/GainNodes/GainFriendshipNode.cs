@@ -10,9 +10,12 @@ public class GainFriendshipNode : Node
     public const float BOTTOM_MARGIN = 30; 
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
-    public GainFriendship GainFriendship = new GainFriendship(true, "", 10);
     public override float Width { get; set; }
     public override float Height { get; set; }
+
+    public bool IsGain;
+    public ECharacterID ID;
+    public int Amount;
 
     public override Node Clone()
     {
@@ -27,7 +30,7 @@ public class GainFriendshipNode : Node
     }
     public override Element ToElement()
     {
-        return GainFriendship;
+        return new GainFriendship(IsGain, ID, Amount);
     }
     public override void DrawNode()
     {
@@ -36,9 +39,9 @@ public class GainFriendshipNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         
-        GainFriendship.IsGain = (bool)JInterface.SimpleField
+        IsGain = (bool)JInterface.SimpleField
         (
-            value : GainFriendship.IsGain,
+            value : IsGain,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth : 100,
@@ -48,9 +51,9 @@ public class GainFriendshipNode : Node
 
         Height += 20;
 
-        GainFriendship.CharacterID = (string)JInterface.SimpleField
+        ID = (ECharacterID)JInterface.SimpleField
         (
-            value : GainFriendship.CharacterID,
+            value : ID,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "CharacterID : ",
             labelWidth : 100,
@@ -60,9 +63,9 @@ public class GainFriendshipNode : Node
 
         Height += 20;
 
-        GainFriendship.Amount = (int)JInterface.SimpleField
+        Amount = (int)JInterface.SimpleField
         (
-            value : GainFriendship.Amount,
+            value : Amount,
             pos : new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth : 100,

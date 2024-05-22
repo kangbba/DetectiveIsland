@@ -11,8 +11,9 @@ public class GainItemNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-
-    public GainItem GainItem = new GainItem(true, EItemID.None, 1);
+    public bool IsGain;
+    public EItemID ID;
+    public int Amount;
 
     public override float Width { get; set; }
     public override float Height { get; set; }
@@ -31,7 +32,7 @@ public class GainItemNode : Node
 
     public override Element ToElement()
     {
-        return GainItem;
+        return new GainItem(IsGain, ID, Amount);
     }
     public override void DrawNode()
     {
@@ -39,8 +40,8 @@ public class GainItemNode : Node
         Width = 300;
         Height = UPPER_MARGIN;
         float standardFieldHeight = 20;
-        GainItem.IsGain = (bool)JInterface.SimpleField(
-            value: GainItem.IsGain,
+        IsGain = (bool)JInterface.SimpleField(
+            value: IsGain,
             pos: new Vector2(NodeRect.position.x + 10 , NodeRect.position.y + Height),
             title: "IsGain : ",
             labelWidth: 100,
@@ -49,8 +50,8 @@ public class GainItemNode : Node
         );
         Height += standardFieldHeight;
 
-        GainItem.ID = (EItemID)JInterface.SimpleField(
-            value: GainItem.ID,
+        ID = (EItemID)JInterface.SimpleField(
+            value: ID,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Id : ",
             labelWidth: 100,
@@ -59,8 +60,8 @@ public class GainItemNode : Node
         );
         Height += standardFieldHeight;
 
-        GainItem.Amount = (int)JInterface.SimpleField(
-            value: GainItem.Amount,
+        Amount = (int)JInterface.SimpleField(
+            value: Amount,
             pos: new Vector2(NodeRect.position.x + 10, NodeRect.position.y + Height),
             title: "Amount : ",
             labelWidth: 100,

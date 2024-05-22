@@ -25,6 +25,9 @@ public class PlaceSection
             placePoint.StartDetecting(isDetecting);
         }
     }
+    public void RefreshPlacePoints(){
+
+    }
 }
 
 public class Place : SpriteEffector
@@ -94,7 +97,12 @@ public class Place : SpriteEffector
         EventPlan eventPlanToPlay = CurSection.EventPlan;
         if (eventPlanToPlay != null && EventTimeService.IsCurrentTimeEquals(eventPlanToPlay.EventTime))
         {
-            await EventProcessor.PlayEvent(eventPlanToPlay);
+            Scenario scenario = EventService.LoadScenario(eventPlanToPlay.ScenarioFile);
+            if(scenario == null){
+                Debug.Log("해당 eventplan엔 시나리오가 없으므로 생략");
+                return;
+            }
+            await EventProcessor.PlayEvent(scenario);
             CurSection.StartDetectingPlacePoints(true);
         }
     }

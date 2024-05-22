@@ -45,13 +45,11 @@ public static class EventProcessor
         }
     }
     
-    public static async UniTask PlayEvent(EventPlan eventPlanToPlay)
+    public static async UniTask PlayEvent(Scenario scenario)
     {
-        Debug.Log($"이벤트 시작: {eventPlanToPlay.EventTime.Date} - {eventPlanToPlay.EventTime.Hour}:{eventPlanToPlay.EventTime.Minute}");
-        Debug.Log($"시나리오 파일: {eventPlanToPlay.ScenarioFile.name}");
 
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
-        await ProcessScenario(EventService.LoadScenario(eventPlanToPlay.ScenarioFile));
+        await ProcessScenario(scenario);
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
 
         Debug.Log("이벤트 종료");
@@ -71,10 +69,10 @@ public static class EventProcessor
     public static async UniTask PlaySectionScenario(Scenario scenario){
 
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
-        UIManager.OpenDialoguePanel(0f);
+        UIManager.OpenDialoguePanel(.1f);
         List<Element> elements = scenario.Elements;
         await ProcessElementsTask(elements);
-        UIManager.CloseDialoguePanel(0f);
+        UIManager.CloseDialoguePanel(.1f);
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
     }
 
@@ -286,6 +284,7 @@ public static class EventProcessor
     }
     public static async UniTask GainPlaceTask(GainPlace gainPlace)
     {
+        OwnershipService.SetPlaceOwnership(gainPlace.ID, true);
         await UniTask.WaitForSeconds(1f);
     }
     public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)

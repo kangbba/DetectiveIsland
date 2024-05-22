@@ -25,15 +25,6 @@ public class EventTime
         _hour = hour;
         _minute = minute;
     }
-    // 내용 비교를 위한 Equals 메서드 재정의
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        EventTime other = (EventTime)obj;
-        return _date == other.Date && _hour == other.Hour && _minute == other.Minute;
-    }
     public override int GetHashCode()
     {
         return _date.GetHashCode() ^ _hour.GetHashCode() ^ _minute.GetHashCode();

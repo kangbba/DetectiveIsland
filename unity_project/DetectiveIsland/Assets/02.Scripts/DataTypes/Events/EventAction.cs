@@ -33,7 +33,7 @@ public class CollectItemAction : IAction
 
     public void Execute()
     {
-        ItemService.OwnItem(_itemID, true);
+        OwnershipService.SetItemOwnership(_itemID, true);
         Debug.Log("Collecting item: " + _itemID);
     }
 }
@@ -49,7 +49,7 @@ public class GiveItemAction : IAction
 
     public void Execute()
     {
-        ItemService.OwnItem(_itemID, false);
+        OwnershipService.SetItemOwnership(_itemID, false);
         Debug.Log("Giving item: " + _itemID);
     }
 }
