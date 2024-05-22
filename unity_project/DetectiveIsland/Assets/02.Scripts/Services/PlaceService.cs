@@ -50,6 +50,10 @@ public static class PlaceService
     }
 
     public static void MoveToPlace(EPlaceID placeID, int sectionIndex){
+
+        if(_curPlace != null){
+            _curPlace.FadeOutAndDestroy(1f);
+        }
         Place place = MakePlace(placeID, 1f);
         place.Initialize(sectionIndex);
         _curPlace = place;

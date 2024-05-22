@@ -7,7 +7,10 @@ using UnityEngine;
 
 
 public static class EventService
-{
+{   
+    public static void Load(){
+        
+    }
     public static Scenario LoadScenario(TextAsset jsonTextAsset)
     {
         if (jsonTextAsset == null)

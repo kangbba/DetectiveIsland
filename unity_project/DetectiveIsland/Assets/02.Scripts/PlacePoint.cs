@@ -54,21 +54,6 @@ public class PlacePoint : MonoBehaviour
         if (_isMouseOver && !_isRunning)
         {
             Debug.Log("마우스 클릭");
-            StartScenarioTask().Forget();
-        }
-    }
-
-    private async UniTaskVoid StartScenarioTask()
-    {
-        _isRunning = true;
-        try
-        {
-            Scenario scenario = EventService.LoadScenario(_jNodeFile);
-            await EventProcessor.ScenarioTask(scenario);
-        }
-        finally
-        {
-            _isRunning = false;
         }
     }
 }

@@ -17,14 +17,7 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 300;
         Initialize();
-        EventTime startingEventTime = EventService.GetFirstEventPlan().EventTime;
-        EventTimeService.SetCurEventTime(startingEventTime);
-
-
-
-        EventService.AllEventReset();
-        
-        EventProcessor.MoveToPlace(EventService.GetFirstEventPlan().ScenarioDatas[0].PlaceID);
+        EventTimeService.SetCurEventTime("2024-04-01", 9 , 0);
     }
 
     private void Initialize()
@@ -33,7 +26,6 @@ public class GameManager : MonoBehaviour
         CameraController.Load();
         UIManager.Load();
         WorldManager.Load();
-        //
         EventTimeService.Load();
         EventService.Load();
         ItemService.Load();

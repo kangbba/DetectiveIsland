@@ -68,31 +68,6 @@ public static class JNodeUtils
         Debug.Log("File saved: " + fileName);
     }
 
-    // 파일 경로를 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(string fileName)
-    {
-        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-        if (!File.Exists(fullPath))
-        {
-            Debug.LogError($"File not found: {fullPath}");
-            return null;
-        }
-        string json = File.ReadAllText(fullPath);
-        return DeserializeScenario(json);
-    }
-    // TextAsset을 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(TextAsset jsonTextAsset)
-    {
-        if (jsonTextAsset == null)
-        {
-            Debug.LogError("No TextAsset provided.");
-            return null;
-        }
-
-        return DeserializeScenario(jsonTextAsset.text);
-    }
-
-
     // JSON 문자열을 역직렬화하여 Scenario 객체를 반환합니다.
     private static Scenario DeserializeScenario(string json)
     {

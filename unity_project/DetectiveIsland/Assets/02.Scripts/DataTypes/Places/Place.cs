@@ -10,13 +10,8 @@ public class EventPlan{
     [SerializeField] private int _placeSectionIndex;
     [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9 , 0); 
     [SerializeField] private ScenarioData _scenarioData;
-
-    public Scenario LoadScenario(){
-       Scenario scenario = EventService.LoadScenario(_scenarioData.ScenarioFile);
-       return scenario;
-    }   
-
     public EventTime EventTime { get => _eventTime; }
+    public ScenarioData ScenarioData { get => _scenarioData; }
 }
 
 [System.Serializable]
@@ -98,7 +93,7 @@ public class Place : SpriteEffector
     private void PlayEventIfExists(){
         EventPlan eventPlan = GetEventPlan(EventTimeService.CurEventTime);
         if(eventPlan != null){
-            Scenario scenario = eventPlan.LoadScenario();
+            Scenario scenario = EventService.LoadScenario(eventPlan.ScenarioData.ScenarioFile);
             EventProcessor.ProcessScenario(scenario);
         }
     }

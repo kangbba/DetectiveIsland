@@ -57,15 +57,17 @@ public class GiveItemAction : IAction
 public class MoveToPlaceAction : IAction
 {
     private EPlaceID _placeID;
+    private int _sectionIndex;
 
-    public MoveToPlaceAction(EPlaceID placeID)
+    public MoveToPlaceAction(EPlaceID placeID, int sectionIndex)
     {
         _placeID = placeID;
+        _sectionIndex = sectionIndex;
     }
 
     public void Execute()
     {
-        EventProcessor.MoveToPlace(_placeID);
+        PlaceService.MoveToPlace(_placeID, _sectionIndex);
         Debug.Log("Moving to place: " + _placeID);
     }
 }
