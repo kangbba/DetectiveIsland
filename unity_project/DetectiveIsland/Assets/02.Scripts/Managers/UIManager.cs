@@ -38,9 +38,6 @@ public static class UIManager
         _uiMouseCursor.Initialize(uiPrefab.GetComponent<Canvas>());
         _overlaySentenceDisplayer = uiPrefab.GetComponentInChildren<OverlaySentenceDisplayer>();
 
-
-       // _itemCheckPanelEnterBtn = uiPrefab.GetComponentInChildren<Button>();
-
     }
     //아이템 체크 판넬
     public static void OpenItemOwnPanel(ItemData itemData){

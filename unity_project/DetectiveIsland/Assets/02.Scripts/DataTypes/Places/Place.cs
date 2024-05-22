@@ -5,48 +5,50 @@ using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using Cysharp.Threading.Tasks;
 
-[System.Serializable]
-public class EventPlan{
-    [SerializeField] private int _placeSectionIndex;
-    [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9 , 0); 
-    [SerializeField] private ScenarioData _scenarioData;
-    public EventTime EventTime { get => _eventTime; }
-    public ScenarioData ScenarioData { get => _scenarioData; }
-}
 
 [System.Serializable]
 public class PlaceSection
 {
     [SerializeField] private float _sectionCenterX;
+    [SerializeField] private EventPlan _eventPlan;
+    [SerializeField] private Transform _placePointsParent; 
 
     public float SectionCenterX => _sectionCenterX;
+
+    public EventPlan EventPlan { get => _eventPlan; }
+
+    public void StartDetectingPlacePoints(bool isDetecting)
+    {
+        List<PlacePoint> placePoints = _placePointsParent.GetComponentsInChildren<PlacePoint>().ToList();
+        foreach (PlacePoint placePoint in placePoints)
+        {
+            placePoint.StartDetecting(isDetecting);
+        }
+    }
 }
+
 public class Place : SpriteEffector
 {
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
-    [SerializeField] private List<PlaceSection> _placeSections = new List<PlaceSection>();
-    [SerializeField] private List<EventPlan> _eventPlans = new List<EventPlan>();
+    [SerializeField] private List<PlaceSection> _sections = new List<PlaceSection>();
 
+    private PlaceSection CurSection => _sections[_curSectionIndex];
 
-    private List<PlacePoint> _placePoints;
+    private int _curSectionIndex;
 
-    private PlaceSection _curPlaceSection;
-
-    public bool IsPreviousSectionExist => _placeSections.Count > 1 && (_curPlaceSection != _placeSections.First());
-    public bool IsNextSectionExist => _placeSections.Count > 1 && (_curPlaceSection != _placeSections.Last());
+    public bool IsPreviousSectionExist => _curSectionIndex > 0;
+    public bool IsNextSectionExist => _curSectionIndex < _sections.Count - 1;
 
     public EPlaceID PlaceID => _placeID;
     public string PlaceNameForUser => _placeNameForUser;
 
-    public List<PlaceSection> PlaceSections => _placeSections;
-    public PlaceSection CurPlaceSection => _curPlaceSection;
-    public List<PlacePoint> PlacePoints => _placePoints;
+    public List<PlaceSection> PlaceSections => _sections;
+    public PlaceSection CurPlaceSection => _sections[_curSectionIndex];
+
 
     private void Start()
     {
-        _placePoints = transform.GetComponentsInChildren<PlacePoint>().ToList();
-        _placeSections = _placeSections.OrderBy(section => section.SectionCenterX).ToList();
         SpriteRenderer.sortingOrder = -1;
     }
 
@@ -62,7 +64,7 @@ public class Place : SpriteEffector
             Debug.LogWarning("다음 페이지가 없습니다");
             return;
         }
-        SetPlaceSection(_placeSections.IndexOf(_curPlaceSection) + 1);
+        SetPlaceSection(_curSectionIndex + 1);
     }
 
     public void SetPreviousPlaceSection()
@@ -72,40 +74,28 @@ public class Place : SpriteEffector
             Debug.LogWarning("이전 페이지가 없습니다");
             return;
         }
-        SetPlaceSection(_placeSections.IndexOf(_curPlaceSection) - 1);
+        SetPlaceSection(_curSectionIndex - 1);
     }
 
-    public void SetPlaceSection(int placeSectionIndex)
+    private async void SetPlaceSection(int placeSectionIndex)
     {
-        if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
+        if (placeSectionIndex < 0 || placeSectionIndex >= _sections.Count)
         {
             Debug.LogWarning($"Index {placeSectionIndex}에 해당하는 섹션을 찾을 수 없습니다");
             return;
         }
-
-        PlaceSection targetPlaceSection = _placeSections[placeSectionIndex];
-
-        _curPlaceSection = targetPlaceSection;
-        CameraController.MoveX(_curPlaceSection.SectionCenterX, 1f);
-
-        PlayEventIfExists();
-    }
-    private void PlayEventIfExists(){
-        EventPlan eventPlan = GetEventPlan(EventTimeService.CurEventTime);
-        if(eventPlan != null){
-            Scenario scenario = EventService.LoadScenario(eventPlan.ScenarioData.ScenarioFile);
-            EventProcessor.ProcessScenario(scenario);
+        if(CurSection != null){
+            CurSection.StartDetectingPlacePoints(false);
         }
-    }
-    public void StartDetectingPlacePoints(bool isDetecting)
-    {
-        foreach (PlacePoint placePoint in _placePoints)
+
+        _curSectionIndex = placeSectionIndex;
+        CameraController.MoveX(CurPlaceSection.SectionCenterX, 1f);
+
+        EventPlan eventPlanToPlay = CurSection.EventPlan;
+        if (eventPlanToPlay != null && EventTimeService.IsCurrentTimeEquals(eventPlanToPlay.EventTime))
         {
-            placePoint.StartDetectingMouseOver(isDetecting);
+            await EventProcessor.PlayEvent(eventPlanToPlay);
+            CurSection.StartDetectingPlacePoints(true);
         }
-    }
-    public EventPlan GetEventPlan(EventTime eventTime)
-    {
-        return _eventPlans.FirstOrDefault(plan => plan.EventTime.Equals(eventTime));
     }
 }

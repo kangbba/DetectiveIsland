@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 300;
         Initialize();
         EventTimeService.SetCurEventTime("2024-04-01", 9 , 0);
+        PlaceService.MoveToPlace(EPlaceID.HospitalBedroom, 0);
     }
 
     private void Initialize()
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         EventService.Load();
         ItemService.Load();
         PlaceService.Load();
+        EventProcessor.Load(PlaceService.PlacePrefabs);
         CharacterService.Load();
         PictureService.Load();
         AudioService.Load();

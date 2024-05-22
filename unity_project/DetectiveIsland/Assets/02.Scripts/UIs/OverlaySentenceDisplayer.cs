@@ -26,7 +26,6 @@ public class OverlaySentenceDisplayer : MonoBehaviour
         for (int i = 0; i < sentence.Length; i++)
         {
             _textMeshPro.text += sentence[i];
-            Debug.Log(delayPerCharacter * i);
             await UniTask.WaitForSeconds(delayPerCharacter);
         }
         

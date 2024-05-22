@@ -9,55 +9,51 @@ public enum TimeRelation
     Same,    // 동일
     Future   // 미래
 }
+
+
 public static class EventTimeService
 {
-    private static  EventTime            _curEventTime     =   null;
+    private static EventTime _curEventTime = null;
 
     public static EventTime CurEventTime { get => _curEventTime; }
 
-    public static void Load(){
-
+    public static void Load()
+    {
     }
-    // 날짜 문자열에서 연도를 추출하는 메소드
+
     public static int GetYear(string date)
     {
         return ParseDatePart(date, 0);
     }
 
-    // 날짜 문자열에서 월을 추출하는 메소드
     public static int GetMonth(string date)
     {
         return ParseDatePart(date, 1);
     }
 
-    // 날짜 문자열에서 일을 추출하는 메소드
     public static int GetDay(string date)
     {
         return ParseDatePart(date, 2);
     }
 
-    // 날짜 문자열 파싱을 도와주는 내부 메소드
     private static int ParseDatePart(string date, int index)
     {
         string[] dateParts = date.Split('-');
         if (dateParts.Length != 3)
         {
             Debug.LogError("Invalid date format provided.");
-            return 0; // Or throw an exception or handle the error based on your project needs
+            return 0;
         }
         return int.Parse(dateParts[index]);
     }
 
-    // EventTime 객체 비교 메서드
     public static bool AreEqual(EventTime first, EventTime second)
     {
         return first.Date == second.Date && first.Hour == second.Hour && first.Minute == second.Minute;
     }
 
-    // EventTime 객체의 전후 관계를 비교하여 enum 값으로 반환
     public static TimeRelation CompareTime(EventTime first, EventTime second)
     {
-        // 날짜와 시간 비교 로직
         int yearFirst = GetYear(first.Date);
         int yearSecond = GetYear(second.Date);
         if (yearFirst != yearSecond)
@@ -85,6 +81,8 @@ public static class EventTimeService
 
         return TimeRelation.Same;
     }
+
+
     public static void SetCurEventTime(string date, int hour, int minute)
     {
         _curEventTime = new EventTime(date, hour, minute);
@@ -95,16 +93,13 @@ public static class EventTimeService
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
         _curEventTime = new EventTime(eventTime.Date, eventTime.Hour, eventTime.Minute);
     }
+
     public static List<EventPlan> EventTimeFilter(this List<EventPlan> eventPlans, EventTime inputTime, TimeRelation timeRelation)
     {
         return eventPlans.Where(plan => CompareTime(plan.EventTime, inputTime) == timeRelation && plan.EventTime.Date == inputTime.Date).ToList();
     }
-    // public static void SetEventTimeToNext(EventTime standardEventTime){
-    //     EventPlan nextEventPlan = EventService.GetNextEventPlan(standardEventTime);
-    //     if(nextEventPlan != null){
-    //         EventTime nextEventTime = nextEventPlan.EventTime;
-    //         SetCurEventTime(nextEventTime);
-    //         UIManager.SetEventTime(standardEventTime);
-    //     }
-    // }
+
+    public static bool IsCurrentTimeEquals(EventTime eventTime){
+        return CompareTime(CurEventTime, eventTime) == TimeRelation.Same;
+    }
 }

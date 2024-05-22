@@ -3,57 +3,40 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class PlacePoint : MonoBehaviour
+public class PlacePoint : WorldBtn
 {
-    [SerializeField] private TextAsset _jNodeFile;
-    private bool _isMouseOver = false;
-    private bool _isRunning = false; // 중복 실행을 막기 위한 플래그
-    private float _hoverRadius = 5f; // 반경 크기 설정
-    private Camera _mainCamera;
+    [SerializeField] private TextAsset _scenarioJsonFile;
 
-    private void Start()
+    protected override void Start()
     {
-        _mainCamera = CameraController.MainCamera;
-        if (_jNodeFile == null)
+        base.Start();
+        if (_scenarioJsonFile == null)
         {
             Debug.LogWarning("대본 없는 PLACE POINT 존재");
         }
     }
-    public void StartDetectingMouseOver(bool b)
+
+    protected override void OnClicked()
     {
-        if(b){
-            StartCoroutine(DetectMouseOverRoutine());
-        }
-        else{
-            StopCoroutine(DetectMouseOverRoutine());
-        }
-    }
-    private IEnumerator DetectMouseOverRoutine()
-    {
-        while (true)
+        base.OnClicked();
+        if (!_isRunning)
         {
-            CheckMouseOver();
-            yield return null; // 매 프레임마다 감지
+            Debug.Log("PlacePoint clicked");
+            StartScenarioTask().Forget();
         }
     }
 
-    private void CheckMouseOver()
+    private async UniTaskVoid StartScenarioTask()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = _mainCamera.ScreenToWorldPoint(mousePos);
-        mousePos.z = 0;
-
-        float distance = Vector3.Distance(mousePos, transform.position);
-        _isMouseOver = distance <= _hoverRadius;
-
-        Debug.Log(_isMouseOver);
-    }
-
-    private void OnMouseDown()
-    {
-        if (_isMouseOver && !_isRunning)
+        _isRunning = true;
+        try
         {
-            Debug.Log("마우스 클릭");
+            Scenario scenario = EventService.LoadScenario(_scenarioJsonFile);
+            await EventProcessor.PlaySectionScenario(scenario);
+        }
+        finally
+        {
+            _isRunning = false;
         }
     }
 }

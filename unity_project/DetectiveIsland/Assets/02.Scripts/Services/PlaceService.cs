@@ -8,6 +8,7 @@ public enum EPlaceID
 {
     None,
     HospitalBedroom,
+    Test
     // 다른 장소들...
 }
 
@@ -18,6 +19,7 @@ public static class PlaceService
 
     private static Place _curPlace;
     public static Place CurPlace { get => _curPlace; }
+    public static List<Place> PlacePrefabs { get => _placePrefabs; }
 
     public static void Load()
     {

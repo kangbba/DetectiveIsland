@@ -7,13 +7,86 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Aroka.ArokaUtils;
 
+[System.Serializable]
+public class EventPlan
+{
+    [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9, 0);
+    [SerializeField] private TextAsset _scenarioFile;
+
+    public TextAsset ScenarioFile => _scenarioFile;
+    public EventTime EventTime => _eventTime;
+
+
+}
+
 public static class EventProcessor
 {
-    public static async void ProcessScenario(Scenario scenario){
-        await ScenarioTask(scenario);
+    private static List<EventPlan> _allEventPlans = new List<EventPlan>();
+
+    public static void Load(List<Place> places)
+    {
+        _allEventPlans.Clear();
+
+        foreach (var place in places)
+        {
+            foreach (var section in place.PlaceSections){
+                _allEventPlans.Add(section.EventPlan);
+            }
+        }
+
+        _allEventPlans = _allEventPlans.OrderBy(plan => plan.EventTime.Date)
+                                       .ThenBy(plan => plan.EventTime.Hour)
+                                       .ThenBy(plan => plan.EventTime.Minute)
+                                       .ToList();
+
+        foreach (var plan in _allEventPlans)
+        {
+            Debug.Log($"EventTime: {plan.EventTime.Date} - {plan.EventTime.Hour}:{plan.EventTime.Minute}");
+        }
     }
+    
+    public static async UniTask PlayEvent(EventPlan eventPlanToPlay)
+    {
+        Debug.Log($"이벤트 시작: {eventPlanToPlay.EventTime.Date} - {eventPlanToPlay.EventTime.Hour}:{eventPlanToPlay.EventTime.Minute}");
+        Debug.Log($"시나리오 파일: {eventPlanToPlay.ScenarioFile.name}");
+
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
+        await ProcessScenario(EventService.LoadScenario(eventPlanToPlay.ScenarioFile));
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
+
+        Debug.Log("이벤트 종료");
+
+        // 이벤트 처리 후 다음 이벤트 시간을 설정
+        EventTime nextEventTime = GetNextEventTime(EventTimeService.CurEventTime);
+        if (nextEventTime != null)
+        {
+            Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
+            EventTimeService.SetCurEventTime(nextEventTime);
+        }
+        else{
+            Debug.Log("다음 이벤트 없음");
+        }
+    }
+
+    public static async UniTask PlaySectionScenario(Scenario scenario){
+
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
+        UIManager.OpenDialoguePanel(0f);
+        List<Element> elements = scenario.Elements;
+        await ProcessElementsTask(elements);
+        UIManager.CloseDialoguePanel(0f);
+        UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
+    }
+
+    private static EventTime GetNextEventTime(EventTime currentEventTime)
+    {
+        var futureEvents = _allEventPlans.Where(plan => EventTimeService.CompareTime(plan.EventTime, currentEventTime) == TimeRelation.Future).ToList();
+        return futureEvents.FirstOrDefault()?.EventTime;
+    }
+
+
     //시나리오 Task 구조
-    private static async UniTask ScenarioTask(Scenario scenario){
+    private static async UniTask ProcessScenario(Scenario scenario){
 
         UIManager.OpenDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
@@ -25,7 +98,6 @@ public static class EventProcessor
 
         UIManager.CloseDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
-
     }
 
     private static async UniTask ProcessElementsTask(List<Element> elements){
@@ -260,6 +332,10 @@ public static class EventProcessor
     {
         OverlaySentenceDisplayer displayer = UIManager.OverlaySentenceDisplayer;
         await displayer.DisplayOverlaySentence(overlaySentence);
+    }
+    public static EventPlan GetEventPlan(EventTime eventTime)
+    {
+        return _allEventPlans.FirstOrDefault(plan => plan.EventTime.Equals(eventTime));
     }
 
 }

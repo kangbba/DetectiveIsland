@@ -7,7 +7,7 @@ using UnityEngine.PlayerLoop;
 public enum EPlaceUIPanelState
 {
     None,
-    NavigatelMode,
+    NavigateMode,
 }
 public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
 {
@@ -37,7 +37,7 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
         switch(placeUIPanelState){
             case EPlaceUIPanelState.None:
             break;
-            case EPlaceUIPanelState.NavigatelMode:
+            case EPlaceUIPanelState.NavigateMode:
             break;
             default:
             break;
