@@ -4,7 +4,6 @@ using System.Linq;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using Cysharp.Threading.Tasks;
-using Aroka.JsonUtils;
 
 [System.Serializable]
 public class EventPlan{
@@ -13,7 +12,7 @@ public class EventPlan{
     [SerializeField] private ScenarioData _scenarioData;
 
     public Scenario LoadScenario(){
-       Scenario scenario = ArokaJsonUtils.LoadScenario(_scenarioData.ScenarioFile);
+       Scenario scenario = EventService.LoadScenario(_scenarioData.ScenarioFile);
        return scenario;
     }   
 

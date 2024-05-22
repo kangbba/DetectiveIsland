@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -9,7 +9,8 @@ using System.IO;
 using Aroka.Anim;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Aroka.ArokaUtils {
 
@@ -368,30 +369,71 @@ namespace Aroka.ArokaUtils {
             }
             return sum / _vectorList.Count;
         }
-
-
     }
+
     // 파일 경로를 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(string fileName)
-    {
-        string fullPath = Path.Combine(StoragePath.ScenarioPath, fileName + ".json");
-        if (!File.Exists(fullPath))
-        {
-            Debug.LogError($"File not found: {fullPath}");
-            return null;
-        }
-        string json = File.ReadAllText(fullPath);
-        return DeserializeScenario(json);
-    }
+  
+
     // TextAsset을 통해 시나리오를 로드합니다.
-    public static Scenario LoadScenario(TextAsset jsonTextAsset)
+   
+
+
+
+    public static class NewToneJsonConverterExtension
     {
-        if (jsonTextAsset == null)
-        {
-            Debug.LogError("No TextAsset provided.");
-            return null;
+        public static T ConvertFromTextAsset<T>(TextAsset jsonTextAsset, JsonSerializerSettings jsonSerializerSettings)
+        { 
+            return JsonConvert.DeserializeObject<T>(jsonTextAsset.text, jsonSerializerSettings);
         }
 
-        return DeserializeScenario(jsonTextAsset.text);
+        public static T ConvertFromPath<T>(string jsonFileFullPath, JsonSerializerSettings jsonSerializerSettings)
+        {
+            if (!File.Exists(jsonFileFullPath))
+            {
+                Debug.LogError($"File not found: {jsonFileFullPath}");
+                return default(T);
+            }
+            string json = File.ReadAllText(jsonFileFullPath);
+            return JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings);
+        }
+
+        public static JsonSerializerSettings JsonSerializerSettings_MaxDetail
+        {//최대한 디테일하게 NewToneJson을 Serializer할때 쓰는 함수
+            get
+            {
+                return new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects,
+                    Formatting = Formatting.Indented,
+                    Converters = new List<JsonConverter> { new Vector2Converter() },
+                    StringEscapeHandling = StringEscapeHandling.Default // Ensuring Hangul is not escaped
+                };
+            }
+        }
+
+        public class Vector2Converter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Vector2);
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                Vector2 vector = (Vector2)value;
+                JObject obj = new JObject
+                {
+                    ["x"] = vector.x,
+                    ["y"] = vector.y
+                };
+                obj.WriteTo(writer);
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                JObject obj = JObject.Load(reader);
+                return new Vector2((float)obj["x"], (float)obj["y"]);
+            }
+        }
     }
 }

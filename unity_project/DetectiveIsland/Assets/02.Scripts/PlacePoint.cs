@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Aroka.JsonUtils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -64,7 +63,7 @@ public class PlacePoint : MonoBehaviour
         _isRunning = true;
         try
         {
-            Scenario scenario = ArokaJsonUtils.LoadScenario(_jNodeFile);
+            Scenario scenario = EventService.LoadScenario(_jNodeFile);
             await EventProcessor.ScenarioTask(scenario);
         }
         finally
