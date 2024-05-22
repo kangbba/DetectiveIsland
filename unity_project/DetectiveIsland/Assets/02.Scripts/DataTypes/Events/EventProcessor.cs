@@ -47,10 +47,18 @@ public static class EventProcessor
     
     public static async UniTask PlayEvent(Scenario scenario)
     {
-
+        Debug.Log("PlayEvent!");
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
-        await ProcessScenario(scenario);
+        UIManager.OpenDialoguePanel(1f);
+        await UniTask.WaitForSeconds(1f);
+
+        //Elements 출력
+        List<Element> elements = scenario.Elements;
+        await ProcessElementsTask(elements);
+
+        UIManager.CloseDialoguePanel(1f);
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
+        await UniTask.WaitForSeconds(1f);
 
         Debug.Log("이벤트 종료");
 
@@ -66,7 +74,7 @@ public static class EventProcessor
         }
     }
 
-    public static async UniTask PlaySectionScenario(Scenario scenario){
+    public static async UniTask PlaySmallEvent(Scenario scenario){
 
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
         UIManager.OpenDialoguePanel(.1f);
@@ -82,32 +90,16 @@ public static class EventProcessor
         return futureEvents.FirstOrDefault()?.EventTime;
     }
 
-
-    //시나리오 Task 구조
-    private static async UniTask ProcessScenario(Scenario scenario){
-
-        UIManager.OpenDialoguePanel(1f);
-        await UniTask.WaitForSeconds(1f);
-        //대화창 On
-        
-        //Elements 출력
-        List<Element> elements = scenario.Elements;
-        await ProcessElementsTask(elements);
-
-        UIManager.CloseDialoguePanel(1f);
-        await UniTask.WaitForSeconds(1f);
-    }
-
     private static async UniTask ProcessElementsTask(List<Element> elements){
 
         foreach(Element element in elements){
+            Debug.Log($"{element.GetType()}");
             await ProcessElementTask(element);
         }
     }
     
     public static async UniTask ProcessElementTask(Element element)
     {
-        Debug.Log(element.GetType());
         switch (element)
         {
             case ModifyPosition modifyPosition:
@@ -207,7 +199,6 @@ public static class EventProcessor
         string[] delimiters = { @"\.", @"\,", @"\!", @"\?", @"\.\.\." }; // 구분할 문자열 패턴 정의
         foreach (var line in dialogue.Lines)
         {
-            Debug.Log("Line 시작");
             UIManager.ClearDialoguePanel();
             UIManager.SetDialogueCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
             if(!(isRyan || isMono)){
@@ -218,7 +209,6 @@ public static class EventProcessor
             await UIManager.TypeLineTask(line.Sentence.Trim(), Color.white); // 문장 출력
             CharacterService.StopCharacterTalking(characterID);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
-            Debug.Log("Line 끝");
         }
 
     }

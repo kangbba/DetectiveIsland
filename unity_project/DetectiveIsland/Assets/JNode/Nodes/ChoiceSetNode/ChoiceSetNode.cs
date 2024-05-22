@@ -44,7 +44,7 @@ public class ChoiceSetNode : Node
         choiceSet.Choices = new List<Choice>();
         for (int i = 0; i < ChoiceNodes.Count; i++)
         {
-            Choice choice = new Choice(ChoiceNodes[i].Content,null);
+            Choice choice = new Choice(ChoiceNodes[i].Content, new List<Element>());
             for (int j = 0; j < ChoiceNodes[i].Nodes.Count; j++)
             {
                 choice.Elements.Add(ChoiceNodes[i].Nodes[j].ToElement());

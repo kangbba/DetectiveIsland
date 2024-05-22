@@ -1,30 +1,16 @@
 using UnityEngine;
 
-public enum SpriteMouseOverState
-{
-    None,
-    Normal,
-    MouseOver,
-    Clicked
-}
-
 public class WorldBtn : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Sprite _noneSprite;
-    [SerializeField] private Sprite _normalSprite;
-    [SerializeField] private Sprite _mouseOverSprite;
-    [SerializeField] private Sprite _clickedSprite;
-
     protected bool _isMouseOver = false;
     protected bool _isDetecting = false; // 마우스 오버 감지 플래그
     protected float _hoverRadius = 3f; // 반경 크기 설정
     protected Camera _mainCamera;
+    private bool _isPressed = false;
 
     protected virtual void Start()
     {
         _mainCamera = Camera.main;
-        SetSpriteState(SpriteMouseOverState.None);
     }
 
     public void StartDetecting(bool isDetecting)
@@ -37,10 +23,19 @@ public class WorldBtn : MonoBehaviour
         if (_isDetecting)
         {
             CheckMouseOver();
-
-            if (Input.GetMouseButtonDown(0) && _isMouseOver)
+            
+            if (_isMouseOver && Input.GetMouseButtonDown(0))
             {
-                OnClicked();
+                _isPressed = true;
+            }
+
+            if (_isPressed && Input.GetMouseButtonUp(0))
+            {
+                if (_isMouseOver)
+                {
+                    OnClicked();
+                }
+                _isPressed = false;
             }
         }
     }
@@ -56,38 +51,24 @@ public class WorldBtn : MonoBehaviour
 
         if (_isMouseOver)
         {
-            SetSpriteState(SpriteMouseOverState.MouseOver);
+            OnMouseOver();
         }
         else
         {
-            SetSpriteState(SpriteMouseOverState.Normal);
+            OnMouseExit();
         }
-
-        Debug.Log(_isMouseOver);
     }
 
     protected virtual void OnClicked()
     {
-        SetSpriteState(SpriteMouseOverState.Clicked);
         Debug.Log("World button clicked");
     }
 
-    private void SetSpriteState(SpriteMouseOverState state)
+    protected virtual void OnMouseOver()
     {
-        switch (state)
-        {
-            case SpriteMouseOverState.None:
-                _spriteRenderer.sprite = _noneSprite;
-                break;
-            case SpriteMouseOverState.Normal:
-                _spriteRenderer.sprite = _normalSprite;
-                break;
-            case SpriteMouseOverState.MouseOver:
-                _spriteRenderer.sprite = _mouseOverSprite;
-                break;
-            case SpriteMouseOverState.Clicked:
-                _spriteRenderer.sprite = _clickedSprite;
-                break;
-        }
+    }
+
+    protected virtual void OnMouseExit()
+    {
     }
 }
