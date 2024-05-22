@@ -27,7 +27,6 @@ public class OpenJNodeEditor
     {
         Debug.Log("Try open JNode"); 
         string filename = System.IO.Path.GetFileName(path);
-        JNodeEditor4.OpenJNodeEditorWindow();
-        JNodeEditor4.LoadJNodeEditorWindow(path, filename);
+        JNodeEditor4.OpenJNodeEditorWindow(path, filename);
     }
 }

@@ -381,13 +381,21 @@ namespace Aroka.ArokaUtils {
 
     public static class NewToneJsonConverterExtension
     {
-        public static T ConvertFromTextAsset<T>(TextAsset jsonTextAsset, JsonSerializerSettings jsonSerializerSettings)
-        { 
+        public static T ConvertJsonToClass_FromJsonTextAsset<T>(TextAsset jsonTextAsset, JsonSerializerSettings jsonSerializerSettings = null)
+        {
+            if (jsonSerializerSettings == null)
+            {
+                jsonSerializerSettings = JsonSerializerSettings_MaxDetail;
+            }
             return JsonConvert.DeserializeObject<T>(jsonTextAsset.text, jsonSerializerSettings);
         }
 
-        public static T ConvertFromPath<T>(string jsonFileFullPath, JsonSerializerSettings jsonSerializerSettings)
+        public static T ConvertJsonToClass_FromPath<T>(string jsonFileFullPath, JsonSerializerSettings jsonSerializerSettings = null)
         {
+            if (jsonSerializerSettings == null)
+            {
+                jsonSerializerSettings = JsonSerializerSettings_MaxDetail;
+            }
             if (!File.Exists(jsonFileFullPath))
             {
                 Debug.LogError($"File not found: {jsonFileFullPath}");
@@ -395,6 +403,15 @@ namespace Aroka.ArokaUtils {
             }
             string json = File.ReadAllText(jsonFileFullPath);
             return JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings);
+        }
+
+        public static string ConvertClassToJson(object unityObj, JsonSerializerSettings jsonSerializerSettings = null)
+        {
+            if (jsonSerializerSettings == null)
+            {
+                jsonSerializerSettings = JsonSerializerSettings_MaxDetail;
+            }
+            return JsonConvert.SerializeObject(unityObj, jsonSerializerSettings);
         }
 
         public static JsonSerializerSettings JsonSerializerSettings_MaxDetail

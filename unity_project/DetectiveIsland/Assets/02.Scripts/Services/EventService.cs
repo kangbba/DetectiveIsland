@@ -19,11 +19,11 @@ public static class EventService
             return null;
         }
 
-        return NewToneJsonConverterExtension.ConvertFromTextAsset<Scenario>(jsonTextAsset, NewToneJsonConverterExtension.JsonSerializerSettings_MaxDetail);
+        return NewToneJsonConverterExtension.ConvertJsonToClass_FromJsonTextAsset<Scenario>(jsonTextAsset, NewToneJsonConverterExtension.JsonSerializerSettings_MaxDetail);
     }
 
     public static Scenario LoadScenario(string filePath)
     {
-        return NewToneJsonConverterExtension.ConvertFromPath<Scenario>(filePath, NewToneJsonConverterExtension.JsonSerializerSettings_MaxDetail);
+        return NewToneJsonConverterExtension.ConvertJsonToClass_FromPath<Scenario>(filePath, NewToneJsonConverterExtension.JsonSerializerSettings_MaxDetail);
     }
 }

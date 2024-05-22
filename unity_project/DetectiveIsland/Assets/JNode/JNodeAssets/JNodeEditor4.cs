@@ -1,4 +1,3 @@
-using Aroka.JsonUtils;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using UnityEditor.Experimental.GraphView;
 using System;
 using System.Linq;
 using UnityEngine.EventSystems;
+using Aroka.ArokaUtils;
 
 public class JNodeEditor4 : EditorWindow
 {
@@ -43,9 +43,12 @@ public class JNodeEditor4 : EditorWindow
     [DidReloadScripts]
     public static void ReloadEditor()
     {
+        if (!EditorWindow.HasOpenInstances<JNodeEditor4>())
+        {
+            return;
+        }
         Debug.Log("Reloaded");
-        LoadJNodeInstance(); 
-           
+        LoadJNodeInstance();
         LoadJNodeEditorWindow(jNodeInstance.recentPath, RecentOpenFileName);
         UpdateLastSavedSnapshot();
     }
@@ -492,11 +495,12 @@ public class JNodeEditor4 : EditorWindow
 
 
 
-    public static void OpenJNodeEditorWindow()
+    public static void OpenJNodeEditorWindow(string filePath, string fileName)
     {
         JNodeEditor4 window = GetWindow<JNodeEditor4>("J Node Editor 4");
         window.Show();
         LoadJNodeInstance();
+        LoadJNodeEditorWindow(filePath, fileName);
         Debug.Log("Open JNode Editor" + window);
     }
 
@@ -516,20 +520,15 @@ public class JNodeEditor4 : EditorWindow
             jNode.Nodes[i].SetRectPos(jNode.Nodes[i].RecentRectPos, JAnchor.TopLeft);
             jNode.Nodes[i].SetNodeRectSize(jNode.Nodes[i].RecentRectSize);
         }
-
         UpdateLastSavedSnapshot();
         
     }
 
     public string GetCurrentSnapShot()
     {
-        string currentSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            Converters = new List<JsonConverter> { new Vector2Converter() },
-            StringEscapeHandling = StringEscapeHandling.Default
-        });
+        string currentSnapshot = NewToneJsonConverterExtension.ConvertClassToJson(
+            jNodeInstance
+            , NewToneJsonConverterExtension.JsonSerializerSettings_MaxDetail);
         return currentSnapshot;
     }
 
@@ -576,7 +575,7 @@ public class JNodeEditor4 : EditorWindow
     {
         if (Nodes.Count > 0)
         {
-            string resourcesPath = StoragePath.ScenarioPath;
+            string resourcesPath = JNodePaths.ScenarioJsonFileSavePath;
 
             string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
 
@@ -628,27 +627,14 @@ public class JNodeEditor4 : EditorWindow
     }
     public static void UpdateLastSavedSnapshot()
     {
-        lastSavedSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            Converters = new List<JsonConverter> { new Vector2Converter() },
-            StringEscapeHandling = StringEscapeHandling.Default
-        });
+        lastSavedSnapshot = NewToneJsonConverterExtension.ConvertClassToJson(jNodeInstance);
     }
     public static void SaveJNode()
     {
-        string currentSnapshot = JsonConvert.SerializeObject(jNodeInstance, new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            Converters = new List<JsonConverter> { new Vector2Converter() },
-            StringEscapeHandling = StringEscapeHandling.Default
-        });
-
+        string currentSnapshot = NewToneJsonConverterExtension.ConvertClassToJson(jNodeInstance);
         if (currentSnapshot != lastSavedSnapshot)
         {
-            string path = Path.Combine(StoragePath.JNodePath, RecentOpenFileName);
+            string path = Path.Combine(JNodePaths.JNodeFileExportPath, RecentOpenFileName);
             if (!string.IsNullOrEmpty(path))
             {
                 File.WriteAllText(path, currentSnapshot);
@@ -663,12 +649,12 @@ public class JNodeEditor4 : EditorWindow
     }
     public static void SaveAsJNode()
     {
-        string resourcesPath = StoragePath.JNodePath;
+        string resourcesPath = JNodePaths.JNodeFileExportPath;
 
         string initialDirectory = Directory.Exists(resourcesPath) ? resourcesPath : Application.dataPath;
 
         // Open the save file dialog with the determined initial directory
-        string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", StoragePath.JNodePath, RecentOpenFileName, "jnode");
+        string path2 = EditorUtility.SaveFilePanel("Save Nodes as JSON", JNodePaths.JNodeFileExportPath, RecentOpenFileName, "jnode");
         Debug.Log(path2);
         //C:/Users/acy04/Desktop/RecentProject/DetectiveIsland/unity_project/DetectiveIsland/Assets/Resources/ScenarioNodes/NewScenarioNode2 1.jnode
         //"C:\Users\acy04\Desktop\RecentProject\DetectiveIsland\unity_project\DetectiveIsland\Assets\Resources\ScenarioNodes\NewScenarioNode2 1.jnode\.jnode".
@@ -842,15 +828,8 @@ public class JNodeEditor4 : EditorWindow
 
         StartNode startNode = new StartNode(Guid.NewGuid().ToString(), "StartNode", null);
         jNode.Nodes.Add(startNode);
-        JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Objects,
-            Formatting = Formatting.Indented,
-            StringEscapeHandling = StringEscapeHandling.Default, // Ensuring Hangul is not escaped
-            Converters = new List<JsonConverter> {  new Vector2Converter() }
-        };
 
-        string json = JsonConvert.SerializeObject(jNode, settings);
+        string json = NewToneJsonConverterExtension.ConvertClassToJson(jNode);
 
         File.WriteAllText(path, json); // Creates an empty JSON object in the file.
         AssetDatabase.Refresh();

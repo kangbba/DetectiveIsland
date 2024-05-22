@@ -9,7 +9,6 @@ using UnityEditor.Experimental.GraphView;
 using System.IO;
 using Newtonsoft.Json;
 
-
 [System.Serializable]
 public abstract class Node
 {

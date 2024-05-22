@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63126eb933f537946a2da78a6445ce19, type: 3}
   m_Name: JNodeInstance
   m_EditorClassIdentifier: 
-  recentOpenFileName: HospitalInteriorExit.jnode
-  recentPath: Assets/JNodeFiles/HospitalInteriorExit.jnode
+  recentOpenFileName: NewJNode.jnode
+  recentPath: Assets/JNodeFiles/NewJNode.jnode

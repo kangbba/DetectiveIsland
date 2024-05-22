@@ -6,8 +6,9 @@ using UnityEngine;
 [InitializeOnLoad]
 public class JNodeIconDisplayer
 {
-    private static readonly string IconPath = "Assets/JNode/Editor/Textures/JNodeIcon2.png";
+    private static readonly string IconPath = JNodePaths.JNodeIconPath;
     static Texture2D myIcon;
+    static bool iconLoadAttempted = false;
 
     static JNodeIconDisplayer()
     {
@@ -19,19 +20,27 @@ public class JNodeIconDisplayer
 
     static void LoadIcon()
     {
+        if (iconLoadAttempted) return;
+
         myIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(IconPath);
 
         if (myIcon == null)
         {
-            Debug.LogError($"Failed to load icon at path: {IconPath}");
+            Debug.LogWarning($"Failed to load icon at path: {IconPath}. Retrying...");
+            EditorApplication.delayCall += LoadIcon;
+        }
+        else
+        {
+            Debug.Log($"Icon loaded successfully at path: {IconPath}");
+            iconLoadAttempted = true;
         }
     }
 
     static void OnProjectWindowItemGUI(string guid, Rect selectionRect)
     {
-        if (myIcon == null)
+        if (myIcon == null && !iconLoadAttempted)
         {
-            // Attempt to reload the icon if it is null
+            // Attempt to reload the icon if it is null and not yet attempted
             LoadIcon();
 
             if (myIcon == null)
