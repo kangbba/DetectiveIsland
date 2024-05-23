@@ -6,6 +6,9 @@ public class ItemOwnPanel : ArokaAnimParent
 {
     [SerializeField] private ItemContainer itemContainer; // 아이템 정보 컨테이너
 
+    private void Start(){
+        ClosePanel();
+    }
     public void OpenPanel(ItemData itemData)
     {
         itemContainer.Display(itemData); // 아이템 정보 표시

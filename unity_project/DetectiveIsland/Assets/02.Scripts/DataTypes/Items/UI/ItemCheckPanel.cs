@@ -12,6 +12,7 @@ public class ItemCheckPanel : ItemPanel
     private void Start()
     {
         _exitBtn.onClick.AddListener(OnClickedExitBtn);
+        ClosePanel();
     }
     public void OpenPanel()
     {

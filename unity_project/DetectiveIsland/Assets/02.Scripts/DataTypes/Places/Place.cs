@@ -37,7 +37,7 @@ public class PlaceSection
         await EventProcessor.PlayEvent(scenario);
     }
 }
-public class Place : SpriteEffector
+public class Place : ArokaSpriteEffector
 {
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;

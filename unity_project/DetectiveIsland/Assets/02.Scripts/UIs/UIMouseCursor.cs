@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class UIMouseCursor : MonoBehaviour
 {
+    [SerializeField] private Canvas _canvas; // UI 요소를 렌더링하는 Canvas
     public RectTransform cursorImage; // 마우스 커서 이미지의 RectTransform
-    private Canvas _canvas; // UI 요소를 렌더링하는 Canvas
 
-    public void Initialize(Canvas canvas){
-
+    private void Start()
+    {
         Cursor.visible = false; // 기본 마우스 커서 숨기기
-        _canvas = canvas;
     }
     void Update()
     {

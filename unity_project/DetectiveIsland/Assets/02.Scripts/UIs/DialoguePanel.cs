@@ -14,11 +14,10 @@ public class DialoguePanel : MonoBehaviour
 
     [SerializeField] private DialogueArrow _dialogueArrow;
     
-    public void Initialize(){
+    private void Start(){
         ClearPanel();
         HideDialogueArrow();
-    } 
-
+    }
     public void ShowDialogueArrow(){
         _dialogueArrow.gameObject.SetActive(true);
     }
@@ -37,7 +36,7 @@ public class DialoguePanel : MonoBehaviour
     }
    
     // 문장 출력을 위한 코루틴
-    public async UniTask TypeLineTask(string str, Color c)
+    public async UniTask TypeDialogueTask(string str, Color c)
     {
         _dialogueArrow.gameObject.SetActive(false);
         _lineText.text += ' ';

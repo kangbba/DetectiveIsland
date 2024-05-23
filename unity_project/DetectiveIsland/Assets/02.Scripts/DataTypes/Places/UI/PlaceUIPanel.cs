@@ -9,7 +9,7 @@ public enum EPlaceUIPanelState
     None,
     NavigateMode,
 }
-public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
+public class PlaceUIPanel : ArokaUIState<EPlaceUIPanelState>
 {
     [SerializeField] private TextMeshProUGUI _curPlaceText;
     [SerializeField] private Transform _btnParent;
@@ -22,7 +22,6 @@ public class PlaceUIPanel : UIStateManager<EPlaceUIPanelState>
 
     private void Start(){
         SetUIState(EPlaceUIPanelState.None, 0f);
-
         _previousPageBtn.onClick.AddListener(() => CurPlace.SetPreviousPlaceSection());
         _nextPageBtn.onClick.AddListener(() => CurPlace.SetNextPlaceSection());
     }

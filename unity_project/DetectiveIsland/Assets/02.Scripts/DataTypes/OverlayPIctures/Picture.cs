@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Picture : SpriteEffector
+public class Picture : ArokaSpriteEffector
 {
     [SerializeField] private EPictureID _id;
     public EPictureID Id { get => _id; }

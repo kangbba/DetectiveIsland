@@ -15,7 +15,9 @@ public class ChoiceSetPanel : ArokaAnimParent
     private List<ChoiceButton> _curChoiceBtns = new List<ChoiceButton>();  // 생성된 버튼들의 리스트
     private ChoiceButton _selectedChoiceBtn;
 
-
+    private void Start(){
+        
+    }
     public async UniTask<Choice> MakeChoiceBtnsAndWait(ChoiceSet choiceSet)
     {
         CreateChoiceBtns(choiceSet);

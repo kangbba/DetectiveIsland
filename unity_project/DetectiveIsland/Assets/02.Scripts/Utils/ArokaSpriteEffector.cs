@@ -2,7 +2,7 @@ using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
 using UnityEngine;
 
-public class SpriteEffector : MonoBehaviour
+public class ArokaSpriteEffector : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
 

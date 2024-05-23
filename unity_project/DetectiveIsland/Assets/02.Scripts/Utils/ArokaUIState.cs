@@ -12,7 +12,7 @@ public class UIPlan<T> where T : Enum
     public List<GameObject> UIElements => _uiElements;
 }
 
-public class UIStateManager<T> : MonoBehaviour where T : Enum
+public class ArokaUIState<T> : MonoBehaviour where T : Enum
 {
     [SerializeField] private List<UIPlan<T>> _uiPlans = new List<UIPlan<T>>();
     private HashSet<GameObject> _allUIElements = new HashSet<GameObject>();

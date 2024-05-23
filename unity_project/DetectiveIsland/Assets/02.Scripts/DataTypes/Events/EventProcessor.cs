@@ -206,7 +206,7 @@ public static class EventProcessor
                CharacterService.StartCharacterTalking(characterID);
             }
             
-            await UIManager.TypeLineTask(line.Sentence.Trim(), Color.white); // 문장 출력
+            await UIManager.TypeDialogueTask(line.Sentence.Trim(), Color.white); // 문장 출력
             CharacterService.StopCharacterTalking(characterID);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
         }
@@ -319,12 +319,12 @@ public static class EventProcessor
     }
     public static async UniTask OverlaySentenceTask(OverlaySentence overlaySentence)
     {
-        OverlaySentenceDisplayer displayer = UIManager.OverlaySentenceDisplayer;
-        await displayer.DisplayOverlaySentence(overlaySentence);
+        await UIManager.DisplayOverlaySentence(overlaySentence);
     }
     public static EventPlan GetEventPlan(EventTime eventTime)
     {
         return _allEventPlans.FirstOrDefault(plan => plan.EventTime.Equals(eventTime));
     }
+
 
 }

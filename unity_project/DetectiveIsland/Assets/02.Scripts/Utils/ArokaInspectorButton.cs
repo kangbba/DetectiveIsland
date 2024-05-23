@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -12,7 +11,7 @@ public class MonoBehaviourEditor : Editor
     {
         DrawDefaultInspector();
 
-        var targetObject = serializedObject.targetObject;
+        var targetObject = target;
         var methods = targetObject.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
         foreach (var method in methods)
@@ -25,8 +24,12 @@ public class MonoBehaviourEditor : Editor
                     if (attribute.PerformCheck(targetObject))
                     {
                         method.Invoke(targetObject, null);
-                        if(EditorUtility.IsDirty(target)){  
-                            EditorUtility.SetDirty(target);
+
+                        // Set the target object as dirty to make sure changes are saved
+                        if (!Application.isPlaying)
+                        {
+                            EditorUtility.SetDirty(targetObject);
+                            PrefabUtility.RecordPrefabInstancePropertyModifications(targetObject);
                             SceneView.RepaintAll();
                         }
                     }
@@ -34,7 +37,6 @@ public class MonoBehaviourEditor : Editor
                     {
                         Debug.LogError(attribute.Error);
                     }
-      
                 }
             }
         }
@@ -47,17 +49,7 @@ public class ArokaButtonAttribute : Attribute
 
     public bool PerformCheck(UnityEngine.Object obj)
     {
-       // return !PrefabUtility.IsPartOfPrefabAsset(obj);
+        // Here you can add additional checks, for now it's always true
         return true;
     }
 }
-
-
-public static class PrefabUtility
-{
-    public static bool IsPartOfPrefabAsset(UnityEngine.Object obj)
-    {
-        return UnityEditor.PrefabUtility.GetPrefabAssetType(obj) != UnityEditor.PrefabAssetType.NotAPrefab;
-    }
-}
-
