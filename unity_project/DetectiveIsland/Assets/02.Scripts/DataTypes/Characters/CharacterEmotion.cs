@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아야 함
 {
-    [SerializeField] private EChacterEmotion _emotionID;
+    [SerializeField] private EEmotionID _emotionID;
     [SerializeField] private SpriteRenderer _backgroundRenderer;
     [SerializeField] private SpriteRenderer _faceRenderer;
     [SerializeField] private SpriteRenderer _eyesRenderer;  // Sprite 대신 SpriteRenderer로 변경
@@ -21,7 +21,7 @@ public class CharacterEmotion : MonoBehaviour // MonoBehaviour를 상속 받아�
     private Coroutine _blinkRoutine;
     private Coroutine _talkingRoutine;
 
-    public EChacterEmotion EmotionID => _emotionID;
+    public EEmotionID EmotionID => _emotionID;
 
     private void Start(){
         if(_backgroundRenderer != null)

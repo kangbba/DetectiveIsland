@@ -45,7 +45,7 @@ public static class EventProcessor
         }
     }
     
-    public static async UniTask PlayEvent(Scenario scenario)
+    public static async UniTask PlayEvent(Scenario scenario, bool timeSpend)
     {
         Debug.Log("PlayEvent!");
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
@@ -55,33 +55,26 @@ public static class EventProcessor
         //Elements 출력
         List<Element> elements = scenario.Elements;
         await ProcessElementsTask(elements);
-
         UIManager.CloseDialoguePanel(1f);
+
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
         await UniTask.WaitForSeconds(1f);
 
         Debug.Log("이벤트 종료");
+        if(timeSpend){
+            // 이벤트 처리 후 다음 이벤트 시간을 설정
+            EventTime nextEventTime = GetNextEventTime(EventTimeService.CurEventTime);
+            if (nextEventTime != null)
+            {
+                Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
+                EventTimeService.SetCurEventTime(nextEventTime);
+            }
+            else{
+                Debug.Log("다음 이벤트 없음");
+            }
 
-        // 이벤트 처리 후 다음 이벤트 시간을 설정
-        EventTime nextEventTime = GetNextEventTime(EventTimeService.CurEventTime);
-        if (nextEventTime != null)
-        {
-            Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
-            EventTimeService.SetCurEventTime(nextEventTime);
         }
-        else{
-            Debug.Log("다음 이벤트 없음");
-        }
-    }
-
-    public static async UniTask PlaySmallEvent(Scenario scenario){
-
-        UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
-        UIManager.OpenDialoguePanel(.1f);
-        List<Element> elements = scenario.Elements;
-        await ProcessElementsTask(elements);
-        UIManager.CloseDialoguePanel(.1f);
-        UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
+        
     }
 
     private static EventTime GetNextEventTime(EventTime currentEventTime)
@@ -171,52 +164,31 @@ public static class EventProcessor
         {
             Vector3 targetLocalPos = CharacterService.GetLocalPosByPositionID(characterPosition.PositionID) + Vector3.right * PlaceService.CurPlace.CurPlaceSection.SectionCenterX;
             if(CharacterService.GetInstancedCharacter(characterPosition.CharacterID) == null){
-                CharacterService.MakeCharacter(characterPosition.CharacterID, EChacterEmotion.Noraml, targetLocalPos, 1f);
+                CharacterService.MakeCharacter(characterPosition.CharacterID, EEmotionID.Noraml, targetLocalPos, 1f);
             }
         }
 
         await UniTask.WaitForSeconds(1f);
     }
 
+    public static async UniTask ProcessDialogue(Dialogue dialogue)
+    {
+        await UIManager.TypeDialogueTask(dialogue);
+    }
 
     public static async UniTask ProcessChoiceSet(ChoiceSet choiceSet){
 
         foreach(Dialogue dialogue in choiceSet.Dialogues){
-            await ProcessDialogue(dialogue);
-
-            
+             await UIManager.TypeDialogueTask(dialogue);
         }
         Choice selectedChoice = await UIManager.MakeChoiceBtnsAndWait(choiceSet);
         await ProcessElementsTask(selectedChoice.Elements);
     }
 
-    public static async UniTask ProcessDialogue(Dialogue dialogue)
-    {
-        ECharacterID characterID = dialogue.CharacterID;
-        bool isRyan = characterID == ECharacterID.Ryan;
-        bool isMono = characterID == ECharacterID.Mono;
-        CharacterData characterData = CharacterService.GetCharacterData(characterID);
-        string[] delimiters = { @"\.", @"\,", @"\!", @"\?", @"\.\.\." }; // 구분할 문자열 패턴 정의
-        foreach (var line in dialogue.Lines)
-        {
-            UIManager.ClearDialoguePanel();
-            UIManager.SetDialogueCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-            if(!(isRyan || isMono)){
-               CharacterService.SetCharacterEmotion(characterID, line.EmotionID, .3f);
-               CharacterService.StartCharacterTalking(characterID);
-            }
-            
-            await UIManager.TypeDialogueTask(line.Sentence.Trim(), Color.white); // 문장 출력
-            CharacterService.StopCharacterTalking(characterID);
-            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기
-        }
-
-    }
-
     public static async UniTask ProcessItemDemand(ItemDemand itemDemand)
     {
         foreach(Dialogue dialogue in itemDemand.Dialogues){
-            await ProcessDialogue(dialogue);
+            await UIManager.TypeDialogueTask(dialogue);
         }
 
         while(true){

@@ -34,7 +34,7 @@ public class PlaceSection
             Debug.Log("해당 eventplan엔 시나리오가 없으므로 생략");
             return;
         }
-        await EventProcessor.PlayEvent(scenario);
+        await EventProcessor.PlayEvent(scenario, true);
     }
 }
 public class Place : ArokaSpriteEffector
@@ -58,9 +58,13 @@ public class Place : ArokaSpriteEffector
         SpriteRenderer.sortingOrder = -1;
     }
 
-    public async void Initialize(int initialPlaceSectionIndex)
+    public async void Enter(int initialPlaceSectionIndex)
     {
         await SetPlaceSection(initialPlaceSectionIndex);
+    }
+    public void Exit()
+    {
+        StartDetectingPlacePoints(false);
     }
 
     public async void SetNextPlaceSection()

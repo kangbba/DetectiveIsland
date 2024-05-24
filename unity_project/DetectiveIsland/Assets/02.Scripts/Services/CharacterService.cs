@@ -17,7 +17,7 @@ public enum ECharacterID{
     Rachel = 8,
 
 }
-public enum EChacterEmotion{
+public enum EEmotionID{
     Smile = 0,
     Sad = 1,
     Angry = 2,
@@ -38,7 +38,7 @@ public static class CharacterService
     }
 
 
-    public static Character MakeCharacter(ECharacterID characterID, EChacterEmotion initialEmotionID, Vector3 targetPos, float totalTime){
+    public static Character MakeCharacter(ECharacterID characterID, EEmotionID initialEmotionID, Vector3 targetPos, float totalTime){
 
         CharacterData characterData = GetCharacterData(characterID);
         if (characterData == null)
@@ -58,7 +58,6 @@ public static class CharacterService
     {
         return _characterDatas.FirstOrDefault(data => data.CharacterID == characterID);
     }
-
 
     public static Vector3 GetLocalPosByPositionID(ECharacterPositionID positionID)
     {
@@ -136,7 +135,7 @@ public static class CharacterService
         character.StopTalking();
     }
 
-    public static void SetCharacterEmotion(ECharacterID characterID, EChacterEmotion emotionID, float totalTime){
+    public static void SetCharacterEmotion(ECharacterID characterID, EEmotionID emotionID, float totalTime){
         Character character = GetInstancedCharacter(characterID);
         if(character == null){
             Debug.Log("해당 캐릭터가 없습니다");

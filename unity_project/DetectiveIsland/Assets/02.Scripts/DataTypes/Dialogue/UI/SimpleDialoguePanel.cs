@@ -11,14 +11,12 @@ public class SimpleDialoguePanel : MonoBehaviour
 
     private string[] _dialogueLines;
     private int _currentLineIndex;
-    private bool _isPanelActive;
 
     private void Awake()
     {
-        _isPanelActive = false;
     }
 
-    public async UniTask ShowDialogue(string[] dialogueLines)
+    public async UniTask ShowSimpleDialogue(string[] dialogueLines)
     {
         if (dialogueLines == null || dialogueLines.Length == 0)
         {
@@ -30,7 +28,6 @@ public class SimpleDialoguePanel : MonoBehaviour
 
         _dialogueLines = dialogueLines;
         _currentLineIndex = 0;
-        _isPanelActive = true;
         _arokaAnimParent.SetOnAllChildren(true, .5f);
 
         for (_currentLineIndex = 0; _currentLineIndex < _dialogueLines.Length; _currentLineIndex++)
@@ -39,7 +36,8 @@ public class SimpleDialoguePanel : MonoBehaviour
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
         }
 
-        ClosePanel();
+        _arokaAnimParent.SetOnAllChildren(false, .5f);
+        await UniTask.WaitForSeconds(.5f);
     }
 
     private void ShowCurrentLine()
@@ -50,18 +48,11 @@ public class SimpleDialoguePanel : MonoBehaviour
         }
     }
 
-    private void ClosePanel()
-    {
-        _arokaAnimParent.SetOnAllChildren(false, .5f);
-        _isPanelActive = false;
-    }
-
     private void ResetPanel()
     {
         _textMeshPro.text = string.Empty;
         _dialogueLines = null;
         _currentLineIndex = 0;
-        _isPanelActive = false;
         _arokaAnimParent.SetOnAllChildren(false, .5f);
     }
 }

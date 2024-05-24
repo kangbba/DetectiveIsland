@@ -15,7 +15,17 @@ using Newtonsoft.Json.Linq;
 namespace Aroka.ArokaUtils {
 
     public static class ArokaUtils
-    {
+    { 
+        public static bool IsMouseOverUI()
+        {
+            if (EventSystem.current == null)
+            {
+                Debug.LogWarning("No EventSystem found. Make sure an EventSystem is in the scene.");
+                return false;
+            }
+
+            return EventSystem.current.IsPointerOverGameObject();
+        }
         public static List<T> LoadScriptableDatasFromFolder<T>(string folderName) where T : UnityEngine.Object
         {
             var dataList = new List<T>();

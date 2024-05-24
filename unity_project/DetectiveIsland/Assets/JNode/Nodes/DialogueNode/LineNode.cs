@@ -12,7 +12,7 @@ public class LineNode : Node
     public const float LEFT_MARGIN = 30;
     public const float RIGHT_MARGIN = 30;
 
-    public EChacterEmotion EmotionID = EChacterEmotion.Smile;
+    public EEmotionID EmotionID = EEmotionID.Smile;
     public string Sentence = "";
     
     public override float Width { get; set; }
@@ -48,7 +48,7 @@ public class LineNode : Node
         Width = DEFAULT_WIDTH;
         Height = UPPER_MARGIN;
          // EmotionID 필드
-        EmotionID = (EChacterEmotion)JInterface.SimpleField
+        EmotionID = (EEmotionID)JInterface.SimpleField
         (
             value: EmotionID,
             pos: new Vector2(NodeRect.position.x, NodeRect.position.y + Height),

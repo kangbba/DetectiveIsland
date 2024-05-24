@@ -1,10 +1,11 @@
+using Aroka.ArokaUtils;
 using UnityEngine;
 
 public class WorldBtn : MonoBehaviour
 {
     protected bool _isMouseOver = false;
     protected bool _isDetecting = false; // 마우스 오버 감지 플래그
-    protected float _hoverRadius = 3f; // 반경 크기 설정
+    [SerializeField] float _detectingRadius = 3f; // 반경 크기 설정
     protected Camera _mainCamera;
     private bool _isPressed = false;
 
@@ -20,7 +21,7 @@ public class WorldBtn : MonoBehaviour
 
     private void Update()
     {
-        if (_isDetecting)
+        if (_isDetecting && !ArokaUtils.IsMouseOverUI())
         {
             CheckMouseOver();
             
@@ -38,6 +39,9 @@ public class WorldBtn : MonoBehaviour
                 _isPressed = false;
             }
         }
+        else{
+            Debug.Log("체크하지않음");
+        }
     }
 
     private void CheckMouseOver()
@@ -47,7 +51,7 @@ public class WorldBtn : MonoBehaviour
         mousePos.z = 0;
 
         float distance = Vector3.Distance(mousePos, transform.position);
-        _isMouseOver = distance <= _hoverRadius;
+        _isMouseOver = distance <= _detectingRadius;
 
         if (_isMouseOver)
         {

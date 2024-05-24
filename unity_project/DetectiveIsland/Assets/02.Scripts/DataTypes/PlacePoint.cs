@@ -10,8 +10,7 @@ public class PlacePoint : WorldBtn
     private EPlaceID _placeIdToGo;
     private int _clickCount;
 
-    // Delegate for click action
-    private System.Action _onClickAction;
+    private bool _isEventPlaying;
 
     protected override void Start()
     {
@@ -38,21 +37,27 @@ public class PlacePoint : WorldBtn
 
     protected override async void OnClicked()
     {
-        base.OnClicked();
+        if(_isEventPlaying){
+            return;
+        }
         Debug.Log("PlacePoint clicked");
-
+        base.OnClicked();
         _clickCount++;
 
-        // 조건에 따라 비동기 작업 수행
         if (_clickCount >= 2 && _isContainGainPlace)
         {
             new EventAction(new MoveToPlaceAction(_placeIdToGo, 0)).Execute();
         }
         else
         {
-            await UIManager.ShowDialogue(_simpleLines);
-            if(_scenario != null)
-            await EventProcessor.PlaySmallEvent(_scenario);
+            _isEventPlaying = true;
+            if(_simpleLines != null && _simpleLines.Length > 0){
+                await UIManager.ShowSimpleDialogue(_simpleLines);
+            }
+            if(_scenario != null){
+                await EventProcessor.PlayEvent(_scenario, false);
+            }
+            _isEventPlaying = false;
         }
     }
 }

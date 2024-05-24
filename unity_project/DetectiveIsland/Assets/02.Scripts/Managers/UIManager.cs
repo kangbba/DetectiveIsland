@@ -13,7 +13,7 @@ public static class UIManager
     public static CanvasRenderer MainCanvasRenderer => _uiParent.MainCanvasRenderer;
 
     public static void Load(){
-        GameObject uiParentPrefab = Resources.Load<GameObject>("UIPrefabs/UISetPrefab");
+        GameObject uiParentPrefab = Resources.Load<GameObject>("UIPrefabs/UIParentPrefab");
         _uiParent = GameObject.Instantiate(uiParentPrefab).GetComponent<UIParent>();
         if(_uiParent == null){
             Debug.LogError("_uiParent is null");
@@ -57,9 +57,15 @@ public static class UIManager
     public static void ClearDialoguePanel(){
          _uiParent.DialoguePanel.ClearPanel();
     }
-    public static async UniTask TypeDialogueTask(string str, Color c){
-        await  _uiParent.DialoguePanel.TypeDialogueTask(str, c);
+    public static async UniTask TypeDialogueTask(Dialogue dialogue){
+
+    
+        await  _uiParent.DialoguePanel.TypeDialogueTask(dialogue);
+    } 
+    public static async UniTask WaitForDialogueExitButton(){
+        await  _uiParent.DialoguePanel.WaitForDialogueExitButton();
     }
+    
 
     public static void SetDialogueCharacterText(string s, Color c){
         _uiParent.DialoguePanel.SetCharacterText(s, c);
@@ -87,8 +93,10 @@ public static class UIManager
     }
 
     // 오버레이 문장 출력
-    public static async UniTask ShowDialogue(string[] stringsToDisplay)
+    public static async UniTask ShowSimpleDialogue(string[] stringsToDisplay)
     {
-        await _uiParent.SimpleDialoguePanel.ShowDialogue(stringsToDisplay);
+        await _uiParent.SimpleDialoguePanel.ShowSimpleDialogue(stringsToDisplay);
     }
+
+
 }

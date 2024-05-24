@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
     }
     
     //Fade In 대신 SetEmotion 하면 원하는거 됩니다.    
-    public void SetEmotion(EChacterEmotion targetEmotionID, float fadeTime)
+    public void SetEmotion(EEmotionID targetEmotionID, float fadeTime)
     {
         CharacterEmotion targetEmotion = GetCharacterEmotion(targetEmotionID);
         if(targetEmotion == null){
@@ -57,7 +57,7 @@ public class Character : MonoBehaviour
         FadeOutCurrentEmotion(totalTime);
         Destroy(gameObject, totalTime);
     }
-    public CharacterEmotion GetCharacterEmotion(EChacterEmotion emotionID){
+    public CharacterEmotion GetCharacterEmotion(EEmotionID emotionID){
         return _characterEmotions.FirstOrDefault(emotion => emotion.EmotionID == emotionID );
     }
     public void StartTalking(){

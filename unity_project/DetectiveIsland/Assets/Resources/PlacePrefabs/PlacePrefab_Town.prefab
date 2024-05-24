@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2507878594518431632}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.4, y: -16.2, z: 0}
+  m_LocalPosition: {x: -16.48, y: 4.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scenarioJsonFile: {fileID: 4900000, guid: 9ae6b818edaf940b381dbc9ac1f89b38, type: 3}
+  _detectingRadius: 3
+  _simpleLines:
+  - "\uCC3D\uBB38\uC774 \uC788\uB2E4."
+  _scenarioJsonFile: {fileID: 0}
 --- !u!1 &4583544520979190535
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +133,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7330697054771719968}
@@ -176,7 +179,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 192dfd2b1f322429aba59632bbd0cdb6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d723b1b0b6d454098ab2b43adc82adb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

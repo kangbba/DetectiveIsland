@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Aroka.ArokaUtils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public enum EPlaceID
@@ -51,13 +52,15 @@ public static class PlaceService
         return place;
     }
 
-    public static void MoveToPlace(EPlaceID placeID, int sectionIndex){
+    public static async UniTaskVoid MoveToPlace(EPlaceID placeID, int sectionIndex){
 
         if(_curPlace != null){
+            _curPlace.Exit();
             _curPlace.FadeOutAndDestroy(1f);
         }
+        await UniTask.WaitForSeconds(1f);
         Place place = MakePlace(placeID, 1f);
-        place.Initialize(sectionIndex);
+        place.Enter(sectionIndex);
         _curPlace = place;
     }
 }

@@ -2,15 +2,15 @@
 [System.Serializable]
 public class Line
 {
-    private EChacterEmotion _emotionID;
+    private EEmotionID _emotionID;
     private string _sentence;
 
-    public Line(EChacterEmotion emotionID, string sentence)
+    public Line(EEmotionID emotionID, string sentence)
     {
         this._emotionID = emotionID;
         this._sentence = sentence;
     }
 
-    public EChacterEmotion EmotionID { get => _emotionID;  }
+    public EEmotionID EmotionID { get => _emotionID;  }
     public string Sentence { get => _sentence; }
 }
