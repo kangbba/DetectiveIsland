@@ -93,9 +93,9 @@ public static class UIManager
     }
 
     // 오버레이 문장 출력
-    public static async UniTask ShowSimpleDialogue(string[] stringsToDisplay)
+    public static async UniTask ShowSimpleDialogue(string[] sentences)
     {
-        await _uiParent.SimpleDialoguePanel.ShowSimpleDialogue(stringsToDisplay);
+        await _uiParent.SimpleDialoguePanel.ShowSimpleDialogue(sentences);
     }
 
 

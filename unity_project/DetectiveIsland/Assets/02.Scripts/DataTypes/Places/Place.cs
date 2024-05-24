@@ -15,20 +15,13 @@ public class PlaceSection
     public float SectionCenterX { get => _sectionCenterX; }
     public EventPlan EventPlan { get => _eventPlan;  }
 
-    public async UniTask PlaySectionEvent(){
-        CameraController.MoveX(_sectionCenterX, 1f);
-
+    public async UniTask PlaySectionEventIfValid(){
         EventPlan eventPlanToPlay = _eventPlan;
         if (eventPlanToPlay == null)
         {
             Debug.Log("eventPlanToPlay null or time does not match");
             return;
         }
-        if(!EventTimeService.IsCurrentTimeEquals(eventPlanToPlay.EventTime)){
-            Debug.Log("EventTime null or time does not match");
-            return;
-        }
-
         Scenario scenario = EventService.LoadScenario(eventPlanToPlay.ScenarioFile);
         if(scenario == null){
             Debug.Log("해당 eventplan엔 시나리오가 없으므로 생략");
@@ -58,20 +51,22 @@ public class Place : ArokaSpriteEffector
         SpriteRenderer.sortingOrder = -1;
     }
 
-    public async void Enter(int initialPlaceSectionIndex)
+    public void OnEnter(int initialPlaceSectionIndex, float totalTime)
     {
-        await SetPlaceSection(initialPlaceSectionIndex);
+        Debug.Log($"{_placeID}에 입장했습니다. Enter() 진행중");
+        Debug.Log($"{initialPlaceSectionIndex}에 입장했습니다. Enter() 진행중");
+        SetPlaceSectionAndPlayEvent(initialPlaceSectionIndex, totalTime).Forget();
     }
-    public void Exit()
+    public void OnExit()
     {
-        StartDetectingPlacePoints(false);
+        SetAllButtonInteractable(false);
     }
 
-    public async void SetNextPlaceSection()
+    public void SetNextPlaceSection()
     {
         if (_curSectionIndex < _placeSections.Count - 1)
         {
-            await SetPlaceSection(_curSectionIndex + 1);
+            SetPlaceSectionAndPlayEvent(_curSectionIndex + 1, .5f).Forget();
         }
         else
         {
@@ -79,11 +74,11 @@ public class Place : ArokaSpriteEffector
         }
     }
 
-    public async void SetPreviousPlaceSection()
+    public void SetPreviousPlaceSection()
     {
         if (_curSectionIndex > 0)
         {
-            await SetPlaceSection(_curSectionIndex - 1);
+            SetPlaceSectionAndPlayEvent(_curSectionIndex - 1, .5f).Forget();
         }
         else
         {
@@ -91,33 +86,35 @@ public class Place : ArokaSpriteEffector
         }
     }
 
-    private async UniTask SetPlaceSection(int placeSectionIndex)
+    private async UniTask SetPlaceSectionAndPlayEvent(int placeSectionIndex, float totalTime)
     {
+        Debug.Log($"{placeSectionIndex}로 설정 시도");
         if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
         {
             Debug.LogWarning($"Index {placeSectionIndex}에 해당하는 섹션을 찾을 수 없습니다");
             return;
         }
-
         _curSectionIndex = placeSectionIndex;
+        PlaceSection placeSection = CurPlaceSection;
+        EventPlan placeEventPlan = placeSection.EventPlan;
+        CameraController.MoveX(placeSection.SectionCenterX, totalTime);
+        await UniTask.WaitForSeconds(totalTime);
 
-        // Set the section and play the scenario
-        if(CurPlaceSection != null){
-            Debug.Log($"현재 시간 : {EventTimeService.CurEventTime}");
-            Debug.Log($"이 섹션에 포함된 시나리오 시간 : {CurPlaceSection.EventPlan.EventTime}");
-            await CurPlaceSection.PlaySectionEvent();
+        if(EventTimeService.IsCurrentTimeEquals(placeEventPlan.EventTime)){
+            Debug.Log($"이 섹션에 포함된 시나리오 시간 : {placeEventPlan.EventTime}");
+            await CurPlaceSection.PlaySectionEventIfValid();
         }
+        Debug.Log("EventTime null or time does not match");
 
-        // Start detecting place points
-        StartDetectingPlacePoints(true);
+        SetAllButtonInteractable(true);
     }
 
-    private void StartDetectingPlacePoints(bool isDetecting)
+    public void SetAllButtonInteractable(bool interactable)
     {
         List<PlacePoint> _placePoints = _placePointsParent.GetComponentsInChildren<PlacePoint>().ToList();
         foreach (var placePoint in _placePoints)
         {
-            placePoint.StartDetecting(isDetecting);
+            placePoint.SetButtonInteractable(interactable);
         }
     }
 }

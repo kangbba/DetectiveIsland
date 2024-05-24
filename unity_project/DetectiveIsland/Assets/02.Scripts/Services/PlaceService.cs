@@ -22,13 +22,15 @@ public static class PlaceService
     public static Place CurPlace { get => _curPlace; }
     public static List<Place> PlacePrefabs { get => _placePrefabs; }
 
+    private static bool _isMoving;
+
     public static void Load()
     {
         _placePanel = new GameObject("Place Panel").transform;
         _placePrefabs = ArokaUtils.LoadResourcesFromFolder<Place>("PlacePrefabs");
     }
 
-    private static Place MakePlace(EPlaceID placeID, float totalTime)
+    public static Place MakePlaceAndRegister(EPlaceID placeID, float totalTime)
     {
         Place placePrefab = GetPlacePrefab(placeID);
         if (placePrefab == null)
@@ -39,6 +41,7 @@ public static class PlaceService
         Place instancedPlace = GameObject.Instantiate(placePrefab, _placePanel.transform);
         instancedPlace.transform.localPosition = Vector3.zero;
         instancedPlace.FadeInFromStart(totalTime);
+        _curPlace = instancedPlace;
         return instancedPlace;
     }
 
@@ -50,17 +53,5 @@ public static class PlaceService
             Debug.LogWarning($"{placeID} 이름의 Place 찾을수 없음");
         }
         return place;
-    }
-
-    public static async UniTaskVoid MoveToPlace(EPlaceID placeID, int sectionIndex){
-
-        if(_curPlace != null){
-            _curPlace.Exit();
-            _curPlace.FadeOutAndDestroy(1f);
-        }
-        await UniTask.WaitForSeconds(1f);
-        Place place = MakePlace(placeID, 1f);
-        place.Enter(sectionIndex);
-        _curPlace = place;
     }
 }

@@ -44,6 +44,16 @@ public static class EventProcessor
             Debug.Log($"EventTime: {plan.EventTime.Date} - {plan.EventTime.Hour}:{plan.EventTime.Minute}");
         }
     }
+
+    public static async UniTask MoveToPlace(EPlaceID placeID, int sectionIndex){
+        if(PlaceService.CurPlace != null){
+           PlaceService.CurPlace.OnExit();
+           PlaceService.CurPlace.FadeOutAndDestroy(1f);
+        }
+        Place place = PlaceService.MakePlaceAndRegister(placeID, 1f);
+        await UniTask.WaitForSeconds(1f);
+        place.OnEnter(sectionIndex, 1f);
+    }
     
     public static async UniTask PlayEvent(Scenario scenario, bool timeSpend)
     {
@@ -55,6 +65,7 @@ public static class EventProcessor
         //Elements 출력
         List<Element> elements = scenario.Elements;
         await ProcessElementsTask(elements);
+
         UIManager.CloseDialoguePanel(1f);
 
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);

@@ -45,9 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uC5F4\uC5B4\uBD24\uC9C0\uB9CC \uC544\uBB34\uAC83\uB3C4 \uC5C6\uC5C8\uB2E4."
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &5686620073082884740
 SpriteRenderer:
@@ -146,9 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uB610\uB2E4\uB978 \uCEF4\uD4E8\uD130\uC774\uB2E4."
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &3025141442921663115
 SpriteRenderer:
@@ -247,10 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
+  _sentences:
   - "\uCEF4\uD4E8\uD130\uAC00 \uC788\uB2E4."
-  - "\uBCC4\uB2E4\uB978 \uB0B4\uC6A9\uC740 \uC5C6\uC5B4 \uBCF4\uC778\uB2E4."
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &1749399011357272935
 SpriteRenderer:
@@ -349,10 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uC77C\uD68C\uC6A9 \uC758\uB8CC\uAE30\uAE30 \uB4F1\uC774 \uBC84\uB824\uC838\uC788\uB2E4."
-  - "\uC4F0\uB808\uAE30\uD1B5\uC740 \uB4A4\uC9C0\uC9C0 \uC54A\uB294\uAC83\uC774 \uC88B\uACA0\uB2E4."
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &739227286732907808
 SpriteRenderer:
@@ -451,10 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uB0A0\uC528\uAC00 \uBC1D\uB2E4."
-  - "\uC9C0\uAE08\uC740 \uBA87\uC2DC\uC77C\uAE4C?"
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &1614777732931723187
 SpriteRenderer:
@@ -618,8 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines: []
+  _sentences: []
   _scenarioJsonFile: {fileID: 4900000, guid: dfb7893b3667c4ed481885e3eb7f9069, type: 3}
 --- !u!212 &8112677730227196772
 SpriteRenderer:
@@ -841,9 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uCE68\uB300\uB2E4."
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &720159122499561687
 SpriteRenderer:
@@ -942,9 +927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectingRadius: 3
-  _simpleLines:
-  - "\uC218\uAC74\uC774 \uAC78\uB824\uC788\uB2E4"
+  _sentences: []
   _scenarioJsonFile: {fileID: 0}
 --- !u!212 &1645835916613931158
 SpriteRenderer:

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public interface IAction
@@ -67,7 +68,7 @@ public class MoveToPlaceAction : IAction
 
     public void Execute()
     {
-        PlaceService.MoveToPlace(_placeID, _sectionIndex);
+        EventProcessor.MoveToPlace(_placeID, _sectionIndex).Forget();
         Debug.Log("Moving to place: " + _placeID);
     }
 }

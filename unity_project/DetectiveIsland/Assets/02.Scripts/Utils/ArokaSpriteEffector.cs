@@ -32,5 +32,6 @@ public class ArokaSpriteEffector : MonoBehaviour
     public void FadeOutAndDestroy(float totalTime)
     {
         _spriteRenderer.EaseSpriteColor(_spriteRenderer.color.ModifiedAlpha(0f), totalTime);
+        Destroy(gameObject, totalTime);
     }
 }
