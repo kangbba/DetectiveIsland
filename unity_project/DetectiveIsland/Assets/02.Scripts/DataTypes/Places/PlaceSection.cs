@@ -1,36 +1,43 @@
-
 using ArokaInspector.Attributes;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-[System.Serializable]
-public class PlaceSection
+public class PlaceSection : MonoBehaviour
 {
-    [SerializeField] private float _sectionCenterX;
+    private bool _isAlreadyViewed;
 
     [SerializeField] private bool _useEnterEvent;
     [ShowIf("_useEnterEvent")]
-    [SerializeField] private EventPlan _eventPlan;
-    public float SectionCenterX { get => _sectionCenterX; }
-    public EventPlan EventPlan { get => _eventPlan;  }
-    public bool UseEnterEvent { get => _useEnterEvent; }
+    [SerializeField] private TextAsset _scenarioFile;
 
-    public async UniTask PlayEnterEvent(){
-        if(!_useEnterEvent){
-            Debug.Log("이벤트를 사용하지않는 section");
-            return;
-        }
-        EventPlan eventPlanToPlay = _eventPlan;
-        if (eventPlanToPlay == null)
+    public float SectionCenterX { get => transform.position.x; }
+    public TextAsset ScenarioFile => _scenarioFile;
+    public bool UseEnterEvent => _useEnterEvent;
+
+    public async UniTask PlayEnterEvent()
+    {
+        if (_isAlreadyViewed)
         {
-            Debug.Log("eventPlanToPlay null or time does not match");
+            Debug.Log("이미 열람한 이벤트");
             return;
         }
-        Scenario scenario = EventService.LoadScenario(eventPlanToPlay.ScenarioFile);
-        if(scenario == null){
-            Debug.Log("해당 eventplan엔 시나리오가 없으므로 생략");
+        if (!_useEnterEvent)
+        {
+            Debug.Log("이벤트를 사용하지 않는 section");
             return;
         }
+        if (_scenarioFile == null)
+        {
+            Debug.Log("_useEnterEvent 임에도 _scenarioFile null");
+            return;
+        }
+        Scenario scenario = EventService.LoadScenario(_scenarioFile);
+        if (scenario == null)
+        {
+            Debug.Log("_scenarioFile 존재하지만 scenario 로드 실패");
+            return;
+        }
+        _isAlreadyViewed = true;
         await EventProcessor.PlayEvent(scenario);
     }
 }

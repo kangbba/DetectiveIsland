@@ -2,101 +2,32 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using ArokaInspector.Attributes;
-
-public enum ButtonActionType
-{
-    None,
-    MovePlace,
-    GetItem,
-    PlayEvent
-}
-
-[System.Serializable]
-public class ButtonActionPair
-{
-    [SerializeField] private PlacePointButton _button;
-    [SerializeField] private ButtonActionType _actionType;
-
-    [ShowIf("_actionType", ButtonActionType.MovePlace)]
-    [SerializeField] private EPlaceID _placeID;
-
-    [ShowIf("_actionType", ButtonActionType.GetItem)]
-    [SerializeField] private EItemID _itemID;
-
-    [ShowIf("_actionType", ButtonActionType.PlayEvent)]
-    [SerializeField] private EventPlan _eventPlan;
-
-    public PlacePointButton Button => _button;
-
-    public void Execute()
-    {
-        switch (_actionType)
-        {
-            case ButtonActionType.MovePlace:
-                Debug.Log($"Moving to place: {_placeID}");
-                EventProcessor.MoveToPlace(_placeID, 0);
-                // 여기에 실제 동작 로직 추가
-                break;
-            case ButtonActionType.GetItem:
-                Debug.Log($"Getting item: {_itemID}");
-                EventProcessor.ProcessGainItem(new GainItem(true, _itemID, 1)).Forget();
-                // 여기에 실제 동작 로직 추가
-                break;
-            case ButtonActionType.PlayEvent:
-                Debug.Log("Playing event...");
-                PlayEvent();
-                break;
-            default:
-                Debug.LogWarning("Unsupported action type.");
-                break;
-        }
-    }
-
-    private async void PlayEvent()
-    {
-        if (_eventPlan == null)
-        {
-            Debug.LogWarning("EventPlan is null.");
-            return;
-        }
-
-        Scenario scenario = EventService.LoadScenario(_eventPlan.ScenarioFile);
-        if (scenario == null)
-        {
-            Debug.LogWarning("Scenario is null.");
-            return;
-        }
-
-        await EventProcessor.PlayEvent(scenario);
-    }
-}
 
 public class Place : ArokaSpriteEffector
 {
     [SerializeField] private EPlaceID _placeID;
-    [SerializeField] private List<PlaceSection> _placeSections;
     [SerializeField] private string _placeNameForUser;
-    [SerializeField] private List<ButtonActionPair> _buttonActionPairs;
-    [SerializeField] private List<PlacePointButton> _placePoints;
+    [SerializeField] private EventTime _eventTime;
 
-    private int _curSectionIndex;
+    private List<PlaceSection> _placeSections = new List<PlaceSection>();
+    private List<PlacePointButton> _placePoints;
+    private int _curSectionIndex = -1;
     private bool _isActive;
 
     public PlaceSection CurPlaceSection => (_curSectionIndex >= 0 && _curSectionIndex < _placeSections.Count) ? _placeSections[_curSectionIndex] : null;
     public List<PlaceSection> PlaceSections => _placeSections;
     public EPlaceID PlaceID => _placeID;
     public string PlaceNameForUser => _placeNameForUser;
-
-    private void Start()
-    {
-        Initialize();
-    }
+    public EventTime EventTime => _eventTime;
 
     private void Initialize()
     {
         SpriteRenderer.sortingOrder = -1;
+
         _placePoints = GetComponentsInChildren<PlacePointButton>().ToList();
+        _placeSections = GetComponentsInChildren<PlaceSection>()
+                            .OrderBy(section => section.SectionCenterX)
+                            .ToList();
 
         foreach (var placePoint in _placePoints)
         {
@@ -106,6 +37,7 @@ public class Place : ArokaSpriteEffector
 
     public void OnEnter(int initialPlaceSectionIndex, float totalTime)
     {
+        Initialize();
         Debug.Log($"{PlaceID}에 입장했습니다. Enter() 진행시작");
         _isActive = true;
         SetPlaceSectionAndPlayEvent(initialPlaceSectionIndex, totalTime).Forget();
@@ -164,27 +96,26 @@ public class Place : ArokaSpriteEffector
         }
         _curSectionIndex = placeSectionIndex;
         PlaceSection placeSection = CurPlaceSection;
-        EventPlan placeEventPlan = placeSection.EventPlan;
+        TextAsset scenarioFile = placeSection.ScenarioFile;
         CameraController.MoveX(placeSection.SectionCenterX, totalTime);
         await UniTask.WaitForSeconds(totalTime);
 
-        if (placeEventPlan != null && EventTimeService.IsCurrentTimeEquals(placeEventPlan.EventTime))
+        if (scenarioFile != null && EventTimeService.IsCurrentTimeEquals(_eventTime))
         {
-            Debug.Log($"이 섹션에 포함된 시나리오 시간 : {placeEventPlan.EventTime}");
+            Debug.Log($"Time match {_eventTime}");
             await CurPlaceSection.PlayEnterEvent();
         }
-        Debug.Log("EventTime null or time does not match");
+        else
+        {
+            Debug.Log($"Time does not match {_eventTime}  // curTime : {EventTimeService.CurEventTime}");
+        }
         SetAllButtonInteractable(true);
         UIManager.SetMouseCursorMode(EMouseCursorMode.Detect);
     }
 
     public void OnPlacePointClicked(PlacePointButton placePointButton)
     {
-        var actionPair = _buttonActionPairs.FirstOrDefault(pair => pair.Button == placePointButton);
-        if (actionPair != null)
-        {
-            actionPair.Execute();
-        }
+        placePointButton.Execute();
     }
 
     public void SetAllButtonInteractable(bool interactable)

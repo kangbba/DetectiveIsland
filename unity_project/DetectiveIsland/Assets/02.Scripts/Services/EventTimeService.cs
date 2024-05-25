@@ -13,30 +13,29 @@ public enum TimeRelation
 
 public static class EventTimeService
 {
-    private static List<EventPlan> _allEventPlans = new List<EventPlan>();
+    private static List<EventTime> _allEventTimes = new List<EventTime>();
     private static EventTime _curEventTime = null;
 
     public static EventTime CurEventTime { get => _curEventTime; }
 
     public static void Load(List<Place> places)
     {
-        _allEventPlans.Clear();
+        _allEventTimes.Clear();
 
+        HashSet<EventTime> uniqueEventTimes = new HashSet<EventTime>();
         foreach (var place in places)
         {
-            foreach (var section in place.PlaceSections){
-                _allEventPlans.Add(section.EventPlan);
-            }
+            uniqueEventTimes.Add(place.EventTime);
         }
 
-        _allEventPlans = _allEventPlans.OrderBy(plan => plan.EventTime.Date)
-                                       .ThenBy(plan => plan.EventTime.Hour)
-                                       .ThenBy(plan => plan.EventTime.Minute)
-                                       .ToList();
+        _allEventTimes = uniqueEventTimes.OrderBy(eventTime => eventTime.Date)
+                                         .ThenBy(eventTime => eventTime.Hour)
+                                         .ThenBy(eventTime => eventTime.Minute)
+                                         .ToList();
 
-        foreach (var plan in _allEventPlans)
+        foreach (var eventTime in _allEventTimes)
         {
-            Debug.Log($"EventTime: {plan.EventTime.Date} - {plan.EventTime.Hour}:{plan.EventTime.Minute}");
+            Debug.Log($"EventTime: {eventTime.Date} - {eventTime.Hour}:{eventTime.Minute}");
         }
     }
     public static int GetYear(string date)
@@ -119,7 +118,7 @@ public static class EventTimeService
     }
     public static EventTime GetNextEventTime()
     {
-        var futureEvents = _allEventPlans.Where(plan => CompareTime(plan.EventTime, _curEventTime) == TimeRelation.Future).ToList();
-        return futureEvents.FirstOrDefault()?.EventTime;
+        var futureEvents = _allEventTimes.Where(eventTime => CompareTime(eventTime, _curEventTime) == TimeRelation.Future).ToList();
+        return futureEvents.FirstOrDefault();
     }
 }

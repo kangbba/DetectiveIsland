@@ -10,6 +10,7 @@ public enum EPlaceID
     None = 0,
     HospitalBedroom = 1,
     HospitalDoor = 2,
+    Town = 3,
     // 다른 장소들...
 }
 
