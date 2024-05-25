@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 300;
         Initialize();
-        EventTimeService.SetCurEventTime("2024-04-01", 9 , 0);
-        EventProcessor.MoveToPlace(EPlaceID.HospitalBedroom, 0).Forget();
+        EventTimeService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
+        EventProcessor.MoveToPlace(EPlaceID.HospitalBedroom, 0);
     }
 
     private void Initialize()
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         PictureService.Load();
         AudioService.Load();
         CameraService.Load();
+        QuestManager.Load();
     }
 
     private void Update(){

@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public abstract class WorldButton : MonoBehaviour
 {
-
     private Button _button;
 
     protected virtual void Start()

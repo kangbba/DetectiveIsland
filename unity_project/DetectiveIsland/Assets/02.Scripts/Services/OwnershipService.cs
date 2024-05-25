@@ -27,7 +27,7 @@ public static class OwnershipService
     }
 
     // 플레이어가 특정 아이템을 소유하게 하거나 잃게 만드는 메서드
-    public static void SetItemOwnership(EItemID itemID, bool ownsItem)
+    public static void SetHasItem(EItemID itemID, bool ownsItem)
     {
         int itemIDValue = (int)itemID;
         string key = $"{ItemPrefix}{itemIDValue}";
@@ -37,7 +37,7 @@ public static class OwnershipService
     }
 
     // 플레이어가 특정 아이템을 소유하고 있는지 확인하는 메서드
-    public static bool GetItemOwnership(EItemID itemID)
+    public static bool HasItem(EItemID itemID)
     {
         int itemIDValue = (int)itemID;
         string key = $"{ItemPrefix}{itemIDValue}";

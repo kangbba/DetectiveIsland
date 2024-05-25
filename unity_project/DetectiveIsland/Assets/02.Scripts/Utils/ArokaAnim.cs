@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Aroka.EaseUtils;
+using ArokaInspector.Attributes;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -123,19 +124,19 @@ namespace Aroka.Anim
             }
         }
 
-        [ArokaButton()]
+        [ArokaButton]
         public void EditorRegister_On(){
             RegisterStateWithCurrent(true);
         }
-        [ArokaButton()]
+        [ArokaButton]
         public void EditorRegister_Off(){
             RegisterStateWithCurrent(false);
         }
-        [ArokaButton()]
+        [ArokaButton]
         public void EditorPreview_On(){
             PreviewState(true);
         }
-        [ArokaButton()]
+        [ArokaButton]
         public void EditorPreview_Off(){
             PreviewState(false);
         }

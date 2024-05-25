@@ -3,6 +3,7 @@ using System.Linq;
 using Aroka.Anim;
 using Aroka.ArokaUtils;
 using Aroka.EaseUtils;
+using ArokaInspector.Attributes;
 using TMPro;
 using UnityEditor;
 using UnityEngine;

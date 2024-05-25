@@ -7,17 +7,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Aroka.ArokaUtils;
 
-[System.Serializable]
-public class EventPlan
-{
-    [SerializeField] private EventTime _eventTime = new EventTime("2024-04-01", 9, 0);
-    [SerializeField] private TextAsset _scenarioFile;
-
-    public TextAsset ScenarioFile => _scenarioFile;
-    public EventTime EventTime => _eventTime;
-
-
-}
 
 public static class EventProcessor
 {
@@ -45,13 +34,12 @@ public static class EventProcessor
         }
     }
 
-    public static async UniTask MoveToPlace(EPlaceID placeID, int sectionIndex){
+    public static void MoveToPlace(EPlaceID placeID, int sectionIndex){
         if(PlaceService.CurPlace != null){
            PlaceService.CurPlace.OnExit();
            PlaceService.CurPlace.FadeOutAndDestroy(1f);
         }
         Place place = PlaceService.MakePlaceAndRegister(placeID, 1f);
-        await UniTask.WaitForSeconds(1f);
         place.OnEnter(sectionIndex, 1f);
     }
     
@@ -119,25 +107,25 @@ public static class EventProcessor
                 await ProcessItemDemand(itemDemand);
                 break;
             case GainItem gainItem:
-                await GainItemTask(gainItem);
+                await ProcessGainItem(gainItem);
                 break;
             case GainFriendship gainFriendship:
-                await GainFriendshipTask(gainFriendship);
+                await ProcessGainFriendship(gainFriendship);
                 break;
             case GainPlace gainPlace:
-                await GainPlaceTask(gainPlace);
+                await ProcessGainPlace(gainPlace);
                 break;
             case OverlayPicture overlayPicture:
-                await OverlayPictureTask(overlayPicture);
+                await ProcessOverlayPicture(overlayPicture);
                 break;
             case CameraAction cameraAction:
-                await CameraActionTask(cameraAction);
+                await ProcessCameraAction(cameraAction);
                 break;
             case AudioAction audioAction:
-                await AudioActionTask(audioAction);
+                await ProcessAudioAction(audioAction);
                 break;
             case OverlaySentence overlaySentence:
-                await OverlaySentenceTask(overlaySentence);
+                await ProcessOverlaySentence(overlaySentence);
                 break;
             default:
                 Debug.LogWarning($"Unsupported element type: {element.GetType()}");
@@ -231,7 +219,7 @@ public static class EventProcessor
         }
     }
 
-    public static async UniTask GainItemTask(GainItem gainItem)
+    public static async UniTask ProcessGainItem(GainItem gainItem)
     {
         ItemData itemData = ItemService.GetItemData(gainItem.ID);
         if (itemData == null)
@@ -240,32 +228,32 @@ public static class EventProcessor
             return;
         }
         if(gainItem.IsGain){
-            EventAction eventAction = new EventAction(new CollectItemAction(itemID : gainItem.ID));
+            OwnershipService.SetHasItem(gainItem.ID, true);
             UIManager.OpenItemOwnPanel(itemData);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             UIManager.CloseItemOwnPanel();
                 
         }
         else {
-            EventAction eventAction = new EventAction(new GiveItemAction(itemID : gainItem.ID));
+            OwnershipService.SetHasItem(gainItem.ID, false);
         }
        
     }
-    public static async UniTask GainFriendshipTask(GainFriendship gainFriendship)
+    public static async UniTask ProcessGainFriendship(GainFriendship gainFriendship)
     {
         await UniTask.WaitForSeconds(1f);
     }
-    public static async UniTask GainPlaceTask(GainPlace gainPlace)
+    public static async UniTask ProcessGainPlace(GainPlace gainPlace)
     {
         OwnershipService.SetPlaceOwnership(gainPlace.ID, true);
         await UniTask.WaitForSeconds(1f);
     }
-    public static async UniTask OverlayPictureTask(OverlayPicture overlayPicture)
+    public static async UniTask ProcessOverlayPicture(OverlayPicture overlayPicture)
     {
         PictureService.SetOverlayPictureEffect(overlayPicture);
         await UniTask.WaitForSeconds(1f);
     }
-    public static async UniTask CameraActionTask(CameraAction cameraAction)
+    public static async UniTask ProcessCameraAction(CameraAction cameraAction)
     { 
         switch (cameraAction.CameraActionID)
         {
@@ -296,11 +284,11 @@ public static class EventProcessor
             await UniTask.WaitForSeconds(0f);
         }
     }
-    public static async UniTask AudioActionTask(AudioAction audioAction)
+    public static async UniTask ProcessAudioAction(AudioAction audioAction)
     {
         await UniTask.WaitForSeconds(1f);
     }
-    public static async UniTask OverlaySentenceTask(OverlaySentence overlaySentence)
+    public static async UniTask ProcessOverlaySentence(OverlaySentence overlaySentence)
     {
         await UIManager.DisplayOverlaySentence(overlaySentence);
     }

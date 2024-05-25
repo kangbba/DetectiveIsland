@@ -21,7 +21,8 @@ public static class AttachInterface
         { "GainFriendship",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<GainFriendshipNode>(nodes, parentNodeID, pos)   },
         { "ModifyPosition",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<ModifyPositionNode>(nodes, parentNodeID, pos)   },
         { "OverlayPicture",      (nodes, parentNodeID, pos)         =>  CreateAndAddNode<OverlayPictureNode>(nodes, parentNodeID, pos)   },
-        { "OverlaySentence",     (nodes, parentNodeID, pos)         =>  CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos)  }
+        { "OverlaySentence",     (nodes, parentNodeID, pos)         =>  CreateAndAddNode<OverlaySentenceNode>(nodes, parentNodeID, pos)  },
+        { "Quest",               (nodes, parentNodeID, pos)         =>  CreateAndAddNode<QuestNode>(nodes, parentNodeID, pos)            }
     };
 
     public static void ShowContextMenu(List<Node> nodes, Node parentNode, Vector2 mousePos)

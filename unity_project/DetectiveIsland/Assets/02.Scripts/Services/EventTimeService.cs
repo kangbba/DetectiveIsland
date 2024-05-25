@@ -83,15 +83,12 @@ public static class EventTimeService
     }
 
 
-    public static void SetCurEventTime(string date, int hour, int minute)
-    {
-        _curEventTime = new EventTime(date, hour, minute);
-    }
 
     public static void SetCurEventTime(EventTime eventTime)
     {
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
-        _curEventTime = new EventTime(eventTime.Date, eventTime.Hour, eventTime.Minute);
+        _curEventTime = eventTime;
+        UIManager.SetEventTime(eventTime);
     }
 
     public static List<EventPlan> EventTimeFilter(this List<EventPlan> eventPlans, EventTime inputTime, TimeRelation timeRelation)

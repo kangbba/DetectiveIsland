@@ -40,9 +40,6 @@ public class ItemDemandNode : Node
         {
         };
     }
-
-
-
     public override Element ToElement()
     {
         return new ItemDemand(ItemID, DialogueNodes.Cast<Node>().ToList().ToElements().Cast<Dialogue>().ToList(),

@@ -7,9 +7,9 @@ using UnityEngine;
 
 public enum EPlaceID
 {
-    None,
-    HospitalBedroom,
-    Test
+    None = 0,
+    HospitalBedroom = 1,
+    HospitalDoor = 2,
     // 다른 장소들...
 }
 
