@@ -13,14 +13,32 @@ public enum TimeRelation
 
 public static class EventTimeService
 {
+    private static List<EventPlan> _allEventPlans = new List<EventPlan>();
     private static EventTime _curEventTime = null;
 
     public static EventTime CurEventTime { get => _curEventTime; }
 
-    public static void Load()
+    public static void Load(List<Place> places)
     {
-    }
+        _allEventPlans.Clear();
 
+        foreach (var place in places)
+        {
+            foreach (var section in place.PlaceSections){
+                _allEventPlans.Add(section.EventPlan);
+            }
+        }
+
+        _allEventPlans = _allEventPlans.OrderBy(plan => plan.EventTime.Date)
+                                       .ThenBy(plan => plan.EventTime.Hour)
+                                       .ThenBy(plan => plan.EventTime.Minute)
+                                       .ToList();
+
+        foreach (var plan in _allEventPlans)
+        {
+            Debug.Log($"EventTime: {plan.EventTime.Date} - {plan.EventTime.Hour}:{plan.EventTime.Minute}");
+        }
+    }
     public static int GetYear(string date)
     {
         return ParseDatePart(date, 0);
@@ -98,5 +116,10 @@ public static class EventTimeService
 
     public static bool IsCurrentTimeEquals(EventTime eventTime){
         return CompareTime(CurEventTime, eventTime) == TimeRelation.Same;
+    }
+    public static EventTime GetNextEventTime()
+    {
+        var futureEvents = _allEventPlans.Where(plan => CompareTime(plan.EventTime, _curEventTime) == TimeRelation.Future).ToList();
+        return futureEvents.FirstOrDefault()?.EventTime;
     }
 }

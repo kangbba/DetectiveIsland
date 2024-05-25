@@ -538,16 +538,29 @@ MonoBehaviour:
         _minute: 0
       _scenarioFile: {fileID: 4900000, guid: ae2f18be71bc34a478cbb90aa0d99306, type: 3}
   _placeNameForUser: "\uBCD1\uC6D0 \uB0B4\uBD80"
-  _placePoints:
-  - {fileID: 0}
-  _buttonEventPlans:
+  _buttonActionPairs:
   - _button: {fileID: 8766669534058958696}
+    _actionType: 1
+    _placeID: 2
+    _itemID: 0
     _eventPlan:
       _eventTime:
         _date: 2024-04-01
         _hour: 9
-        _minute: 10
-      _scenarioFile: {fileID: 4900000, guid: dfb7893b3667c4ed481885e3eb7f9069, type: 3}
+        _minute: 0
+      _scenarioFile: {fileID: 0}
+  - _button: {fileID: 0}
+    _actionType: 0
+    _placeID: 0
+    _itemID: 0
+    _eventPlan:
+      _eventTime:
+        _date: 
+        _hour: 0
+        _minute: 0
+      _scenarioFile: {fileID: 0}
+  _placePoints:
+  - {fileID: 0}
 --- !u!1 &5333247522535687510
 GameObject:
   m_ObjectHideFlags: 0

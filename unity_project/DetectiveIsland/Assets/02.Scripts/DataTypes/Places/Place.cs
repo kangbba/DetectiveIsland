@@ -2,15 +2,74 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using ArokaInspector.Attributes;
+
+public enum ButtonActionType
+{
+    None,
+    MovePlace,
+    GetItem,
+    PlayEvent
+}
 
 [System.Serializable]
-public class ButtonEventPlanPair
+public class ButtonActionPair
 {
     [SerializeField] private PlacePointButton _button;
+    [SerializeField] private ButtonActionType _actionType;
+
+    [ShowIf("_actionType", ButtonActionType.MovePlace)]
+    [SerializeField] private EPlaceID _placeID;
+
+    [ShowIf("_actionType", ButtonActionType.GetItem)]
+    [SerializeField] private EItemID _itemID;
+
+    [ShowIf("_actionType", ButtonActionType.PlayEvent)]
     [SerializeField] private EventPlan _eventPlan;
 
     public PlacePointButton Button => _button;
-    public EventPlan EventPlan => _eventPlan;
+
+    public void Execute()
+    {
+        switch (_actionType)
+        {
+            case ButtonActionType.MovePlace:
+                Debug.Log($"Moving to place: {_placeID}");
+                EventProcessor.MoveToPlace(_placeID, 0);
+                // 여기에 실제 동작 로직 추가
+                break;
+            case ButtonActionType.GetItem:
+                Debug.Log($"Getting item: {_itemID}");
+                EventProcessor.ProcessGainItem(new GainItem(true, _itemID, 1)).Forget();
+                // 여기에 실제 동작 로직 추가
+                break;
+            case ButtonActionType.PlayEvent:
+                Debug.Log("Playing event...");
+                PlayEvent();
+                break;
+            default:
+                Debug.LogWarning("Unsupported action type.");
+                break;
+        }
+    }
+
+    private async void PlayEvent()
+    {
+        if (_eventPlan == null)
+        {
+            Debug.LogWarning("EventPlan is null.");
+            return;
+        }
+
+        Scenario scenario = EventService.LoadScenario(_eventPlan.ScenarioFile);
+        if (scenario == null)
+        {
+            Debug.LogWarning("Scenario is null.");
+            return;
+        }
+
+        await EventProcessor.PlayEvent(scenario);
+    }
 }
 
 public class Place : ArokaSpriteEffector
@@ -18,7 +77,7 @@ public class Place : ArokaSpriteEffector
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private List<PlaceSection> _placeSections;
     [SerializeField] private string _placeNameForUser;
-    [SerializeField] private List<ButtonEventPlanPair> _buttonEventPlans;
+    [SerializeField] private List<ButtonActionPair> _buttonActionPairs;
     [SerializeField] private List<PlacePointButton> _placePoints;
 
     private int _curSectionIndex;
@@ -47,15 +106,28 @@ public class Place : ArokaSpriteEffector
 
     public void OnEnter(int initialPlaceSectionIndex, float totalTime)
     {
-        Debug.Log($"{PlaceID}에 입장했습니다. Enter() 진행중");
+        Debug.Log($"{PlaceID}에 입장했습니다. Enter() 진행시작");
         _isActive = true;
         SetPlaceSectionAndPlayEvent(initialPlaceSectionIndex, totalTime).Forget();
     }
 
     public void OnExit()
     {
+        UIManager.SetMouseCursorMode(EMouseCursorMode.Normal);
         _isActive = false;
         SetAllButtonInteractable(false);
+        Debug.Log($"{PlaceID}에서 퇴장합니다. Exit() 진행완료");
+        // 이벤트 처리 후 다음 이벤트 시간을 설정
+        EventTime nextEventTime = EventTimeService.GetNextEventTime();
+        if (nextEventTime != null)
+        {
+            Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
+            EventTimeService.SetCurEventTime(nextEventTime);
+        }
+        else
+        {
+            Debug.Log("다음 이벤트 없음");
+        }
     }
 
     public void SetNextPlaceSection()
@@ -102,8 +174,17 @@ public class Place : ArokaSpriteEffector
             await CurPlaceSection.PlayEnterEvent();
         }
         Debug.Log("EventTime null or time does not match");
-
         SetAllButtonInteractable(true);
+        UIManager.SetMouseCursorMode(EMouseCursorMode.Detect);
+    }
+
+    public void OnPlacePointClicked(PlacePointButton placePointButton)
+    {
+        var actionPair = _buttonActionPairs.FirstOrDefault(pair => pair.Button == placePointButton);
+        if (actionPair != null)
+        {
+            actionPair.Execute();
+        }
     }
 
     public void SetAllButtonInteractable(bool interactable)
@@ -111,17 +192,6 @@ public class Place : ArokaSpriteEffector
         foreach (var placePoint in _placePoints)
         {
             placePoint.SetButtonInteractable(interactable);
-        }
-    }
-
-    public void OnPlacePointClicked(PlacePointButton placePoint)
-    {
-        Debug.Log($"PlacePoint clicked: {placePoint.name}");
-        
-        var eventPlanPair = _buttonEventPlans.FirstOrDefault(pair => pair.Button == placePoint);
-        if (eventPlanPair != null)
-        {
-            EventProcessor.PlayEvent(EventService.LoadScenario(eventPlanPair.EventPlan.ScenarioFile), false).Forget();
         }
     }
 }

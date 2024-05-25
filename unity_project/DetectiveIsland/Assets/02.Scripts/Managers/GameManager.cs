@@ -27,11 +27,11 @@ public class GameManager : MonoBehaviour
         CameraController.Load();
         UIManager.Load();
         WorldManager.Load();
-        EventTimeService.Load();
         EventService.Load();
         ItemService.Load();
         PlaceService.Load();
-        EventProcessor.Load(PlaceService.PlacePrefabs);
+        EventTimeService.Load(PlaceService.PlacePrefabs);
+        EventProcessor.Load();
         CharacterService.Load();
         PictureService.Load();
         AudioService.Load();

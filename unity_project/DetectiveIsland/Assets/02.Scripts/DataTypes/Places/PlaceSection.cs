@@ -31,6 +31,6 @@ public class PlaceSection
             Debug.Log("해당 eventplan엔 시나리오가 없으므로 생략");
             return;
         }
-        await EventProcessor.PlayEvent(scenario, true);
+        await EventProcessor.PlayEvent(scenario);
     }
 }

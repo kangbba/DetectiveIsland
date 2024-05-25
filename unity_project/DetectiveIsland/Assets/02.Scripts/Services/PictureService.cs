@@ -60,7 +60,7 @@ public static class PictureService
             case EPictureEffectID.FadeOut:
                 if (_instancedPictures.TryGetValue(pictureID, out Picture picture))
                 {
-                    picture.FadeOut(effectTime);
+                    picture.FadeOutAndDestroy(effectTime);
                 }
                 break;
             default:

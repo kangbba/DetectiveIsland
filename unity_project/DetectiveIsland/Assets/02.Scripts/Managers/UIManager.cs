@@ -98,5 +98,10 @@ public static class UIManager
         await _uiParent.SimpleDialoguePanel.ShowSimpleDialogue(sentences);
     }
 
+    // 마우스 커서 모드 설정
+    public static void SetMouseCursorMode(EMouseCursorMode mode)
+    {
+        _uiParent.UIMouseCursor.SetState(mode);
+    }
 
 }

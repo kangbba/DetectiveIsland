@@ -10,30 +10,10 @@ using Aroka.ArokaUtils;
 
 public static class EventProcessor
 {
-    private static List<EventPlan> _allEventPlans = new List<EventPlan>();
 
-    public static void Load(List<Place> places)
-    {
-        _allEventPlans.Clear();
+    public static void Load(){
 
-        foreach (var place in places)
-        {
-            foreach (var section in place.PlaceSections){
-                _allEventPlans.Add(section.EventPlan);
-            }
-        }
-
-        _allEventPlans = _allEventPlans.OrderBy(plan => plan.EventTime.Date)
-                                       .ThenBy(plan => plan.EventTime.Hour)
-                                       .ThenBy(plan => plan.EventTime.Minute)
-                                       .ToList();
-
-        foreach (var plan in _allEventPlans)
-        {
-            Debug.Log($"EventTime: {plan.EventTime.Date} - {plan.EventTime.Hour}:{plan.EventTime.Minute}");
-        }
     }
-
     public static void MoveToPlace(EPlaceID placeID, int sectionIndex){
         if(PlaceService.CurPlace != null){
            PlaceService.CurPlace.OnExit();
@@ -43,7 +23,7 @@ public static class EventProcessor
         place.OnEnter(sectionIndex, 1f);
     }
     
-    public static async UniTask PlayEvent(Scenario scenario, bool timeSpend)
+    public static async UniTask PlayEvent(Scenario scenario)
     {
         Debug.Log("PlayEvent!");
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
@@ -59,28 +39,9 @@ public static class EventProcessor
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
         await UniTask.WaitForSeconds(1f);
 
-        Debug.Log("이벤트 종료");
-        if(timeSpend){
-            // 이벤트 처리 후 다음 이벤트 시간을 설정
-            EventTime nextEventTime = GetNextEventTime(EventTimeService.CurEventTime);
-            if (nextEventTime != null)
-            {
-                Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
-                EventTimeService.SetCurEventTime(nextEventTime);
-            }
-            else{
-                Debug.Log("다음 이벤트 없음");
-            }
-
-        }
         
     }
 
-    private static EventTime GetNextEventTime(EventTime currentEventTime)
-    {
-        var futureEvents = _allEventPlans.Where(plan => EventTimeService.CompareTime(plan.EventTime, currentEventTime) == TimeRelation.Future).ToList();
-        return futureEvents.FirstOrDefault()?.EventTime;
-    }
 
     private static async UniTask ProcessElementsTask(List<Element> elements){
 
@@ -291,10 +252,6 @@ public static class EventProcessor
     public static async UniTask ProcessOverlaySentence(OverlaySentence overlaySentence)
     {
         await UIManager.DisplayOverlaySentence(overlaySentence);
-    }
-    public static EventPlan GetEventPlan(EventTime eventTime)
-    {
-        return _allEventPlans.FirstOrDefault(plan => plan.EventTime.Equals(eventTime));
     }
 
 

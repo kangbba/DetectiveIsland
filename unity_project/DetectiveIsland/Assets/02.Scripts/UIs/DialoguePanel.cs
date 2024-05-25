@@ -73,6 +73,8 @@ public class DialoguePanel : MonoBehaviour
         ECharacterID characterID = dialogue.CharacterID;
         bool isRyan = characterID == ECharacterID.Ryan;
         bool isMono = characterID == ECharacterID.Mono;
+        bool isCharacterExist = CharacterService.GetInstancedCharacter(characterID) != null;
+        bool isSpeakerExist = !isRyan && !isMono && isCharacterExist;
         CharacterData characterData = CharacterService.GetCharacterData(characterID);
         string[] delimiters = { @"\.", @"\,", @"\!", @"\?", @"\.\.\." }; // 구분할 문자열 패턴 정의
         
@@ -80,14 +82,17 @@ public class DialoguePanel : MonoBehaviour
         {
             UIManager.ClearDialoguePanel();
             UIManager.SetDialogueCharacterText(characterData.CharacterNameForUser, characterData.CharacterColor);
-            if (!(isRyan || isMono)){
+            if (isSpeakerExist){
                 CharacterService.SetCharacterEmotion(characterID, line.EmotionID, .3f);
                 CharacterService.StartCharacterTalking(characterID);
             }
             
             SetState(DialogueState.Typing);
             await TypeLineTask(line.Sentence.Trim(), Color.white); // 문장 출력
-            CharacterService.StopCharacterTalking(characterID);
+            
+            if (isSpeakerExist){
+                CharacterService.StopCharacterTalking(characterID);
+            }
             SetState(DialogueState.WaitingForNextSentence);
 
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)); // 마우스 클릭 대기

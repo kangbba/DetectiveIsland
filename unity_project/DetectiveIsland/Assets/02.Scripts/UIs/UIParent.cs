@@ -25,7 +25,7 @@ public class UIParent : MonoBehaviour
     public ChoiceSetPanel ChoiceSetPanel => _choiceSetPanel;
     public EventTimeDisplayer EventTimeDisplayer => _eventTimeDisplayer;
     public PlaceUIPanel PlaceUIPanel => _placeUIPanel;
-    public UIMouseCursor UiMouseCursor => _uiMouseCursor;
+    public UIMouseCursor UIMouseCursor => _uiMouseCursor;
     public ItemCheckPanel ItemCheckPanel => _itemCheckPanel;
     public Button ItemCheckPanelEnterBtn => _itemCheckPanelEnterBtn;
 
