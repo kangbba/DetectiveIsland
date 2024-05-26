@@ -421,6 +421,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00c8cafd2cae43e1b33065bb995f52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialEventTimeForTest:
+    _date: 2024-04-01
+    _hour: 12
+    _minute: 0
+  initialPlaceID: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

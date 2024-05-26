@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63126eb933f537946a2da78a6445ce19, type: 3}
-  m_Name: JNodeInstance
+  m_Script: {fileID: 11500000, guid: 24963b7aaab3244499c171ec6bb78157, type: 3}
+  m_Name: CharacterData_TownPeople 3
   m_EditorClassIdentifier: 
-  recentOpenFileName: "3.\uCF00\uC774\uD2B8\uC640 \uB9CC\uB0A8.jnode"
-  recentPath: "Assets/JNodeFiles/3.\uCF00\uC774\uD2B8\uC640 \uB9CC\uB0A8.jnode"
+  _characterID: 103
+  _characterPrefab: {fileID: 0}
+  _characterNameForUser: "\uB9C8\uC744 \uC0AC\uB78C 3"
+  _characterColor: {r: 0.6574849, g: 0.6880785, b: 0.7075472, a: 1}

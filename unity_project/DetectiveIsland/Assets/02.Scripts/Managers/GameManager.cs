@@ -12,13 +12,16 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
+    [SerializeField] private EventTime initialEventTimeForTest;
+    [SerializeField] private EPlaceID initialPlaceID;
+
     
     private void Start()
     {
         Application.targetFrameRate = 300;
         Initialize();
-        EventTimeService.SetCurEventTime(new EventTime("2024-04-01", 9 , 0));
-        EventProcessor.MoveToPlace(EPlaceID.HospitalBedroom, 0);
+        EventTimeService.SetCurEventTime(initialEventTimeForTest);
+        EventProcessor.MoveToPlace(initialPlaceID, 0);
     }
 
     private void Initialize()

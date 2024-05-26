@@ -15,6 +15,10 @@ public enum ECharacterID{
     Brian = 6,
     Joseph = 7,
     Rachel = 8,
+    TownPeople = 100,
+    TownPeople1 = 101,
+    TownPeople2 = 102,
+    TownPeople3 = 103,
 
 }
 public enum EEmotionID{
