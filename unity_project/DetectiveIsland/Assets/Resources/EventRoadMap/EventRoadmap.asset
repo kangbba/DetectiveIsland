@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f3ca09b32c24f28b0af11e1f9851ba, type: 3}
+  m_Name: EventRoadmap
+  m_EditorClassIdentifier: 
+  allEventPlans:
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 9
+      _minute: 0
+    _placeID: 1
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 4900000, guid: ae2f18be71bc34a478cbb90aa0d99306, type: 3}
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 10
+      _minute: 0
+    _placeID: 3
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 4900000, guid: 027496d351b9845f59e415abd942a287, type: 3}
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 11
+      _minute: 0
+    _placeID: 4
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 4900000, guid: 446bdcc53f48d49c789328c51d70603d, type: 3}
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 18
+      _minute: 0
+    _placeID: 4
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 4900000, guid: b28d61383c5004cfebe9d9494555123d, type: 3}

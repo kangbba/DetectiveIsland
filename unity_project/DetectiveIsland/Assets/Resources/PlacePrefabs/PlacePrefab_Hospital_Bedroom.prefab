@@ -486,16 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 5535754164890447236}
   _placeID: 1
-  _placeSections:
-  - {fileID: 5232696303935498908}
-  - {fileID: 8172530434576825690}
   _placeNameForUser: "\uBCD1\uC6D0 \uB0B4\uBD80"
-  _placePoints:
-  - {fileID: 0}
-  _eventTime:
-    _date: 2024-04-01
-    _hour: 9
-    _minute: 0
 --- !u!1 &4897148135600210276
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,8 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f35d15f94ba1420fb992279ff1de155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useEnterEvent: 1
-  _scenarioFile: {fileID: 4900000, guid: ae2f18be71bc34a478cbb90aa0d99306, type: 3}
+  _sectionIndex: 0
 --- !u!1 &5333247522535687510
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,8 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f35d15f94ba1420fb992279ff1de155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useEnterEvent: 0
-  _scenarioFile: {fileID: 0}
+  _sectionIndex: 1
 --- !u!1 &7258867082572516415
 GameObject:
   m_ObjectHideFlags: 0

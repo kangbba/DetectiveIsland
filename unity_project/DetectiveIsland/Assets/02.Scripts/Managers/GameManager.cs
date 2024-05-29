@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 300;
         Initialize();
-        EventTimeService.SetCurEventTime(initialEventTimeForTest);
-        EventProcessor.MoveToPlace(initialPlaceID, 0);
     }
 
     private void Initialize()
@@ -33,15 +31,18 @@ public class GameManager : MonoBehaviour
         EventService.Load();
         ItemService.Load();
         PlaceService.Load();
-        EventTimeService.Load(PlaceService.PlacePrefabs);
-        EventProcessor.Load();
+        EventService.Load();
+        EventTimeService.Load();
         CharacterService.Load();
         PictureService.Load();
         AudioService.Load();
         CameraService.Load();
         QuestManager.Load();
-    }
 
+        EventTimeService.SetCurEventTime(initialEventTimeForTest);
+        PlaceService.MoveToPlace(initialPlaceID, 0);
+
+    }
     private void Update(){
         if(Input.GetKeyDown(KeyCode.Space)){
             DevelopmentTool.IsDebug = !DevelopmentTool.IsDebug;

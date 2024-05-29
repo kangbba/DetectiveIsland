@@ -423,9 +423,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialEventTimeForTest:
     _date: 2024-04-01
-    _hour: 12
+    _hour: 9
     _minute: 0
-  initialPlaceID: 3
+  initialPlaceID: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

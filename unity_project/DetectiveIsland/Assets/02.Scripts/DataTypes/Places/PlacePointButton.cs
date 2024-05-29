@@ -38,7 +38,7 @@ public class PlacePointButton : WorldButton
         {
             case ButtonActionType.MovePlace:
                 Debug.Log($"Moving to place: {_placeID}");
-                EventProcessor.MoveToPlace(_placeID, 0);
+                PlaceService.MoveToPlace(_placeID, 0);
                 break;
             case ButtonActionType.GetItem:
                 Debug.Log($"Getting item: {_itemID}");
@@ -46,7 +46,7 @@ public class PlacePointButton : WorldButton
                 break;
             case ButtonActionType.PlayEvent:
                 Debug.Log("Playing event...");
-                await PlayEnterEvent();
+                await EventProcessor.PlayScenarioFile(_scenarioFile);
                 break;
             default:
                 Debug.LogWarning("Unsupported action type.");
@@ -54,21 +54,4 @@ public class PlacePointButton : WorldButton
         }
     }
 
-    private async UniTask PlayEnterEvent()
-    {
-        if (_scenarioFile == null)
-        {
-            Debug.LogWarning("_scenarioFile is null.");
-            return;
-        }
-
-        Scenario scenario = EventService.LoadScenario(_scenarioFile);
-        if (scenario == null)
-        {
-            Debug.LogWarning("Scenario is null.");
-            return;
-        }
-
-        await EventProcessor.PlayEvent(scenario);
-    }
 }

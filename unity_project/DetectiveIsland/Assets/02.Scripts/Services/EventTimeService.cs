@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aroka.ArokaUtils;
 using UnityEngine;
 
 public enum TimeRelation
@@ -9,49 +10,51 @@ public enum TimeRelation
     Same,    // 동일
     Future   // 미래
 }
-
-
 public static class EventTimeService
 {
-    private static List<EventTime> _allEventTimes = new List<EventTime>();
     private static EventTime _curEventTime = null;
+    private static EventRoadmap _eventRoadmap;
 
-    public static EventTime CurEventTime { get => _curEventTime; }
+    public static EventTime CurEventTime => _curEventTime;
 
-    public static void Load(List<Place> places)
+    public static void Load()
     {
-        _allEventTimes.Clear();
-
-        HashSet<EventTime> uniqueEventTimes = new HashSet<EventTime>();
-        foreach (var place in places)
+        _eventRoadmap = ArokaUtils.LoadScriptableDatasFromFolder<EventRoadmap>("EventRoadmap").FirstOrDefault();
+        if (_eventRoadmap == null)
         {
-            uniqueEventTimes.Add(place.EventTime);
+            Debug.LogError("EventRoadmap을 찾을 수 없습니다.");
+            return;
         }
 
-        _allEventTimes = uniqueEventTimes.OrderBy(eventTime => eventTime.Date)
-                                         .ThenBy(eventTime => eventTime.Hour)
-                                         .ThenBy(eventTime => eventTime.Minute)
-                                         .ToList();
+        var allEventTimes = _eventRoadmap.AllEventPlans.Select(plan => plan.EventTime).Distinct().OrderBy(eventTime => eventTime.Date).ThenBy(eventTime => eventTime.Hour).ThenBy(eventTime => eventTime.Minute).ToList();
 
-        foreach (var eventTime in _allEventTimes)
+        foreach (var eventTime in allEventTimes)
         {
             Debug.Log($"EventTime: {eventTime.Date} - {eventTime.Hour}:{eventTime.Minute}");
         }
     }
-    public static int GetYear(string date)
+
+    public static EventPlan GetEventPlan(EventTime eventTime, EPlaceID placeID, int sectionIndex)
     {
-        return ParseDatePart(date, 0);
+      //  Debug.Log($"Checking event for PlaceID: {placeID}, SectionIndex: {sectionIndex}, EventTime: {eventTime}");
+
+        foreach (var plan in _eventRoadmap.AllEventPlans)
+        {
+         //   Debug.Log($"Checking Plan - EventTime: {plan.EventTime}, PlaceID: {plan.PlaceID}, SectionIndex: {plan.PlaceSectionIndex}");
+            if (IsCurrentTimeEquals(eventTime) && plan.PlaceID == placeID && plan.PlaceSectionIndex == sectionIndex)
+            {
+                return plan;
+            }
+        }
+        return null;
     }
 
-    public static int GetMonth(string date)
-    {
-        return ParseDatePart(date, 1);
-    }
 
-    public static int GetDay(string date)
-    {
-        return ParseDatePart(date, 2);
-    }
+    public static int GetYear(string date) => ParseDatePart(date, 0);
+
+    public static int GetMonth(string date) => ParseDatePart(date, 1);
+
+    public static int GetDay(string date) => ParseDatePart(date, 2);
 
     private static int ParseDatePart(string date, int index)
     {
@@ -62,11 +65,6 @@ public static class EventTimeService
             return 0;
         }
         return int.Parse(dateParts[index]);
-    }
-
-    public static bool AreEqual(EventTime first, EventTime second)
-    {
-        return first.Date == second.Date && first.Hour == second.Hour && first.Minute == second.Minute;
     }
 
     public static TimeRelation CompareTime(EventTime first, EventTime second)
@@ -99,8 +97,6 @@ public static class EventTimeService
         return TimeRelation.Same;
     }
 
-
-
     public static void SetCurEventTime(EventTime eventTime)
     {
         Debug.Log($"새로 설정된 EventTime : {eventTime.Date} - {eventTime.Hour}시 {eventTime.Minute}분");
@@ -108,17 +104,14 @@ public static class EventTimeService
         UIManager.SetEventTime(eventTime);
     }
 
-    public static List<EventPlan> EventTimeFilter(this List<EventPlan> eventPlans, EventTime inputTime, TimeRelation timeRelation)
+    public static bool IsCurrentTimeEquals(EventTime eventTime)
     {
-        return eventPlans.Where(plan => CompareTime(plan.EventTime, inputTime) == timeRelation && plan.EventTime.Date == inputTime.Date).ToList();
-    }
-
-    public static bool IsCurrentTimeEquals(EventTime eventTime){
         return CompareTime(CurEventTime, eventTime) == TimeRelation.Same;
     }
+
     public static EventTime GetNextEventTime()
     {
-        var futureEvents = _allEventTimes.Where(eventTime => CompareTime(eventTime, _curEventTime) == TimeRelation.Future).ToList();
+        var futureEvents = _eventRoadmap.AllEventPlans.Select(plan => plan.EventTime).Where(eventTime => CompareTime(eventTime, _curEventTime) == TimeRelation.Future).Distinct().OrderBy(eventTime => eventTime.Date).ThenBy(eventTime => eventTime.Hour).ThenBy(eventTime => eventTime.Minute).ToList();
         return futureEvents.FirstOrDefault();
     }
 }

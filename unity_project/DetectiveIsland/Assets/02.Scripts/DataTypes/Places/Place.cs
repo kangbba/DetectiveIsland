@@ -1,24 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 
 public class Place : ArokaSpriteEffector
 {
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
-    [SerializeField] private EventTime _eventTime;
-
     private List<PlaceSection> _placeSections = new List<PlaceSection>();
-    private List<PlacePointButton> _placePoints;
+    private List<PlacePointButton> _placePoints = new List<PlacePointButton>();
     private int _curSectionIndex = -1;
     private bool _isActive;
 
-    public PlaceSection CurPlaceSection => (_curSectionIndex >= 0 && _curSectionIndex < _placeSections.Count) ? _placeSections[_curSectionIndex] : null;
-    public List<PlaceSection> PlaceSections => _placeSections;
     public EPlaceID PlaceID => _placeID;
     public string PlaceNameForUser => _placeNameForUser;
-    public EventTime EventTime => _eventTime;
+    public List<PlaceSection> PlaceSections => _placeSections;
+
+    public PlaceSection CurPlaceSection 
+    {
+        get => (_curSectionIndex >= 0 && _curSectionIndex < _placeSections.Count) ? _placeSections[_curSectionIndex] : null;
+        set
+        {
+            if (_curSectionIndex != value.SectionIndex)
+            {
+                _curSectionIndex = value.SectionIndex;
+                OnCurPlaceSectionChanged?.Invoke(value);
+            }
+        }
+    }
+
+    public delegate void CurPlaceSectionChangedHandler(PlaceSection newSection);
+    public event CurPlaceSectionChangedHandler OnCurPlaceSectionChanged;
 
     private void Initialize()
     {
@@ -35,38 +47,42 @@ public class Place : ArokaSpriteEffector
         }
     }
 
-    public void OnEnter(int initialPlaceSectionIndex, float totalTime)
+    public void OnEnter(int initialPlaceSectionIndex)
     {
+        Debug.Log($"{EventTimeService.CurEventTime} 시간에 {PlaceID}에 입장했습니다. Enter() 진행시작");
+        SetAllButtonInteractable(false);
         Initialize();
-        Debug.Log($"{PlaceID}에 입장했습니다. Enter() 진행시작");
         _isActive = true;
-        SetPlaceSectionAndPlayEvent(initialPlaceSectionIndex, totalTime).Forget();
+        SetPlaceSection(initialPlaceSectionIndex, 1f);
     }
+
+    private void SetPlaceSection(int placeSectionIndex, float totalTime)
+    {
+        Debug.Log($"{placeSectionIndex}로 설정 시도");
+        if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
+        {
+            Debug.LogWarning($"Index {placeSectionIndex}에 해당하는 섹션을 찾을 수 없습니다");
+            return;
+        }
+        _curSectionIndex = placeSectionIndex;
+        PlaceSection placeSection = CurPlaceSection;
+        CameraController.MoveX(placeSection.SectionCenterX, totalTime);
+        EventProcessor.CheckAndPlayEvent(this, totalTime).Forget();
+    }
+
 
     public void OnExit()
     {
-        UIManager.SetMouseCursorMode(EMouseCursorMode.Normal);
-        _isActive = false;
         SetAllButtonInteractable(false);
+        _isActive = false;
         Debug.Log($"{PlaceID}에서 퇴장합니다. Exit() 진행완료");
-        // 이벤트 처리 후 다음 이벤트 시간을 설정
-        EventTime nextEventTime = EventTimeService.GetNextEventTime();
-        if (nextEventTime != null)
-        {
-            Debug.Log($"다음 이벤트 시간: {nextEventTime.Date} - {nextEventTime.Hour}:{nextEventTime.Minute}");
-            EventTimeService.SetCurEventTime(nextEventTime);
-        }
-        else
-        {
-            Debug.Log("다음 이벤트 없음");
-        }
     }
 
     public void SetNextPlaceSection()
     {
         if (_curSectionIndex < _placeSections.Count - 1)
         {
-            SetPlaceSectionAndPlayEvent(_curSectionIndex + 1, .5f).Forget();
+            SetPlaceSection(_curSectionIndex + 1, 1f);
         }
         else
         {
@@ -78,41 +94,13 @@ public class Place : ArokaSpriteEffector
     {
         if (_curSectionIndex > 0)
         {
-            SetPlaceSectionAndPlayEvent(_curSectionIndex - 1, .5f).Forget();
+            SetPlaceSection(_curSectionIndex - 1, 1f);
         }
         else
         {
             Debug.LogWarning("이전 페이지가 없습니다");
         }
     }
-
-    private async UniTask SetPlaceSectionAndPlayEvent(int placeSectionIndex, float totalTime)
-    {
-        Debug.Log($"{placeSectionIndex}로 설정 시도");
-        if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
-        {
-            Debug.LogWarning($"Index {placeSectionIndex}에 해당하는 섹션을 찾을 수 없습니다");
-            return;
-        }
-        _curSectionIndex = placeSectionIndex;
-        PlaceSection placeSection = CurPlaceSection;
-        TextAsset scenarioFile = placeSection.ScenarioFile;
-        CameraController.MoveX(placeSection.SectionCenterX, totalTime);
-        await UniTask.WaitForSeconds(totalTime);
-
-        if (scenarioFile != null && EventTimeService.IsCurrentTimeEquals(_eventTime))
-        {
-            Debug.Log($"Time match {_eventTime}");
-            await CurPlaceSection.PlayEnterEvent();
-        }
-        else
-        {
-            Debug.Log($"Time does not match {_eventTime}  // curTime : {EventTimeService.CurEventTime}");
-        }
-        SetAllButtonInteractable(true);
-        UIManager.SetMouseCursorMode(EMouseCursorMode.Detect);
-    }
-
     public void OnPlacePointClicked(PlacePointButton placePointButton)
     {
         placePointButton.Execute();
