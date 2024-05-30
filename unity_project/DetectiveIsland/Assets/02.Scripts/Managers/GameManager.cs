@@ -32,14 +32,14 @@ public class GameManager : MonoBehaviour
         ItemService.Load();
         PlaceService.Load();
         EventService.Load();
-        EventTimeService.Load();
+        EventPlanManager.Load();
         CharacterService.Load();
         PictureService.Load();
         AudioService.Load();
         CameraService.Load();
         QuestManager.Load();
 
-        EventTimeService.SetCurEventTime(initialEventTimeForTest);
+        EventPlanManager.SetCurEventTime(initialEventTimeForTest);
         PlaceService.MoveToPlace(initialPlaceID, 0);
 
     }

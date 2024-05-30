@@ -49,7 +49,7 @@ public class Place : ArokaSpriteEffector
 
     public void OnEnter(int initialPlaceSectionIndex)
     {
-        Debug.Log($"{EventTimeService.CurEventTime} 시간에 {PlaceID}에 입장했습니다. Enter() 진행시작");
+        Debug.Log($"{EventPlanManager.CurEventTime} 시간에 {PlaceID}에 입장했습니다. Enter() 진행시작");
         SetAllButtonInteractable(false);
         Initialize();
         _isActive = true;
@@ -67,7 +67,23 @@ public class Place : ArokaSpriteEffector
         _curSectionIndex = placeSectionIndex;
         PlaceSection placeSection = CurPlaceSection;
         CameraController.MoveX(placeSection.SectionCenterX, totalTime);
-        EventProcessor.CheckAndPlayEvent(this, totalTime).Forget();
+        CheckAndPlayEvent(_placeID, placeSectionIndex, totalTime).Forget();
+    }
+
+    public async UniTaskVoid CheckAndPlayEvent(EPlaceID placeID, int sectionIndex, float delayTime)
+    {
+        await UniTask.WaitForSeconds(delayTime);
+        EventPlan eventPlan = EventPlanManager.GetCurEventPlanOfPlace(placeID, sectionIndex);
+        if (eventPlan != null && !eventPlan.IsSolved && eventPlan.ScenarioFile != null)
+        {
+            await EventProcessor.PlayScenarioFileOnly(eventPlan.ScenarioFile);
+            eventPlan.SetSolved(true);
+            if(EventPlanManager.IsAllSolvedInEventTime(EventPlanManager.CurEventTime)){
+                EventPlanManager.TimePassesToNext();
+            }
+        }
+        Debug.Log("버튼 활성화!");
+        SetAllButtonInteractable(true);
     }
 
 

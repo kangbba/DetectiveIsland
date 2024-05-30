@@ -45,7 +45,7 @@ public class EventTimeDisplayer : MonoBehaviour
                 formattedDate = FormatStandardOrEnglish(eventTime);
                 break;
             case DisplayFormat.Debug:
-                formattedDate = $"{EventTimeService.GetYear(eventTime.Date):0000}-{EventTimeService.GetMonth(eventTime.Date):00}-{EventTimeService.GetDay(eventTime.Date):00} {eventTime.Hour:00}:{eventTime.Minute:00}";
+                formattedDate = $"{EventPlanManager.GetYear(eventTime.Date):0000}-{EventPlanManager.GetMonth(eventTime.Date):00}-{EventPlanManager.GetDay(eventTime.Date):00} {eventTime.Hour:00}:{eventTime.Minute:00}";
                 break;
             default:
                 formattedDate = eventTime.Date;  // Fallback if format is unrecognized
@@ -59,13 +59,13 @@ public class EventTimeDisplayer : MonoBehaviour
     {
         if (_displayFormat == DisplayFormat.Standard)
         {
-            return $"{EventTimeService.GetYear(eventTime.Date):0000}.{EventTimeService.GetMonth(eventTime.Date):00}.{EventTimeService.GetDay(eventTime.Date):00}";
+            return $"{EventPlanManager.GetYear(eventTime.Date):0000}.{EventPlanManager.GetMonth(eventTime.Date):00}.{EventPlanManager.GetDay(eventTime.Date):00}";
         }
         else  // English format
         {
-            int month = EventTimeService.GetMonth(eventTime.Date);
-            int day = EventTimeService.GetDay(eventTime.Date);
-            int year = EventTimeService.GetYear(eventTime.Date);
+            int month = EventPlanManager.GetMonth(eventTime.Date);
+            int day = EventPlanManager.GetDay(eventTime.Date);
+            int year = EventPlanManager.GetYear(eventTime.Date);
             string monthName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
             return $"{monthName} {day}, {year}";
         }

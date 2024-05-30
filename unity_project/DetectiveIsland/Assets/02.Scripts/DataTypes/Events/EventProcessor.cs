@@ -7,20 +7,7 @@ using Aroka.ArokaUtils;
 public static class EventProcessor
 {
 
-    public static async UniTaskVoid CheckAndPlayEvent(Place place, float delayTime)
-    {
-        await UniTask.WaitForSeconds(delayTime);
-        EventPlan eventPlan = EventTimeService.GetEventPlan(EventTimeService.CurEventTime, place.PlaceID, place.CurPlaceSection.SectionIndex);
-        if (eventPlan != null && eventPlan.ScenarioFile != null)
-        {
-            Debug.Log("작동?");
-            await PlayScenarioFile(eventPlan.ScenarioFile);
-        }
-        Debug.Log("버튼 활성화!");
-        place.SetAllButtonInteractable(true);
-    }
-
-    public static async UniTask PlayScenarioFile(TextAsset scenarioFile)
+    public static async UniTask PlayScenarioFileOnly(TextAsset scenarioFile)
     {
         // Scenario 파일을 로드하고 이벤트를 실행하는 로직
         Scenario scenario = EventService.LoadScenario(scenarioFile);
@@ -30,7 +17,6 @@ public static class EventProcessor
             return;
         }
 
-        Debug.Log("PlayScenarioFile!");
         UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
         UIManager.OpenDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
@@ -40,9 +26,6 @@ public static class EventProcessor
 
         UIManager.CloseDialoguePanel(1f);
         UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
-        EventTimeService.SetCurEventTime(EventTimeService.GetNextEventTime());
-        
-        await UniTask.WaitForSeconds(1f);
     }
 
     private static async UniTask ProcessElementsTask(List<Element> elements)

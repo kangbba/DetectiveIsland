@@ -25,6 +25,17 @@ public class EventTime
         _hour = hour;
         _minute = minute;
     }
+    public override bool Equals(object obj)
+    {
+        if (obj is EventTime other)
+        {
+            return _date == other._date && _hour == other._hour && _minute == other._minute;
+        }
+        return false;
+    }
+    public bool IsEqual(EventTime eventTime){
+        return _date == eventTime.Date && _hour == eventTime.Hour && _minute == eventTime.Minute;
+    }
     public override int GetHashCode()
     {
         return _date.GetHashCode() ^ _hour.GetHashCode() ^ _minute.GetHashCode();

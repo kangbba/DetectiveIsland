@@ -46,7 +46,7 @@ public class PlacePointButton : WorldButton
                 break;
             case ButtonActionType.PlayEvent:
                 Debug.Log("Playing event...");
-                await EventProcessor.PlayScenarioFile(_scenarioFile);
+                await EventProcessor.PlayScenarioFileOnly(_scenarioFile);
                 break;
             default:
                 Debug.LogWarning("Unsupported action type.");

@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd7cb3e01cf43a4988b15e715989c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionType: 0
+  _actionType: 3
   _placeID: 0
   _itemID: 0
   _scenarioFile: {fileID: 0}
