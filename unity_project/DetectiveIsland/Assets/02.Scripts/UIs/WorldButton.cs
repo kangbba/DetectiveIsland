@@ -1,80 +1,36 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class WorldButton : MonoBehaviour
+public class WorldTracker : MonoBehaviour
 {
-    private Button _button;
+    private Transform _targetTransform;
 
-    protected virtual void Start()
+    public void Initialize(Transform targetTransform)
     {
-        LoadAndCreateButton();
+        if (targetTransform == null)
+        {
+            Debug.LogError("Target Transform is null.");
+            return;
+        }
+
+        _targetTransform = targetTransform;
+
+        PositionTracker(true);  // 초기 위치 설정
     }
 
-    private void LoadAndCreateButton()
+    private void PositionTracker(bool forceUpdate = false)
     {
-        GameObject buttonPrefab = Resources.Load<GameObject>("UIPrefabs/PlaceButtonPrefab");
-        if (buttonPrefab == null)
+        if (_targetTransform != null)
         {
-            Debug.LogError("Button Prefab could not be loaded from Resources.");
-            return;
-        }
-
-        GameObject canvasObj = UIManager.MainCanvas.gameObject;
-
-        GameObject buttonObj = Instantiate(buttonPrefab, canvasObj.transform);
-
-        RectTransform rectTransform = buttonObj.GetComponent<RectTransform>();
-        if (rectTransform == null)
-        {
-            Debug.LogError("Button Prefab does not have RectTransform component.");
-            return;
-        }
-
-        _button = buttonObj.GetComponent<Button>();
-        if (_button == null)
-        {
-            Debug.LogError("Button Prefab does not have Button component.");
-            return;
-        }
-
-        _button.onClick.AddListener(OnButtonClicked);
-        _button.interactable = false;
-
-        PositionButton(true);  // 초기 위치 설정
-    }
-
-    private void PositionButton(bool forceUpdate = false)
-    {
-        if (_button != null)
-        {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-            if (forceUpdate || _button.transform.position != screenPos)
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(_targetTransform.position);
+            if (forceUpdate || transform.position != screenPos)
             {
-                _button.transform.position = screenPos;
+                transform.position = screenPos;
             }
         }
     }
 
     private void Update()
     {
-        PositionButton();
-    }
-
-    public void SetButtonInteractable(bool b)
-    {
-        if(_button == null){
-            return;
-        }
-        _button.interactable = b;
-    }
-
-    protected abstract void OnButtonClicked();
-
-    private void OnDestroy()
-    {
-        if (_button != null)
-        {
-            Destroy(_button.gameObject);
-        }
+        PositionTracker();
     }
 }

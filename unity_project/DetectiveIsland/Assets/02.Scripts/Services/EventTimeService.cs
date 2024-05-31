@@ -109,7 +109,7 @@ public static class EventPlanManager
         _curEventTime = eventTime;
         UIManager.SetEventTime(eventTime);
     }
-    private static EventTime GetNextEventTime()
+    public static EventTime GetNextEventTime()
     {
         var futureEvents = _eventRoadmap.AllEventPlans.Select(plan => plan.EventTime).Where(eventTime => CompareTime(eventTime, _curEventTime) == TimeRelation.Future).Distinct().OrderBy(eventTime => eventTime.Date).ThenBy(eventTime => eventTime.Hour).ThenBy(eventTime => eventTime.Minute).ToList();
         return futureEvents.FirstOrDefault();
@@ -131,7 +131,7 @@ public static class EventPlanManager
 
     private static bool IsAllSolved(this List<EventPlan> eventPlans){
         foreach(EventPlan eventPlan in eventPlans){
-            if(!eventPlan.IsSolved){
+            if(!eventPlan.IsCleared){
                 return false;
             }
         }

@@ -11,11 +11,11 @@ public static class EventService
     public static void Load(){
         
     }
-    public static Scenario LoadScenario(TextAsset jsonTextAsset)
+    public static Scenario LoadScenario(this TextAsset jsonTextAsset)
     {
         if (jsonTextAsset == null)
         {
-            Debug.LogError("No TextAsset provided.");
+            Debug.LogWarning("No TextAsset provided.");
             return null;
         }
 

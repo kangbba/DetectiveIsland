@@ -8,6 +8,7 @@ public class UIParent : MonoBehaviour
     private CanvasRenderer _mainCanvasRenderer;
     [SerializeField] private OverlaySentenceDisplayer _overlaySentenceDisplayer;
     [SerializeField] private EventTimeDisplayer _eventTimeDisplayer;
+    [SerializeField] private OverlayPicturePanel _overlayPicturePanel;
     [SerializeField] private PlaceUIPanel _placeUIPanel;
     [SerializeField] private DialoguePanel _dialoguePanel;
     [SerializeField] private SimpleDialoguePanel _simpleDialoguePanel;
@@ -32,6 +33,7 @@ public class UIParent : MonoBehaviour
     public SimpleDialoguePanel SimpleDialoguePanel { get => _simpleDialoguePanel; }
     public Canvas MainCanvas { get => _mainCanvas;  }
     public CanvasRenderer MainCanvasRenderer { get => _mainCanvasRenderer; }
+    public OverlayPicturePanel OverlayPicturePanel { get => _overlayPicturePanel; }
 
     private void Start(){
         _mainCanvas = GetComponent<Canvas>();

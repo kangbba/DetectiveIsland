@@ -7,25 +7,18 @@ using Aroka.ArokaUtils;
 public static class EventProcessor
 {
 
-    public static async UniTask PlayScenarioFileOnly(TextAsset scenarioFile)
+    public static async UniTask PlayScenarioWithDialougePanel(Scenario scenario)
     {
-        // Scenario 파일을 로드하고 이벤트를 실행하는 로직
-        Scenario scenario = EventService.LoadScenario(scenarioFile);
-        if (scenario == null)
-        {
-            Debug.Log("Scenario 로드 실패");
+        if(scenario == null){
             return;
         }
-
-        UIManager.SetPlaceUIState(EPlaceUIPanelState.None, 1f);
         UIManager.OpenDialoguePanel(1f);
         await UniTask.WaitForSeconds(1f);
 
-        List<Element> elements = scenario.Elements;
-        await ProcessElementsTask(elements);
+        await ProcessElementsTask(scenario.Elements);
 
         UIManager.CloseDialoguePanel(1f);
-        UIManager.SetPlaceUIState(EPlaceUIPanelState.NavigateMode, 1f);
+        await UniTask.WaitForSeconds(1f);
     }
 
     private static async UniTask ProcessElementsTask(List<Element> elements)

@@ -16,17 +16,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EPlaceID initialPlaceID;
 
     
-    private void Start()
+     private void Start()
     {
         Application.targetFrameRate = 300;
+        InitializeAsync().Forget();
+    }
+
+    private async UniTaskVoid InitializeAsync()
+    {
         Initialize();
+        await UniTask.Yield(); // 모든 초기화 작업이 완료될 때까지 프레임 끝까지 기다림
+
+        EventPlanManager.SetCurEventTime(initialEventTimeForTest);
+        PlaceService.MoveToPlace(initialPlaceID, 0);
     }
 
     private void Initialize()
     {
-        AudioController.Load();
         CameraController.Load();
         UIManager.Load();
+
+        AudioController.Load();
         WorldManager.Load();
         EventService.Load();
         ItemService.Load();
@@ -34,15 +44,12 @@ public class GameManager : MonoBehaviour
         EventService.Load();
         EventPlanManager.Load();
         CharacterService.Load();
-        PictureService.Load();
+        PictureService.Load(UIManager.UIParent.OverlayPicturePanel);
         AudioService.Load();
-        CameraService.Load();
+        CameraActionService.Load();
         QuestManager.Load();
-
-        EventPlanManager.SetCurEventTime(initialEventTimeForTest);
-        PlaceService.MoveToPlace(initialPlaceID, 0);
-
     }
+
     private void Update(){
         if(Input.GetKeyDown(KeyCode.Space)){
             DevelopmentTool.IsDebug = !DevelopmentTool.IsDebug;

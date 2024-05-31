@@ -8,9 +8,11 @@ using UnityEngine.UI;
 
 public static class UIManager
 {   
-    public static UIParent _uiParent;
+    private static UIParent _uiParent;
     public static Canvas MainCanvas => _uiParent.MainCanvas;
     public static CanvasRenderer MainCanvasRenderer => _uiParent.MainCanvasRenderer;
+
+    public static UIParent UIParent { get => _uiParent; }
 
     public static void Load(){
         GameObject uiParentPrefab = Resources.Load<GameObject>("UIPrefabs/UIParentPrefab");
@@ -75,9 +77,6 @@ public static class UIManager
 
     public static async UniTask<Choice> MakeChoiceBtnsAndWait(ChoiceSet choiceSet){
         return await  _uiParent.ChoiceSetPanel.MakeChoiceBtnsAndWait(choiceSet);
-    }
-    public static void SetPlaceUIState(EPlaceUIPanelState placeUIPanelState, float totalTime){
-        _uiParent.PlaceUIPanel.SetUIState(placeUIPanelState, totalTime);
     }
 
     //시간, 이벤트 판넬

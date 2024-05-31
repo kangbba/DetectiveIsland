@@ -19,7 +19,18 @@ MonoBehaviour:
       _minute: 0
     _placeID: 1
     _placeSectionIndex: 0
-    _scenarioFile: {fileID: 4900000, guid: ae2f18be71bc34a478cbb90aa0d99306, type: 3}
+    _scenarioFile: {fileID: 4900000, guid: 810ffc74905744c4786790f32f465d42, type: 3}
+    _placeIDToAutoMoveAfter: 0
+    _isCleared: 1
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 9
+      _minute: 30
+    _placeID: 2
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 0}
+    _placeIDToAutoMoveAfter: 0
+    _isCleared: 1
   - _eventTime:
       _date: 2024-04-01
       _hour: 10
@@ -27,6 +38,8 @@ MonoBehaviour:
     _placeID: 3
     _placeSectionIndex: 0
     _scenarioFile: {fileID: 4900000, guid: 027496d351b9845f59e415abd942a287, type: 3}
+    _placeIDToAutoMoveAfter: 0
+    _isCleared: 1
   - _eventTime:
       _date: 2024-04-01
       _hour: 11
@@ -34,6 +47,8 @@ MonoBehaviour:
     _placeID: 4
     _placeSectionIndex: 0
     _scenarioFile: {fileID: 4900000, guid: 446bdcc53f48d49c789328c51d70603d, type: 3}
+    _placeIDToAutoMoveAfter: 0
+    _isCleared: 1
   - _eventTime:
       _date: 2024-04-01
       _hour: 18
@@ -41,3 +56,14 @@ MonoBehaviour:
     _placeID: 4
     _placeSectionIndex: 0
     _scenarioFile: {fileID: 4900000, guid: b28d61383c5004cfebe9d9494555123d, type: 3}
+    _placeIDToAutoMoveAfter: 9
+    _isCleared: 1
+  - _eventTime:
+      _date: 2024-04-01
+      _hour: 19
+      _minute: 0
+    _placeID: 9
+    _placeSectionIndex: 0
+    _scenarioFile: {fileID: 4900000, guid: 444257ba51cd2417f92b7eda9f27050d, type: 3}
+    _placeIDToAutoMoveAfter: 0
+    _isCleared: 0

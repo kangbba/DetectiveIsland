@@ -11,6 +11,8 @@ public enum EPictureID
     None = 0,
     Black = 1,
     White = 2,
+    FrontOfCafeSeabreeze = 3,
+    CafeDoorBell = 4,
 }
 public enum EPictureEffectID
 {
@@ -22,13 +24,13 @@ public static class PictureService
 {
     private static List<Picture> _picturePrefabs;
     private static Dictionary<EPictureID, Picture> _instancedPictures;
-    private static Transform _overlayedPicturePanel;
+    private static OverlayPicturePanel _overlayedPicturePanel;
 
-    public static void Load()
+    public static void Load(OverlayPicturePanel overlayPicturePanel)
     {
         _picturePrefabs = ArokaUtils.LoadResourcesFromFolder<Picture>("PicturePrefabs");
         _instancedPictures = new Dictionary<EPictureID, Picture>();
-        _overlayedPicturePanel = new GameObject("Overlayed Picture Panel").transform;
+        _overlayedPicturePanel = overlayPicturePanel;
     }
 
     public static Picture GetPicture(EPictureID id)
@@ -53,8 +55,9 @@ public static class PictureService
         switch (effectID)
         {
             case EPictureEffectID.FadeIn:
-                Picture instPicture = GameObject.Instantiate(foundPicture.gameObject, _overlayedPicturePanel).GetComponent<Picture>();
-                instPicture.FadeInFromStart(effectTime);
+                Picture instPicture = GameObject.Instantiate(foundPicture.gameObject, _overlayedPicturePanel.transform).GetComponent<Picture>();
+                instPicture.transform.localPosition = Vector3.zero;
+                instPicture.FadeInFromBlack(effectTime);
                 _instancedPictures[pictureID] = instPicture;
                 break;
             case EPictureEffectID.FadeOut:

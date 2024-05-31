@@ -17,6 +17,7 @@ public class OverlayPictureNode : Node
 
     public EPictureID PictureID = EPictureID.None;
     public EPictureEffectID EffectID = EPictureEffectID.None;
+    public bool IsPreset = false;
     public float EffectTime = 1;
 
     public const float FIELD_COMMON_HEIGHT = 20;
@@ -33,7 +34,7 @@ public class OverlayPictureNode : Node
 
     public override Element ToElement()
     {
-        return new OverlayPicture(PictureID, EffectID, EffectTime);
+        return new OverlayPicture(PictureID, EffectID, IsPreset, EffectTime);
     }
 
     public override void DrawNode()
@@ -73,6 +74,17 @@ public class OverlayPictureNode : Node
            fieldWidth: 80,
            fieldHeight: FIELD_COMMON_HEIGHT
        );
+        Height += FIELD_COMMON_HEIGHT;
+
+        IsPreset = (bool)JInterface.SimpleField
+        (
+           title: "IsPreset: ",
+           value: IsPreset,
+           pos: new Vector2(NodeRect.position.x + LEFT_MARGIN, NodeRect.position.y + Height),
+           labelWidth: 100,
+           fieldWidth: 80,
+           fieldHeight: FIELD_COMMON_HEIGHT
+        );
         Height += FIELD_COMMON_HEIGHT;
 
         Height += BOTTOM_MARGIN;

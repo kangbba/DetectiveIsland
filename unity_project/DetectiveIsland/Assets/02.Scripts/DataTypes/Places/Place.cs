@@ -1,20 +1,20 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-public class Place : ArokaSpriteEffector
+public class Place : ArokaEffector
 {
     [SerializeField] private EPlaceID _placeID;
     [SerializeField] private string _placeNameForUser;
     private List<PlaceSection> _placeSections = new List<PlaceSection>();
-    private List<PlacePointButton> _placePoints = new List<PlacePointButton>();
+    private List<PlacePoint> _placePoints = new List<PlacePoint>();
     private int _curSectionIndex = -1;
-    private bool _isActive;
 
     public EPlaceID PlaceID => _placeID;
-    public string PlaceNameForUser => _placeNameForUser;
     public List<PlaceSection> PlaceSections => _placeSections;
+
+    private PlaceUIPanel _placeUIPanel;
 
     public PlaceSection CurPlaceSection 
     {
@@ -24,39 +24,41 @@ public class Place : ArokaSpriteEffector
             if (_curSectionIndex != value.SectionIndex)
             {
                 _curSectionIndex = value.SectionIndex;
-                OnCurPlaceSectionChanged?.Invoke(value);
             }
         }
     }
 
-    public delegate void CurPlaceSectionChangedHandler(PlaceSection newSection);
-    public event CurPlaceSectionChangedHandler OnCurPlaceSectionChanged;
 
-    private void Initialize()
+    public void Initialize(int initialSectionIndex, PlaceUIPanel placeUIPanel)
     {
+        _placeUIPanel = placeUIPanel;
         SpriteRenderer.sortingOrder = -1;
 
-        _placePoints = GetComponentsInChildren<PlacePointButton>().ToList();
+        _placePoints = GetComponentsInChildren<PlacePoint>().ToList();
         _placeSections = GetComponentsInChildren<PlaceSection>()
                             .OrderBy(section => section.SectionCenterX)
                             .ToList();
 
-        foreach (var placePoint in _placePoints)
-        {
-            placePoint.Initialize(this);
-        }
+        SetPlaceSection(initialSectionIndex);
+
+        _placeUIPanel.SetCurPlaceNameForUser(_placeNameForUser);
     }
 
-    public void OnEnter(int initialPlaceSectionIndex)
-    {
-        Debug.Log($"{EventPlanManager.CurEventTime} 시간에 {PlaceID}에 입장했습니다. Enter() 진행시작");
-        SetAllButtonInteractable(false);
-        Initialize();
-        _isActive = true;
-        SetPlaceSection(initialPlaceSectionIndex, 1f);
+    //place points로 UI에게 만들어달라고 요청
+    public void MakeBtnsWithPlacePoints(){
+        _placeUIPanel.MakePlacePointBtns(_placePoints);
+    }
+    //UI에게 place points로 만들어진 버튼들을 파괴해달라고 요청
+    public void DestroyPlacePointBtns(){
+        _placeUIPanel.DestroyPlacePointBtns();
+    }
+    
+    //UI에게 Place 를 상호작용할수있는 UI모드를 조정해달라고 요청
+    public void SetPlaceMode(EPlaceUIPanelState mode, float totalTime){
+        _placeUIPanel.SetUIState(mode, totalTime);
     }
 
-    private void SetPlaceSection(int placeSectionIndex, float totalTime)
+    public void SetPlaceSection(int placeSectionIndex)
     {
         Debug.Log($"{placeSectionIndex}로 설정 시도");
         if (placeSectionIndex < 0 || placeSectionIndex >= _placeSections.Count)
@@ -65,40 +67,15 @@ public class Place : ArokaSpriteEffector
             return;
         }
         _curSectionIndex = placeSectionIndex;
-        PlaceSection placeSection = CurPlaceSection;
-        CameraController.MoveX(placeSection.SectionCenterX, totalTime);
-        CheckAndPlayEvent(_placeID, placeSectionIndex, totalTime).Forget();
     }
 
-    public async UniTaskVoid CheckAndPlayEvent(EPlaceID placeID, int sectionIndex, float delayTime)
-    {
-        await UniTask.WaitForSeconds(delayTime);
-        EventPlan eventPlan = EventPlanManager.GetCurEventPlanOfPlace(placeID, sectionIndex);
-        if (eventPlan != null && !eventPlan.IsSolved && eventPlan.ScenarioFile != null)
-        {
-            await EventProcessor.PlayScenarioFileOnly(eventPlan.ScenarioFile);
-            eventPlan.SetSolved(true);
-            if(EventPlanManager.IsAllSolvedInEventTime(EventPlanManager.CurEventTime)){
-                EventPlanManager.TimePassesToNext();
-            }
-        }
-        Debug.Log("버튼 활성화!");
-        SetAllButtonInteractable(true);
-    }
-
-
-    public void OnExit()
-    {
-        SetAllButtonInteractable(false);
-        _isActive = false;
-        Debug.Log($"{PlaceID}에서 퇴장합니다. Exit() 진행완료");
-    }
-
-    public void SetNextPlaceSection()
+    //UI가 이 함수를 통해 쉽게 페이지를 넘길수있게 함.
+    public void SetNextPlaceSectionForUI()
     {
         if (_curSectionIndex < _placeSections.Count - 1)
         {
-            SetPlaceSection(_curSectionIndex + 1, 1f);
+            SetPlaceSection(_curSectionIndex + 1);
+            CameraController.MoveX(CurPlaceSection.SectionCenterX, 1f);
         }
         else
         {
@@ -106,27 +83,16 @@ public class Place : ArokaSpriteEffector
         }
     }
 
-    public void SetPreviousPlaceSection()
+    public void SetPreviousPlaceSectionForUI()
     {
         if (_curSectionIndex > 0)
         {
-            SetPlaceSection(_curSectionIndex - 1, 1f);
+            SetPlaceSection(_curSectionIndex - 1);
+            CameraController.MoveX(CurPlaceSection.SectionCenterX, 1f);
         }
         else
         {
             Debug.LogWarning("이전 페이지가 없습니다");
-        }
-    }
-    public void OnPlacePointClicked(PlacePointButton placePointButton)
-    {
-        placePointButton.Execute();
-    }
-
-    public void SetAllButtonInteractable(bool interactable)
-    {
-        foreach (var placePoint in _placePoints)
-        {
-            placePoint.SetButtonInteractable(interactable);
         }
     }
 }
